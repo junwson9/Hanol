@@ -6,15 +6,13 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
-const root = ReactDOM.createRoot(
-	document.getElementById('root') as HTMLElement,
-);
+const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
-	<RecoilRoot>
-		<BrowserRouter>
-			<App />
-		</BrowserRouter>
-	</RecoilRoot>,
+  <RecoilRoot>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </RecoilRoot>,
 );
 
 reportWebVitals();

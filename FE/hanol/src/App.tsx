@@ -4,13 +4,13 @@ import Login from './pages/auth/login';
 import './App.css';
 
 function App() {
-	return (
-		<div className="App">
-			<Routes>
-				<Route path="/login" element={<Login />} />
-			</Routes>
-		</div>
-	);
+  return (
+    <div className="App">
+      <Routes>
+        <Route path="/login" element={<Login />} />
+      </Routes>
+    </div>
+  );
 }
 
 export default App;
