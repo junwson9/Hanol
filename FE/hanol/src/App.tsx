@@ -5,9 +5,9 @@ import './App.css';
 
 function App() {
 	return (
-		<div className={'App'}>
+		<div className="App">
 			<Routes>
-				<Route path={'/login'} element={<Login />} />
+				<Route path="/login" element={<Login />} />
 			</Routes>
 		</div>
 	);

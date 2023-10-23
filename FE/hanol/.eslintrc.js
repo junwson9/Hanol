@@ -58,11 +58,7 @@ module.exports = {
 		'react/prefer-stateless-function': 0,
 		'react/jsx-one-expression-per-line': 0,
 		'no-nested-ternary': 0,
-		// [error] Curly braces are unnecessary here
-		'react/jsx-curly-brace-presence': [
-			'warn',
-			{ props: 'always', children: 'always' },
-		],
+
 		// 파일의 경로가 틀렸는지 확인하는 옵션 false
 		'import/no-unresolved': ['error', { caseSensitive: false }],
 		// props spreading 허용하지 않는 경고 표시
