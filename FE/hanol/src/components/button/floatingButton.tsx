@@ -1,11 +1,11 @@
 import React from 'react';
 
-function floatingButton() {
+function FloatingButton() {
   return (
-    <div className="w-[314px] h-[54px] px-[54px] py-4 bg-emerald-400 rounded-xl shadow justify-center items-center gap-2.5 inline-flex">
-      <div className="text-white font-medium  tracking-wide">button</div>
+    <div className="w-[314px] h-[54px] px-[54px] py-4 rounded-xl shadow justify-center items-center gap-2.5 inline-flex bg-Main">
+      <div className="text-white text-base tracking-wide">시작하기</div>
     </div>
   );
 }
 
-export default floatingButton;
+export default FloatingButton;
