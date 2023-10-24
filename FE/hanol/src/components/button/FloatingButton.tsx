@@ -1,11 +1,13 @@
 import React from 'react';
+type FloatButtonProps = {
+  name: string;
+};
 
-function FloatingButton() {
-  const name = 'name';
+function FloatingButton({ name }: FloatButtonProps) {
   return (
-    <div className="w-full h-[54px] rounded-xl drop-shadow-xl justify-center items-center gap-2.5 inline-flex bg-Main">
+    <button className="w-full h-[54px] rounded-xl drop-shadow-xl justify-center items-center gap-2.5 inline-flex bg-Main">
       <div className="text-White text-base font-medium text-[16px] tracking-wide">{name}</div>
-    </div>
+    </button>
   );
 }
 

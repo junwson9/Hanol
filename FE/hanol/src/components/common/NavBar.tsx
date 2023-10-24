@@ -36,7 +36,7 @@ function NavBar() {
   }, [location]);
 
   return (
-    <div className="fixed bottom-0 h-[75px] max-w-[450px] w-full rounded-xl border">
+    <div className="fixed bottom-0 h-[4.5rem] max-w-[450px] w-full rounded-xl border bg-White" style={{ zIndex: 20 }}>
       <div className="flex justify-between">
         <button
           className="flex flex-col items-center justify-center w-[66px] h-[66px] gap-[7px]"
@@ -62,7 +62,11 @@ function NavBar() {
           }}
         >
           {selectedMenu === 'examination' ? <Examination /> : <ExaminationUnActive />}
-          <p className={`${selectedMenu === 'examination' ? 'text-NavActive' : 'text-GrayForText'} text-xs`}>
+          <p
+            className={`${
+              selectedMenu === 'examination' ? 'text-NavActive' : 'text-GrayForText'
+            } text-xs whitespace-nowrap`}
+          >
             간편문진
           </p>
         </button>
@@ -82,7 +86,13 @@ function NavBar() {
           }}
         >
           {selectedMenu === 'routine' ? <Routine /> : <RoutineUnActive />}
-          <p className={`${selectedMenu === 'routine' ? 'text-NavActive' : 'text-GrayForText'} text-xs`}>케어루틴</p>
+          <p
+            className={`${
+              selectedMenu === 'routine' ? 'text-NavActive' : 'text-GrayForText'
+            } text-xs whitespace-nowrap`}
+          >
+            케어루틴
+          </p>
         </button>
         <button
           className="flex flex-col items-center justify-center w-[66px] h-[66px] gap-[7px]"
@@ -92,7 +102,11 @@ function NavBar() {
           }}
         >
           {selectedMenu === 'about' ? <About /> : <AboutUnActive />}
-          <p className={`${selectedMenu === 'about' ? 'text-NavActive' : 'text-GrayForText'} text-xs`}>더보기</p>
+          <p
+            className={`${selectedMenu === 'about' ? 'text-NavActive' : 'text-GrayForText'} text-xs whitespace-nowrap`}
+          >
+            더보기
+          </p>
         </button>
       </div>
     </div>

@@ -1,5 +1,5 @@
 import React from 'react';
-import FloatingButton from 'components/button/FloatingButton';
+// import FloatingButton from 'components/button/FloatingButton';
 import EmptyButton from 'components/button/EmptyButton';
 
 function Login() {
@@ -7,9 +7,7 @@ function Login() {
   return (
     <div className="col-span-full">
       <p className="font-medium">{login}</p>
-      <div>
-        <FloatingButton />
-      </div>
+      <div>{/* <FloatingButton /> */}</div>
       <div>
         <EmptyButton />
       </div>
