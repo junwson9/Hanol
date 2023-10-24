@@ -4,11 +4,12 @@ module.exports = {
     extend: {
       colors: {
         Main: '#3FCC8A',
-        GrayForTab: 'BCBCBC',
-        GrayForText: '888888',
-        White: 'FFFEFF',
-        Black: '252321',
-        Error: 'E30F0F',
+        GrayForTab: '#BCBCBC',
+        GrayForText: '#888888',
+        White: '#FFFEFF',
+        Black: '#252321',
+        Error: '#E30F0F',
+        NavActive: '#333D4B',
       },
     },
   },
