@@ -34,3 +34,7 @@ INSERT INTO ROUTINE (routine_name, is_default, is_value_1, is_value_2, is_value_
 INSERT INTO ROUTINE (routine_name, is_default, is_value_1, is_value_2, is_value_3, is_value_4, is_value_5, is_value_6) VALUES ('탈모 약 바르기', 0, 0, 0, 0, 0, 0, 1);
 INSERT INTO ROUTINE (routine_name, is_default, is_value_1, is_value_2, is_value_3, is_value_4, is_value_5, is_value_6) VALUES ('금주하기', 1, 0, 0, 0, 0, 0, 0);
 INSERT INTO ROUTINE (routine_name, is_default, is_value_1, is_value_2, is_value_3, is_value_4, is_value_5, is_value_6) VALUES ('아누카 사과 먹기', 0, 0, 0, 0, 0, 0, 1);
+
+/* 회원 테스트 데이터 */
+INSERT INTO MEMBER (name, email, gender, birth, oauth_provider, oauth_id, role, create_date) VALUES ('test1', 'test1@ssafy.com', 1, '1999-01-05 00:00:00.000000', 'KAKAO', 'test1', 1, now());
+INSERT INTO MEMBER (name, email, gender, birth, oauth_provider, oauth_id, role, create_date) VALUES ('test2', 'test2@ssafy.com', 1, '1999-10-05 00:00:00.000000', 'KAKAO', 'test2', 1, now());
