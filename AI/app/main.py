@@ -1,13 +1,15 @@
-from fastapi import FastAPI
-from PIL import Image
-import api
+from fastapi import FastAPI,UploadFile
+from models.image_request import ImageRequest
+from api.diagnostic_ai import DiagnosticAI
 
 app = FastAPI()
+
+diag = DiagnosticAI()
 
 @app.get("/test")
 async def test():
     return 'test page'
 
 @app.post("/image")
-async def process_diagnostic(request:Image):
-    return await api.diagnostic_ai(request)
+async def process_diagnostic(file: UploadFile):
+    return await diag.process_diagnostic(file)
