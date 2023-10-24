@@ -10,9 +10,11 @@ function App() {
       <div className="grid grid-cols-6 gap-[10px] mx-[23px]">
         <Routes>
           <Route path="/login" element={<Login />} />
-          <Route path="/login-error" element={<LoginError />} />
         </Routes>
       </div>
+      <Routes>
+        <Route path="/login-error" element={<LoginError />} />
+      </Routes>
     </div>
   );
 }
