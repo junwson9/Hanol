@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -29,8 +30,14 @@ public class Member extends BaseTimeEntity {
     @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false, name = "profile_image")
-    private String profileImage;
+    @Column(nullable = false)
+    private String email;
+
+    @Column(nullable = false)
+    private Gender gender;
+
+    @Column(nullable = false)
+    private Date birth;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, name = "oauth_provider")
@@ -46,13 +53,17 @@ public class Member extends BaseTimeEntity {
     private LocalDateTime lastLoginDate;
 
     @Builder
-    public Member(String name, String profileImage, OauthProvider oauthProvider, OauthId oauthId,
-                  Role role) {
+    public Member(Long id, String name, String email, Gender gender, Date birth, OauthProvider oauthProvider,
+                  OauthId oauthId, Role role, LocalDateTime lastLoginDate) {
+        this.id = id;
         this.name = name;
-        this.profileImage = profileImage;
+        this.email = email;
+        this.gender = gender;
+        this.birth = birth;
         this.oauthProvider = oauthProvider;
         this.oauthId = oauthId;
         this.role = role;
+        this.lastLoginDate = lastLoginDate;
     }
 
     public void updateLastLoginDate() {
