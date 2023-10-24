@@ -3,4 +3,5 @@
 	max-width: 450px;
 	margin: 0 auto; /* 중앙 정렬을 위해 가운데 정렬 */
 	background-color: white;
+	height: 100vh;
 }
