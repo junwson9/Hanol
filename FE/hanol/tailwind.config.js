@@ -10,6 +10,7 @@ module.exports = {
         Black: '#252321',
         Error: '#E30F0F',
         Gray: '#D9D9D9',
+        NavActive: '#333D4B',
       },
     },
   },
