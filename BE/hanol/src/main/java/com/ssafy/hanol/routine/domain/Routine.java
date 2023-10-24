@@ -20,8 +20,8 @@ public class Routine {
     @Column(name = "routine_name")
     private String routineName;
 
-    @Column(name = "is_basic", columnDefinition = "TINYINT(1) DEFAULT 0")
-    private boolean isBasic;
+    @Column(name = "is_default", columnDefinition = "TINYINT(1) DEFAULT 0")
+    private boolean isDefault;
 
     @Column(name = "is_value_1", columnDefinition = "TINYINT(1) DEFAULT 0")
     private boolean isValue1;
@@ -42,9 +42,9 @@ public class Routine {
     private boolean isValue6;
 
     @Builder
-    public Routine(String routineName, boolean isBasic, boolean isValue1, boolean isValue2, boolean isValue3, boolean isValue4, boolean isValue5, boolean isValue6) {
+    public Routine(String routineName, boolean isDefault, boolean isValue1, boolean isValue2, boolean isValue3, boolean isValue4, boolean isValue5, boolean isValue6) {
         this.routineName = routineName;
-        this.isBasic = isBasic;
+        this.isDefault = isDefault;
         this.isValue1 = isValue1;
         this.isValue2 = isValue2;
         this.isValue3 = isValue3;
