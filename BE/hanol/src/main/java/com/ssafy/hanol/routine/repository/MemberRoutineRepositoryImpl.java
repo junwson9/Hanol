@@ -29,8 +29,8 @@ public class MemberRoutineRepositoryImpl implements MemberRoutineRepository {
     }
 
     @Override
-    public void deleteById(Long id) {
-        jpaMemberRoutineRepository.deleteById(id);
+    public void deleteByMemberIdAndRoutineId(Long memberId, Long routineId) {
+        jpaMemberRoutineRepository.deleteByMemberIdAndRoutineId(memberId, routineId);
     }
 
 }

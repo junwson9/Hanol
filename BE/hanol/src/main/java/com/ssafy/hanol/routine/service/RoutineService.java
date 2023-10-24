@@ -1,15 +1,18 @@
 package com.ssafy.hanol.routine.service;
 
+import com.ssafy.hanol.member.domain.Member;
 import com.ssafy.hanol.routine.domain.MemberRoutine;
 import com.ssafy.hanol.routine.domain.Routine;
 import com.ssafy.hanol.routine.repository.MemberRoutineRepository;
 import com.ssafy.hanol.routine.repository.RoutineRepository;
+import com.ssafy.hanol.routine.service.dto.request.RoutineListModifyRequest;
 import com.ssafy.hanol.routine.service.dto.response.RoutineListResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,6 +23,7 @@ import java.util.stream.Collectors;
 @Transactional
 public class RoutineService {
 
+    private final RoutineRepository routineRepository;
     private final MemberRoutineRepository memberRoutineRepository;
 
     public RoutineListResponse findRoutineList() {
@@ -58,6 +62,42 @@ public class RoutineService {
                 .myRoutines(myRoutines)
                 .suggestedRoutines(suggestedRoutines)
                 .build();
+    }
+
+
+    public void modifyRoutineList(RoutineListModifyRequest routineListModifyRequest) {
+        // 임시 데이터
+        Long memberId = 1L;
+
+        // TODO 예외 처리: 스케쥴링 작업 중인 경우, 존재하지 않는 루틴
+
+        List<Long> removedRoutines = routineListModifyRequest.getRemovedRoutines();
+        List<Long> addedRoutines = routineListModifyRequest.getAddedRoutines();
+
+        if(!removedRoutines.isEmpty()) {
+            LocalDate today = LocalDate.now();
+
+            for(Long routineId : removedRoutines) {
+                // 회원별 루틴 테이블에서 삭제
+                memberRoutineRepository.deleteByMemberIdAndRoutineId(memberId, routineId);
+                // TODO 루틴 이력 테이블에서 삭제
+            }
+        }
+
+        if(!addedRoutines.isEmpty()) {
+            for(Long routineId : addedRoutines) {
+                Routine routine = routineRepository.findById(routineId).orElseThrow();
+                // 회원별 루틴 테이블에 추가 TODO member 조회해와서 넣기
+//                MemberRoutine memberRoutine = MemberRoutine.builder()
+//                        .member(member)
+//                        .routine(routine)
+//                        .isNotificationActive(false)
+//                        .build();
+
+                // TODO 루틴 이력 테이블에 추가
+            }
+        }
+
     }
 
 

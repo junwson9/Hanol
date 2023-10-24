@@ -10,6 +10,6 @@ public interface MemberRoutineRepository {
     Optional<MemberRoutine> findById(Long id);
     List<MemberRoutine> findByMemberId(Long memberId);
     void save(MemberRoutine memberRoutine);
-    void deleteById(Long id);
+    void deleteByMemberIdAndRoutineId(Long memberId, Long routineId);
 
 }

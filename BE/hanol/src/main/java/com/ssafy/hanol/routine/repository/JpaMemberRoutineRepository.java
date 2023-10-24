@@ -11,4 +11,6 @@ public interface JpaMemberRoutineRepository extends JpaRepository<MemberRoutine,
     @Query("SELECT mr FROM MemberRoutine mr JOIN FETCH mr.routine WHERE mr.member.id = :memberId")
     List<MemberRoutine> findByMemberId(Long memberId);
 
+    void deleteByMemberIdAndRoutineId(Long memberId, Long routineId);
+
 }
