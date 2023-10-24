@@ -38,3 +38,9 @@ INSERT INTO ROUTINE (routine_name, is_default, is_value_1, is_value_2, is_value_
 /* 회원 테스트 데이터 */
 INSERT INTO MEMBER (name, email, gender, birth, oauth_provider, oauth_id, role, create_date) VALUES ('test1', 'test1@ssafy.com', 1, '1999-01-05 00:00:00.000000', 'KAKAO', 'test1', 1, now());
 INSERT INTO MEMBER (name, email, gender, birth, oauth_provider, oauth_id, role, create_date) VALUES ('test2', 'test2@ssafy.com', 1, '1999-10-05 00:00:00.000000', 'KAKAO', 'test2', 1, now());
+
+/* 회원별 루틴 테스트 데이터 */
+INSERT INTO Member_Routine (member_id, routine_id, is_notification_active, notification_time) VALUES (1, 3, 1, '13:00:00');
+INSERT INTO Member_Routine (member_id, routine_id, is_notification_active, notification_time) VALUES (1, 6, 1, '19:00:00');
+INSERT INTO Member_Routine (member_id, routine_id, is_notification_active, notification_time) VALUES (1, 9, 0, '12:00:00');
+INSERT INTO Member_Routine (member_id, routine_id, is_notification_active) VALUES (1, 30, 0);
