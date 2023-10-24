@@ -9,6 +9,7 @@ module.exports = {
         White: '#FFFEFF',
         Black: '#252321',
         Error: '#E30F0F',
+        NavActive: '#333D4B',
       },
     },
   },
