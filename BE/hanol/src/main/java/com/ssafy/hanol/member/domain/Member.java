@@ -53,9 +53,8 @@ public class Member extends BaseTimeEntity {
     private LocalDateTime lastLoginDate;
 
     @Builder
-    public Member(Long id, String name, String email, Gender gender, Date birth, OauthProvider oauthProvider,
+    public Member(String name, String email, Gender gender, Date birth, OauthProvider oauthProvider,
                   OauthId oauthId, Role role, LocalDateTime lastLoginDate) {
-        this.id = id;
         this.name = name;
         this.email = email;
         this.gender = gender;
