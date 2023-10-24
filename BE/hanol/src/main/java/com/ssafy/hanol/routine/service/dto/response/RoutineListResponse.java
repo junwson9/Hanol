@@ -1,5 +1,7 @@
 package com.ssafy.hanol.routine.service.dto.response;
 
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.ssafy.hanol.routine.domain.MemberRoutine;
 import lombok.Builder;
 import lombok.Getter;
@@ -15,6 +17,7 @@ public class RoutineListResponse {
 
     @Getter
     @Builder
+    @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
     public static class RoutineItem {
         private Long memberRoutineId;
         private Long routineId;

@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,11 +22,11 @@ public class RoutineController {
 
     @GetMapping
     public ResponseEntity<?> routineList() {
-        log.info("요청 도착");
         RoutineListResponse result = routineService.findRoutineList();
-        log.info("결과 : {}", result);
-        return ResponseFactory.success("추천 루틴 리스트 조회 성공", RoutineListApiResponse.from(result));
+        return ResponseFactory.success("루틴 리스트 조회 성공", RoutineListApiResponse.from(result));
     }
+
+
 
 
 }
