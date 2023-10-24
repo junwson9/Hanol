@@ -1,5 +1,6 @@
 // import { ReactComponent as CheckUnactive } from 'assets/icons/check-unactive.svg';
 import { ReactComponent as Check } from 'assets/icons/check.svg';
+import FloatingButton from 'components/button/FloatingButton';
 
 function SetRoutine() {
   return (
@@ -16,36 +17,35 @@ function SetRoutine() {
         지금 실천 중인 루틴이에요.
       </p>
       <div className="mt-2.5 col-start-1 col-end-7">
-        <div className="flex h-14 mt-2 border rounded-lg items-center gap-2.5 whitespace-nowrap">
+        <div className="flex h-14 mt-3 border rounded-lg items-center gap-2.5 whitespace-nowrap">
           <Check className="ml-2.5" />
           여기에
         </div>
-        <div className="flex h-14 mt-2 border rounded-lg items-center gap-2.5 whitespace-nowrap">
+        <div className="flex h-14 mt-3 border rounded-lg items-center gap-2.5 whitespace-nowrap">
           <Check className="ml-2.5" />
           실천중인게
         </div>
-        <div className="flex h-14 mt-2 border rounded-lg items-center gap-2.5 whitespace-nowrap">
+        <div className="flex h-14 mt-3 border rounded-lg items-center gap-2.5 whitespace-nowrap">
           <Check className="ml-2.5" />
           들어갑니다.
         </div>
       </div>
       <p className="text-xl  text-left font-bold mt-9 col-start-1 col-end-5 whitespace-nowrap">이런 루틴은 어때요?</p>
       <div className="mt-2.5 col-start-1 col-end-7">
-        <div className="flex h-14 mt-2 border rounded-lg items-center gap-2.5 whitespace-nowrap">
+        <div className="flex h-14 mt-3 border rounded-lg items-center gap-2.5 whitespace-nowrap">
           <Check className="ml-2.5" />
           여기에
         </div>
-        <div className="flex h-14 mt-2 border rounded-lg items-center gap-2.5 whitespace-nowrap">
+        <div className="flex h-14 mt-3 border rounded-lg items-center gap-2.5 whitespace-nowrap">
           <Check className="ml-2.5" />
-          실천중인게
+          추천이
         </div>
-        <div className="flex h-14 mt-2 border rounded-lg items-center gap-2.5 whitespace-nowrap">
+        <div className="flex h-14 mt-3 border rounded-lg items-center gap-2.5 whitespace-nowrap">
           <Check className="ml-2.5" />
           들어갑니다.
         </div>
-        <div className="flex h-14 mt-2 border rounded-lg items-center gap-2.5 whitespace-nowrap">
-          <Check className="ml-2.5" />
-          들어갑니다.
+        <div className="sticky bottom-5 mt-10">
+          <FloatingButton name="루틴 설정하기" />
         </div>
       </div>
     </>
