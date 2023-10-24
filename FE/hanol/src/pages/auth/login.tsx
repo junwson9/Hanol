@@ -6,7 +6,9 @@ function Login() {
   return (
     <div>
       <p>{login}</p>
-      <FloatingButton />
+      <div>
+        <FloatingButton />
+      </div>
     </div>
   );
 }
