@@ -14,7 +14,6 @@ public class OauthMemberInfo {
     private OauthId oauthId;
     private OauthProvider oauthProvider;
     private String name;
-    private String email;
 
     @Builder
     public OauthMemberInfo(String oauthId, OauthProvider oauthProvider, String name,
@@ -22,16 +21,14 @@ public class OauthMemberInfo {
         this.oauthId = OauthId.of(oauthId);
         this.oauthProvider = oauthProvider;
         this.name = name;
-        this.email = email;
     }
 
     public Member toMember() {
         return Member.builder()
                      .oauthProvider(oauthProvider)
                      .name(name)
-                     .email(email)
                      .oauthId(oauthId)
-                     .role(Role.MEMBER)
+                     .role(Role.GUEST)
                      .build();
     }
 }

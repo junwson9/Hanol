@@ -4,6 +4,7 @@ import com.ssafy.hanol.common.exception.CustomException;
 import com.ssafy.hanol.member.exception.AuthenticationErrorCode;
 import com.ssafy.hanol.member.exception.MemberErrorCode;
 import io.jsonwebtoken.*;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.math.BigInteger;
@@ -17,6 +18,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Component
+@Slf4j
 public class IdTokenResolver {
 
     private String parseToken(String token) {
@@ -45,9 +47,8 @@ public class IdTokenResolver {
         }
     }
 
-    public Map<String, Object> validateIdToken(String idToken, String issuer, String aud,
-            String modulus,
-            String exponent) {
+    public Map<String, Object> validateIdToken(String idToken, String issuer, String aud, String modulus, String exponent) {
+        log.info("????????????????");
         try {
             Jws<Claims> claimsJws = Jwts.parserBuilder()
                                         .requireAudience(aud)
@@ -58,6 +59,7 @@ public class IdTokenResolver {
             Claims body = claimsJws.getBody();
             return new HashMap<>(body);
         } catch (Exception e) {
+            log.error("ERROR : {}", e.getMessage());
             throw new CustomException(MemberErrorCode.INVALID_ID_TOKEN);
         }
     }

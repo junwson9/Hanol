@@ -5,10 +5,12 @@ import com.ssafy.hanol.common.exception.CustomException;
 import com.ssafy.hanol.member.exception.MemberErrorCode;
 import com.ssafy.hanol.member.service.OauthMemberInfo;
 import com.ssafy.hanol.member.service.jwt.IdTokenResolver;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 import java.util.Map;
 
+@Slf4j
 public abstract class AbstractIdTokenValidator {
 
     private final OidcIdTokenCheckProperty oidcIdTokenCheckProperty;
@@ -26,9 +28,11 @@ public abstract class AbstractIdTokenValidator {
 
         String issuer = oidcIdTokenCheckProperty.getIssuer();
         String audience = oidcIdTokenCheckProperty.getAudience();
-
-        Map<String, Object> payload = idTokenResolver.validateIdToken(idToken, issuer, audience,
-                publicKey.getN(), publicKey.getE());
+        log.info("idToken : {}", idToken);
+        log.info("issuer : {}", issuer);
+        log.info("audience : {}", audience);
+        log.info("publicKey : {}", publicKey);
+        Map<String, Object> payload = idTokenResolver.validateIdToken(idToken, issuer, audience, publicKey.getN(), publicKey.getE());
 
         return extractMemberInfoFromPayload(payload);
     }

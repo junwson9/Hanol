@@ -48,15 +48,13 @@ public class KakaoIdTokenValidator extends AbstractIdTokenValidator {
     OauthMemberInfo extractMemberInfoFromPayload(Map<String, Object> payload) {
         String oauthId = (String) payload.get(KAKAO_ID_KEY);
         String name = (String) payload.get(KAKAO_NAME_KEY);
-        String email = (String) payload.get(KAKAO_PROFILE_EMAIL_KEY);
-        if (requireValueIsNull(oauthId, name, email)) {
+        if (requireValueIsNull(oauthId, name)) {
             throw new CustomException(CommonErrorCode.SERVER_ERROR);
         }
 
         return OauthMemberInfo.builder()
                               .oauthId(oauthId)
                               .name(name)
-                              .email(email)
                               .oauthProvider(OauthProvider.KAKAO)
                               .build();
     }
@@ -65,7 +63,7 @@ public class KakaoIdTokenValidator extends AbstractIdTokenValidator {
     /*
      * 해당 예외가 발생하는건 카카오에서 프로퍼티 key 값을 바꾸지 않는 이상은 발생하지 않는다.
      */
-    private boolean requireValueIsNull(String oauthId, String name, String email) {
-        return oauthId == null || name == null || email == null;
+    private boolean requireValueIsNull(String oauthId, String name) {
+        return oauthId == null || name == null;
     }
 }
