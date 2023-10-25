@@ -44,3 +44,10 @@ INSERT INTO Member_Routine (member_id, routine_id, is_notification_active, notif
 INSERT INTO Member_Routine (member_id, routine_id, is_notification_active, notification_time) VALUES (1, 6, 1, '19:00:00');
 INSERT INTO Member_Routine (member_id, routine_id, is_notification_active, notification_time) VALUES (1, 9, 0, '12:00:00');
 INSERT INTO Member_Routine (member_id, routine_id, is_notification_active) VALUES (1, 30, 0);
+
+/* 진단 테스트 데이터 */
+INSERT INTO DIAGNOSIS (member_id, value_1, value_2, value_3, value_4, value_5, value_6, device_type, scan_part) VALUES (1, 0, 1, 2, 3, 2, 1, 1, 2);
+INSERT INTO DIAGNOSIS (member_id, value_1, value_2, value_3, value_4, value_5, value_6, device_type, scan_part) VALUES (1, 3, 3, 3, 2, 2, 2, 1, 1);
+INSERT INTO DIAGNOSIS (member_id, value_1, value_2, value_3, value_4, value_5, value_6, device_type, scan_part) VALUES (1, 1, 1, 2, 2, 3, 3, 1, 3);
+INSERT INTO DIAGNOSIS (member_id, value_1, value_2, value_3, value_4, value_5, value_6, device_type, scan_part) VALUES (1, 0, 0, 0, 0, 0, 0, 0, 4);
+INSERT INTO DIAGNOSIS (member_id, value_1, value_2, value_3, value_4, value_5, value_6, device_type, scan_part) VALUES (2, 0, 0, 0, 0, 0, 0, 0, 1);
