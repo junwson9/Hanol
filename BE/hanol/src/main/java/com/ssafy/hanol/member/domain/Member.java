@@ -30,13 +30,10 @@ public class Member extends BaseTimeEntity {
     @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false)
-    private String email;
-
-    @Column(nullable = false)
+    @Column(nullable = true)
     private Gender gender;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private Date birth;
 
     @Enumerated(EnumType.STRING)
@@ -53,10 +50,9 @@ public class Member extends BaseTimeEntity {
     private LocalDateTime lastLoginDate;
 
     @Builder
-    public Member(String name, String email, Gender gender, Date birth, OauthProvider oauthProvider,
+    public Member(String name, Gender gender, Date birth, OauthProvider oauthProvider,
                   OauthId oauthId, Role role, LocalDateTime lastLoginDate) {
         this.name = name;
-        this.email = email;
         this.gender = gender;
         this.birth = birth;
         this.oauthProvider = oauthProvider;
