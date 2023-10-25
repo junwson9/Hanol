@@ -15,7 +15,7 @@ import React from 'react';
 // 	);
 import { Routes, Route } from 'react-router-dom';
 import Login from './pages/auth/login';
-import DivisionRectangle from './components/common/DivisionRectangle';
+import RecommendCareRoutine from './components/DashboardPage/RecommendCareRoutine';
 import './App.css';
 
 function App() {
@@ -25,7 +25,7 @@ function App() {
         <Route path="/login" element={<Login />} />
       </Routes>
       <Routes>
-        <Route path="/test" element={<DivisionRectangle />} />
+        <Route path="/test" element={<RecommendCareRoutine />} />
       </Routes>
     </div>
   );
