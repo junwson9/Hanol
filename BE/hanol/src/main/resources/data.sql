@@ -36,11 +36,18 @@ INSERT INTO ROUTINE (routine_name, is_default, is_value_1, is_value_2, is_value_
 INSERT INTO ROUTINE (routine_name, is_default, is_value_1, is_value_2, is_value_3, is_value_4, is_value_5, is_value_6) VALUES ('아누카 사과 먹기', 0, 0, 0, 0, 0, 0, 1);
 
 /* 회원 테스트 데이터 */
-INSERT INTO MEMBER (name, email, gender, birth, oauth_provider, oauth_id, role, create_date) VALUES ('test1', 'test1@ssafy.com', 1, '1999-01-05 00:00:00.000000', 'KAKAO', 'test1', 1, now());
-INSERT INTO MEMBER (name, email, gender, birth, oauth_provider, oauth_id, role, create_date) VALUES ('test2', 'test2@ssafy.com', 1, '1999-10-05 00:00:00.000000', 'KAKAO', 'test2', 1, now());
+INSERT INTO MEMBER (name, gender, birth, oauth_provider, oauth_id, role, create_date) VALUES ('test1', 1, '1999-01-05 00:00:00.000000', 'KAKAO', 'test1', 1, now());
+INSERT INTO MEMBER (name, gender, birth, oauth_provider, oauth_id, role, create_date) VALUES ('test2', 1, '1999-10-05 00:00:00.000000', 'KAKAO', 'test2', 1, now());
 
 /* 회원별 루틴 테스트 데이터 */
 INSERT INTO Member_Routine (member_id, routine_id, is_notification_active, notification_time) VALUES (1, 3, 1, '13:00:00');
 INSERT INTO Member_Routine (member_id, routine_id, is_notification_active, notification_time) VALUES (1, 6, 1, '19:00:00');
 INSERT INTO Member_Routine (member_id, routine_id, is_notification_active, notification_time) VALUES (1, 9, 0, '12:00:00');
 INSERT INTO Member_Routine (member_id, routine_id, is_notification_active) VALUES (1, 30, 0);
+
+/* 진단 테스트 데이터 */
+INSERT INTO DIAGNOSIS (member_id, value_1, value_2, value_3, value_4, value_5, value_6, device_type, scan_part, create_date) VALUES (1, 0, 1, 2, 3, 2, 1, 1, 2, now());
+INSERT INTO DIAGNOSIS (member_id, value_1, value_2, value_3, value_4, value_5, value_6, device_type, scan_part, create_date) VALUES (1, 3, 3, 3, 2, 2, 2, 1, 1, now());
+INSERT INTO DIAGNOSIS (member_id, value_1, value_2, value_3, value_4, value_5, value_6, device_type, scan_part, create_date) VALUES (1, 1, 1, 2, 2, 3, 3, 1, 3, now());
+INSERT INTO DIAGNOSIS (member_id, value_1, value_2, value_3, value_4, value_5, value_6, device_type, scan_part, create_date) VALUES (1, 0, 0, 0, 0, 0, 0, 0, 4, now());
+INSERT INTO DIAGNOSIS (member_id, value_1, value_2, value_3, value_4, value_5, value_6, device_type, scan_part, create_date) VALUES (2, 0, 0, 0, 0, 0, 0, 0, 1, now());
