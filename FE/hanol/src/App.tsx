@@ -10,7 +10,7 @@ import NavBar from 'components/common/NavBar';
 
 function App() {
   const location = useLocation();
-  const showNavBarPaths = ['/set-routine', '/examination', '/routine', '/', '/myreport', '/about'];
+  const showNavBarPaths = ['/examination', '/routine', '/', '/myreport', '/about'];
   const shouldShowNavBar = showNavBarPaths.includes(location.pathname);
   return (
     <div className="App">
