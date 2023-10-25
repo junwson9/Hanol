@@ -18,8 +18,8 @@ public class DiagnosisRepositoryImpl implements DiagnosisRepository {
     }
 
     @Override
-    public Optional<Diagnosis> findTopByMemberIdByIdDesc(Long memberId) {
-        return jpaDiagnosisRepository.findTopByMemberIdByIdDesc(memberId);
+    public Optional<Diagnosis> findTopByMemberIdOrderByIdDesc(Long memberId) {
+        return jpaDiagnosisRepository.findTopByMemberIdOrderByIdDesc(memberId);
     }
 
 }

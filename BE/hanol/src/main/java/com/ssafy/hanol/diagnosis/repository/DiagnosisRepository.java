@@ -8,6 +8,6 @@ public interface DiagnosisRepository {
 
     Optional<Diagnosis> findById(Long id);
 
-    Optional<Diagnosis> findTopByMemberIdByIdDesc(Long memberId);
+    Optional<Diagnosis> findTopByMemberIdOrderByIdDesc(Long memberId);
 
 }

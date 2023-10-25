@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 
 public interface JpaDiagnosisRepository extends JpaRepository<Diagnosis, Long> {
-    Optional<Diagnosis> findTopByMemberIdByIdDesc(Long memberId);
+    Optional<Diagnosis> findTopByMemberIdOrderByIdDesc(Long memberId);
 }
