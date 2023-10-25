@@ -3,6 +3,7 @@ package com.ssafy.hanol.routine.controller.dto.response;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import com.ssafy.hanol.routine.service.RoutineInfo;
 import com.ssafy.hanol.routine.service.dto.response.RoutineListResponse;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,10 +15,10 @@ import java.util.List;
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class RoutineListApiResponse {
 
-    private List<RoutineListResponse.RoutineItem> myRoutines;
-    private List<RoutineListResponse.RoutineItem> suggestedRoutines;
+    private List<RoutineInfo> myRoutines;
+    private List<RoutineInfo> suggestedRoutines;
 
-    public RoutineListApiResponse(List<RoutineListResponse.RoutineItem> myRoutines, List<RoutineListResponse.RoutineItem> suggestedRoutines) {
+    public RoutineListApiResponse(List<RoutineInfo> myRoutines, List<RoutineInfo> suggestedRoutines) {
         this.myRoutines = myRoutines;
         this.suggestedRoutines = suggestedRoutines;
     }
