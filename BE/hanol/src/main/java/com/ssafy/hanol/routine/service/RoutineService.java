@@ -71,7 +71,7 @@ public class RoutineService {
 
     public void modifyRoutineList(RoutineListModifyRequest routineListModifyRequest) {
         // 임시 데이터
-        Long memberId = 5L;
+        Long memberId = 1L;
 
         // TODO 예외 처리: 스케쥴링 작업 중인 경우, 존재하지 않는 루틴
 

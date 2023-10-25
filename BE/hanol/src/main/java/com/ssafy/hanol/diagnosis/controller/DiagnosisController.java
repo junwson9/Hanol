@@ -1,6 +1,9 @@
 package com.ssafy.hanol.diagnosis.controller;
 
+import com.ssafy.hanol.common.response.ResponseFactory;
+import com.ssafy.hanol.diagnosis.controller.dto.response.DiagnosisDetailApiResponse;
 import com.ssafy.hanol.diagnosis.service.DiagnosisService;
+import com.ssafy.hanol.diagnosis.service.dto.response.DiagnosisDetailResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +22,8 @@ public class DiagnosisController {
 
     @GetMapping("/{diagnosisId}")
     public ResponseEntity<?> diagnosisDetails(@PathVariable Long diagnosisId) {
-        return null;
+        DiagnosisDetailResponse result = diagnosisService.findDiagnosis(diagnosisId);
+        return ResponseFactory.success("진단 결과 조회 성공", DiagnosisDetailApiResponse.from(result));
     }
 
 }

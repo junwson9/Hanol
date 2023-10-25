@@ -16,8 +16,7 @@ public class OauthMemberInfo {
     private String name;
 
     @Builder
-    public OauthMemberInfo(String oauthId, OauthProvider oauthProvider, String name,
-                           String email) {
+    public OauthMemberInfo(String oauthId, OauthProvider oauthProvider, String name) {
         this.oauthId = OauthId.of(oauthId);
         this.oauthProvider = oauthProvider;
         this.name = name;
