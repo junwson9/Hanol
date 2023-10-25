@@ -22,8 +22,8 @@ function NavBar() {
 
   useEffect(() => {
     const path = location.pathname;
-    if (path === '/myReport') {
-      setSelectedMenu('myReport');
+    if (path === '/myreport') {
+      setSelectedMenu('myreport');
     } else if (path === '/examination') {
       setSelectedMenu('examination');
     } else if (path === '/routine') {
@@ -41,14 +41,14 @@ function NavBar() {
         <button
           className="flex flex-col items-center justify-center w-[66px] h-[66px] gap-[7px]"
           onClick={() => {
-            handleNavigate('/myReport');
-            setSelectedMenu('myReport');
+            handleNavigate('/myreport');
+            setSelectedMenu('myreport');
           }}
         >
-          {selectedMenu === 'myReport' ? <MyReport /> : <MyReportUnActive />}
+          {selectedMenu === 'myreport' ? <MyReport /> : <MyReportUnActive />}
           <p
             className={`${
-              selectedMenu === 'myReport' ? 'text-NavActive' : 'text-GrayForText'
+              selectedMenu === 'myreport' ? 'text-NavActive' : 'text-GrayForText'
             } text-xs whitespace-nowrap`}
           >
             마이리포트
