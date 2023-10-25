@@ -29,6 +29,11 @@ public class MemberRoutineRepositoryImpl implements MemberRoutineRepository {
     }
 
     @Override
+    public void saveAll(List<MemberRoutine> memberRoutines) {
+        jpaMemberRoutineRepository.saveAll(memberRoutines);
+    }
+
+    @Override
     public void deleteByMemberIdAndRoutineId(Long memberId, Long routineId) {
         jpaMemberRoutineRepository.deleteByMemberIdAndRoutineId(memberId, routineId);
     }
