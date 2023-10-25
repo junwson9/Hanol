@@ -1,7 +1,15 @@
 .App {
-	text-align: center;
-	max-width: 450px;
-	margin: 0 auto; /* 중앙 정렬을 위해 가운데 정렬 */
-	background-color: white;
-	height: 100vh;
+  text-align: center;
+  max-width: 450px;
+  margin: 0 auto; /* 중앙 정렬을 위해 가운데 정렬 */
+  background-color: white;
+  height: 100vh;
+}
+.AppContent {
+  overflow-y: auto;
+  height: 100vh;
+}
+
+.show-navbar {
+  height: calc(100vh - 4.5rem);
 }

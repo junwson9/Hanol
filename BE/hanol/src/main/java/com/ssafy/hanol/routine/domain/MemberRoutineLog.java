@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -28,13 +29,13 @@ public class MemberRoutineLog {
     private Routine routine;
 
     @Column(nullable = false)
-    private LocalDateTime date;
+    private LocalDate date;
 
     @Column(name = "is_done", columnDefinition = "TINYINT(1) DEFAULT 0")
     private boolean isDone;
 
     @Builder
-    public MemberRoutineLog(Member member, Routine routine, LocalDateTime date, boolean isDone) {
+    public MemberRoutineLog(Member member, Routine routine, LocalDate date, boolean isDone) {
         this.member = member;
         this.routine = routine;
         this.date = date;
