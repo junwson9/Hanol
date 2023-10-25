@@ -25,7 +25,7 @@ public class JwtProvider {
     private final Key refreshKey;
     private final Integer accessExpiredMin;
     private final Integer refreshExpiredDay;
-    private final String APP_ISSUER = "Junear";
+    private final String APP_ISSUER = "Hanol";
 
     public JwtProvider(JwtProperty jwtProperty) {
         byte[] accessEncodeByte = Base64Utils.encode(jwtProperty.getAccessKey()
