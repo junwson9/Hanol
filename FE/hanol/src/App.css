@@ -7,5 +7,9 @@
 }
 .AppContent {
   overflow-y: auto;
+  height: 100vh;
+}
+
+.show-navbar {
   height: calc(100vh - 4.5rem);
 }
