@@ -1,6 +1,8 @@
 import { Routes, Route } from 'react-router-dom';
 import Login from './pages/auth/login';
 import LoginError from './pages/auth/loginError';
+import SignupBirth from 'pages/auth/signupBirth';
+import SignupGender from 'pages/auth/signupGender';
 import './App.css';
 import Home from 'pages/home';
 import SetRoutine from 'pages/routine/setRoutine';
@@ -18,7 +20,8 @@ function App() {
         </div>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
+          <Route path="/signup-birth" element={<SignupBirth />} />
+          <Route path="/signup-gender" element={<SignupGender />} />
           <Route path="/myreport" element={<Login />} />
           <Route path="/examination" element={<Home />} />
           <Route path="/routine" element={<Home />} />
