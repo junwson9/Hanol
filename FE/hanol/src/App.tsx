@@ -11,7 +11,11 @@ import ExplainRoutine from 'pages/routine/explainRoutine';
 
 function App() {
   const location = useLocation();
+<<<<<<< HEAD
   const showNavBarPaths = ['/set-routine', '/examination', '/routine', '/', '/myreport', '/about', '/explain-routine'];
+=======
+  const showNavBarPaths = ['/examination', '/routine', '/', '/myreport', '/about'];
+>>>>>>> develop
   const shouldShowNavBar = showNavBarPaths.includes(location.pathname);
   return (
     <div className="App">
