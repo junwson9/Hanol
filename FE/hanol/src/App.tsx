@@ -15,7 +15,7 @@ import React from 'react';
 // 	);
 import { Routes, Route } from 'react-router-dom';
 import Login from './pages/auth/login';
-import BannerButton from './components/button/BannerButton';
+import ValueCardNonmember from './components/DashboardPage/ValueCardNonmember';
 import './App.css';
 
 function App() {
@@ -25,7 +25,7 @@ function App() {
         <Route path="/login" element={<Login />} />
       </Routes>
       <Routes>
-        <Route path="/test" element={<BannerButton />} />
+        <Route path="/test" element={<ValueCardNonmember title="피지" />} />
       </Routes>
     </div>
   );
