@@ -7,10 +7,15 @@ import './App.css';
 import Home from 'pages/home';
 import SetRoutine from 'pages/routine/setRoutine';
 import NavBar from 'components/common/NavBar';
+import ExplainRoutine from 'pages/routine/explainRoutine';
 
 function App() {
   const location = useLocation();
+<<<<<<< HEAD
+  const showNavBarPaths = ['/set-routine', '/examination', '/routine', '/', '/myreport', '/about', '/explain-routine'];
+=======
   const showNavBarPaths = ['/examination', '/routine', '/', '/myreport', '/about'];
+>>>>>>> develop
   const shouldShowNavBar = showNavBarPaths.includes(location.pathname);
   return (
     <div className="App">
@@ -27,6 +32,7 @@ function App() {
             <Route path="/routine" element={<Home />} />
             <Route path="/about" element={<Home />} />
             <Route path="/login-error" element={<LoginError />} />
+            <Route path="/explain-routine" element={<ExplainRoutine />} />
           </Routes>
         </div>
       </div>
