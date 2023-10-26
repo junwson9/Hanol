@@ -7,7 +7,7 @@ import './App.css';
 import Home from 'pages/home';
 import SetRoutine from 'pages/routine/setRoutine';
 import NavBar from 'components/common/NavBar';
-import Test from 'components/button/DateNavigateButton';
+import Test from 'components/DetailPage/DateNavigateModal';
 
 function App() {
   const location = useLocation();
@@ -28,7 +28,7 @@ function App() {
             <Route path="/routine" element={<Home />} />
             <Route path="/about" element={<Home />} />
             <Route path="/login-error" element={<LoginError />} />
-            <Route path="/test" element={<Test date="23.10.14 (금) 16:00" />} />
+            <Route path="/test" element={<Test />} />
           </Routes>
         </div>
       </div>
