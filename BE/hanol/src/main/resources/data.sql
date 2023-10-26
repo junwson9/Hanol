@@ -45,6 +45,10 @@ INSERT INTO Member_Routine (member_id, routine_id, is_notification_active, notif
 INSERT INTO Member_Routine (member_id, routine_id, is_notification_active, notification_time) VALUES (1, 9, 0, '12:00:00');
 INSERT INTO Member_Routine (member_id, routine_id, is_notification_active) VALUES (1, 30, 0);
 
+/* 회원-루틴 이력 테스트 데이터 */
+INSERT INTO Member_Routine_Log (member_id, routine_id, is_done, date) VALUES (1, 6, 0, '2023-10-25');
+INSERT INTO Member_Routine_Log (member_id, routine_id, is_done, date) VALUES (1, 9, 1, '2023-10-25');
+
 /* 진단 테스트 데이터 */
 INSERT INTO DIAGNOSIS (member_id, value_1, value_2, value_3, value_4, value_5, value_6, device_type, scan_part, create_date) VALUES (1, 0, 1, 2, 3, 2, 1, 1, 2, now());
 INSERT INTO DIAGNOSIS (member_id, value_1, value_2, value_3, value_4, value_5, value_6, device_type, scan_part, create_date) VALUES (1, 3, 3, 3, 2, 2, 2, 1, 1, now());

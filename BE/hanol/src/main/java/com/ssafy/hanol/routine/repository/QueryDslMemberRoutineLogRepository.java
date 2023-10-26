@@ -5,6 +5,7 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.ssafy.hanol.routine.domain.QMemberRoutine;
 import com.ssafy.hanol.routine.domain.QMemberRoutineLog;
+import com.ssafy.hanol.routine.domain.QRoutine;
 import com.ssafy.hanol.routine.service.RoutineLogInfo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -42,6 +43,7 @@ public class QueryDslMemberRoutineLogRepository {
 
         QMemberRoutineLog memberRoutineLog = QMemberRoutineLog.memberRoutineLog;
         QMemberRoutine memberRoutine = QMemberRoutine.memberRoutine;
+        QRoutine routine = QRoutine.routine;
 
         BooleanExpression criteria = memberRoutineLog.member.id.eq(memberId)
                 .and(memberRoutineLog.date.eq(date));
@@ -56,12 +58,13 @@ public class QueryDslMemberRoutineLogRepository {
                     .select(Projections.constructor(RoutineLogInfo.class,
                             memberRoutineLog.id,
                             memberRoutineLog.routine.id,
-                            memberRoutineLog.routine.routineName,
+                            routine.routineName,
                             memberRoutineLog.date,
                             memberRoutineLog.isDone,
                             memberRoutine.isNotificationActive,
                             memberRoutine.notificationTime))
                     .from(memberRoutineLog)
+                    .join(memberRoutineLog.routine, routine)
                     .join(memberRoutine).on(memberRoutineLog.routine.id.eq(memberRoutine.routine.id))
                     .where(criteria)
                     .fetch();
@@ -70,11 +73,12 @@ public class QueryDslMemberRoutineLogRepository {
                     .select(Projections.constructor(RoutineLogInfo.class,
                             memberRoutineLog.id,
                             memberRoutineLog.routine.id,
-                            memberRoutineLog.routine.routineName,
+                            routine.routineName,
                             memberRoutineLog.date,
                             memberRoutineLog.isDone
                     ))
                     .from(memberRoutineLog)
+                    .join(memberRoutineLog.routine, routine)
                     .where(criteria)
                     .fetch();
         }
