@@ -10,6 +10,7 @@ import NavBar from 'components/common/NavBar';
 import ExplainRoutine from 'pages/routine/explainRoutine';
 import ExplainDiagnose from 'pages/diagnose/explainDiagnose';
 import SelectDevice from 'pages/diagnose/selectDevice';
+import Streaming from 'pages/diagnose/streaming';
 
 function App() {
   const location = useLocation();
@@ -33,6 +34,11 @@ function App() {
             <Route path="/login-error" element={<LoginError />} />
             <Route path="/explain-routine" element={<ExplainRoutine />} />
             <Route path="/select-device" element={<SelectDevice />} />
+          </Routes>
+        </div>
+        <div>
+          <Routes>
+            <Route path="/streaming" element={<Streaming />} />
           </Routes>
         </div>
       </div>
