@@ -11,6 +11,7 @@ import com.ssafy.hanol.routine.repository.MemberRoutineLogRepository;
 import com.ssafy.hanol.routine.repository.MemberRoutineRepository;
 import com.ssafy.hanol.routine.repository.RoutineRepository;
 import com.ssafy.hanol.routine.service.dto.request.RoutineListModifyRequest;
+import com.ssafy.hanol.routine.service.dto.response.RoutineLogListResponse;
 import com.ssafy.hanol.routine.service.dto.response.RoutineListResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -34,6 +35,8 @@ public class RoutineService {
     private final DiagnosisRepository diagnosisRepository;
     private final MemberRepository memberRepository;
 
+
+    // 회원별 설정 루틴 및 추천 루틴 리스트 조회
     public RoutineListResponse findRoutineList() {
         // 임시 데이터
         Long memberId = 1L;
@@ -65,6 +68,7 @@ public class RoutineService {
     }
 
 
+    // 회원별 설정 루틴 리스트 변경
     public void modifyRoutineList(RoutineListModifyRequest routineListModifyRequest) {
         // 임시 데이터
         Long memberId = 1L;
@@ -115,4 +119,15 @@ public class RoutineService {
     }
 
 
+    // 날짜별 루틴 이력 리스트 조회
+    public RoutineLogListResponse findMemberRoutineLogByDate(LocalDate date) {
+        Long memberId = 1L;
+
+        List<RoutineLogInfo> routineLogInfos = memberRoutineLogRepository.selectRoutineLogsByMemberIdAndDate(memberId, date);
+        log.info("특정일의 루틴 이력 조회, {}", routineLogInfos);
+
+        return RoutineLogListResponse.builder()
+                .dailyRoutines(routineLogInfos)
+                .build();
+    }
 }
