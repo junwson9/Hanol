@@ -7,7 +7,7 @@ import './App.css';
 import Home from 'pages/home';
 import SetRoutine from 'pages/routine/setRoutine';
 import NavBar from 'components/common/NavBar';
-import Test from 'components/DetailPage/DateNavigateModal';
+import Test from 'pages/myreport/MyreportDetailPage';
 
 function App() {
   const location = useLocation();

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { ReactComponent as CloseIcon } from '../../assets/icons/close_FILL0_wght400_GRAD0_opsz24 1.svg';
 import { ReactComponent as SelectedIcon } from '../../assets/icons/check_FILL0_wght400_GRAD0_opsz24 1.svg';
 
-const DateNavigateButton = () => {
+const DateNavigateModal = () => {
   return (
     <div className="col-span-full">
       <ModalBackgroundBox>
@@ -161,4 +161,4 @@ const ModalBackgroundBox = styled.div`
   background: rgba(72, 72, 72, 0.67);
 `;
 
-export default DateNavigateButton;
+export default DateNavigateModal;

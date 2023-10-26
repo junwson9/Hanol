@@ -3,89 +3,93 @@ import React from 'react';
 import styled from 'styled-components';
 
 interface Props {
-	Indicator: string;
+  Indicator: string;
+  title1: string;
+  title2: string;
 }
 
-const TopTab = ({ Indicator }: Props) => {
-	// const navigate = useNavigate();
+interface StyleProps {
+  Indicator: string;
+}
 
-	return (
-		<TopTabBox>
-			<LeftBox Indicator={Indicator}>
-				<div className="top_tab_title">간편 문진</div>
+const TopTab = ({ Indicator, title1, title2 }: Props) => {
+  // const navigate = useNavigate();
 
-				<UnderBar>{Indicator === 'one' && <ActiveBar />}</UnderBar>
-			</LeftBox>
+  return (
+    <TopTabBox>
+      <LeftBox Indicator={Indicator}>
+        <div className="top_tab_title">{title1}</div>
 
-			<RightBox Indicator={Indicator}>
-				<div className="top_tab_title">문진 결과 </div>
-				<UnderBar>{Indicator === 'two' && <ActiveBar />} </UnderBar>
-			</RightBox>
-		</TopTabBox>
-	);
+        <UnderBar>{Indicator === 'one' && <ActiveBar />}</UnderBar>
+      </LeftBox>
+
+      <RightBox Indicator={Indicator}>
+        <div className="top_tab_title">{title2} </div>
+        <UnderBar>{Indicator === 'two' && <ActiveBar />} </UnderBar>
+      </RightBox>
+    </TopTabBox>
+  );
 };
 
 const ActiveBar = styled.div`
-	width: 142px;
-	height: 2px;
-	flex-shrink: 0;
+  width: 142px;
+  height: 2px;
+  flex-shrink: 0;
 
-	border-radius: 1px;
-	background: #353d4a;
+  border-radius: 1px;
+  background: #353d4a;
 `;
 const UnderBar = styled.div`
-	display: flex;
-	justify-content: center;
+  display: flex;
+  justify-content: center;
 
-	width: 50%;
-	height: 1px;
-	background: #d1d5db;
+  width: 50%;
+  height: 1px;
+  background: #d1d5db;
 `;
 
-const RightBox = styled.div<Props>`
-	display: flex;
-	width: 50%;
-	padding-top: 12px;
-	flex-direction: column;
-	justify-content: flex-end;
-	align-items: center;
-	gap: 13px;
-	cursor: pointer;
-	.top_tab_title {
-		color: ${(props) =>
-			props.Indicator === 'two' ? '#353d4a !important' : '#6d7582'};
-	}
+const RightBox = styled.div<StyleProps>`
+  display: flex;
+  width: 50%;
+  padding-top: 12px;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 13px;
+  cursor: pointer;
+  .top_tab_title {
+    color: ${(props) => (props.Indicator === 'two' ? '#353d4a !important' : '#6d7582')};
+  }
 `;
-const LeftBox = styled.div<Props>`
-	display: flex;
-	width: 50%;
-	padding-top: 12px;
-	flex-direction: column;
-	justify-content: flex-end;
-	align-items: center;
-	gap: 13px;
-	cursor: pointer;
-	.top_tab_title {
-		color: ${(props) =>
-			props.Indicator === 'one' ? '#353d4a !important' : '#6d7582'};
-	}
+const LeftBox = styled.div<StyleProps>`
+  display: flex;
+  width: 50%;
+  padding-top: 12px;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 13px;
+  cursor: pointer;
+  .top_tab_title {
+    color: ${(props) => (props.Indicator === 'one' ? '#353d4a !important' : '#6d7582')};
+  }
 `;
 const TopTabBox = styled.div`
-	display: inline-flex;
-	align-items: flex-start;
-	width: 100%;
-	background: #fffeff;
+  display: inline-flex;
+  align-items: flex-start;
+  width: 100%;
+  background: #fffeff;
 
-	.top_tab_title {
-		color: #6d7582;
-		text-align: center;
-		font-family: Noto Sans KR;
-		font-size: 16px;
-		font-style: normal;
-		font-weight: 500;
-		line-height: 140%;
-		letter-spacing: 0.1px;
-	}
+  .top_tab_title {
+    color: #6d7582;
+    text-align: center;
+    font-family: Noto Sans KR;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 140%;
+    letter-spacing: 0.1px;
+  }
 `;
 
 export default TopTab;

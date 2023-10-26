@@ -1,77 +1,30 @@
 import React from 'react';
 import styled from 'styled-components';
-import { ReactComponent as HelpIcon } from '../../assets/icons/help_FILL0_wght400_GRAD0_opsz24 1.svg';
-import { ResponsiveRadar } from '@nivo/radar';
 
-const ScalpImageView = () => {
-  const data = [
-    {
-      category: '탈모',
+interface Props {
+  sub_title: string;
+  scalp_img: string;
+}
 
-      점수: 1,
-    },
-    {
-      category: '각질',
-
-      점수: 2,
-    },
-    {
-      category: '피지',
-
-      점수: 3,
-    },
-    {
-      category: '홍반',
-
-      점수: 4,
-    },
-    {
-      category: '비듬',
-
-      점수: 2,
-    },
-    {
-      category: '염증',
-
-      점수: 1,
-    },
-  ];
-
+const ScalpImageView = ({ sub_title, scalp_img }: Props) => {
   return (
     <div className="col-span-full">
-      <ScalpImageViewBox>
+      <ScalpViewBox>
         <TitleBox>
-          <div className="title">두피 건강점수</div>
-          <HelpIcon className="help_icon" />
+          <div className="title">두피 이미지</div>
+          <div className="sub_title">{sub_title}</div>
         </TitleBox>
-        <GraphBox>
-          <ResponsiveRadar
-            data={data}
-            keys={['점수']}
-            indexBy="category"
-            margin={{ top: 30, right: 30, bottom: 30, left: 30 }}
-            borderColor={{ from: 'color', modifiers: [] }}
-            gridLevels={4}
-            gridShape="linear"
-            gridLabelOffset={18}
-            dotSize={10}
-            dotColor={{ theme: 'background' }}
-            dotBorderWidth={2}
-            dotBorderColor={{ from: 'color', modifiers: [] }}
-            dotLabel="value"
-            dotLabelYOffset={-14}
-            colors={{ scheme: 'pastel1' }}
-            // motionConfig="wobbly"
-          />
-        </GraphBox>
-      </ScalpImageViewBox>
+        <ImgBox>
+          <img src={scalp_img} alt="두피 이미지가 들어갈 자리입니다." className="scalp_img" />
+        </ImgBox>
+      </ScalpViewBox>
     </div>
   );
 };
 
-const GraphBox = styled.div`
+const ImgBox = styled.div`
   width: 14.125rem;
-  height: 14.125rem;
+  /* width: 226px; */
   object-fit: cover;
   margin-top: 1.5rem;
   align-self: center;
@@ -85,7 +38,7 @@ const TitleBox = styled.div`
   display: flex;
   height: 1.125rem;
   justify-content: flex-start;
-  /* align-items: center; */
+  align-items: flex-end;
   flex-shrink: 0;
 
   .title {
@@ -98,15 +51,17 @@ const TitleBox = styled.div`
     letter-spacing: 0.2px;
   }
 
-  .help_icon {
-    margin-left: 0.3125rem;
-    align-self: flex-start;
-    // 추후 수정
-    margin-top: 1px;
-    cursor: pointer;
+  .sub_title {
+    color: var(--GrayForText, #888);
+    font-family: Noto Sans KR;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 12px;
+    letter-spacing: 0.4px;
+    margin-left: 0.625rem;
   }
 `;
-const ScalpImageViewBox = styled.div`
+const ScalpViewBox = styled.div`
   display: flex;
   flex-direction: column;
 `;
