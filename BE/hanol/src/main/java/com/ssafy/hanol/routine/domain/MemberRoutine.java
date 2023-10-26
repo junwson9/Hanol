@@ -12,6 +12,10 @@ import java.time.LocalTime;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(
+        name = "member_routine",
+        uniqueConstraints = @UniqueConstraint(columnNames = {"member_id", "routine_id"})
+)
 public class MemberRoutine {
 
     @Id

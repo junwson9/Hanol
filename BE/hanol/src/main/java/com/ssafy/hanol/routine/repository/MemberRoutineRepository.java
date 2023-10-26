@@ -12,5 +12,5 @@ public interface MemberRoutineRepository {
     void save(MemberRoutine memberRoutine);
     void saveAll(List<MemberRoutine> memberRoutines);
     void deleteByMemberIdAndRoutineId(Long memberId, Long routineId);
-
+    void deleteByMemberIdAndRoutineId(Long memberId, List<Long> removedRoutineIds);
 }
