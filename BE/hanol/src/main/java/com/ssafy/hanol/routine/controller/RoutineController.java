@@ -1,14 +1,15 @@
 package com.ssafy.hanol.routine.controller;
 
 import com.ssafy.hanol.common.response.ResponseFactory;
-import com.ssafy.hanol.global.config.auth.AuthMember;
-import com.ssafy.hanol.global.config.auth.AuthenticatedMember;
+import com.ssafy.hanol.routine.controller.dto.request.RoutineAchievementStatusApiRequest;
 import com.ssafy.hanol.routine.controller.dto.request.RoutineListModifyApiRequest;
 import com.ssafy.hanol.routine.controller.dto.response.RoutineAchievementRatesApiResponse;
+import com.ssafy.hanol.routine.controller.dto.response.RoutineAchievementStatusApiResponse;
 import com.ssafy.hanol.routine.controller.dto.response.RoutineListApiResponse;
 import com.ssafy.hanol.routine.controller.dto.response.RoutineLogListApiResponse;
 import com.ssafy.hanol.routine.service.RoutineService;
 import com.ssafy.hanol.routine.service.dto.response.RoutineAchievementRatesResponse;
+import com.ssafy.hanol.routine.service.dto.response.RoutineAchievementStatusResponse;
 import com.ssafy.hanol.routine.service.dto.response.RoutineLogListResponse;
 import com.ssafy.hanol.routine.service.dto.response.RoutineListResponse;
 import lombok.RequiredArgsConstructor;
@@ -50,6 +51,14 @@ public class RoutineController {
         RoutineAchievementRatesResponse result = routineService.findRoutineAchievementRates(LocalDate.parse(date));
         return ResponseFactory.success("해당 주의 일별 루틴 달성률 조회 성공", RoutineAchievementRatesApiResponse.from(result));
     }
+
+    @PatchMapping("/{memberRoutineLogId}/achievement")
+    public ResponseEntity<?> routineAchievementStatusModify(@PathVariable Long memberRoutineLogId,
+                                                            @Validated @RequestBody RoutineAchievementStatusApiRequest request) {
+        RoutineAchievementStatusResponse result = routineService.modifyRoutineAchievementStatus(memberRoutineLogId, request.toApplicationDto());
+        return ResponseFactory.success("루틴 달성 여부 변경 완료", RoutineAchievementStatusApiResponse.from(result));
+    }
+
 
 
 }

@@ -25,6 +25,11 @@ public class MemberRoutineRepositoryImpl implements MemberRoutineRepository {
     }
 
     @Override
+    public Optional<MemberRoutine> findByMemberIdAndRoutineId(Long memberId, Long routineId) {
+        return jpaMemberRoutineRepository.findByMemberIdAndRoutineId(memberId, routineId);
+    }
+
+    @Override
     public void save(MemberRoutine memberRoutine) {
         jpaMemberRoutineRepository.save(memberRoutine);
     }

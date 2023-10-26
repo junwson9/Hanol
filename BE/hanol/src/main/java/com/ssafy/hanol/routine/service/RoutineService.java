@@ -10,8 +10,10 @@ import com.ssafy.hanol.routine.domain.Routine;
 import com.ssafy.hanol.routine.repository.MemberRoutineLogRepository;
 import com.ssafy.hanol.routine.repository.MemberRoutineRepository;
 import com.ssafy.hanol.routine.repository.RoutineRepository;
+import com.ssafy.hanol.routine.service.dto.request.RoutineAchievementStatusRequest;
 import com.ssafy.hanol.routine.service.dto.request.RoutineListModifyRequest;
 import com.ssafy.hanol.routine.service.dto.response.RoutineAchievementRatesResponse;
+import com.ssafy.hanol.routine.service.dto.response.RoutineAchievementStatusResponse;
 import com.ssafy.hanol.routine.service.dto.response.RoutineLogListResponse;
 import com.ssafy.hanol.routine.service.dto.response.RoutineListResponse;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +26,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -127,6 +130,8 @@ public class RoutineService {
         // 임시 데이터
         Long memberId = 1L;
 
+        // TODO 예외 처리: 스케쥴링 작업 중인 경우
+
         List<RoutineLogInfo> routineLogInfos = memberRoutineLogRepository.selectRoutineLogsByMemberIdAndDate(memberId, date);
         log.info("특정일의 루틴 이력 조회, {}", routineLogInfos);
 
@@ -141,6 +146,8 @@ public class RoutineService {
         // 임시 데이터
         Long memberId = 1L;
 
+        // TODO 예외 처리: 스케쥴링 작업 중인 경우
+
         // 주차의 시작(월요일)과 끝(일요일) 날짜 계산
         LocalDate startOfWeek = date.with(DayOfWeek.MONDAY);
         LocalDate endOfWeek = date.with(DayOfWeek.SUNDAY);
@@ -152,5 +159,39 @@ public class RoutineService {
                 .achievementRates(achievementRates)
                 .build();
     }
+    
+    
+    // 루틴 달성여부 변경
+    public RoutineAchievementStatusResponse modifyRoutineAchievementStatus(Long memberRoutineLogId,
+                                                                           RoutineAchievementStatusRequest request) {
+        // 임시 데이터
+        Long memberId = 1L;
 
+        // TODO 예외 처리: 스케쥴링 작업 중인 경우, 존재하지 않는 루틴
+
+        MemberRoutineLog routineLog = memberRoutineLogRepository.findById(memberRoutineLogId).orElseThrow();
+        if(!routineLog.getMember().getId().equals(memberId)) {
+            // TODO 예외 처리: 본인이 아님
+            log.info("수정 권한이 없습니다");
+        }
+
+        // 달성여부 변경
+        routineLog.updateDoneStatus(request.getIsDone());
+        MemberRoutineLog memberRoutineLog = memberRoutineLogRepository.save(routineLog);
+        // TODO 삭제된 루틴은 알림 정보 포함 안되게 처리
+        // 알림 정보가 포함된 RoutineLogInfo 만들기
+        MemberRoutine memberRoutine = memberRoutineRepository.findByMemberIdAndRoutineId(memberId, memberRoutineLog.getRoutine().getId()).orElseThrow();
+        RoutineLogInfo updatedRoutineLog = RoutineLogInfo.from(memberRoutineLog, memberRoutine);
+
+        // 해당일의 달성율 재계산
+        LocalDate targetDate = LocalDate.now();
+        log.info("startDate: {}, endDate: {}", targetDate, targetDate);
+        Map<LocalDate, Double> achievementRates = memberRoutineLogRepository.computeAchievementRates(memberId, targetDate, targetDate);
+        log.info("achievementRates: {}", achievementRates);
+
+        return RoutineAchievementStatusResponse.builder()
+                .updatedRoutineLog(updatedRoutineLog)
+                .achievementRates(achievementRates)
+                .build();
+    }
 }
