@@ -8,11 +8,14 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(
+        name = "member_routine_log",
+        uniqueConstraints = @UniqueConstraint(columnNames = {"member_id", "routine_id", "date"})
+)
 public class MemberRoutineLog {
 
     @Id
