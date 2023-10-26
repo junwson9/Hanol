@@ -20,7 +20,7 @@ function SignupBirth() {
   return (
     <div className="col-span-full h-screen flex flex-col justify-between">
       <div>
-        <TapBarDepth2 name={'회원가입'} onClick={handleCloseClick} />
+        <TapBarDepth2 name={'회원가입'} onClick={handleCloseClick} propsIsBack={true} />
         <div className="flex">
           <div className="h-[0.188rem] w-[33%] bg-Main absolute left-0"></div>
           <div className="h-[0.188rem] w-[67%] bg-Gray absolute left-[33%]"></div>
