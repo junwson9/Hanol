@@ -8,14 +8,11 @@ import Home from 'pages/home';
 import SetRoutine from 'pages/routine/setRoutine';
 import NavBar from 'components/common/NavBar';
 import ExplainRoutine from 'pages/routine/explainRoutine';
+import Routine from 'pages/routine/routine';
 
 function App() {
   const location = useLocation();
-<<<<<<< HEAD
   const showNavBarPaths = ['/set-routine', '/examination', '/routine', '/', '/myreport', '/about', '/explain-routine'];
-=======
-  const showNavBarPaths = ['/examination', '/routine', '/', '/myreport', '/about'];
->>>>>>> develop
   const shouldShowNavBar = showNavBarPaths.includes(location.pathname);
   return (
     <div className="App">
@@ -29,7 +26,7 @@ function App() {
             <Route path="/signup-gender" element={<SignupGender />} />
             <Route path="/myreport" element={<Home />} />
             <Route path="/examination" element={<Home />} />
-            <Route path="/routine" element={<Home />} />
+            <Route path="/routine" element={<Routine />} />
             <Route path="/about" element={<Home />} />
             <Route path="/login-error" element={<LoginError />} />
             <Route path="/explain-routine" element={<ExplainRoutine />} />

@@ -3,9 +3,14 @@ import { useState } from 'react';
 import { ReactComponent as Check } from 'assets/icons/check.svg';
 import FloatingButton from 'components/button/FloatingButton';
 import SettingDone from 'components/routine/SettingDone';
+import { useNavigate } from 'react-router';
 
 function SetRoutine() {
   const [settingDone, setSettingDone] = useState<boolean>(false);
+  const navigate = useNavigate();
+  const handleClick = () => {
+    navigate('/routine');
+  };
   return (
     <>
       {!settingDone ? (
@@ -65,7 +70,7 @@ function SetRoutine() {
             </div>
           </div>
           <div className="sticky col-start-1 col-end-7 mt-60 bottom-5" onClick={() => setSettingDone(true)}>
-            <FloatingButton name="루틴 설정하기" />
+            <FloatingButton name="루틴 설정하기" onClick={handleClick} />
           </div>
         </>
       ) : (
