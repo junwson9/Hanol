@@ -1,10 +1,14 @@
 package com.ssafy.hanol.routine.controller;
 
 import com.ssafy.hanol.common.response.ResponseFactory;
+import com.ssafy.hanol.global.config.auth.AuthMember;
+import com.ssafy.hanol.global.config.auth.AuthenticatedMember;
 import com.ssafy.hanol.routine.controller.dto.request.RoutineListModifyApiRequest;
+import com.ssafy.hanol.routine.controller.dto.response.RoutineAchievementRatesApiResponse;
 import com.ssafy.hanol.routine.controller.dto.response.RoutineListApiResponse;
 import com.ssafy.hanol.routine.controller.dto.response.RoutineLogListApiResponse;
 import com.ssafy.hanol.routine.service.RoutineService;
+import com.ssafy.hanol.routine.service.dto.response.RoutineAchievementRatesResponse;
 import com.ssafy.hanol.routine.service.dto.response.RoutineLogListResponse;
 import com.ssafy.hanol.routine.service.dto.response.RoutineListResponse;
 import lombok.RequiredArgsConstructor;
@@ -37,9 +41,14 @@ public class RoutineController {
 
     @GetMapping("/daily-routines")
     public ResponseEntity<?> dailyRoutineLogList(@RequestParam(value = "date") String date) {
-        log.info("특정일의 루틴 이력 조회: {}", date);
         RoutineLogListResponse result = routineService.findMemberRoutineLogByDate(LocalDate.parse(date));
-        return ResponseFactory.success("루틴 이력 리스트 조회 성공", RoutineLogListApiResponse.from(result));
+        return ResponseFactory.success("특정일의 루틴 이력 리스트 조회 성공", RoutineLogListApiResponse.from(result));
+    }
+
+    @GetMapping("/weekly-achievement")
+    public ResponseEntity<?> routineAchievementRates(@RequestParam(value = "date") String date) {
+        RoutineAchievementRatesResponse result = routineService.findRoutineAchievementRates(LocalDate.parse(date));
+        return ResponseFactory.success("해당 주의 일별 루틴 달성률 조회 성공", RoutineAchievementRatesApiResponse.from(result));
     }
 
 

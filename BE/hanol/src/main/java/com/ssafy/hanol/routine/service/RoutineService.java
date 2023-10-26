@@ -5,11 +5,13 @@ import com.ssafy.hanol.diagnosis.repository.DiagnosisRepository;
 import com.ssafy.hanol.member.domain.Member;
 import com.ssafy.hanol.member.repository.MemberRepository;
 import com.ssafy.hanol.routine.domain.MemberRoutine;
+import com.ssafy.hanol.routine.domain.MemberRoutineLog;
 import com.ssafy.hanol.routine.domain.Routine;
 import com.ssafy.hanol.routine.repository.MemberRoutineLogRepository;
 import com.ssafy.hanol.routine.repository.MemberRoutineRepository;
 import com.ssafy.hanol.routine.repository.RoutineRepository;
 import com.ssafy.hanol.routine.service.dto.request.RoutineListModifyRequest;
+import com.ssafy.hanol.routine.service.dto.response.RoutineAchievementRatesResponse;
 import com.ssafy.hanol.routine.service.dto.response.RoutineLogListResponse;
 import com.ssafy.hanol.routine.service.dto.response.RoutineListResponse;
 import lombok.RequiredArgsConstructor;
@@ -17,9 +19,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -120,6 +124,7 @@ public class RoutineService {
 
     // 날짜별 루틴 이력 리스트 조회
     public RoutineLogListResponse findMemberRoutineLogByDate(LocalDate date) {
+        // 임시 데이터
         Long memberId = 1L;
 
         List<RoutineLogInfo> routineLogInfos = memberRoutineLogRepository.selectRoutineLogsByMemberIdAndDate(memberId, date);
@@ -129,4 +134,23 @@ public class RoutineService {
                 .dailyRoutines(routineLogInfos)
                 .build();
     }
+
+
+    // 특정일이 포함된 주의 일별 루틴 달성률 조회
+    public RoutineAchievementRatesResponse findRoutineAchievementRates(LocalDate date) {
+        // 임시 데이터
+        Long memberId = 1L;
+
+        // 주차의 시작(월요일)과 끝(일요일) 날짜 계산
+        LocalDate startOfWeek = date.with(DayOfWeek.MONDAY);
+        LocalDate endOfWeek = date.with(DayOfWeek.SUNDAY);
+        endOfWeek = endOfWeek.isAfter(LocalDate.now()) ? LocalDate.now() : endOfWeek;
+        log.info("startDate: {}, endDate: {}", startOfWeek, endOfWeek);
+
+        Map<LocalDate, Double> achievementRates = memberRoutineLogRepository.computeAchievementRates(memberId, startOfWeek, endOfWeek);
+        return RoutineAchievementRatesResponse.builder()
+                .achievementRates(achievementRates)
+                .build();
+    }
+
 }
