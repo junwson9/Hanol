@@ -6,7 +6,7 @@ interface Props {
   scalp_img: string;
 }
 
-const ScalpView = ({ sub_title, scalp_img }: Props) => {
+const ScalpScaleView = ({ sub_title, scalp_img }: Props) => {
   return (
     <div className="col-span-full">
       <ScalpViewBox>
@@ -66,4 +66,4 @@ const ScalpViewBox = styled.div`
   flex-direction: column;
 `;
 
-export default ScalpView;
+export default ScalpScaleView;
