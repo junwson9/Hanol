@@ -10,6 +10,7 @@ import NavBar from 'components/common/NavBar';
 import ExplainRoutine from 'pages/routine/explainRoutine';
 import ExplainDiagnose from 'pages/diagnose/explainDiagnose';
 import SelectDevice from 'pages/diagnose/selectDevice';
+import Test from 'components/diagnosisResultPage/RecommendCareRoutine';
 
 function App() {
   const location = useLocation();
@@ -33,6 +34,7 @@ function App() {
             <Route path="/login-error" element={<LoginError />} />
             <Route path="/explain-routine" element={<ExplainRoutine />} />
             <Route path="/select-device" element={<SelectDevice />} />
+            <Route path="/test" element={<Test />} />
           </Routes>
         </div>
       </div>
