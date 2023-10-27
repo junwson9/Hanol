@@ -14,10 +14,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Repository
@@ -97,7 +94,7 @@ public class QueryDslMemberRoutineLogRepository {
 
         QMemberRoutineLog memberRoutineLog = QMemberRoutineLog.memberRoutineLog;
 
-        Map<LocalDate, Double> achievementRates = new HashMap<>();
+        Map<LocalDate, Double> achievementRates = new LinkedHashMap<>();
 
         // 달성한 루틴 개수 조회
         List<Tuple> doneRoutinesCounts = jpaQueryFactory

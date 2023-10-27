@@ -26,7 +26,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -141,20 +140,15 @@ public class RoutineService {
     }
 
 
-    // 특정일이 포함된 주의 일별 루틴 달성률 조회
-    public RoutineAchievementRatesResponse findRoutineAchievementRates(LocalDate date) {
+    // 기간 내 일별 루틴 달성률 조회
+    public RoutineAchievementRatesResponse findRoutineAchievementRates(LocalDate startDate, LocalDate endDate) {
         // 임시 데이터
         Long memberId = 1L;
 
         // TODO 예외 처리: 스케쥴링 작업 중인 경우
 
-        // 주차의 시작(월요일)과 끝(일요일) 날짜 계산
-        LocalDate startOfWeek = date.with(DayOfWeek.MONDAY);
-        LocalDate endOfWeek = date.with(DayOfWeek.SUNDAY);
-        endOfWeek = endOfWeek.isAfter(LocalDate.now()) ? LocalDate.now() : endOfWeek;
-        log.info("startDate: {}, endDate: {}", startOfWeek, endOfWeek);
-
-        Map<LocalDate, Double> achievementRates = memberRoutineLogRepository.computeAchievementRates(memberId, startOfWeek, endOfWeek);
+        log.info("startDate: {}, endDate: {}", startDate, endDate);
+        Map<LocalDate, Double> achievementRates = memberRoutineLogRepository.computeAchievementRates(memberId, startDate, endDate);
         return RoutineAchievementRatesResponse.builder()
                 .achievementRates(achievementRates)
                 .build();
