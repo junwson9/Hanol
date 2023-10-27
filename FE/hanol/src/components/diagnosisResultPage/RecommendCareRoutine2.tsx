@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import illust from '../../assets/images/image35.jpg';
 
-const RecommendCareRoutine = () => {
+const RecommendCareRoutine2 = () => {
   return (
     <div className="col-span-full">
       <RecMentBox>
@@ -51,4 +51,4 @@ const RecMentBox = styled.div`
     margin-top: 4.625rem;
   }
 `;
-export default RecommendCareRoutine;
+export default RecommendCareRoutine2;

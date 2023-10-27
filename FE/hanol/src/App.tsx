@@ -10,7 +10,8 @@ import NavBar from 'components/common/NavBar';
 import ExplainRoutine from 'pages/routine/explainRoutine';
 import ExplainDiagnose from 'pages/diagnose/explainDiagnose';
 import SelectDevice from 'pages/diagnose/selectDevice';
-import Test from 'components/diagnosisResultPage/RecommendCareRoutine';
+import Test from 'components/diagnosisResultPage/RecommendCareRoutine2';
+import Test111 from 'components/diagnosisResultPage/AlopeciaDiagnosis';
 
 function App() {
   const location = useLocation();
@@ -35,6 +36,7 @@ function App() {
             <Route path="/explain-routine" element={<ExplainRoutine />} />
             <Route path="/select-device" element={<SelectDevice />} />
             <Route path="/test" element={<Test />} />
+            <Route path="/test111" element={<Test111 valuenumber={3} />} />
           </Routes>
         </div>
       </div>
