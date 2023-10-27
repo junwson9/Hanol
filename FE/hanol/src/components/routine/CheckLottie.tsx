@@ -17,7 +17,7 @@ const LottieFrame = styled.div`
 function CheckLottie() {
   return (
     <LottieFrame>
-      <Lottie className="lottie" animationData={checkLottie} height={200} width={200} loop={false} />
+      <Lottie className="lottie" animationData={checkLottie} height={80} width={80} loop={false} />
     </LottieFrame>
   );
 }
