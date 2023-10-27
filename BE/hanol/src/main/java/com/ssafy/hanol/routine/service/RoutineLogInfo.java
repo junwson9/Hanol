@@ -45,14 +45,25 @@ public class RoutineLogInfo {
 
 
     public static RoutineLogInfo from(MemberRoutineLog memberRoutineLog, MemberRoutine memberRoutine) {
-        return new RoutineLogInfo(memberRoutineLog.getId(),
-                memberRoutineLog.getRoutine().getId(),
-                memberRoutineLog.getRoutine().getRoutineName(),
-                memberRoutineLog.getDate(),
-                memberRoutineLog.getIsDone(),
-                memberRoutine.getIsNotificationActive(),
-                memberRoutine.getNotificationTime()
-                );
+        if(memberRoutine == null) {
+            return new RoutineLogInfo(
+                    memberRoutineLog.getId(),
+                    memberRoutineLog.getRoutine().getId(),
+                    memberRoutineLog.getRoutine().getRoutineName(),
+                    memberRoutineLog.getDate(),
+                    memberRoutineLog.getIsDone()
+            );
+        } else {
+            return new RoutineLogInfo(
+                    memberRoutineLog.getId(),
+                    memberRoutineLog.getRoutine().getId(),
+                    memberRoutineLog.getRoutine().getRoutineName(),
+                    memberRoutineLog.getDate(),
+                    memberRoutineLog.getIsDone(),
+                    memberRoutine.getIsNotificationActive(),
+                    memberRoutine.getNotificationTime()
+            );
+        }
     }
 
 }

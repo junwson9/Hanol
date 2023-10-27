@@ -177,14 +177,18 @@ public class RoutineService {
 
         // 달성여부 변경
         routineLog.updateDoneStatus(request.getIsDone());
-        MemberRoutineLog memberRoutineLog = memberRoutineLogRepository.save(routineLog);
-        // TODO 삭제된 루틴은 알림 정보 포함 안되게 처리
-        // 알림 정보가 포함된 RoutineLogInfo 만들기
-        MemberRoutine memberRoutine = memberRoutineRepository.findByMemberIdAndRoutineId(memberId, memberRoutineLog.getRoutine().getId()).orElseThrow();
-        RoutineLogInfo updatedRoutineLog = RoutineLogInfo.from(memberRoutineLog, memberRoutine);
+        memberRoutineLogRepository.save(routineLog);
+
+        // 알림 정보가 담긴 RoutineLogInfo 객체 생성
+        LocalDate targetDate = routineLog.getDate();
+        MemberRoutine memberRoutine = null;
+        // 당일인 경우에만 알림 정보 포함
+        if(routineLog.getDate().isEqual(LocalDate.now())) {
+            memberRoutine = memberRoutineRepository.findByMemberIdAndRoutineId(memberId, routineLog.getRoutine().getId()).orElseThrow();
+        }
+        RoutineLogInfo updatedRoutineLog = RoutineLogInfo.from(routineLog, memberRoutine);
 
         // 해당일의 달성율 재계산
-        LocalDate targetDate = LocalDate.now();
         log.info("startDate: {}, endDate: {}", targetDate, targetDate);
         Map<LocalDate, Double> achievementRates = memberRoutineLogRepository.computeAchievementRates(memberId, targetDate, targetDate);
         log.info("achievementRates: {}", achievementRates);
