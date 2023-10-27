@@ -95,12 +95,12 @@ function SetRoutine() {
             </div>
           </div>
           {pageHeight ? (
-            <div className="col-span-full sticky mt-10 bottom-5" onClick={() => setSettingDone(true)}>
-              <FloatingButton name="루틴 설정하기" />
+            <div className="col-span-full sticky mt-10 bottom-5">
+              <FloatingButton name="루틴 설정하기" onClick={() => setSettingDone(true)} />
             </div>
           ) : (
-            <div className="absolute w-[100%] bottom-5" onClick={() => setSettingDone(true)}>
-              <FloatingButton name="루틴 설정하기" />
+            <div className="absolute w-[100%] bottom-5">
+              <FloatingButton name="루틴 설정하기" onClick={() => setSettingDone(true)} />
             </div>
           )}
         </div>
