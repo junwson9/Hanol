@@ -34,12 +34,11 @@ function App() {
             <Route path="/login-error" element={<LoginError />} />
             <Route path="/explain-routine" element={<ExplainRoutine />} />
             <Route path="/select-device" element={<SelectDevice />} />
+            <Route path="/streaming" element={<Streaming />} />
           </Routes>
         </div>
         <div>
-          <Routes>
-            <Route path="/streaming" element={<Streaming />} />
-          </Routes>
+          <Routes></Routes>
         </div>
       </div>
       {shouldShowNavBar && <NavBar />}

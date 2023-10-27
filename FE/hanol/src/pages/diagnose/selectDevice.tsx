@@ -11,16 +11,20 @@ function SelectDevice() {
   };
   const navigate = useNavigate();
   const handleNavigate = () => {
-    navigate('/diagnose');
+    if (selectedButton === 1) {
+      navigate('/streaming');
+    } else if (selectedButton === 0) {
+      navigate('/IoTstreaming');
+    }
   };
   return (
     <div className="col-span-full relative h-screen">
       <TopBarDepth2
         name="진단하기"
         onClick={() => {
-          handleNavigate();
+          navigate('/diagnose');
         }}
-        propsIsBack={true}
+        propsIsBack={false}
       />
       <p className="text-lg  text-left font-bold mt-12 text-center">촬영 기기를 선택해 주세요.</p>
       <div className="flex justify-center mt-6 gap-6">
@@ -75,7 +79,7 @@ function SelectDevice() {
         </>
       )}
       <div className="absolute w-[100%] bottom-5">
-        <StartButton name="선택 완료" onClick={() => navigate('/streaming')} />
+        <StartButton name="선택 완료" onClick={() => handleNavigate()} />
       </div>
     </div>
   );
