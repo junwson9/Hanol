@@ -1,7 +1,9 @@
 import { ReactComponent as DiagnoseExplain } from 'assets/images/diagnoseExplain.svg';
 import FloatingButton from 'components/button/FloatingButton';
+import { useNavigate } from 'react-router-dom';
 
 function ExplainDiagnose() {
+  const navigate = useNavigate();
   return (
     <div className="col-span-full">
       <p className="text-lg  text-left font-bold mt-20">
@@ -20,7 +22,7 @@ function ExplainDiagnose() {
       </p>
       <div className="bg-GrayForTab h-[300px] mt-10">그래프가 들어갑니다.</div>
       <div className="sticky mt-10 bottom-5">
-        <FloatingButton name="시작하기" />
+        <FloatingButton name="시작하기" onClick={() => navigate('/select-device')} />
       </div>
     </div>
   );
