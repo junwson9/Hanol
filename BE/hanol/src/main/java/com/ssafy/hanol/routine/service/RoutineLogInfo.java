@@ -20,17 +20,19 @@ public class RoutineLogInfo {
     private String routineName;
     private LocalDate date;
     private Boolean isDone;
+    private Long memberRoutineId;
     private Boolean isNotificationActive;
     private LocalTime notificationTime;
 
 
     // QueryDsl 조회를 위한 생성자
-    public RoutineLogInfo(Long memberRoutineLogId, Long routineId, String routineName, LocalDate date, Boolean isDone, Boolean isNotificationActive, LocalTime notificationTime) {
+    public RoutineLogInfo(Long memberRoutineLogId, Long routineId, String routineName, LocalDate date, Boolean isDone, Long memberRoutineId, Boolean isNotificationActive, LocalTime notificationTime) {
         this.memberRoutineLogId = memberRoutineLogId;
         this.routineId = routineId;
         this.routineName = routineName;
         this.date = date;
         this.isDone = isDone;
+        this.memberRoutineId = memberRoutineId;
         this.isNotificationActive = isNotificationActive;
         this.notificationTime = notificationTime;
     }
@@ -60,6 +62,7 @@ public class RoutineLogInfo {
                     memberRoutineLog.getRoutine().getRoutineName(),
                     memberRoutineLog.getDate(),
                     memberRoutineLog.getIsDone(),
+                    memberRoutine.getId(),
                     memberRoutine.getIsNotificationActive(),
                     memberRoutine.getNotificationTime()
             );

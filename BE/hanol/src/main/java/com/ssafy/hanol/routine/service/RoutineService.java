@@ -4,6 +4,7 @@ import com.ssafy.hanol.diagnosis.domain.Diagnosis;
 import com.ssafy.hanol.diagnosis.repository.DiagnosisRepository;
 import com.ssafy.hanol.member.domain.Member;
 import com.ssafy.hanol.member.repository.MemberRepository;
+import com.ssafy.hanol.routine.controller.dto.request.RoutineNotificationModifyApiRequest;
 import com.ssafy.hanol.routine.domain.MemberRoutine;
 import com.ssafy.hanol.routine.domain.MemberRoutineLog;
 import com.ssafy.hanol.routine.domain.Routine;
@@ -12,10 +13,8 @@ import com.ssafy.hanol.routine.repository.MemberRoutineRepository;
 import com.ssafy.hanol.routine.repository.RoutineRepository;
 import com.ssafy.hanol.routine.service.dto.request.RoutineAchievementStatusRequest;
 import com.ssafy.hanol.routine.service.dto.request.RoutineListModifyRequest;
-import com.ssafy.hanol.routine.service.dto.response.RoutineAchievementRatesResponse;
-import com.ssafy.hanol.routine.service.dto.response.RoutineAchievementStatusResponse;
-import com.ssafy.hanol.routine.service.dto.response.RoutineLogListResponse;
-import com.ssafy.hanol.routine.service.dto.response.RoutineListResponse;
+import com.ssafy.hanol.routine.service.dto.request.RoutineNotificationModifyRequest;
+import com.ssafy.hanol.routine.service.dto.response.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -171,25 +170,42 @@ public class RoutineService {
 
         // 달성여부 변경
         routineLog.updateDoneStatus(request.getIsDone());
-        memberRoutineLogRepository.save(routineLog);
 
         // 알림 정보가 담긴 RoutineLogInfo 객체 생성
         LocalDate targetDate = routineLog.getDate();
         MemberRoutine memberRoutine = null;
         // 당일인 경우에만 알림 정보 포함
-        if(routineLog.getDate().isEqual(LocalDate.now())) {
+        if(targetDate.isEqual(LocalDate.now())) {
             memberRoutine = memberRoutineRepository.findByMemberIdAndRoutineId(memberId, routineLog.getRoutine().getId()).orElseThrow();
         }
         RoutineLogInfo updatedRoutineLog = RoutineLogInfo.from(routineLog, memberRoutine);
 
         // 해당일의 달성율 재계산
-        log.info("startDate: {}, endDate: {}", targetDate, targetDate);
         Map<LocalDate, Double> achievementRates = memberRoutineLogRepository.computeAchievementRates(memberId, targetDate, targetDate);
-        log.info("achievementRates: {}", achievementRates);
 
         return RoutineAchievementStatusResponse.builder()
                 .updatedRoutineLog(updatedRoutineLog)
                 .achievementRates(achievementRates)
+                .build();
+    }
+
+    public RoutineNotificationModifyResponse modifyRoutineNotification(Long memberRoutineId, RoutineNotificationModifyRequest request) {
+
+        // 임시 데이터
+        Long memberId = 1L;
+
+        // TODO 예외 처리: 존재하지 않는 루틴
+        MemberRoutine memberRoutine = memberRoutineRepository.findById(memberRoutineId).orElseThrow();
+        if(!memberRoutine.getMember().getId().equals(memberId)) {
+            // TODO 예외 처리: 권한 없음
+            log.info("수정 권한이 없습니다");
+        }
+        memberRoutine.updateNotification(request.getIsNotificationActive(), request.getNotificationTime());
+
+        return RoutineNotificationModifyResponse.builder()
+                .memberRoutineId(memberRoutineId)
+                .isNotificationActive(memberRoutine.getIsNotificationActive())
+                .notificationTime(memberRoutine.getNotificationTime())
                 .build();
     }
 }

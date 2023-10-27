@@ -64,6 +64,7 @@ public class QueryDslMemberRoutineLogRepository {
                             routine.routineName,
                             memberRoutineLog.date,
                             memberRoutineLog.isDone,
+                            memberRoutine.id,
                             memberRoutine.isNotificationActive,
                             memberRoutine.notificationTime))
                     .from(memberRoutineLog)

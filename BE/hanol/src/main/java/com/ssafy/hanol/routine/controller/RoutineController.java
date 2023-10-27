@@ -3,15 +3,10 @@ package com.ssafy.hanol.routine.controller;
 import com.ssafy.hanol.common.response.ResponseFactory;
 import com.ssafy.hanol.routine.controller.dto.request.RoutineAchievementStatusApiRequest;
 import com.ssafy.hanol.routine.controller.dto.request.RoutineListModifyApiRequest;
-import com.ssafy.hanol.routine.controller.dto.response.RoutineAchievementRatesApiResponse;
-import com.ssafy.hanol.routine.controller.dto.response.RoutineAchievementStatusApiResponse;
-import com.ssafy.hanol.routine.controller.dto.response.RoutineListApiResponse;
-import com.ssafy.hanol.routine.controller.dto.response.RoutineLogListApiResponse;
+import com.ssafy.hanol.routine.controller.dto.request.RoutineNotificationModifyApiRequest;
+import com.ssafy.hanol.routine.controller.dto.response.*;
 import com.ssafy.hanol.routine.service.RoutineService;
-import com.ssafy.hanol.routine.service.dto.response.RoutineAchievementRatesResponse;
-import com.ssafy.hanol.routine.service.dto.response.RoutineAchievementStatusResponse;
-import com.ssafy.hanol.routine.service.dto.response.RoutineLogListResponse;
-import com.ssafy.hanol.routine.service.dto.response.RoutineListResponse;
+import com.ssafy.hanol.routine.service.dto.response.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -60,6 +55,11 @@ public class RoutineController {
         return ResponseFactory.success("루틴 달성 여부 변경 완료", RoutineAchievementStatusApiResponse.from(result));
     }
 
-
+    @PatchMapping("/{memberRoutineId}/notification")
+    public ResponseEntity<?> routineNotificationModify(@PathVariable Long memberRoutineId,
+                                                       @Validated @RequestBody RoutineNotificationModifyApiRequest request) {
+        RoutineNotificationModifyResponse result = routineService.modifyRoutineNotification(memberRoutineId, request.toApplicationDto());
+        return ResponseFactory.success("루틴 알림 설정 변경 완료", RoutineNotificationModifyApiResponse.from(result));
+    }
 
 }
