@@ -8,7 +8,7 @@ interface Props {
   diagnosisContent: string;
 }
 
-const DiagnosisDetail = ({ diagnosisTitle, diagnosisContent }: Props) => {
+const DiagnosisDetailToggle = ({ diagnosisTitle, diagnosisContent }: Props) => {
   const [isToggleOpen, SetToggleOpen] = useState(false);
 
   const handleToggle = () => {
@@ -103,4 +103,4 @@ const DiagnosisDetailBox = styled.div`
 
   padding: 1.25rem 0.938rem;
 `;
-export default DiagnosisDetail;
+export default DiagnosisDetailToggle;
