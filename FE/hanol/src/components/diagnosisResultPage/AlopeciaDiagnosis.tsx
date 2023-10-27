@@ -31,7 +31,6 @@ const DiagnosisBox = styled.div`
 
   .diagnosis {
     color: var(--Black, #252321);
-
     font-family: Noto Sans KR;
     font-size: 18px;
     font-weight: 700;
