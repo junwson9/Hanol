@@ -9,6 +9,7 @@ import SetRoutine from 'pages/routine/setRoutine';
 import NavBar from 'components/common/NavBar';
 import ExplainRoutine from 'pages/routine/explainRoutine';
 import Routine from 'pages/routine/routine';
+import About from 'pages/about/about';
 
 function App() {
   const location = useLocation();
@@ -27,7 +28,7 @@ function App() {
             <Route path="/myreport" element={<Home />} />
             <Route path="/examination" element={<Home />} />
             <Route path="/routine" element={<Routine />} />
-            <Route path="/about" element={<Home />} />
+            <Route path="/about" element={<About />} />
             <Route path="/login-error" element={<LoginError />} />
             <Route path="/explain-routine" element={<ExplainRoutine />} />
           </Routes>

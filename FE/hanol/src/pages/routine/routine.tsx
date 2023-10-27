@@ -3,20 +3,40 @@ import TapBar from 'components/common/TopBar';
 import { useNavigate } from 'react-router';
 import { useState } from 'react';
 import { ReactComponent as Error } from 'assets/icons/error.svg';
-import { ReactComponent as ArrowLeft } from 'assets/icons/arrow_left.svg';
-import { ReactComponent as ArrowRight } from 'assets/icons/arrow_right.svg';
 import DateBox from 'components/routine/DateBox';
+import { ReactComponent as ArrorLeft } from 'assets/icons/arrow_left.svg';
+import { ReactComponent as ArrorRight } from 'assets/icons/arrow_right.svg';
+import { ReactComponent as Calender } from 'assets/icons/calender.svg';
+import CalenderBasic from 'components/picker/DateCalender';
+import RoutineButton from 'components/button/RoutineButton';
+import RoutineButtonGray from 'components/button/RoutineButtonGray';
+type DateInfo = {
+  year: number;
+  month: number;
+  day: number;
+  dayOfWeek: string;
+};
 
 function Routine() {
-  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
-  const [currentDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(new Date());
+  const today = new Date();
+  const [selectedDateInfo, setSelectedDateInfo] = useState<DateInfo | null>({
+    year: today.getFullYear(),
+    month: today.getMonth() + 1,
+    day: today.getDate(),
+    dayOfWeek: getDayOfWeekName(today.getDay()),
+  });
+
+  const handleDateBoxClick = (dateInfo: DateInfo) => {
+    setSelectedDateInfo(dateInfo);
+  };
 
   const navigate = useNavigate();
   const handleClick = () => {
     navigate('/routine');
   };
 
-  const { weekDates } = getCurrentDateAndWeekDates(currentDate);
+  const { weekDates } = getCurrentDateAndWeekDates(selectedDate);
   const monthDate = new Date();
   const [formattedDate] = useState(formatDate(monthDate));
 
@@ -24,40 +44,38 @@ function Routine() {
   console.log('월요일부터 일요일까지의 날짜와 해당 년도 및 월:', weekDates);
 
   const handlePrevDate = () => {
-    if (selectedDateIndex > 0) {
-      setSelectedDateIndex(selectedDateIndex - 1);
-    }
+    const newDate = new Date(selectedDate);
+    newDate.setDate(selectedDate.getDate() - 7); // 7일을 이전으로 이동
+    setSelectedDate(newDate);
   };
 
   const handleNextDate = () => {
-    if (selectedDateIndex < weekDates.length - 1) {
-      setSelectedDateIndex(selectedDateIndex + 1);
-    }
+    const newDate = new Date(selectedDate);
+    newDate.setDate(selectedDate.getDate() + 7); // 7일을 다음으로 이동
+    setSelectedDate(newDate);
   };
-  const handleDateBoxClick = (date: Date) => {
-    setSelectedDate(date);
-  };
-
   return (
     <div className="col-span-full flex flex-col justify-between">
-      <TapBar name={formattedDate} />
-      <div className="flex">
+      <TapBar name={weekDates[0].year.toString() + '년 ' + weekDates[0].month.toString() + '월'} icon={<Calender />} />
+      <div className="flex justify-center">
         <button onClick={handlePrevDate}>
-          <ArrowLeft />
+          <ArrorLeft />
         </button>
         {weekDates.map((dateInfo, index) => (
           <DateBox
             key={index}
             dateInfo={dateInfo}
-            selected={
-              selectedDate !== null &&
-              selectedDate.toDateString() === new Date(dateInfo.year, dateInfo.month - 1, dateInfo.day).toDateString()
+            isSelected={
+              selectedDateInfo !== null &&
+              dateInfo.year === selectedDateInfo.year &&
+              dateInfo.month === selectedDateInfo.month &&
+              dateInfo.day === selectedDateInfo.day
             }
-            onClick={() => handleDateBoxClick(new Date(dateInfo.year, dateInfo.month - 1, dateInfo.day))}
+            onClick={() => handleDateBoxClick(dateInfo)}
           />
         ))}
         <button onClick={handleNextDate}>
-          <ArrowRight />
+          <ArrorRight />
         </button>
       </div>
       <div className="mt-[2rem]">
@@ -70,6 +88,15 @@ function Routine() {
 
       <div className="my-[2rem] sticky bottom-5 mb-[3rem]">
         <FloatingButton name={'두피 케어 루틴 설정하기'} onClick={handleClick} />
+      </div>
+      <div>
+        <CalenderBasic />
+      </div>
+      <div>
+        <RoutineButton />
+      </div>
+      <div>
+        <RoutineButtonGray />
       </div>
     </div>
   );
@@ -112,6 +139,7 @@ function getCurrentDateAndWeekDates(currentDate: Date) {
 }
 
 function formatDate(date: Date) {
+  console.log(date);
   const year = date.getFullYear();
   const month = date.getMonth() + 1; // 월은 0부터 시작하므로 1을 더합니다.
 
@@ -119,4 +147,9 @@ function formatDate(date: Date) {
   const formattedDate = `${year}년 ${month}월 `;
 
   return formattedDate;
+}
+
+function getDayOfWeekName(dayOfWeek: number): string {
+  const days = ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'];
+  return days[dayOfWeek];
 }

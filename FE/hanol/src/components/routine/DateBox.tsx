@@ -1,5 +1,3 @@
-import React, { useState } from 'react';
-
 type DateInfo = {
   year: number;
   month: number;
@@ -7,33 +5,34 @@ type DateInfo = {
   dayOfWeek: string;
 };
 
-type DateBoxProps = {
+function DateBox({
+  dateInfo,
+  isSelected,
+  onClick,
+}: {
   dateInfo: DateInfo;
-  selected: boolean;
-};
-
-function DateBox({ dateInfo }: DateBoxProps) {
+  isSelected: boolean;
+  onClick: (dateInfo: DateInfo) => void;
+}) {
   const { year, month, day, dayOfWeek } = dateInfo;
   console.log(year, month);
-  const [isSelected, setIsSelected] = useState(false);
-
-  const toggleSelected = () => {
-    setIsSelected(!isSelected);
+  // 클릭되었을 때 onClick 함수를 호출하여 선택된 날짜를 설정
+  const handleDateClick = () => {
+    if (!isSelected) {
+      onClick(dateInfo);
+    }
   };
-
   return (
     <button
-      className={`w-[2.8rem] h-[4rem] flex flex-col justify-center items-center rounded-[0.75rem] border border-Gray ${
-        isSelected ? 'bg-gray' : 'bg-White'
+      className={`bg-White w-[2.8rem] h-[4rem] flex flex-col justify-center items-center rounded-[0.75rem] border border-Gray ${
+        isSelected ? 'bg-GrayForText' : ''
       }`}
-      onClick={toggleSelected}
+      onClick={handleDateClick}
     >
-      <div className="flex justify-center items-center font-regular">{dayOfWeek}</div>
-      <div
-        className={`flex justify-center items-center rounded-full ${
-          isSelected ? 'bg-gray' : 'bg-Gray'
-        } w-[1.875rem] h-[1.875rem] p-[0.25rem]`}
-      >
+      <div className={`flex justify-center items-center font-regular ${isSelected ? 'text-White' : ''}`}>
+        {dayOfWeek}
+      </div>
+      <div className="flex justify-center items-center rounded-full bg-Gray w-[1.875rem] h-[1.875rem] p-[0.25rem]">
         {day}
       </div>
     </button>
