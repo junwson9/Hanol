@@ -12,6 +12,7 @@ import java.util.Optional;
 public class MemberRoutineRepositoryImpl implements MemberRoutineRepository {
 
     private final JpaMemberRoutineRepository jpaMemberRoutineRepository;
+    private final QueryDslMemberRoutineRepository queryDslMemberRoutineRepository;
 
     @Override
     public Optional<MemberRoutine> findById(Long id) {
@@ -36,6 +37,11 @@ public class MemberRoutineRepositoryImpl implements MemberRoutineRepository {
     @Override
     public void deleteByMemberIdAndRoutineId(Long memberId, Long routineId) {
         jpaMemberRoutineRepository.deleteByMemberIdAndRoutineId(memberId, routineId);
+    }
+
+    @Override
+    public void deleteByMemberIdAndRoutineId(Long memberId, List<Long> removedRoutineIds) {
+        queryDslMemberRoutineRepository.deleteByMemberIdAndRoutineId(memberId, removedRoutineIds);
     }
 
 }

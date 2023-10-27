@@ -4,21 +4,27 @@ import styled from 'styled-components';
 
 interface Props {
   Indicator: string;
+  title1: string;
+  title2: string;
 }
 
-const TopTab = ({ Indicator }: Props) => {
+interface StyleProps {
+  Indicator: string;
+}
+
+const TopTab = ({ Indicator, title1, title2 }: Props) => {
   // const navigate = useNavigate();
 
   return (
     <TopTabBox>
       <LeftBox Indicator={Indicator}>
-        <div className="top_tab_title">간편 문진</div>
+        <div className="top_tab_title">{title1}</div>
 
         <UnderBar>{Indicator === 'one' && <ActiveBar />}</UnderBar>
       </LeftBox>
 
       <RightBox Indicator={Indicator}>
-        <div className="top_tab_title">문진 결과 </div>
+        <div className="top_tab_title">{title2} </div>
         <UnderBar>{Indicator === 'two' && <ActiveBar />} </UnderBar>
       </RightBox>
     </TopTabBox>
@@ -42,7 +48,7 @@ const UnderBar = styled.div`
   background: #d1d5db;
 `;
 
-const RightBox = styled.div<Props>`
+const RightBox = styled.div<StyleProps>`
   display: flex;
   width: 50%;
   padding-top: 12px;
@@ -55,7 +61,7 @@ const RightBox = styled.div<Props>`
     color: ${(props) => (props.Indicator === 'two' ? '#353d4a !important' : '#6d7582')};
   }
 `;
-const LeftBox = styled.div<Props>`
+const LeftBox = styled.div<StyleProps>`
   display: flex;
   width: 50%;
   padding-top: 12px;
