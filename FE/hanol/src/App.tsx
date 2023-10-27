@@ -11,6 +11,7 @@ import ExplainRoutine from 'pages/routine/explainRoutine';
 import ExplainDiagnose from 'pages/diagnose/explainDiagnose';
 import SelectDevice from 'pages/diagnose/selectDevice';
 import Streaming from 'pages/diagnose/streaming';
+import IoTstreaming from 'pages/diagnose/IoTstreaming';
 
 function App() {
   const location = useLocation();
@@ -38,7 +39,9 @@ function App() {
           </Routes>
         </div>
         <div>
-          <Routes></Routes>
+          <Routes>
+            <Route path="/IoTstreaming" element={<IoTstreaming />} />
+          </Routes>
         </div>
       </div>
       {shouldShowNavBar && <NavBar />}
