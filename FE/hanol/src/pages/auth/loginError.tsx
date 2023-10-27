@@ -16,7 +16,7 @@ function loginError() {
           <div>로그인이 필요한</div>
           <div>서비스 입니다.</div>
         </div>
-        <div className="w-full px-10 mt-10">
+        <div className="w-full px-10 mt-10 fixed relative">
           <Button name={buttonName} onClick={handleButtonClick} />
         </div>
       </div>

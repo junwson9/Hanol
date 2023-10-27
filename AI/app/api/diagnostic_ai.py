@@ -12,7 +12,7 @@ class DiagnosticAI:
         image = Image.open(BytesIO(image_bytes))
         time1 = time.time()
         model_path = 'AI_model/test_model1.pt'
-        model = torch.load(model_path, map_location=torch.device('cpu'))
+        model = torch.load(model_path, map_location=torch.device('cuda' if torch.cuda.is_available() else 'cpu'))
 
         image_size = (600, 600)
         normalize = transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])

@@ -73,7 +73,7 @@ function NavBar() {
         <button>
           <Camera
             onClick={() => {
-              handleNavigate('/diagnostic');
+              handleNavigate('/diagnose');
               setSelectedMenu('');
             }}
           />

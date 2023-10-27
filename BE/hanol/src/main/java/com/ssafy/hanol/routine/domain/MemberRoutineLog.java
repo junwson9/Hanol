@@ -8,11 +8,14 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(
+        name = "member_routine_log",
+        uniqueConstraints = @UniqueConstraint(columnNames = {"member_id", "routine_id", "date"})
+)
 public class MemberRoutineLog {
 
     @Id
@@ -32,10 +35,10 @@ public class MemberRoutineLog {
     private LocalDate date;
 
     @Column(name = "is_done", columnDefinition = "TINYINT(1) DEFAULT 0")
-    private boolean isDone;
+    private Boolean isDone;
 
     @Builder
-    public MemberRoutineLog(Member member, Routine routine, LocalDate date, boolean isDone) {
+    public MemberRoutineLog(Member member, Routine routine, LocalDate date, Boolean isDone) {
         this.member = member;
         this.routine = routine;
         this.date = date;
@@ -43,7 +46,7 @@ public class MemberRoutineLog {
     }
 
     // 실천 여부를 변경하는 메서드
-    public void updateDoneStatus(boolean isDone) {
+    public void updateDoneStatus(Boolean isDone) {
         this.isDone = isDone;
     }
 

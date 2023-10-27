@@ -2,10 +2,7 @@ package com.ssafy.hanol.diagnosis.domain;
 
 import com.ssafy.hanol.common.model.BaseTimeEntity;
 import com.ssafy.hanol.member.domain.Member;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Arrays;
@@ -14,6 +11,7 @@ import java.util.List;
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
+@ToString
 @Table(name = "diagnosis")
 public class Diagnosis extends BaseTimeEntity {
 
