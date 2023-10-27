@@ -12,9 +12,9 @@ function DisabledButton({ name, onClick, disabled }: ButtonProps) {
   }`;
 
   return (
-    <div className={buttonClasses} onClick={!disabled ? onClick : undefined}>
+    <button className={buttonClasses} onClick={!disabled ? onClick : undefined}>
       <div className="text-white text-base font-medium text-[16px] tracking-wide">{name}</div>
-    </div>
+    </button>
   );
 }
 
