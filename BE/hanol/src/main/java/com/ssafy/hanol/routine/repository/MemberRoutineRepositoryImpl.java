@@ -13,6 +13,7 @@ public class MemberRoutineRepositoryImpl implements MemberRoutineRepository {
 
     private final JpaMemberRoutineRepository jpaMemberRoutineRepository;
     private final QueryDslMemberRoutineRepository queryDslMemberRoutineRepository;
+    private final JdbcMemberRoutineRepository jdbcMemberRoutineRepository;
 
     @Override
     public Optional<MemberRoutine> findById(Long id) {
@@ -36,7 +37,8 @@ public class MemberRoutineRepositoryImpl implements MemberRoutineRepository {
 
     @Override
     public void saveAll(List<MemberRoutine> memberRoutines) {
-        jpaMemberRoutineRepository.saveAll(memberRoutines);
+//        jpaMemberRoutineRepository.saveAll(memberRoutines);
+        jdbcMemberRoutineRepository.saveAll(memberRoutines);
     }
 
     @Override
