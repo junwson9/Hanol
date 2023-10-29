@@ -1,4 +1,4 @@
-import { ReactComponent as DiagnoseExplain } from 'assets/images/diagnoseExplain.svg';
+import DiagnoseExplain from 'assets/images/diagnoseExplain.png';
 import FloatingButton from 'components/button/FloatingButton';
 import { useNavigate } from 'react-router-dom';
 
@@ -12,8 +12,8 @@ function ExplainDiagnose() {
         <br />
         분석해드려요.
       </p>
-      <div className="mt-10">
-        <DiagnoseExplain className="mx-auto" />
+      <div className="flex mt-10 justify-center">
+        <img src={DiagnoseExplain} />
       </div>
       <p className="text-lg  text-left font-bold mt-20">
         탈모 진행도, 두피 건강 상태를

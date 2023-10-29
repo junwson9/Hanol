@@ -5,7 +5,12 @@ import FloatingButton from 'components/button/FloatingButton';
 import SettingDone from 'components/routine/SettingDone';
 import TopBarDepth2 from 'components/common/TapBarDepth2';
 import { useNavigate } from 'react-router-dom';
-
+import { ReactComponent as UnActiveCheck } from 'assets/icons/check-unactive.svg';
+interface RoutineElement {
+  id: number;
+  text: string;
+  active: boolean;
+}
 function SetRoutine() {
   const navigate = useNavigate();
   const [settingDone, setSettingDone] = useState<boolean>(false);
@@ -14,6 +19,29 @@ function SetRoutine() {
   const handleNavigate = () => {
     navigate('/');
   };
+
+  const [activeElements, setActiveElements] = useState<RoutineElement[]>([
+    { id: 1, text: '여기에', active: true },
+    // 추가 요소들
+  ]);
+
+  const [unactiveElements, setUnactiveElements] = useState<RoutineElement[]>([
+    { id: 2, text: 'gg', active: false },
+    // 추가 요소들
+  ]);
+
+  const toggleActive = (element: RoutineElement) => {
+    // Create new arrays with updated elements
+    const updatedActiveElements = activeElements.map((e) => (e.id === element.id ? { ...e, active: !e.active } : e));
+    const updatedUnactiveElements = unactiveElements.map((e) =>
+      e.id === element.id ? { ...e, active: !e.active } : e,
+    );
+
+    // Update the state with the new arrays
+    setActiveElements(updatedActiveElements);
+    setUnactiveElements(updatedUnactiveElements);
+  };
+
   useEffect(() => {
     const container = containerRef.current;
     if (container) {
@@ -25,6 +53,7 @@ function SetRoutine() {
       }
     }
   }, []);
+
   return (
     <>
       {!settingDone ? (
@@ -51,47 +80,35 @@ function SetRoutine() {
               지금 실천 중인 루틴이에요.
             </p>
             <div className="mt-2.5 col-start-1 col-end-7">
-              <div className="flex h-14 mt-3 border rounded-lg items-center gap-2.5 whitespace-nowrap">
-                <Check className="ml-2.5" />
-                여기에
-              </div>
-              <div className="flex h-14 mt-3 border rounded-lg items-center gap-2.5 whitespace-nowrap">
-                <Check className="ml-2.5" />
-                실천중인게
-              </div>
-              <div className="flex h-14 mt-3 border rounded-lg items-center gap-2.5 whitespace-nowrap">
-                <Check className="ml-2.5" />
-                들어갑니다.
-              </div>
+              {activeElements.map((element) => (
+                <div
+                  key={element.id}
+                  className={`flex h-14 mt-3 border ${
+                    element.active ? 'border-Main text-Main' : 'text-GrayForText'
+                  } rounded-lg items-center gap-2.5 whitespace-nowrap cursor-pointer`}
+                  onClick={() => toggleActive(element)}
+                >
+                  {element.active ? <Check className="ml-2.5" /> : <UnActiveCheck className="ml-2.5" />}
+                  {element.text}
+                </div>
+              ))}
             </div>
             <p className="text-lg  text-left font-bold mt-9 col-start-1 col-end-5 whitespace-nowrap">
               이런 루틴은 어때요?
             </p>
             <div className="mt-2.5 col-start-1 col-end-7">
-              <div className="flex h-14 mt-3 border rounded-lg items-center gap-2.5 whitespace-nowrap">
-                <Check className="ml-2.5" />
-                여기에
-              </div>
-              <div className="flex h-14 mt-3 border rounded-lg items-center gap-2.5 whitespace-nowrap">
-                <Check className="ml-2.5" />
-                추천이
-              </div>
-              <div className="flex h-14 mt-3 border rounded-lg items-center gap-2.5 whitespace-nowrap">
-                <Check className="ml-2.5" />
-                들어갑니다.
-              </div>
-              <div className="flex h-14 mt-3 border rounded-lg items-center gap-2.5 whitespace-nowrap">
-                <Check className="ml-2.5" />
-                들어갑니다.
-              </div>
-              <div className="flex h-14 mt-3 border rounded-lg items-center gap-2.5 whitespace-nowrap">
-                <Check className="ml-2.5" />
-                들어갑니다.
-              </div>
-              <div className="flex h-14 mt-3 border rounded-lg items-center gap-2.5 whitespace-nowrap">
-                <Check className="ml-2.5" />
-                들어갑니다.
-              </div>
+              {unactiveElements.map((element) => (
+                <div
+                  key={element.id}
+                  className={`flex h-14 mt-3 border ${
+                    element.active ? 'border-Main text-Main' : 'text-GrayForText'
+                  } items-center gap-2.5 whitespace-nowrap cursor-pointer rounded-lg`}
+                  onClick={() => toggleActive(element)}
+                >
+                  {element.active ? <Check className="ml-2.5" /> : <UnActiveCheck className="ml-2.5" />}
+                  {element.text}
+                </div>
+              ))}
             </div>
           </div>
           {pageHeight ? (
