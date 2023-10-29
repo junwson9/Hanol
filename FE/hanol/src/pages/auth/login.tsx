@@ -13,8 +13,9 @@ function Login() {
       id_token: data.response.id_token,
       oauth_provider: 'KAKAO',
     };
+    console.log(requestData);
     axios
-      .post<{ access_token: string; refresh_token: string }>('http://dev.hanol.site/api/member/oauth', requestData)
+      .post<{ access_token: string; refresh_token: string }>('http://localhost:8000/api/member/oauth', requestData)
       // eslint-disable-next-line
       .then((response: any) => {
         const { access_token, refresh_token } = response.data.data;

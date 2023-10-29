@@ -32,20 +32,20 @@ public class MemberRoutine {
     private Routine routine;
 
     @Column(name = "is_notification_active", columnDefinition = "TINYINT(1) DEFAULT 0")
-    private boolean isNotificationActive;
+    private Boolean isNotificationActive;
 
     @Column(name = "notification_time")
     private LocalTime notificationTime;
 
     @Builder
-    public MemberRoutine(Member member, Routine routine, boolean isNotificationActive, LocalTime notificationTime) {
+    public MemberRoutine(Member member, Routine routine, Boolean isNotificationActive, LocalTime notificationTime) {
         this.member = member;
         this.routine = routine;
         this.isNotificationActive = isNotificationActive;
         this.notificationTime = notificationTime;
     }
 
-    public void updateNotification(boolean isNotificationActive, LocalTime notificationTime) {
+    public void updateNotification(Boolean isNotificationActive, LocalTime notificationTime) {
         this.isNotificationActive = isNotificationActive;
         this.notificationTime = notificationTime;
     }
