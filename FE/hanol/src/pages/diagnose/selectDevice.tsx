@@ -2,10 +2,10 @@ import { useState } from 'react';
 import StartButton from 'components/button/Button';
 import { useNavigate } from 'react-router';
 import TopBarDepth2 from 'components/common/TapBarDepth2';
-import { ReactComponent as Ex } from 'assets/images/scalpExample.svg';
+// import { ReactComponent as Ex } from 'assets/images/scalpExample.svg';
 
 function SelectDevice() {
-  const [selectedButton, setSelectedButton] = useState<number | null>(null);
+  const [selectedButton, setSelectedButton] = useState<number>(0);
   const handleButtonSelect = (index: number) => {
     setSelectedButton(index);
   };
@@ -54,9 +54,7 @@ function SelectDevice() {
             <br />
             &nbsp;&nbsp;&nbsp;&nbsp;두피를 촬영해 주세요.
           </p>
-          <div className="mt-6 flex justify-center">
-            <Ex />
-          </div>
+          <div className="mt-6 flex justify-center">{/* <Ex /> */}</div>
           <p className="text-left mt-6">
             3. 사진이 선명할 수록 분석이 정확해집니다.
             <br />
@@ -70,11 +68,6 @@ function SelectDevice() {
             2. 고민부위에 기기를 대고
             <br />
             &nbsp;&nbsp;&nbsp;&nbsp;두피를 촬영해 주세요.
-          </p>
-          <p className="text-left mt-6">
-            3. 사진이 선명할 수록 분석이 정확해집니다.
-            <br />
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;촬영 시 타인의 도움을 받아보세요.
           </p>
         </>
       )}
