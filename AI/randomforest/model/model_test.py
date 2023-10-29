@@ -10,6 +10,8 @@ df = pd.read_excel(path1)
 target = 'type'
 
 features = df.columns.difference([target])
+
+print(features)
 				
 new_data = pd.DataFrame({
     'Gender' : 1,
