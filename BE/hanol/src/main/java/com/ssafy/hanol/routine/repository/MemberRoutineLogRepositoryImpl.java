@@ -16,6 +16,7 @@ public class MemberRoutineLogRepositoryImpl implements MemberRoutineLogRepositor
 
     private final JpaMemberRoutineLogRepository jpaMemberRoutineLogRepository;
     private final QueryDslMemberRoutineLogRepository queryDslMemberRoutineLogRepository;
+    private final JdbcMemberRoutineLogRepository jdbcMemberRoutineLogRepository;
 
     @Override
     public Optional<MemberRoutineLog> findById(Long id) {
@@ -29,7 +30,8 @@ public class MemberRoutineLogRepositoryImpl implements MemberRoutineLogRepositor
 
     @Override
     public void saveAll(List<MemberRoutineLog> memberRoutineLogs) {
-        jpaMemberRoutineLogRepository.saveAll(memberRoutineLogs);
+//        jpaMemberRoutineLogRepository.saveAll(memberRoutineLogs);
+        jdbcMemberRoutineLogRepository.saveAll(memberRoutineLogs);
     }
 
     @Override
