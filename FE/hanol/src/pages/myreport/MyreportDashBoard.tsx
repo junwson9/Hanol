@@ -1,19 +1,19 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import BannerButton from 'components/button/BannerButton';
 import ValueCard from 'components/DashboardPage/ValueCard';
 import ValueGraph from 'components/DashboardPage/ValueGraph';
 import DivisionRectangle from 'components/common/DivisionRectangle';
 import RecommendCareRoutine from 'components/DashboardPage/RecommendCareRoutine';
-import Button from 'components/button/Button';
+// import Button from 'components/button/Button';
 
 const MyreaportDashBoard = () => {
-  const navigate = useNavigate();
+  //   const navigate = useNavigate();
 
-  const handleButtonClick = () => {
-    navigate('/test');
-  };
+  //   const handleButtonClick = () => {
+  //     navigate('/test');
+  //   };
 
   return (
     <div className="col-span-full">
@@ -31,14 +31,14 @@ const MyreaportDashBoard = () => {
         <ValueCard title="비듬" value={1} />
       </ValueCardBox>
       <br />
-      <ValueGraph />
+      <ValueGraph title="탈모" />
       <br />
       <DivisionRectangle />
 
       <br />
       <RecommendCareRoutine />
       <br />
-      <Button name="두피 케어 루틴 추천 받기" onClick={handleButtonClick()} />
+      {/* <Button name="두피 케어 루틴 추천 받기" onClick={handleButtonClick()} /> */}
     </div>
   );
 };

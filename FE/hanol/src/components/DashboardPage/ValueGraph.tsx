@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
+import Hammer from 'hammerjs';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -11,26 +12,60 @@ import {
   PointElement,
   LineElement,
 } from 'chart.js';
-
 import { Line } from 'react-chartjs-2';
+import zoomPlugin from 'chartjs-plugin-zoom';
 
-ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, PointElement, LineElement);
+ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, PointElement, LineElement, zoomPlugin);
 
 interface Props {
   title: string;
 }
+
 const ValueGraph = ({ title }: Props) => {
-  // 그래프 관련
+  useEffect(() => {
+    const myElement = document.getElementById('myElement'); // Replace 'myElement' with your element ID or reference
+
+    if (myElement) {
+      const hammer = new Hammer(myElement as HTMLElement);
+
+      // Add event listeners for specific gestures
+      hammer.on('pan', (event) => {
+        console.log('Pan gesture detected', event);
+      });
+    }
+  }, []);
+
+  // 그래프 커스텀
   const options = {
     responsive: true,
     plugins: {
       legend: {
-        position: 'top' as const, // display: false,
-        labels: { font: { size: 10, family: 'Pretendard' } },
+        position: 'top' as const,
+        display: false,
+        labels: { font: { size: 10, family: 'Noto Sans' } },
       },
       title: {
         display: true,
         // text: 'Chart.js Bar Chart',
+      },
+      zoom: {
+        pan: {
+          enabled: true,
+          mode: 'x' as const,
+          modifierKey: 'shift' as const,
+          scaleMode: 'x' as const,
+          threshold: 1,
+        },
+        // limits: {
+        //   x: { min: 3, max: 15 },
+        // },
+        // zoom: {
+        //   mode: 'xy' as const,
+        //   wheel: {
+        //     enabled: true,
+        //     modifierKey: 'shift' as const,
+        //   },
+        // },
       },
     },
     elements: { point: { radius: 3 } },
@@ -53,17 +88,17 @@ const ValueGraph = ({ title }: Props) => {
     ],
     datasets: [
       {
-        label: '관심 아티스트 등록 수 (명)',
+        label: `${title}`,
         data: [123403, 123603, 125079, 126030, 123403, 123603, 125079, 126030, 123403, 123603, 125079, 126030],
         // data: artistLikesCountperWeek.reverse().map((data) => data.scrapCount),
-        borderColor: '#718093',
-        backgroundColor: '#DCDFE4',
+        borderColor: '#DCDFE4',
+        backgroundColor: '#718093',
       },
     ],
   };
 
   return (
-    <ValueGraphBox>
+    <ValueGraphBox id="myElement">
       <Line options={options} data={data} />
     </ValueGraphBox>
   );
@@ -71,10 +106,8 @@ const ValueGraph = ({ title }: Props) => {
 
 const ValueGraphBox = styled.div`
   // 추후 수정
-  /* width: 314px; */
-  width: auto;
-  height: 268px;
+  width: 19.625em;
+  height: 16.75rem;
   margin: 0 auto;
-  /* overflow-x: auto; */
 `;
 export default ValueGraph;
