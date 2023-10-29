@@ -1,25 +1,26 @@
 version: "3.8"
 
 services:
-  hanol-mysql:
-    container_name: hanol-mysql
-    image: mysql:8.0
+  hanol-maria:
+    container_name: hanol-maria
+    image: mariadb:latest
     ports:
       - 3307:3306
     command:
       - --character-set-server=utf8mb4
       - --collation-server=utf8mb4_unicode_ci
+      - --character-set-client-handshake=FALSE
+    env_file: .env
     environment:
       - TZ=Asia/Seoul
-      - MYSQL_ROOT_PASSWORD=ssafya205!
-      - MYSQL_DATABASE=hanol
     restart: always
     volumes:
-      - ./db/mysql:/var/lib/mysql
+      - ./db/mariadb:/var/lib/mysql
   hanol-redis:
     container_name: hanol-redis
     image: redis:7.0.12
     ports:
       - 6379:6379
-    command: redis-server --requirepass ssafya205! --port 6379
+    env_file: .env
+    command: redis-server --requirepass ${REDIS_PASSWORD} --port 6379
     restart: on-failure
