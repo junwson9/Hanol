@@ -2,7 +2,7 @@ import { useState } from 'react';
 import StartButton from 'components/button/Button';
 import { useNavigate } from 'react-router';
 import TopBarDepth2 from 'components/common/TapBarDepth2';
-import { ReactComponent as Ex } from 'assets/images/scalpExample.svg';
+// import { ReactComponent as Ex } from 'assets/images/scalpExample.svg';
 
 function SelectDevice() {
   const [selectedButton, setSelectedButton] = useState<number>(0);
@@ -54,9 +54,7 @@ function SelectDevice() {
             <br />
             &nbsp;&nbsp;&nbsp;&nbsp;두피를 촬영해 주세요.
           </p>
-          <div className="mt-6 flex justify-center">
-            <Ex />
-          </div>
+          <div className="mt-6 flex justify-center">{/* <Ex /> */}</div>
           <p className="text-left mt-6">
             3. 사진이 선명할 수록 분석이 정확해집니다.
             <br />
