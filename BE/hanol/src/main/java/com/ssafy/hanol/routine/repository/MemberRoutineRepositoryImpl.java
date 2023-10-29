@@ -49,4 +49,9 @@ public class MemberRoutineRepositoryImpl implements MemberRoutineRepository {
         queryDslMemberRoutineRepository.deleteByMemberIdAndRoutineId(memberId, removedRoutineIds);
     }
 
+    @Override
+    public List<MemberRoutine> findAll() {
+        return jpaMemberRoutineRepository.findAll();
+    }
+
 }
