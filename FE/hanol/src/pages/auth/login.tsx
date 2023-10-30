@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 
 function Login() {
   const kakaoID = process.env.REACT_APP_KAKAO_CLIENT_ID;
+  const APP_URI = process.env.REACT_APP_API_URL;
   const navigate = useNavigate();
   console.log(kakaoID);
   // eslint-disable-next-line
@@ -13,8 +14,9 @@ function Login() {
       id_token: data.response.id_token,
       oauth_provider: 'KAKAO',
     };
+    console.log(requestData);
     axios
-      .post<{ access_token: string; refresh_token: string }>('http://dev.hanol.site/api/member/oauth', requestData)
+      .post<{ access_token: string; refresh_token: string }>(`${APP_URI}/member/oauth`, requestData)
       // eslint-disable-next-line
       .then((response: any) => {
         const { access_token, refresh_token } = response.data.data;

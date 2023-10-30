@@ -21,6 +21,7 @@
     "@typescript-eslint/parser": "^6.8.0",
     "axios": "^1.5.1",
     "chart.js": "^4.4.0",
+    "chartjs-plugin-zoom": "^2.0.1",
     "dayjs": "^1.11.10",
     "eslint": "^8.52.0",
     "eslint-config-prettier": "^9.0.0",
@@ -78,6 +79,7 @@
   },
   "devDependencies": {
     "@mui/x-date-pickers": "^6.16.3",
+    "@types/hammerjs": "^2.0.43",
     "@types/react-datepicker": "^4.19.1",
     "autoprefixer": "^10.4.16",
     "postcss": "^8.4.31",

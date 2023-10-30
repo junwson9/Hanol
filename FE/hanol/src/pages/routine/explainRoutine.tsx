@@ -1,11 +1,18 @@
 import { ReactComponent as ExplainRoutinesvg } from 'assets/images/explainRoutine.svg';
 import { ReactComponent as Bell } from 'assets/images/bell.svg';
 import { ReactComponent as CareRoutineExplain } from 'assets/images/careRoutineExplain.svg';
-// import FloatingButton from 'components/button/FloatingButton';
+import FloatingButton from 'components/button/FloatingButton';
+import TapBar from 'components/common/TopBar';
+import { useNavigate } from 'react-router';
 
 function ExplainRoutine() {
+  const navigate = useNavigate();
+  const handleClick = () => {
+    navigate('/routine');
+  };
   return (
     <div className="col-span-full flex flex-col justify-between">
+      <TapBar name={'문진하기'} />
       <div>
         <div className="font-bold text-[1.125rem] text-black flex">두피 진단 결과를 바탕으로</div>
         <div className="font-bold text-[1.125rem] text-black flex">두피 케어 루틴을 추천해드려요.</div>
@@ -31,11 +38,13 @@ function ExplainRoutine() {
       <div className="mt-[3rem]">
         <div className="font-bold text-[1.125rem] text-black flex">루틴을 선택하고</div>
         <div className="font-bold text-[1.125rem] text-black flex">알림을 받아 실천하세요.</div>
-        <div className="flex justify-center bg-Gray mt-[4rem] rounded-[1rem]">
+        <div className="flex justify-center bg-Gray mt-[2rem] rounded-[1rem]">
           <CareRoutineExplain className="h-[22rem] my-[2rem]" />
         </div>
       </div>
-      {/* <FloatingButton name={'name'} /> */}
+      <div className="my-[2rem] sticky bottom-5 mb-[3rem]">
+        <FloatingButton name={'두피 케어 루틴 설정하기'} onClick={handleClick} />
+      </div>
     </div>
   );
 }

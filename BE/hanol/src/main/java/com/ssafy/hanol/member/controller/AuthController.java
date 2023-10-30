@@ -8,6 +8,7 @@ import com.ssafy.hanol.member.service.dto.OauthLoginResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,5 +24,10 @@ public class AuthController {
         OauthLoginResponse result = authService.login(request.toApplicationDto());
         return ResponseFactory.success("로그인 성공", OauthLoginApiResponse.from(result));
         //return ResponseFactory.success("로그인 성공");
+    }
+
+    @GetMapping("/api/member/test")
+    public ResponseEntity<?> memberTest() {
+        return ResponseFactory.success("테스트 성공");
     }
 }
