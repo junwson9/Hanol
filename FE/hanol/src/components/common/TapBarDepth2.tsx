@@ -3,7 +3,7 @@ import { ReactComponent as Back } from 'assets/icons/back.svg';
 import { useNavigate } from 'react-router-dom';
 type TapBarDepth2Props = {
   name: string;
-  onClick: () => void;
+  onClick?: () => void;
   propsIsBack: boolean;
 };
 
