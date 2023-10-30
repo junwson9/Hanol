@@ -1,10 +1,8 @@
 package com.ssafy.hanol.notification.repository;
 
 import com.querydsl.core.types.Projections;
-import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.ssafy.hanol.notification.domain.NotificationSetting;
-import com.ssafy.hanol.notification.domain.QNotificationSetting;
+import com.ssafy.hanol.notification.domain.QNotificationConfiguration;
 import com.ssafy.hanol.notification.service.dto.response.NotificationResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,17 +19,17 @@ public class QueryDslNotificationRepository {
 
     public Optional<NotificationResponse> findNotificationResponseByMemberId(Long memberId) {
 
-        QNotificationSetting notificationSetting = QNotificationSetting.notificationSetting;
+        QNotificationConfiguration notification = QNotificationConfiguration.notificationConfiguration;
 
         NotificationResponse result = jpaQueryFactory
                 .select(Projections.constructor(NotificationResponse.class,
-                        notificationSetting.notificationSettingId,
-                        notificationSetting.member.id,
-                        notificationSetting.isCheckRoutineActive,
-                        notificationSetting.isIndividualRoutineActive
+                        notification.notificationConfigurationId,
+                        notification.member.id,
+                        notification.isCheckRoutineActive,
+                        notification.isIndividualRoutineActive
                 ))
-                .from(notificationSetting)
-                .where(notificationSetting.member.id.eq(memberId))
+                .from(notification)
+                .where(notification.member.id.eq(memberId))
                 .fetchOne();
 
         return Optional.ofNullable(result);

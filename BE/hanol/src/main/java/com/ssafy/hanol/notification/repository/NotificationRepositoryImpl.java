@@ -1,6 +1,6 @@
 package com.ssafy.hanol.notification.repository;
 
-import com.ssafy.hanol.notification.domain.NotificationSetting;
+import com.ssafy.hanol.notification.domain.NotificationConfiguration;
 import com.ssafy.hanol.notification.service.dto.response.NotificationResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -15,7 +15,7 @@ public class NotificationRepositoryImpl implements NotificationRepository{
     private final QueryDslNotificationRepository queryDslNotificationRepository;
 
     @Override
-    public Optional<NotificationSetting> findByMemberId(Long memberId) {
+    public Optional<NotificationConfiguration> findByMemberId(Long memberId) {
         return jpaNotificationRepository.findByMemberId(memberId);
     }
 

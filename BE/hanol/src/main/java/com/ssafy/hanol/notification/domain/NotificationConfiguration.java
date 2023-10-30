@@ -10,20 +10,20 @@ import javax.persistence.*;
 @Getter
 @ToString
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "notification_setting",
+@Table(name = "notification_configuration",
         uniqueConstraints = {
             @UniqueConstraint(
-                    name = "unique_notification_setting",
+                    name = "unique_notification_configuration",
                     columnNames = {"member_id"}
             )
         }
         )
-public class NotificationSetting extends BaseTimeEntity {
+public class NotificationConfiguration extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "notification_setting_id")
-    private Long notificationSettingId;
+    @Column(name = "notification_configuration_id")
+    private Long notificationConfigurationId;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id", nullable = false)
@@ -36,8 +36,8 @@ public class NotificationSetting extends BaseTimeEntity {
     private Boolean isIndividualRoutineActive;
 
     @Builder
-    public NotificationSetting(Long notificationSettingId, Member member, Boolean isCheckRoutineActive, Boolean isIndividualRoutineActive) {
-        this.notificationSettingId = notificationSettingId;
+    public NotificationConfiguration(Long notificationConfigurationId, Member member, Boolean isCheckRoutineActive, Boolean isIndividualRoutineActive) {
+        this.notificationConfigurationId = notificationConfigurationId;
         this.member = member;
         this.isCheckRoutineActive = isCheckRoutineActive;
         this.isIndividualRoutineActive = isIndividualRoutineActive;

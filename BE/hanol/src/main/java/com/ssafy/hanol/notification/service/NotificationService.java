@@ -1,6 +1,6 @@
 package com.ssafy.hanol.notification.service;
 
-import com.ssafy.hanol.notification.domain.NotificationSetting;
+import com.ssafy.hanol.notification.domain.NotificationConfiguration;
 import com.ssafy.hanol.notification.domain.NotificationType;
 import com.ssafy.hanol.notification.repository.NotificationRepository;
 import com.ssafy.hanol.notification.service.dto.request.NotificationModifyRequest;
@@ -30,22 +30,21 @@ public class NotificationService {
         // 임시데이터
         Long memberId = 1L;
 
-        NotificationSetting notificationSetting = notificationRepository.findByMemberId(memberId).orElseThrow();
+        NotificationConfiguration notificationConfiguration = notificationRepository.findByMemberId(memberId).orElseThrow();
+
+        // 변경하려는 Notification 유형에 따라 업데이트
         NotificationType notificationType = notificationModifyRequest.getNotificationType();
-        switch (notificationType) {
-            case CHECK_ROUTINE:
-                notificationSetting.updateIsCheckRoutineActive(notificationModifyRequest.getIsActive());
-                break;
-            case INDIVIDUAL_ROUTINE:
-                notificationSetting.updateIsIndividualRoutineActive(notificationModifyRequest.getIsActive());
-                break;
+        if(notificationType.equals(NotificationType.CHECK_ROUTINE)) {
+            notificationConfiguration.updateIsCheckRoutineActive(notificationModifyRequest.getIsActive());
+        } else if(notificationType.equals(NotificationType.INDIVIDUAL_ROUTINE)) {
+            notificationConfiguration.updateIsIndividualRoutineActive(notificationModifyRequest.getIsActive());
         }
 
         return NotificationResponse.builder()
-                .notificationSettingId(notificationSetting.getNotificationSettingId())
+                .notificationConfigurationId(notificationConfiguration.getNotificationConfigurationId())
                 .memberId(memberId)
-                .isCheckRoutineActive(notificationSetting.getIsCheckRoutineActive())
-                .isIndividualRoutineActive(notificationSetting.getIsIndividualRoutineActive())
+                .isCheckRoutineActive(notificationConfiguration.getIsCheckRoutineActive())
+                .isIndividualRoutineActive(notificationConfiguration.getIsIndividualRoutineActive())
                 .build();
     }
 }

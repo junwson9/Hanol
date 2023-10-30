@@ -14,20 +14,20 @@ import lombok.Setter;
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class NotificationApiResponse {
 
-    private Long notificationSettingId;
+    private Long notificationConfigurationId;
     private Long memberId;
     private Boolean isCheckRoutineActive;
     private Boolean isIndividualRoutineActive;
 
-    public NotificationApiResponse(Long notificationSettingId, Long memberId, Boolean isCheckRoutineActive, Boolean isIndividualRoutineActive) {
-        this.notificationSettingId = notificationSettingId;
+    public NotificationApiResponse(Long notificationConfigurationId, Long memberId, Boolean isCheckRoutineActive, Boolean isIndividualRoutineActive) {
+        this.notificationConfigurationId = notificationConfigurationId;
         this.memberId = memberId;
         this.isCheckRoutineActive = isCheckRoutineActive;
         this.isIndividualRoutineActive = isIndividualRoutineActive;
     }
 
     public static NotificationApiResponse from(NotificationResponse notificationResponse) {
-        return new NotificationApiResponse(notificationResponse.getNotificationSettingId(),
+        return new NotificationApiResponse(notificationResponse.getNotificationConfigurationId(),
                 notificationResponse.getMemberId(),
                 notificationResponse.getIsCheckRoutineActive(),
                 notificationResponse.getIsIndividualRoutineActive()
