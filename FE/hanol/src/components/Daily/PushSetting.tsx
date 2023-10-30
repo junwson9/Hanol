@@ -5,6 +5,7 @@ import NotificationTime from './NotificationTime';
 
 const PushSetting = () => {
   const [activeTime, setActiveTime] = useState(2);
+  const [isToggleOn, setIsToggleOn] = useState(false);
 
   return (
     <div className="col-span-full">
@@ -12,14 +13,19 @@ const PushSetting = () => {
         <PushNotificationBox>
           <div className="push_notification_text">푸시 알림</div>
           <div className="toggle_box">
-            <Toggle />
+            <Toggle isToggleOn={isToggleOn} setIsToggleOn={setIsToggleOn} />
           </div>
         </PushNotificationBox>
-        <NotificationTimeBox>
-          <NotificationTime timename="오전 9시" isActive={activeTime === 0} setActiveTime={setActiveTime} index={0} />
-          <NotificationTime timename="오후 1시" isActive={activeTime === 1} setActiveTime={setActiveTime} index={1} />
-          <NotificationTime timename="오후 7시" isActive={activeTime === 2} setActiveTime={setActiveTime} index={2} />
-        </NotificationTimeBox>
+
+        {isToggleOn ? (
+          <NotificationTimeBox>
+            <NotificationTime timename="오전 9시" isActive={activeTime === 0} setActiveTime={setActiveTime} index={0} />
+            <NotificationTime timename="오후 1시" isActive={activeTime === 1} setActiveTime={setActiveTime} index={1} />
+            <NotificationTime timename="오후 7시" isActive={activeTime === 2} setActiveTime={setActiveTime} index={2} />
+          </NotificationTimeBox>
+        ) : (
+          ''
+        )}
       </PushSettingBox>
     </div>
   );
@@ -27,7 +33,7 @@ const PushSetting = () => {
 
 const NotificationTimeBox = styled.div`
   display: flex;
-  margin-top: 1.813rem;
+  margin-top: 1.25rem;
   justify-content: center;
 `;
 const PushNotificationBox = styled.div`
@@ -54,6 +60,6 @@ const PushSettingBox = styled.div`
   margin-top: 1.813rem;
 
   width: 100%;
-  height: 1.688rem;
+  height: 100%;
 `;
 export default PushSetting;

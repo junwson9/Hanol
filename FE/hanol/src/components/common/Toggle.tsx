@@ -1,17 +1,22 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
-const Toggle = () => {
-  const [isToggleOn, setIsToggleOn] = useState(false);
-
-  const toggleHandler = () => {
-    setIsToggleOn((prev) => !prev);
+interface Props {
+  isToggleOn: boolean;
+  setIsToggleOn(value: boolean): void;
+}
+const Toggle = ({ isToggleOn, setIsToggleOn }: Props) => {
+  const toggleHandler = (prev: boolean) => {
+    setIsToggleOn(!prev);
   };
 
   return (
     <div className="col-span-full">
       <ToggleBox>
-        <ToggleBackground onClick={toggleHandler} className={`${isToggleOn ? 'on_background' : 'off_background'}`}>
+        <ToggleBackground
+          onClick={() => toggleHandler(isToggleOn)}
+          className={`${isToggleOn ? 'on_background' : 'off_background'}`}
+        >
           <ToggleSwitch className={`${isToggleOn ? 'on_switch' : 'off_switch'}`} />
         </ToggleBackground>
       </ToggleBox>

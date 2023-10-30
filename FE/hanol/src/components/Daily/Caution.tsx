@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const NotificationTime = () => {
+const Caution = () => {
   return (
     <div className="col-span-full">
       <CautionBox>
@@ -28,4 +28,4 @@ const CautionBox = styled.div`
     text-align: start;
   }
 `;
-export default NotificationTime;
+export default Caution;

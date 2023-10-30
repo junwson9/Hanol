@@ -6,8 +6,7 @@ const RoutineName = () => {
     <div className="col-span-full">
       <RoutineNameBox>
         <div className="routine_name">
-          루틴 이름이 들어갈 자리입니다.루틴 이름이 들어갈 자리입니다.루틴 이름이 들어갈 자리입니다.루틴 이름이 들어갈
-          자리입니다.
+          루틴 이름이 들어갈 자리입니다.루틴 이름이 들어갈 자리입니다.루틴 이름이 들어갈 자리입니다.
         </div>
         <div className="underline"></div>
       </RoutineNameBox>
@@ -25,8 +24,10 @@ const RoutineNameBox = styled.div`
     font-family: Noto Sans KR;
     font-size: 16px;
     font-weight: 500;
-    line-height: 140%
+    line-height: 140%;
     letter-spacing: 0.1px;
+
+    text-align: start;
   }
 
   .underline {

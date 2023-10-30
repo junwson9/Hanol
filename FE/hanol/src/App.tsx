@@ -14,7 +14,7 @@ import ExplainDiagnose from 'pages/diagnose/explainDiagnose';
 import SelectDevice from 'pages/diagnose/selectDevice';
 import Streaming from 'pages/diagnose/streaming';
 import IoTstreaming from 'pages/diagnose/IoTstreaming';
-import RoutineName from 'components/Daily/Caution';
+import RoutineName from 'pages/routine/routineNotiSetting';
 
 function App() {
   const location = useLocation();
