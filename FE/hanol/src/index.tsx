@@ -5,6 +5,7 @@ import { RecoilRoot } from 'recoil';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
@@ -16,3 +17,5 @@ root.render(
 );
 
 reportWebVitals();
+
+serviceWorkerRegistration.register();
