@@ -25,11 +25,16 @@ public class DiagnosisService {
         return DiagnosisDetailResponse.from(DiagnosisInfo.from(diagnosis));
     }
 
-    public DiagnosisListResponse findRecentDiagnoses() {
+    public DiagnosisListResponse findDiagnoses(Integer limit) {
         // 임시 데이터
         Long memberId = 1L;
 
-        List<DiagnosisInfo> diagnosisInfoList = diagnosisRepository.findRecentDiagnoses(memberId);
+        Boolean applyLimit = false;
+        if(limit != null) {
+            applyLimit = true;
+        }
+
+        List<DiagnosisInfo> diagnosisInfoList = diagnosisRepository.findDiagnoses(memberId, applyLimit, limit);
         return DiagnosisListResponse.builder()
                 .diagnosisInfoList(diagnosisInfoList)
                 .build();

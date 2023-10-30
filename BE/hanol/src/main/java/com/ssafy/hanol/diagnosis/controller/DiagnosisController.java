@@ -9,10 +9,7 @@ import com.ssafy.hanol.diagnosis.service.dto.response.DiagnosisListResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @Slf4j
@@ -28,10 +25,10 @@ public class DiagnosisController {
         return ResponseFactory.success("진단 결과 조회 성공", DiagnosisDetailApiResponse.from(result));
     }
 
-    @GetMapping("/dashboard")
-    public ResponseEntity<?> diagnosisList() {
-        DiagnosisListResponse result = diagnosisService.findRecentDiagnoses();
-        return ResponseFactory.success("진단 결과 대시보드 조회 성공", DiagnosisListApiResponse.from(result));
+    @GetMapping
+    public ResponseEntity<?> diagnosisList(@RequestParam(value = "limit", required = false) Integer limit) {
+        DiagnosisListResponse result = diagnosisService.findDiagnoses(limit);
+        return ResponseFactory.success("진단 결과 리스트 조회 성공", DiagnosisListApiResponse.from(result));
     }
 
 }

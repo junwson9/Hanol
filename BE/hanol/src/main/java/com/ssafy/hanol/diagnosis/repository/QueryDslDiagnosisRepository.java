@@ -1,11 +1,10 @@
 package com.ssafy.hanol.diagnosis.repository;
 
 import com.querydsl.core.types.Projections;
-import com.querydsl.core.types.dsl.Expressions;
+import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.ssafy.hanol.diagnosis.domain.QDiagnosis;
 import com.ssafy.hanol.diagnosis.service.DiagnosisInfo;
-import com.ssafy.hanol.diagnosis.service.dto.response.DiagnosisListResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
@@ -22,11 +21,11 @@ public class QueryDslDiagnosisRepository {
     private final JPAQueryFactory jpaQueryFactory;
 
     // 최근 진단 데이터 20개를 조회하는 쿼리
-    public List<DiagnosisInfo> findRecentDiagnoses(Long memberId) {
+    public List<DiagnosisInfo> findDiagnoses(Long memberId, Boolean applyLimit, Integer limit) {
 
         QDiagnosis diagnosis = QDiagnosis.diagnosis;
 
-        List<DiagnosisInfo> diagnosisInfoList = jpaQueryFactory.select(
+        JPAQuery<DiagnosisInfo> query = jpaQueryFactory.select(
                         Projections.constructor(DiagnosisInfo.class,
                         diagnosis.id,
                         diagnosis.member.id,
@@ -39,10 +38,12 @@ public class QueryDslDiagnosisRepository {
                 ))
                 .from(diagnosis)
                 .where(diagnosis.member.id.eq(memberId))
-                .orderBy(diagnosis.createDate.desc())
-                .limit(20)
-                .fetch();
+                .orderBy(diagnosis.createDate.desc());
 
-        return diagnosisInfoList;
+        if(applyLimit) {
+            query = query.limit(limit);
+        }
+
+        return query.fetch();
     }
 }

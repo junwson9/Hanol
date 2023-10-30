@@ -2,7 +2,6 @@ package com.ssafy.hanol.diagnosis.repository;
 
 import com.ssafy.hanol.diagnosis.domain.Diagnosis;
 import com.ssafy.hanol.diagnosis.service.DiagnosisInfo;
-import com.ssafy.hanol.diagnosis.service.dto.response.DiagnosisListResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -27,8 +26,8 @@ public class DiagnosisRepositoryImpl implements DiagnosisRepository {
     }
 
     @Override
-    public List<DiagnosisInfo> findRecentDiagnoses(Long memberId) {
-        return queryDslDiagnosisRepository.findRecentDiagnoses(memberId);
+    public List<DiagnosisInfo> findDiagnoses(Long memberId, Boolean applyLimit, Integer limit) {
+        return queryDslDiagnosisRepository.findDiagnoses(memberId, applyLimit, limit);
     }
 
 }

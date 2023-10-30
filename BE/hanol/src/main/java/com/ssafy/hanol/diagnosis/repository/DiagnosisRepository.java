@@ -2,7 +2,6 @@ package com.ssafy.hanol.diagnosis.repository;
 
 import com.ssafy.hanol.diagnosis.domain.Diagnosis;
 import com.ssafy.hanol.diagnosis.service.DiagnosisInfo;
-import com.ssafy.hanol.diagnosis.service.dto.response.DiagnosisListResponse;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,5 +12,5 @@ public interface DiagnosisRepository {
 
     Optional<Diagnosis> findTopByMemberIdOrderByIdDesc(Long memberId);
 
-    List<DiagnosisInfo> findRecentDiagnoses(Long memberId);
+    List<DiagnosisInfo> findDiagnoses(Long memberId, Boolean applyLimit, Integer limit);
 }
