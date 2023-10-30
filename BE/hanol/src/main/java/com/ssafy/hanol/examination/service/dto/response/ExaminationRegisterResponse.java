@@ -7,13 +7,13 @@ import java.util.List;
 @Getter
 public class ExaminationRegisterResponse {
 
-    private List<String> examinationResult;
+    private List<Integer> examinationResult;
 
-    public ExaminationRegisterResponse(List<String> examinationResult) {
+    public ExaminationRegisterResponse(List<Integer> examinationResult) {
         this.examinationResult = examinationResult;
     }
 
-    public static ExaminationRegisterResponse from(List<String> examinationResult) {
+    public static ExaminationRegisterResponse from(List<Integer> examinationResult) {
         return new ExaminationRegisterResponse(examinationResult);
     }
 }

@@ -9,5 +9,5 @@ import java.util.List;
 @ToString
 public class ExaminationProduceResponse {
 
-    private List<String> examinationResult;
+    private List<Integer> examinationResult;
 }

@@ -13,13 +13,13 @@ import java.util.List;
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class ExaminationRegisterApiResponse {
 
-    private List<String> examinationResult;
+    private List<Integer> examinationResult;
 
-    public ExaminationRegisterApiResponse(List<String> examinationResult) {
+    public ExaminationRegisterApiResponse(List<Integer> examinationResult) {
         this.examinationResult = examinationResult;
     }
 
     public static ExaminationRegisterApiResponse from(ExaminationRegisterResponse result) {
-        return new ExaminationRegisterApiResponse();
+        return new ExaminationRegisterApiResponse(result.getExaminationResult());
     }
 }
