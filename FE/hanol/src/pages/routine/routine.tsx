@@ -1,6 +1,5 @@
 import FloatingButton from 'components/button/FloatingButton';
 import TapBar from 'components/common/TopBar';
-import { useNavigate } from 'react-router';
 import { useState } from 'react';
 import { ReactComponent as Error } from 'assets/icons/error.svg';
 import DateBox from 'components/routine/DateBox';
@@ -9,12 +8,19 @@ import { ReactComponent as ArrorRight } from 'assets/icons/arrow_right.svg';
 import { ReactComponent as Calender } from 'assets/icons/calender.svg';
 import CalenderBasic from 'components/picker/DateCalender';
 import RoutineButton from 'components/button/RoutineButton';
-import RoutineButtonGray from 'components/button/RoutineButtonGray';
+import axiosInstance from 'api/axiosInterceptor';
+import { useNavigate } from 'react-router-dom';
 type DateInfo = {
   year: number;
   month: number;
   day: number;
   dayOfWeek: string;
+};
+
+type DailyRoutine = {
+  routine_id: number;
+  is_done: boolean;
+  routine_name: string;
 };
 
 function Routine() {
@@ -26,14 +32,36 @@ function Routine() {
     day: today.getDate(),
     dayOfWeek: getDayOfWeekName(today.getDay()),
   });
+  const [dailyRoutines, setDailyRoutine] = useState<DailyRoutine[]>([]);
 
   const handleDateBoxClick = (dateInfo: DateInfo) => {
     setSelectedDateInfo(dateInfo);
+    const dateInfoString = `${dateInfo.year}-${dateInfo.month.toString().padStart(2, '0')}-${dateInfo.day
+      .toString()
+      .padStart(2, '0')}`;
+    console.log(formatDateToYYYYMMDD(dateInfoString));
+
+    // 비동기 함수로 변경
+    const fetchDailyRoutine = async (dateInfoString: string) => {
+      try {
+        const response = await axiosInstance.get(
+          `/routines/daily-routine?date=${formatDateToYYYYMMDD(dateInfoString)}`,
+        );
+        console.log(response);
+        console.log(formatDateToYYYYMMDD(dateInfoString));
+        setDailyRoutine(response.data.data.daily_routines);
+        console.log(dailyRoutines);
+      } catch (error) {
+        console.error('Error fetching daily routine:', error);
+      }
+    };
+
+    fetchDailyRoutine(dateInfoString);
   };
 
   const navigate = useNavigate();
   const handleClick = () => {
-    navigate('/routine');
+    navigate('/set-routine');
   };
 
   const { weekDates } = getCurrentDateAndWeekDates(selectedDate);
@@ -93,10 +121,14 @@ function Routine() {
         <CalenderBasic />
       </div>
       <div>
-        <RoutineButton />
-      </div>
-      <div>
-        <RoutineButtonGray />
+        {dailyRoutines.map((routine) => (
+          <RoutineButton
+            key={routine.routine_id} // 고유한 키 사용
+            is_done={routine.is_done}
+            routine_id={routine.routine_id}
+            routine_name={routine.routine_name}
+          />
+        ))}
       </div>
     </div>
   );
@@ -152,4 +184,11 @@ function formatDate(date: Date) {
 function getDayOfWeekName(dayOfWeek: number): string {
   const days = ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'];
   return days[dayOfWeek];
+}
+
+function formatDateToYYYYMMDD(dateInfo: string) {
+  const [year, month, day] = dateInfo.split('-');
+  const formattedMonth = month.length === 1 ? `0${month}` : month;
+  const formattedDay = day.length === 1 ? `0${day}` : day;
+  return `${year}-${formattedMonth}-${formattedDay}`;
 }
