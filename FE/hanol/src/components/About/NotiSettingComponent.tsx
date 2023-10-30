@@ -53,7 +53,8 @@ const NotiSettingComponentBox = styled.div`
   justify-content: space-between;
   align-items: center;
   margin: 0.75rem 0 1.25rem;
-  padding: 0.938rem 1.063rem;
+  /* padding: 0.938rem 1.063rem; */
+  padding: 1.25rem;
 
   width: 100%;
   height: 100%;
