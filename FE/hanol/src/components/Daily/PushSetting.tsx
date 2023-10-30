@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import Toggle from 'components/common/Toggle';
+import NotificationTime from './NotificationTime';
 
 const PushSetting = () => {
+  const [activeTime, setActiveTime] = useState(2);
+
   return (
     <div className="col-span-full">
       <PushSettingBox>
@@ -12,11 +15,21 @@ const PushSetting = () => {
             <Toggle />
           </div>
         </PushNotificationBox>
+        <NotificationTimeBox>
+          <NotificationTime timename="오전 9시" isActive={activeTime === 0} setActiveTime={setActiveTime} index={0} />
+          <NotificationTime timename="오후 1시" isActive={activeTime === 1} setActiveTime={setActiveTime} index={1} />
+          <NotificationTime timename="오후 7시" isActive={activeTime === 2} setActiveTime={setActiveTime} index={2} />
+        </NotificationTimeBox>
       </PushSettingBox>
     </div>
   );
 };
 
+const NotificationTimeBox = styled.div`
+  display: flex;
+  margin-top: 1.813rem;
+  justify-content: center;
+`;
 const PushNotificationBox = styled.div`
   display: flex;
   justify-content: space-between;
