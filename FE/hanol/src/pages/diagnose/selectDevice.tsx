@@ -57,7 +57,7 @@ function SelectDevice() {
           <div className="mt-6 flex justify-center">
             <Ex />
           </div>
-          <p className="text-left mt-6">
+          <p className="text-left mt-5">
             3. 사진이 선명할 수록 분석이 정확해집니다.
             <br />
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;촬영 시 타인의 도움을 받아보세요.
@@ -65,11 +65,16 @@ function SelectDevice() {
         </>
       ) : (
         <>
-          <p className="text-left mt-6">1. 와이파이를 연결해주세요.</p>
-          <p className="text-left mt-6">
+          <p className="text-left mt-5">1. 와이파이를 연결해주세요.</p>
+          <p className="text-left mt-5">
             2. 고민부위에 기기를 대고
             <br />
             &nbsp;&nbsp;&nbsp;&nbsp;두피를 촬영해 주세요.
+          </p>
+          <p className="text-left mt-5">
+            3. 사진이 선명할 수록 분석이 정확해집니다.
+            <br />
+            &nbsp;&nbsp;&nbsp;&nbsp;휴대폰 화면을 보고 기기 위치를 조정해 주세요!
           </p>
         </>
       )}
