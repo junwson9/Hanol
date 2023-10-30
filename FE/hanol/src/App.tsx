@@ -15,6 +15,7 @@ import SelectDevice from 'pages/diagnose/selectDevice';
 import Streaming from 'pages/diagnose/streaming';
 import IoTstreaming from 'pages/diagnose/IoTstreaming';
 import Test from 'pages/myreport/MyreportDashBoard';
+import MyPage from 'pages/about/mypage';
 
 function App() {
   const location = useLocation();
@@ -40,6 +41,7 @@ function App() {
             <Route path="/select-device" element={<SelectDevice />} />
             <Route path="/streaming" element={<Streaming />} />
             <Route path="/test" element={<Test />} />
+            <Route path="/mypage" element={<MyPage />} />
           </Routes>
         </div>
         <div>
