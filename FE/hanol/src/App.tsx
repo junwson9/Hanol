@@ -14,7 +14,8 @@ import ExplainDiagnose from 'pages/diagnose/explainDiagnose';
 import SelectDevice from 'pages/diagnose/selectDevice';
 import Streaming from 'pages/diagnose/streaming';
 import IoTstreaming from 'pages/diagnose/IoTstreaming';
-import RoutineName from 'pages/routine/routineNotiSetting';
+import Test from 'pages/myreport/MyreportDashBoard';
+import MyPage from 'pages/about/mypage';
 
 function App() {
   const location = useLocation();
@@ -39,7 +40,8 @@ function App() {
             <Route path="/explain-routine" element={<ExplainRoutine />} />
             <Route path="/select-device" element={<SelectDevice />} />
             <Route path="/streaming" element={<Streaming />} />
-            <Route path="/test" element={<RoutineName />} />
+            <Route path="/test" element={<Test />} />
+            <Route path="/mypage" element={<MyPage />} />
           </Routes>
         </div>
         <div>

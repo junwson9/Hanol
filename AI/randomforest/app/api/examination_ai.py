@@ -104,18 +104,18 @@ class ExaiminationAI:
             pass
 
         if result[0] == '0':
-            pass
+            predict_result.append(0)
         else:
-            predict_result.append('비듬')
+            predict_result.append(1)
         
         if result[1] == '0':
-            pass
+            predict_result.append(0)
         else:
-            predict_result.append('홍반')
+            predict_result.append(1)
 
         if result[2] == '0':
-            pass
+            predict_result.append(0)
         else:
-            predict_result.append('탈모')
+            predict_result.append(1)
 
         return predict_result
