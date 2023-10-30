@@ -32,7 +32,7 @@ public class NotificationSetting extends BaseTimeEntity {
     @Column(name = "is_check_routine_active", columnDefinition = "TINYINT(1) DEFAULT 0")
     private Boolean isCheckRoutineActive;
 
-    @Column(name = "isIndividualRoutineActive", columnDefinition = "TINYINT(1) DEFAULT 0")
+    @Column(name = "is_individual_routine_active", columnDefinition = "TINYINT(1) DEFAULT 0")
     private Boolean isIndividualRoutineActive;
 
     @Builder
