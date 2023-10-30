@@ -6,7 +6,7 @@ class SurveyRequest(BaseModel):
     answer1 : int
     answer2 : int
     answer3 : int
-    answer4 : str
-    answer5 : str
+    answer4 : list
+    answer5 : list
     answer6 : int
     answer7 : int
