@@ -20,8 +20,7 @@ const Toggle = () => {
 };
 
 const ToggleBox = styled.div`
-  display: flex;
-  margin-top: 0.625rem;
+  /* display: flex; */
 
   .on_background {
     background-color: #3fcc8a;
