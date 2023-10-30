@@ -28,38 +28,38 @@ class ExaiminationAI:
 
         color_hair,fake_hair,move_hair,hair_etc = 0,0,0,0
 
-        answer4 = answer4.split(',')
+        # answer4 = answer4.split(',')
         for i in range(len(answer4)):
-            tmp = answer4[i]
-            if tmp == '염색 모발':
+            tmp = int(answer4[i])
+            if tmp == 0:
                 color_hair = 1
-            elif tmp == '가발 사용(붙임머리 포함)':
+            elif tmp == 1:
                 fake_hair = 1
-            elif tmp == '모발이식/시술':
+            elif tmp == 2:
                 move_hair = 1
-            elif tmp == '기타':
+            elif tmp == 3:
                 hair_etc = 1
             else:
                 pass
 
         shampoo, hair_styling, scalp_scaling, hair_assence, rinse, treatment, scalp_serum = 0,0,0,0,0,0,0
 
-        answer5 = answer5.split(',')
+        # answer5 = answer5.split(',')
         for i in range(len(answer5)):
-            tmp = answer5[i]
-            if tmp == '샴푸':
+            tmp = int(answer5[i])
+            if tmp == 0:
                 shampoo = 1
-            elif tmp == '헤어 스타일링제':
+            elif tmp == 1:
                 hair_styling = 1
-            elif tmp == '두피 스케일링제':
+            elif tmp == 2:
                 scalp_scaling = 1
-            elif tmp == '헤어 에센스':
+            elif tmp == 3:
                 hair_assence = 1
-            elif tmp == '린스':
+            elif tmp == 4:
                 rinse = 1
-            elif tmp == '트리트먼트':
+            elif tmp == 5:
                 treatment = 1
-            elif tmp == '두피 세럼':
+            elif tmp == 6:
                 scalp_serum = 1
             else:
                 pass
