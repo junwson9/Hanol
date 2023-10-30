@@ -2,9 +2,10 @@ package com.ssafy.hanol.examination.service;
 
 import com.ssafy.hanol.examination.service.dto.request.ExaminationRegisterRequest;
 import com.ssafy.hanol.examination.service.dto.response.ExaminationRegisterResponse;
-import com.ssafy.hanol.global.examinationAI.ExaminationResultService;
-import com.ssafy.hanol.global.examinationAI.dto.ExaminationProduceRequest;
-import com.ssafy.hanol.global.examinationAI.dto.ExaminationProduceResponse;
+import com.ssafy.hanol.global.examinationSurvey.ExaminationGenerator;
+import com.ssafy.hanol.global.examinationSurvey.ExaminationResultService;
+import com.ssafy.hanol.global.examinationSurvey.dto.ExaminationGenerationApiRequest;
+import com.ssafy.hanol.global.examinationSurvey.dto.ExaminationGenerationApiResponse;
 import com.ssafy.hanol.member.domain.Gender;
 import com.ssafy.hanol.member.domain.Member;
 import com.ssafy.hanol.member.repository.MemberRepository;
@@ -17,6 +18,7 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.List;
 
 @Service
 @Slf4j
@@ -24,6 +26,7 @@ import java.util.Date;
 public class ExaminationService {
 
     private final ExaminationResultService examinationResultService;
+    private final ExaminationGenerator examinationGenerator;
     private final MemberRepository memberRepository;
 
 
@@ -33,30 +36,11 @@ public class ExaminationService {
         Long memberId = 1L;
 
         Member member = memberRepository.findById(memberId).orElseThrow(); // TODO 예외처리
-
-        // 성별 구하기
+        // 성별, 연령대 구하기
         String gender = member.getGender().equals(Gender.MALE) ? "0" : "1";
+        int ageRange = getAgeRange(member);
 
-        // 연령대 구하기
-        LocalDate currentDate = LocalDate.now();
-        LocalDate birthDate = member.getBirth().toInstant()
-                .atZone(ZoneId.systemDefault())
-                .toLocalDate();
-        int age = Period.between(birthDate, currentDate).getYears();
-        int ageRange;
-        if(age < 30) {
-            ageRange = 20;  // 30세 미만은 모두 20대로 설정
-        } else if (age < 40) {
-            ageRange = 30;
-        } else if (age < 50) {
-            ageRange = 40;
-        } else if (age < 60){
-            ageRange = 50;
-        } else {
-            ageRange = 60;  // 60세 이상은 모두 50대로 설정
-        }
-
-        ExaminationProduceRequest examinationProduceRequest = ExaminationProduceRequest.builder()
+        ExaminationGenerationApiRequest examinationGenerationApiRequest = ExaminationGenerationApiRequest.builder()
                 .answer1(request.getAnswer1())
                 .answer2(request.getAnswer2())
                 .answer3(request.getAnswer3())
@@ -67,13 +51,36 @@ public class ExaminationService {
                 .age(ageRange)
                 .build();
 
-        log.info("examinationProduceRequest: {}", examinationProduceRequest);
+        log.info("examinationProduceRequest: {}", examinationGenerationApiRequest);
 
-        ExaminationProduceResponse examinationProduceResponse = examinationResultService.produceExamination(examinationProduceRequest);
+//        ExaminationGenerationApiResponse examinationGenerationApiResponse = examinationResultService.generateExaminationResult(examinationGenerationApiRequest);
+        ExaminationGenerationApiResponse result = examinationGenerator.getExaminationResult(examinationGenerationApiRequest);
 
         // TODO 문진 데이터 저장
 
-        return new ExaminationRegisterResponse(examinationProduceResponse.getExaminationResult());
+        return new ExaminationRegisterResponse(result.getExaminationResult());
+    }
+
+    
+    // 연령대 구하기
+    private int getAgeRange(Member member) {
+        LocalDate currentDate = LocalDate.now();
+        Date birthDateOld = member.getBirth();
+        if(birthDateOld == null) {
+            // TODO 예외처리 : 생일이 없는 경우
+        }
+
+        LocalDate birthDate = birthDateOld.toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDate();
+        int age = Period.between(birthDate, currentDate).getYears();
+
+        if(age < 20) return 10; // 20세 미만은 모두 10대로 설정
+        if(age < 30) return 20;
+        if(age < 40) return 30;
+        if(age < 50) return 40;
+        if(age < 60) return 50;
+        return 60;              // 60세 이상은 모두 60대로 설정
     }
 
 }

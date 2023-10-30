@@ -1,4 +1,4 @@
-package com.ssafy.hanol.global.examinationAI.dto;
+package com.ssafy.hanol.global.examinationSurvey.dto;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
@@ -13,7 +13,7 @@ import java.util.List;
 @ToString
 @NoArgsConstructor
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class ExaminationProduceRequest {
+public class ExaminationGenerationApiRequest {
 
     private int answer1;
     private int answer2;
@@ -25,7 +25,7 @@ public class ExaminationProduceRequest {
     private int age;
 
     @Builder
-    public ExaminationProduceRequest(int answer1, int answer2, int answer3, List<Integer> answer4, List<Integer> answer5, int answer6, String gender, int age) {
+    public ExaminationGenerationApiRequest(int answer1, int answer2, int answer3, List<Integer> answer4, List<Integer> answer5, int answer6, String gender, int age) {
         this.answer1 = answer1;
         this.answer2 = answer2;
         this.answer3 = answer3;
