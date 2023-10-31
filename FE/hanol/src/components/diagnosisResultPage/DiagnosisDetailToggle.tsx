@@ -16,26 +16,26 @@ const DiagnosisDetailToggle = ({ diagnosisTitle, diagnosisContent }: Props) => {
   };
 
   return (
-    <div className="col-span-full">
-      <DiagnosisDetailBox>
-        <TitleBox>
-          <div className="for_hidden">
-            <NoSeeMoreIcon />
-          </div>
-          <div className="diagnosis_title">{diagnosisTitle}</div>
-          <div onClick={handleToggle} className="toggle_icon_div">
-            {isToggleOpen ? <NoSeeMoreIcon className="toggle_icon" /> : <SeeMoreIcon className="toggle_icon" />}
-          </div>
-        </TitleBox>
-        {isToggleOpen ? (
-          <ContentBox>
-            <div className="diagnosis_content">{diagnosisContent}</div>
-          </ContentBox>
-        ) : (
-          ''
-        )}
-      </DiagnosisDetailBox>
-    </div>
+    // <div className="col-span-full">
+    <DiagnosisDetailBox>
+      <TitleBox>
+        <div className="for_hidden">
+          <NoSeeMoreIcon />
+        </div>
+        <div className="diagnosis_title">{diagnosisTitle}</div>
+        <div onClick={handleToggle} className="toggle_icon_div">
+          {isToggleOpen ? <NoSeeMoreIcon className="toggle_icon" /> : <SeeMoreIcon className="toggle_icon" />}
+        </div>
+      </TitleBox>
+      {isToggleOpen ? (
+        <ContentBox>
+          <div className="diagnosis_content">{diagnosisContent}</div>
+        </ContentBox>
+      ) : (
+        ''
+      )}
+    </DiagnosisDetailBox>
+    // </div>
   );
 };
 
@@ -94,12 +94,13 @@ const TitleBox = styled.div`
 const DiagnosisDetailBox = styled.div`
   display: flex;
   flex-direction: column;
+  width: 100%;
+  margin-top: 0.938rem;
 
   background-color: var(--white, #fffeff);
   border: 0.2px solid var(--GrayForTab, #bcbcbc);
   border-radius: 18px;
   opacity: 0.76;
-  width: 100%;
 
   padding: 1.25rem 0.938rem;
 `;

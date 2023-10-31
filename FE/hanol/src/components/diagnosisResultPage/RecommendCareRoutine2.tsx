@@ -48,7 +48,7 @@ const RecMentBox = styled.div`
     letter-spacing: 0.2px;
     text-align: start;
 
-    margin-top: 4.625rem;
+    /* margin-top: 4.625rem; */
   }
 `;
 export default RecommendCareRoutine2;
