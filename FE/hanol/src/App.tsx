@@ -42,12 +42,11 @@ function App() {
             <Route path="/streaming" element={<Streaming />} />
             <Route path="/test" element={<Test />} />
             <Route path="/mypage" element={<MyPage />} />
+            <Route path="/IoTstreaming" element={<IoTstreaming />} />
           </Routes>
         </div>
         <div>
-          <Routes>
-            <Route path="/IoTstreaming" element={<IoTstreaming />} />
-          </Routes>
+          <Routes></Routes>
         </div>
       </div>
       {shouldShowNavBar && <NavBar />}
