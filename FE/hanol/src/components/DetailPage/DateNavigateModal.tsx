@@ -3,14 +3,18 @@ import styled from 'styled-components';
 import { ReactComponent as CloseIcon } from '../../assets/icons/close_FILL0_wght400_GRAD0_opsz24 1.svg';
 import { ReactComponent as SelectedIcon } from '../../assets/icons/check_FILL0_wght400_GRAD0_opsz24 1.svg';
 
-const DateNavigateModal = () => {
+interface Props {
+  setIsModalOpen: (arg: boolean) => void;
+}
+
+const DateNavigateModal = ({ setIsModalOpen }: Props) => {
   return (
     <div className="col-span-full">
       <ModalBackgroundBox>
         <ModalBox>
           <TitleBox>
             <div className="title">날짜 선택하기</div>
-            <CloseIcon className="close_icon" />
+            <CloseIcon className="close_icon" onClick={() => setIsModalOpen(false)} />
           </TitleBox>
           <DateListBox>
             <DateBox>
