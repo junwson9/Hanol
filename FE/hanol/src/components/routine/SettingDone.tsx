@@ -22,12 +22,12 @@ function SettingDone() {
       <div className="col-start-2 col-end-6 mt-36">
         <CheckLottie />
       </div>
-      <p className="col-span-full font-bold text-xl whitespace-nowrap">두피 케어 루틴을 완성했어요!</p>
-      <p className="col-start-2 col-end-6 text-xs text-GrayForText whitespace-nowrap mt-5">
+      <p className="col-span-full font-bold text-[1.125rem] whitespace-nowrap">두피 케어 루틴을 완성했어요!</p>
+      <p className="col-start-2 col-end-6 text-[0.75rem] text-GrayForText whitespace-nowrap mt-5">
         루틴 알림을 설정하시면 <br /> 까먹지 않고 실천할 수 있어요.
       </p>
       <div className="absolute w-[100%] bottom-5">
-        <SuccessButton name="루틴 확인하기" onClick={() => navigate('/home')} />
+        <SuccessButton name="루틴 확인하기" onClick={() => navigate('/')} />
       </div>
     </div>
   );
