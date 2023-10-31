@@ -3,79 +3,92 @@ import styled from 'styled-components';
 import { ReactComponent as CloseIcon } from '../../assets/icons/close_FILL0_wght400_GRAD0_opsz24 1.svg';
 import { ReactComponent as SelectedIcon } from '../../assets/icons/check_FILL0_wght400_GRAD0_opsz24 1.svg';
 
-const DateNavigateModal = () => {
+interface Props {
+  date: string;
+  setSelectedDate: (arg: string) => void;
+  setIsModalOpen: (arg: boolean) => void;
+}
+
+const DateNavigateModal = ({ date, setSelectedDate, setIsModalOpen }: Props) => {
+  const handleDateBoxClick = () => {
+    setIsModalOpen(false);
+    setSelectedDate('11.11.11');
+  };
+
   return (
     <div className="col-span-full">
       <ModalBackgroundBox>
         <ModalBox>
           <TitleBox>
             <div className="title">날짜 선택하기</div>
-            <CloseIcon className="close_icon" />
+            <CloseIcon className="close_icon" onClick={() => setIsModalOpen(false)} />
           </TitleBox>
           <DateListBox>
-            <DateBox>
+            <DateBox onClick={() => handleDateBoxClick()}>
               <div className="date">23.10.14 (금) 18:09</div>
-              <SelectedIcon className="selected_icon" />
+              {/* api에서 들어온 날짜들(=위에 div안에 들어가는거)랑,  date로 넘어온거랑 같으면 표시*/}
+              {/* 추가: 선택하면 date를 선택한 날짜와 같게 표시 */}
+              {date === '22.12.11' && <SelectedIcon className="selected_icon" />}
             </DateBox>
             <DateBox>
               <div className="date">23.10.14 (금) 18:09</div>
-              <SelectedIcon className="selected_icon" />
+              {date === '23.12.29' && <SelectedIcon className="selected_icon" />}
             </DateBox>
             <DateBox>
               <div className="date">23.10.14 (금) 18:09</div>
-              <SelectedIcon className="selected_icon" />
+              {date === '23.12.29' && <SelectedIcon className="selected_icon" />}
             </DateBox>
             <DateBox>
               <div className="date">23.10.14 (금) 18:09</div>
-              <SelectedIcon className="selected_icon" />
+              {date === '23.12.29' && <SelectedIcon className="selected_icon" />}
             </DateBox>
             <DateBox>
               <div className="date">23.10.14 (금) 18:09</div>
-              <SelectedIcon className="selected_icon" />
+              {date === '23.12.29' && <SelectedIcon className="selected_icon" />}
             </DateBox>
             <DateBox>
               <div className="date">23.10.14 (금) 18:09</div>
-              <SelectedIcon className="selected_icon" />
+              {date === '23.12.29' && <SelectedIcon className="selected_icon" />}
             </DateBox>
             <DateBox>
               <div className="date">23.10.14 (금) 18:09</div>
-              <SelectedIcon className="selected_icon" />
+              {date === '23.12.29' && <SelectedIcon className="selected_icon" />}
             </DateBox>
             <DateBox>
               <div className="date">23.10.14 (금) 18:09</div>
-              <SelectedIcon className="selected_icon" />
+              {date === '23.12.29' && <SelectedIcon className="selected_icon" />}
             </DateBox>
             <DateBox>
               <div className="date">23.10.14 (금) 18:09</div>
-              <SelectedIcon className="selected_icon" />
+              {date === '23.12.29' && <SelectedIcon className="selected_icon" />}
             </DateBox>
             <DateBox>
               <div className="date">23.10.14 (금) 18:09</div>
-              <SelectedIcon className="selected_icon" />
+              {date === '23.12.29' && <SelectedIcon className="selected_icon" />}
             </DateBox>
             <DateBox>
               <div className="date">23.10.14 (금) 18:09</div>
-              <SelectedIcon className="selected_icon" />
+              {date === '23.12.29' && <SelectedIcon className="selected_icon" />}
             </DateBox>
             <DateBox>
               <div className="date">23.10.14 (금) 18:09</div>
-              <SelectedIcon className="selected_icon" />
+              {date === '23.12.29' && <SelectedIcon className="selected_icon" />}
             </DateBox>
             <DateBox>
               <div className="date">23.10.14 (금) 18:09</div>
-              <SelectedIcon className="selected_icon" />
+              {date === '23.12.29' && <SelectedIcon className="selected_icon" />}
             </DateBox>
             <DateBox>
               <div className="date">23.10.14 (금) 18:09</div>
-              <SelectedIcon className="selected_icon" />
+              {date === '23.12.29' && <SelectedIcon className="selected_icon" />}
             </DateBox>
             <DateBox>
               <div className="date">23.10.14 (금) 18:09</div>
-              <SelectedIcon className="selected_icon" />
+              {date === '23.12.29' && <SelectedIcon className="selected_icon" />}
             </DateBox>
             <DateBox>
               <div className="date">23.10.14 (금) 18:09</div>
-              <SelectedIcon className="selected_icon" />
+              {date === '23.12.29' && <SelectedIcon className="selected_icon" />}
             </DateBox>
           </DateListBox>
         </ModalBox>

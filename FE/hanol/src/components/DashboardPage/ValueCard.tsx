@@ -28,6 +28,7 @@ const ValueCardBox = styled.div`
   border: 0.2px solid rgba(188, 188, 188, 0.5);
   opacity: 0.76;
   background: var(--white, #fffeff);
+  cursor: pointer;
 
   .value_title {
     display: flex;

@@ -17,6 +17,7 @@ import IoTstreaming from 'pages/diagnose/IoTstreaming';
 import Test from 'pages/about/aboutNotiSetting';
 import MyPage from 'pages/about/mypage';
 import Dashboard from 'pages/myreport/MyreportDashBoard';
+import MyDetail from 'pages/myreport/MyreportDetailPage';
 
 function App() {
   const location = useLocation();
@@ -44,6 +45,7 @@ function App() {
             <Route path="/test" element={<Test />} />
             <Route path="/mypage" element={<MyPage />} />
             <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/mydetail" element={<MyDetail />} />
           </Routes>
         </div>
         <div>
