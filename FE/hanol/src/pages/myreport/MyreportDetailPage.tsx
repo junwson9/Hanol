@@ -9,18 +9,17 @@ import DateNavigateModal from 'components/DetailPage/DateNavigateModal';
 const MyreportDetailPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState('23.12.29');
-  console.log(`isMoal: ${isModalOpen}`);
 
   return (
     <div className="col-span-full">
-      <OverwrapContainer1 onClick={() => setSelectedDate('22.12.11')}>
+      <OverwrapContainer1>
         <TopTab Indicator="two" title1="대시보드" title2="진단 결과" link1="dashboard" link2="mydetail" />
         <DateNavigateButton date={selectedDate} onClick={() => setIsModalOpen(true)} />
         <ScalpScaleView />
         <ScalpImageView sub_title="측두부" scalp_img="../.../src/assets/images/scalp.jpg" />
         {isModalOpen && (
           <OverwrapContainer2>
-            <DateNavigateModal setIsModalOpen={setIsModalOpen} />
+            <DateNavigateModal date={selectedDate} setSelectedDate={setSelectedDate} setIsModalOpen={setIsModalOpen} />
           </OverwrapContainer2>
         )}
       </OverwrapContainer1>
