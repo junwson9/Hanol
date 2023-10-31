@@ -15,9 +15,7 @@ function DateBox({
   isSelected: boolean;
   onClick: (dateInfo: DateInfo) => void;
 }) {
-  const { year, month, day, dayOfWeek } = dateInfo;
-  console.log(year, month);
-  console.log(isSelected);
+  const { day, dayOfWeek } = dateInfo;
   const handleDateClick = () => {
     if (!isSelected) {
       onClick(dateInfo);

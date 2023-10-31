@@ -1,6 +1,6 @@
 import FloatingButton from 'components/button/FloatingButton';
 import TapBar from 'components/common/TopBar';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ReactComponent as Error } from 'assets/icons/error.svg';
 import DateBox from 'components/routine/DateBox';
 import { ReactComponent as ArrorLeft } from 'assets/icons/arrow_left.svg';
@@ -10,6 +10,8 @@ import CalenderBasic from 'components/picker/DateCalender';
 import RoutineButton from 'components/button/RoutineButton';
 import axiosInstance from 'api/axiosInterceptor';
 import { useNavigate } from 'react-router-dom';
+import { useMemo } from 'react';
+
 type DateInfo = {
   year: number;
   month: number;
@@ -21,6 +23,7 @@ type DailyRoutine = {
   routine_id: number;
   is_done: boolean;
   routine_name: string;
+  member_routine_log_id: number;
 };
 
 function Routine() {
@@ -33,7 +36,6 @@ function Routine() {
     dayOfWeek: getDayOfWeekName(today.getDay()),
   });
   const [dailyRoutines, setDailyRoutine] = useState<DailyRoutine[]>([]);
-
   const handleDateBoxClick = (dateInfo: DateInfo) => {
     setSelectedDateInfo(dateInfo);
     const dateInfoString = `${dateInfo.year}-${dateInfo.month.toString().padStart(2, '0')}-${dateInfo.day
@@ -41,16 +43,13 @@ function Routine() {
       .padStart(2, '0')}`;
     console.log(formatDateToYYYYMMDD(dateInfoString));
 
-    // 비동기 함수로 변경
     const fetchDailyRoutine = async (dateInfoString: string) => {
       try {
         const response = await axiosInstance.get(
           `/routines/daily-routine?date=${formatDateToYYYYMMDD(dateInfoString)}`,
         );
         console.log(response);
-        console.log(formatDateToYYYYMMDD(dateInfoString));
         setDailyRoutine(response.data.data.daily_routines);
-        console.log(dailyRoutines);
       } catch (error) {
         console.error('Error fetching daily routine:', error);
       }
@@ -60,21 +59,19 @@ function Routine() {
   };
 
   const navigate = useNavigate();
+  const handleDateChange = (date: Date | null) => {
+    console.log('선택된 날짜:', date);
+  };
   const handleClick = () => {
     navigate('/set-routine');
   };
-
-  const { weekDates } = getCurrentDateAndWeekDates(selectedDate);
-  const monthDate = new Date();
-  const [formattedDate] = useState(formatDate(monthDate));
-
-  console.log('오늘 날짜:', formattedDate);
-  console.log('월요일부터 일요일까지의 날짜와 해당 년도 및 월:', weekDates);
-
+  const { weekDates } = useMemo(() => getCurrentDateAndWeekDates(selectedDate), [selectedDate]);
+  console.log(weekDates);
   const handlePrevDate = () => {
     const newDate = new Date(selectedDate);
     newDate.setDate(selectedDate.getDate() - 7); // 7일을 이전으로 이동
     setSelectedDate(newDate);
+    console.log(selectedDate);
   };
 
   const handleNextDate = () => {
@@ -82,6 +79,53 @@ function Routine() {
     newDate.setDate(selectedDate.getDate() + 7); // 7일을 다음으로 이동
     setSelectedDate(newDate);
   };
+
+  const handleDataChange = (isDone: boolean, achievementRates: number, key: number) => {
+    // setDailyRoutine()
+    console.log(key);
+    console.log('isDone:', isDone);
+    console.log('achievementRates:', achievementRates);
+  };
+
+  useEffect(() => {
+    const today = new Date();
+    const formattedDate = formatDate(today);
+    console.log(formattedDate);
+    const fetchData = async () => {
+      try {
+        const response = await axiosInstance.get(`/routines/daily-routine?date=${formattedDate}`);
+        setDailyRoutine(response.data.data.daily_routines);
+        console.log(response);
+      } catch (error) {
+        console.error('데이터 가져오기 오류:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    const startYear = weekDates[0].year.toString().padStart(2, '0');
+    const startMonth = weekDates[0].month.toString().padStart(2, '0');
+    const startDay = weekDates[0].day.toString().padStart(2, '0');
+    const endYear = weekDates[6].year.toString().padStart(2, '0');
+    const endMonth = weekDates[6].month.toString().padStart(2, '0');
+    const endDay = weekDates[6].day.toString().padStart(2, '0');
+    const fetchData = async () => {
+      try {
+        const response = await axiosInstance.get(
+          `/routines/daily-routine/achievement-rates?start-date=${startYear}-${startMonth}-${startDay}&end-date=${endYear}-${endMonth}-${endDay}`,
+        );
+        // setDailyRoutine(response.data.data.daily_routines);
+        console.log(response);
+      } catch (error) {
+        console.error('데이터 가져오기 오류:', error);
+      }
+    };
+
+    fetchData();
+  }, [weekDates]);
+
   return (
     <div className="col-span-full flex flex-col justify-between">
       <TapBar name={weekDates[0].year.toString() + '년 ' + weekDates[0].month.toString() + '월'} icon={<Calender />} />
@@ -118,15 +162,17 @@ function Routine() {
         <FloatingButton name={'두피 케어 루틴 설정하기'} onClick={handleClick} />
       </div>
       <div>
-        <CalenderBasic />
+        <CalenderBasic onDateChange={handleDateChange} />
       </div>
       <div>
-        {dailyRoutines.map((routine) => (
+        {dailyRoutines.map((routine, index) => (
           <RoutineButton
-            key={routine.routine_id} // 고유한 키 사용
+            key={index} // 고유한 키 사용
             is_done={routine.is_done}
             routine_id={routine.routine_id}
             routine_name={routine.routine_name}
+            member_routine_log_id={routine.member_routine_log_id}
+            onDataChange={handleDataChange}
           />
         ))}
       </div>
@@ -136,8 +182,7 @@ function Routine() {
 
 export default Routine;
 
-// 나머지 코드 (getCurrentDateAndWeekDates, formatDate 함수, DateBox 컴포넌트 등) 유지
-
+// 달력을 위한 함수
 function getCurrentDateAndWeekDates(currentDate: Date) {
   const daysOfWeek = ['일', '월', '화', '수', '목', '금', '토'];
 
@@ -171,14 +216,10 @@ function getCurrentDateAndWeekDates(currentDate: Date) {
 }
 
 function formatDate(date: Date) {
-  console.log(date);
   const year = date.getFullYear();
-  const month = date.getMonth() + 1; // 월은 0부터 시작하므로 1을 더합니다.
-
-  // 날짜, 월, 년도를 원하는 형식으로 조합합니다.
-  const formattedDate = `${year}년 ${month}월 `;
-
-  return formattedDate;
+  const month = (date.getMonth() + 1).toString().padStart(2, '0');
+  const day = date.getDate().toString().padStart(2, '0');
+  return `${year}-${month}-${day}`;
 }
 
 function getDayOfWeekName(dayOfWeek: number): string {

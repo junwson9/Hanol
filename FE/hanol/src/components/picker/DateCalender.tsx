@@ -3,10 +3,10 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
 
-export default function CalendarBasic() {
+export default function CalendarBasic({ onDateChange }: { onDateChange: (date: Date | null) => void }) {
   const [isModalOpen, setIsModalOpen] = React.useState(false);
   const [selectedDate, setSelectedDate] = React.useState<Date | null>(null);
-  console.log(selectedDate);
+
   const openModal = () => {
     setIsModalOpen(true);
   };
@@ -17,6 +17,7 @@ export default function CalendarBasic() {
 
   const handleDateChange = (date: Date | null) => {
     setSelectedDate(date || null);
+    onDateChange(date);
     closeModal();
   };
 
