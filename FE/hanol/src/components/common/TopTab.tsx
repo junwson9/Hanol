@@ -1,29 +1,34 @@
 import React from 'react';
-// import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 interface Props {
   Indicator: string;
   title1: string;
   title2: string;
+  link1: string;
+  link2: string;
 }
 
 interface StyleProps {
   Indicator: string;
 }
 
-const TopTab = ({ Indicator, title1, title2 }: Props) => {
-  // const navigate = useNavigate();
+const TopTab = ({ Indicator, title1, title2, link1, link2 }: Props) => {
+  const navigate = useNavigate();
 
+  const handleTabClick = (where: string) => {
+    navigate(`/${where}`);
+  };
   return (
     <TopTabBox>
-      <LeftBox Indicator={Indicator}>
+      <LeftBox Indicator={Indicator} onClick={() => handleTabClick(link1)}>
         <div className="top_tab_title">{title1}</div>
 
         <UnderBar>{Indicator === 'one' && <ActiveBar />}</UnderBar>
       </LeftBox>
 
-      <RightBox Indicator={Indicator}>
+      <RightBox Indicator={Indicator} onClick={() => handleTabClick(link2)}>
         <div className="top_tab_title">{title2} </div>
         <UnderBar>{Indicator === 'two' && <ActiveBar />} </UnderBar>
       </RightBox>
@@ -43,7 +48,7 @@ const UnderBar = styled.div`
   display: flex;
   justify-content: center;
 
-  width: 50%;
+  width: 100%;
   height: 1px;
   background: #d1d5db;
 `;

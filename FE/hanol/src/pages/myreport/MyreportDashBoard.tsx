@@ -7,6 +7,7 @@ import ValueGraph from 'components/DashboardPage/ValueGraph';
 import DivisionRectangle from 'components/common/DivisionRectangle';
 import RecommendCareRoutine from 'components/DashboardPage/RecommendCareRoutine';
 import Button from 'components/button/Button';
+import TopTab from 'components/common/TopTab';
 
 const MyreaportDashBoard = () => {
   const navigate = useNavigate();
@@ -15,10 +16,14 @@ const MyreaportDashBoard = () => {
     navigate('/test');
   };
 
+  const handleBannerButtonClick = () => {
+    navigate('/test');
+  };
+
   return (
     <div className="col-span-full">
-      <BannerButton />
-
+      <TopTab Indicator="one" title1="대시보드" title2="진단 결과" link1="dashboard" link2="mydetail" />
+      <BannerButton name="내 두피 분석 하러가기" onClick={() => handleBannerButtonClick()} />
       <ValueCardBox>
         <ValueCard title="탈모" value={0} />
         <ValueCard title="각질" value={2} />

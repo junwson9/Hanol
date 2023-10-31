@@ -2,10 +2,15 @@ import React from 'react';
 import { ReactComponent as EastArrowIcon } from '../../assets/icons/east_arrow_icon.svg';
 import styled from 'styled-components';
 
-const BannerButton = () => {
+interface Props {
+  name: string;
+  onClick: () => void;
+}
+
+const BannerButton = ({ name, onClick }: Props) => {
   return (
-    <BannerButtonBox>
-      <div className="buton_content">내 두피 분석 하러가기</div>
+    <BannerButtonBox onClick={onClick}>
+      <div className="buton_content">{name}</div>
       <ArrowEclipse>
         <EastArrowIcon className="arrow_icon" />
       </ArrowEclipse>
@@ -41,6 +46,8 @@ const BannerButtonBox = styled.div`
   border-radius: 12px;
   align-items: center;
   margin-top: 1.25rem;
+  cursor: pointer;
+
   .buton_content {
     display: flex;
 
