@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import { ReactComponent as Camera } from 'assets/icons/diagnoseCamera.svg';
 import TopBarDepth2 from 'components/common/TapBarDepth2';
 import { useNavigate } from 'react-router-dom';

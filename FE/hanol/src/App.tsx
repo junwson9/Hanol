@@ -53,15 +53,17 @@ function App() {
               }
             />
             <Route path="/mypage" element={<MyPage />} />
+<<<<<<< HEAD
+            <Route path="/IoTstreaming" element={<IoTstreaming />} />
+=======
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/mydetail" element={<MyDetail />} />
             <Route path="/diagnosis" element={<DiagnosisDetail />} />
+>>>>>>> develop
           </Routes>
         </div>
         <div>
-          <Routes>
-            <Route path="/IoTstreaming" element={<IoTstreaming />} />
-          </Routes>
+          <Routes></Routes>
         </div>
       </div>
       {shouldShowNavBar && <NavBar />}
