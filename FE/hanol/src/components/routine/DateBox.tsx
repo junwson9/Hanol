@@ -1,3 +1,4 @@
+import React from 'react';
 type DateInfo = {
   year: number;
   month: number;
@@ -16,7 +17,7 @@ function DateBox({
 }) {
   const { year, month, day, dayOfWeek } = dateInfo;
   console.log(year, month);
-  // 클릭되었을 때 onClick 함수를 호출하여 선택된 날짜를 설정
+  console.log(isSelected);
   const handleDateClick = () => {
     if (!isSelected) {
       onClick(dateInfo);
@@ -25,7 +26,7 @@ function DateBox({
   return (
     <button
       className={`bg-White w-[2.8rem] h-[4rem] flex flex-col justify-center items-center rounded-[0.75rem] border border-Gray ${
-        isSelected ? 'bg-GrayForText' : ''
+        isSelected ? 'bg-[#888888]' : ''
       }`}
       onClick={handleDateClick}
     >
@@ -39,4 +40,4 @@ function DateBox({
   );
 }
 
-export default DateBox;
+export default React.memo(DateBox);

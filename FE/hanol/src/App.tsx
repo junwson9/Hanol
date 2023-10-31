@@ -14,8 +14,9 @@ import ExplainDiagnose from 'pages/diagnose/explainDiagnose';
 import SelectDevice from 'pages/diagnose/selectDevice';
 import Streaming from 'pages/diagnose/streaming';
 import IoTstreaming from 'pages/diagnose/IoTstreaming';
-import Test from 'pages/myreport/MyreportDashBoard';
+import Test from 'pages/about/aboutNotiSetting';
 import MyPage from 'pages/about/mypage';
+import Dashboard from 'pages/myreport/MyreportDashBoard';
 
 function App() {
   const location = useLocation();
@@ -42,6 +43,7 @@ function App() {
             <Route path="/streaming" element={<Streaming />} />
             <Route path="/test" element={<Test />} />
             <Route path="/mypage" element={<MyPage />} />
+            <Route path="/dashboard" element={<Dashboard />} />
           </Routes>
         </div>
         <div>
