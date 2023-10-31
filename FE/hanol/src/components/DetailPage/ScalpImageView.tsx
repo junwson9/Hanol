@@ -27,6 +27,7 @@ const ImgBox = styled.div`
   width: 70%;
   object-fit: cover;
   margin-top: 1.5rem;
+  margin-bottom: 2.876rem;
   align-self: center;
 
   .scalp_img {
