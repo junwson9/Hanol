@@ -15,6 +15,7 @@ const Rectangle = styled.div`
   flex-shrink: 0;
 
   background: #f6f6f6;
+  margin: 1.875rem 0;
 `;
 
 export default DivisionRectangle;
