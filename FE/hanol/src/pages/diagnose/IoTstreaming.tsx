@@ -1,10 +1,10 @@
 import { useRef, useEffect, useState } from 'react';
 import TopBarDepth2 from 'components/common/TapBarDepth2';
 import { ReactComponent as Camera } from 'assets/icons/diagnoseCamera.svg';
-// import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 function IoTstreaming() {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const videoRef = useRef<HTMLImageElement | null>(null);
   const [showCaptureButtons, setShowCaptureButtons] = useState(true);
   const [capturedImage, setCapturedImage] = useState<string | null>(null);
@@ -22,7 +22,6 @@ function IoTstreaming() {
 
     socket.onclose = (event) => {
       console.error('Socket Closed:', event);
-      setTimeout(initializeWebSocket, 2000);
     };
 
     socket.onerror = (event) => {
@@ -33,7 +32,6 @@ function IoTstreaming() {
   const closeWebSocket = () => {
     if (socket) {
       socket.close();
-      console.log('닫았나?');
     }
   };
   useEffect(() => {
@@ -75,7 +73,7 @@ function IoTstreaming() {
       <TopBarDepth2
         name=""
         onClick={() => {
-          closeWebSocket();
+          navigate('/diagnose');
         }}
         propsIsBack={true}
       />
