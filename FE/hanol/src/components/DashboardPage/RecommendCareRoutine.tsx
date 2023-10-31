@@ -19,5 +19,6 @@ const RecMentBox = styled.div`
   line-height: 140%; /* 25.2px */
   letter-spacing: 0.2px;
   text-align: left;
+  margin-bottom: 1.25rem;
 `;
 export default RecommendCareRoutine;

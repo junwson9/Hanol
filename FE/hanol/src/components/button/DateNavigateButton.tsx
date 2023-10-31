@@ -5,15 +5,18 @@ import { ReactComponent as RightNavigateIcon } from '../../assets/icons/chevron_
 
 interface Props {
   date: string;
+  onClick: (arg: boolean) => void;
 }
 
-const DateNavigateButton = ({ date }: Props) => {
+const DateNavigateButton = ({ date, onClick }: Props) => {
   return (
     <div className="col-span-full">
       <ButtonBox>
         <DateNavigateButtonBox>
           <LeftNavigateIcon className="left_icon" />
-          <div className="date_box">{date}</div>
+          <div className="date_box" onClick={() => onClick(true)}>
+            {date}
+          </div>
           <RightNavigateIcon className="right_icon" />
         </DateNavigateButtonBox>
       </ButtonBox>
@@ -24,6 +27,8 @@ const DateNavigateButton = ({ date }: Props) => {
 const ButtonBox = styled.div`
   display: flex;
   justify-content: center;
+
+  margin: 1.563rem 0;
 `;
 
 const DateNavigateButtonBox = styled.div`

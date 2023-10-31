@@ -19,7 +19,6 @@ public class DiagnosisDetailApiResponse {
     }
 
     public static DiagnosisDetailApiResponse from(DiagnosisDetailResponse diagnosisDetailResponse) {
-        DiagnosisInfo info = diagnosisDetailResponse.getDiagnosisInfo();
-        return new DiagnosisDetailApiResponse(info);
+        return new DiagnosisDetailApiResponse(diagnosisDetailResponse.getDiagnosisInfo());
     }
 }

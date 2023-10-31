@@ -19,17 +19,16 @@ const ValueCard = ({ title, value }: Props) => {
 const ValueCardBox = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
   align-items: center;
-  /* 후에 수정 */
-  width: 98px;
-  height: 80px;
+  width: 30%;
+  height: 100%;
   flex-shrink: 0;
-
+  padding: 0.75rem 0.75rem;
   border-radius: 18px;
-  border: 0.2px solid var(--GrayForTab, #bcbcbc);
+  border: 0.2px solid rgba(188, 188, 188, 0.5);
   opacity: 0.76;
   background: var(--white, #fffeff);
+  cursor: pointer;
 
   .value_title {
     display: flex;
@@ -38,6 +37,7 @@ const ValueCardBox = styled.div`
     flex-direction: column;
     justify-content: center;
     flex-shrink: 0;
+    margin-bottom: 0.625rem;
 
     color: var(--Black, #252321);
     text-align: center;
