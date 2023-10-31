@@ -47,6 +47,6 @@ public class DiagnosisService {
     //
     //  진단 결과 listen -> 이미지 업로드, 데이터 저장 -> 결과 return
 
-    
+
 
 }
