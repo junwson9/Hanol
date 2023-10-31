@@ -1,9 +1,11 @@
 package com.ssafy.hanol.diagnosis.repository;
 
 import com.ssafy.hanol.diagnosis.domain.Diagnosis;
+import com.ssafy.hanol.diagnosis.service.DiagnosisInfo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Optional;
 
 @Component
@@ -11,6 +13,7 @@ import java.util.Optional;
 public class DiagnosisRepositoryImpl implements DiagnosisRepository {
 
     private final JpaDiagnosisRepository jpaDiagnosisRepository;
+    private final QueryDslDiagnosisRepository queryDslDiagnosisRepository;
 
     @Override
     public Optional<Diagnosis> findById(Long id) {
@@ -20,6 +23,11 @@ public class DiagnosisRepositoryImpl implements DiagnosisRepository {
     @Override
     public Optional<Diagnosis> findTopByMemberIdOrderByIdDesc(Long memberId) {
         return jpaDiagnosisRepository.findTopByMemberIdOrderByIdDesc(memberId);
+    }
+
+    @Override
+    public List<DiagnosisInfo> findDiagnoses(Long memberId, Boolean applyLimit, Integer limit) {
+        return queryDslDiagnosisRepository.findDiagnoses(memberId, applyLimit, limit);
     }
 
 }
