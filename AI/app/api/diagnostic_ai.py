@@ -4,15 +4,11 @@ from torchvision import transforms
 from PIL import Image
 from io import BytesIO
 from fastapi import UploadFile
+import concurrent.futures
 
 class DiagnosticAI:
     def __init__(self):
-        self.model1 = self.load_model('AI_model/model1.pt')
-        self.model2 = self.load_model('AI_model/model2.pt')
-        self.model3 = self.load_model('AI_model/model3.pt')
-        self.model4 = self.load_model('AI_model/model4.pt')
-        self.model5 = self.load_model('AI_model/model5.pt')
-        self.model6 = self.load_model('AI_model/model6.pt')
+        self.models = [self.load_model(f'AI_model/model{i}.pt') for i in range(1, 7)]
 
     def load_model(self, model_path):
         return torch.load(model_path, map_location=torch.device('cuda' if torch.cuda.is_available() else 'cpu'))
@@ -43,24 +39,21 @@ class DiagnosticAI:
         input_tensor = preprocess(image)
         input_batch = input_tensor.unsqueeze(0)
 
-        predicted_class1 = self.predict(self.model1, input_batch)
-        predicted_class2 = self.predict(self.model2, input_batch)
-        predicted_class3 = self.predict(self.model3, input_batch)
-        predicted_class4 = self.predict(self.model4, input_batch)
-        predicted_class5 = self.predict(self.model5, input_batch)
-        predicted_class6 = self.predict(self.model6, input_batch)
+        # 병렬로 모델 처리
+        with concurrent.futures.ThreadPoolExecutor() as executor:
+            predictions = list(executor.map(self.predict, self.models, [input_batch]*6))
 
         time2 = time.time()
 
         print(time2 - time1)
 
         response = {
-            "미세각질": predicted_class1,
-            "피지과다": predicted_class2,
-            "모낭사이홍반": predicted_class3,
-            "모낭홍반농포": predicted_class4,
-            "비듬": predicted_class5,
-            "탈모": predicted_class6
+            "미세각질": predictions[0],
+            "피지과다": predictions[1],
+            "모낭사이홍반": predictions[2],
+            "모낭홍반농포": predictions[3],
+            "비듬": predictions[4],
+            "탈모": predictions[5]
         }
 
         print("결과 출력 완료", response)
