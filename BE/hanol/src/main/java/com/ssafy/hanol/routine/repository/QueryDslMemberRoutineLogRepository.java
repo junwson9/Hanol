@@ -31,6 +31,7 @@ public class QueryDslMemberRoutineLogRepository {
         QMemberRoutineLog memberRoutineLog = QMemberRoutineLog.memberRoutineLog;
 
         BooleanExpression criteria = memberRoutineLog.member.id.eq(memberId)
+                .and(memberRoutineLog.date.eq(today))
                 .and(memberRoutineLog.routine.id.in(removedRoutines));
 
         jpaQueryFactory

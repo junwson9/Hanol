@@ -11,8 +11,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-import static com.querydsl.jpa.JPAExpressions.select;
-
 @Repository
 @Slf4j
 @RequiredArgsConstructor
@@ -34,11 +32,11 @@ public class QueryDslDiagnosisRepository {
                         diagnosis.imageUrl,
                         diagnosis.deviceType,
                         diagnosis.scanPart,
-                        diagnosis.createDate
+                        diagnosis.createdDate
                 ))
                 .from(diagnosis)
                 .where(diagnosis.member.id.eq(memberId))
-                .orderBy(diagnosis.createDate.desc());
+                .orderBy(diagnosis.createdDate.desc());
 
         if(applyLimit) {
             query = query.limit(limit);
