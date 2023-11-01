@@ -19,6 +19,7 @@ import MyPage from 'pages/about/mypage';
 import Dashboard from 'pages/myreport/MyreportDashBoard';
 import MyDetail from 'pages/myreport/MyreportDetailPage';
 import DiagnosisDetail from 'pages/diagnose/diagnosisDetail';
+import SelectPart from 'pages/diagnose/selectPart';
 
 function App() {
   const location = useLocation();
@@ -57,6 +58,7 @@ function App() {
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/mydetail" element={<MyDetail />} />
             <Route path="/diagnosis" element={<DiagnosisDetail />} />
+            <Route path="/select-part" element={<SelectPart />} />
           </Routes>
         </div>
         <div>
