@@ -7,7 +7,6 @@ import com.ssafy.hanol.diagnosis.domain.Diagnosis;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Getter
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
@@ -25,10 +24,10 @@ public class DiagnosisInfo {
     private int deviceType;
     private int scanPart;
     @JsonFormat(pattern = "yyyy-MM-dd' 'HH:mm:ss")
-    private LocalDateTime createDate;
+    private LocalDateTime createdDate;
 
     // QueryDSL 추출용 생성자
-    public DiagnosisInfo(Long diagnosisId, Long memberId, int value1, int value2, int value3, int value4, int value5, int value6, String imageUrl, int deviceType, int scanPart, LocalDateTime createDate) {
+    public DiagnosisInfo(Long diagnosisId, Long memberId, int value1, int value2, int value3, int value4, int value5, int value6, String imageUrl, int deviceType, int scanPart, LocalDateTime createdDate) {
         this.diagnosisId = diagnosisId;
         this.memberId = memberId;
         this.value1 = value1;
@@ -40,13 +39,13 @@ public class DiagnosisInfo {
         this.imageUrl = imageUrl;
         this.deviceType = deviceType;
         this.scanPart = scanPart;
-        this.createDate = createDate;
+        this.createdDate = createdDate;
     }
 
     public static DiagnosisInfo from(Diagnosis diagnosis) {
         return new DiagnosisInfo(diagnosis.getId(), diagnosis.getMember().getId(),
                 diagnosis.getValue1(), diagnosis.getValue2(), diagnosis.getValue3(),
                 diagnosis.getValue4(), diagnosis.getValue5(), diagnosis.getValue6(),
-                diagnosis.getImageUrl(), diagnosis.getDeviceType(), diagnosis.getScanPart(), diagnosis.getCreateDate());
+                diagnosis.getImageUrl(), diagnosis.getDeviceType(), diagnosis.getScanPart(), diagnosis.getCreatedDate());
     }
 }
