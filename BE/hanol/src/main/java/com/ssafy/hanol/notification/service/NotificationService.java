@@ -19,17 +19,12 @@ public class NotificationService {
 
     private final NotificationRepository notificationRepository;
 
-    public NotificationResponse findNotifications() {
-        // 임시데이터
-        Long memberId = 1L;
+    public NotificationResponse findNotifications(Long memberId) {
         NotificationResponse notificationResponse = notificationRepository.findNotificationResponseByMemberId(memberId).orElseThrow();
         return notificationResponse;
     }
 
-    public NotificationResponse modifyNotification(NotificationModifyRequest notificationModifyRequest) {
-        // 임시데이터
-        Long memberId = 1L;
-
+    public NotificationResponse modifyNotification(NotificationModifyRequest notificationModifyRequest, Long memberId) {
         NotificationConfiguration notificationConfiguration = notificationRepository.findByMemberId(memberId).orElseThrow();
 
         // 변경하려는 Notification 유형에 따라 업데이트
