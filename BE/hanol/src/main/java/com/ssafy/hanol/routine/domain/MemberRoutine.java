@@ -1,5 +1,6 @@
 package com.ssafy.hanol.routine.domain;
 
+import com.ssafy.hanol.common.model.BaseTimeEntity;
 import com.ssafy.hanol.member.domain.Member;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -16,7 +17,7 @@ import java.time.LocalTime;
         name = "member_routine",
         uniqueConstraints = @UniqueConstraint(columnNames = {"member_id", "routine_id"})
 )
-public class MemberRoutine {
+public class MemberRoutine extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
