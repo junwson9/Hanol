@@ -13,7 +13,7 @@ public class DiagnosisResponseConsumer {
 
     private final DiagnosisService diagnosisService;
 
-    @RabbitListener(queues = "${rabbitmq.queue.request.name")
+    @RabbitListener(queues = "${rabbitmq.queue.request.name}")
     public void receiveDiagnosis() {
         log.info("response 큐에서 요청 받음");
     }
