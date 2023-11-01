@@ -1,11 +1,11 @@
 import axiosInstance from 'api/axiosInterceptor';
 type RoutineButtonProps = {
-  buttonKey: number;
+  index: number;
   is_done: boolean;
   routine_id: number;
   routine_name: string;
   member_routine_log_id: number;
-  onDataChange: (isDone: boolean, achievementRates: number, buttonKey: number;) => void; // onDataChange 추가
+  onDataChange: (isDone: boolean, achievementRates: number, index: number) => void;
 };
 function RoutineButton(props: RoutineButtonProps) {
   const handleClick = async () => {
@@ -20,8 +20,10 @@ function RoutineButton(props: RoutineButtonProps) {
       props.onDataChange(
         response.data.data.updated_routine_log.is_done,
         response.data.data.achievement_rates,
-        props.buttonKey
+        props.index,
       );
+      console.log(props.index);
+
       console.log(response);
     } catch (error) {
       console.error('Error fetching daily routine:', error);

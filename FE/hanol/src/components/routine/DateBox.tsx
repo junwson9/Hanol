@@ -4,6 +4,7 @@ type DateInfo = {
   month: number;
   day: number;
   dayOfWeek: string;
+  achievement: number;
 };
 
 function DateBox({
@@ -15,12 +16,17 @@ function DateBox({
   isSelected: boolean;
   onClick: (dateInfo: DateInfo) => void;
 }) {
-  const { day, dayOfWeek } = dateInfo;
+  const { day, dayOfWeek, achievement } = dateInfo;
   const handleDateClick = () => {
     if (!isSelected) {
       onClick(dateInfo);
     }
   };
+  // console.log(achievement);
+  const roundedAchievement = Math.round(achievement);
+  const bgStyle = roundedAchievement > 0 ? `bg-Main bg-opacity-[${roundedAchievement}%]` : `bg-Gray`;
+  // console.log(bgStyle);
+  // console.log(roundedAchievement);
   return (
     <button
       className={`bg-White w-[2.8rem] h-[4rem] flex flex-col justify-center items-center rounded-[0.75rem] border border-Gray ${
@@ -31,7 +37,9 @@ function DateBox({
       <div className={`flex justify-center items-center font-regular ${isSelected ? 'text-White' : ''}`}>
         {dayOfWeek}
       </div>
-      <div className="flex justify-center items-center rounded-full bg-Gray w-[1.875rem] h-[1.875rem] p-[0.25rem]">
+      <div
+        className={`flex justify-center items-center rounded-full bg-Gray text-White w-[1.875rem] h-[1.875rem] p-[0.25rem] ${bgStyle}`}
+      >
         {day}
       </div>
     </button>
