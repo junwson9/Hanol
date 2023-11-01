@@ -44,12 +44,21 @@ public class NotificationConfiguration extends BaseTimeEntity {
     }
 
 
+    // == 회원가입 시 알림 설정 데이터 생성 ==
+    public static NotificationConfiguration fromMember(Member member) {
+        return NotificationConfiguration.builder()
+                .member(member)
+                .isCheckRoutineActive(true)
+                .isIndividualRoutineActive(true)
+                .build();
+    }
+
     // == 각 알림 활성화 여부 변경 ==
-    public void updateIsCheckRoutineActive(Boolean isActive) {
+    public void changeIsCheckRoutineActive(Boolean isActive) {
         this.isCheckRoutineActive = isActive;
     }
 
-    public void updateIsIndividualRoutineActive(Boolean isActive) {
+    public void changeIsIndividualRoutineActive(Boolean isActive) {
         this.isIndividualRoutineActive = isActive;
     }
 }

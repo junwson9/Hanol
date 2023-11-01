@@ -10,4 +10,6 @@ public interface NotificationRepository {
     Optional<NotificationResponse> findNotificationResponseByMemberId(Long memberId);
 
     Optional<NotificationConfiguration> findByMemberId(Long memberId);
+
+    NotificationConfiguration save(NotificationConfiguration notificationConfiguration);
 }
