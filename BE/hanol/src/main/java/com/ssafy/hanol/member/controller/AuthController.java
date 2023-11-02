@@ -1,6 +1,8 @@
 package com.ssafy.hanol.member.controller;
 
 import com.ssafy.hanol.common.response.ResponseFactory;
+import com.ssafy.hanol.global.config.auth.AuthMember;
+import com.ssafy.hanol.global.config.auth.AuthenticatedMember;
 import com.ssafy.hanol.member.controller.dto.OauthLoginApiRequest;
 import com.ssafy.hanol.member.controller.dto.OauthLoginApiResponse;
 import com.ssafy.hanol.member.service.AuthService;
@@ -26,6 +28,9 @@ public class AuthController {
         //return ResponseFactory.success("로그인 성공");
     }
 
+    /**
+     * 컨디션 체크를 위한 테스트 요청
+     */
     @GetMapping("/api/member/test")
     public ResponseEntity<?> memberTest() {
         return ResponseFactory.success("테스트 성공");

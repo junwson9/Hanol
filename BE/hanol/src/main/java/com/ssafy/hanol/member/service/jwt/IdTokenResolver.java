@@ -48,7 +48,6 @@ public class IdTokenResolver {
     }
 
     public Map<String, Object> validateIdToken(String idToken, String issuer, String aud, String modulus, String exponent) {
-        log.info("????????????????");
         try {
             Jws<Claims> claimsJws = Jwts.parserBuilder()
                                         .requireAudience(aud)
