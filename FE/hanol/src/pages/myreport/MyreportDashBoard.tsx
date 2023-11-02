@@ -15,7 +15,8 @@ import { diagnosisResultType } from 'types/DiagnosisResult';
 const MyreportDashBoard = () => {
   const navigate = useNavigate();
   const [diagnosisList, setDiagnosisList] = useState<diagnosisResultType[]>();
-  const [whatValue, setWhatValue] = useState<number>(6);
+  const [graphValue, setgraphValue] = useState<number>(6);
+  // const [diagnosisId, setDiagnosisId] = useState<number>();
   const [value1, setValue1] = useState<number>();
   const [value2, setValue2] = useState<number>();
   const [value3, setValue3] = useState<number>();
@@ -32,8 +33,8 @@ const MyreportDashBoard = () => {
   };
 
   const handleValueCardClick = (arg: number) => {
-    setWhatValue(arg);
-    console.log('whatvalue:', whatValue);
+    setgraphValue(arg);
+    console.log('whatvalue:', graphValue);
   };
 
   useEffect(() => {
@@ -62,8 +63,20 @@ const MyreportDashBoard = () => {
     }
   }, [diagnosisList]);
 
-  // console.log('value1:', value1);
-  // 확인해보기@@@@@@
+  // useEffect(() => {
+  //   if (diagnosisId && diagnosisList) {
+  //     const selectedDiagnosis = diagnosisList.find((diagnosis) => diagnosis.diagnosis_id === diagnosisId);
+
+  //     if (selectedDiagnosis) {
+  //       setValue1(selectedDiagnosis.value1);
+  //       setValue2(selectedDiagnosis.value2);
+  //       setValue3(selectedDiagnosis.value3);
+  //       setValue4(selectedDiagnosis.value4);
+  //       setValue5(selectedDiagnosis.value5);
+  //       setValue6(selectedDiagnosis.value6);
+  //     }
+  //   }
+  // }, [diagnosisId, diagnosisList]);
 
   return (
     <div className="col-span-full">
@@ -80,7 +93,7 @@ const MyreportDashBoard = () => {
         <ValueCard title="염증" value={value4 || 0} onClick={() => handleValueCardClick(4)} />
         <ValueCard title="비듬" value={value5 || 0} onClick={() => handleValueCardClick(5)} />
       </ValueCardBox>
-      <ValueGraph title="탈모" dataList={diagnosisList || []} whatValue={whatValue} />
+      <ValueGraph title="탈모" dataList={diagnosisList || []} graphValue={graphValue} />
       <DivisionRectangle />
       <RecommendCareRoutine />
       <Button name="두피 케어 루틴 추천 받기" onClick={() => handleButtonClick()} />

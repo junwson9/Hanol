@@ -21,31 +21,11 @@ ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend,
 interface Props {
   title: string;
   dataList: diagnosisResultType[];
-  whatValue: number;
+  graphValue: number;
+  // setDiagnosisId: (arg: number) => void;
 }
 
-const ValueGraph = ({ title, dataList, whatValue }: Props) => {
-  dataList.map((data) => {
-    // console.log(data.created_date.split(' ')[0].slice(2));
-
-    switch (whatValue) {
-      case 1:
-        return console.log('value1:', data.value1);
-      case 2:
-        return console.log('value2:', data.value2);
-      case 3:
-        return console.log('value3:', data.value3);
-      case 4:
-        return console.log('value4:', data.value4);
-      case 5:
-        return console.log('value5:', data.value5);
-      case 6:
-        return console.log('value6:', data.value6);
-    }
-  });
-
-  // console.log(dataList[3].created_date);
-
+const ValueGraph = ({ title, dataList, graphValue }: Props) => {
   // useEffect(() => {
   //   const myElement = document.getElementById('myElement');
   //   if (myElement) {
@@ -109,16 +89,14 @@ const ValueGraph = ({ title, dataList, whatValue }: Props) => {
     //   '2주 전',
     //   '1주 전',
     // ],
-    // labels: ['4주 전', '3주 전', '2주 전', '1주 전'],
     labels: dataList.map((data) => data.created_date.split(' ')[0].slice(2)),
     datasets: [
       {
         label: `${title}`,
         // data: [123403, 123603, 125079, 126030, 123403, 123603, 125079, 126030, 123403, 123603, 125079, 126030],
-        // data: [123403, 123603, 125079, 126030],
         // data: artistLikesCountperWeek.reverse().map((data) => data.scrapCount),
         data: dataList.map((data) => {
-          switch (whatValue) {
+          switch (graphValue) {
             case 1:
               return data.value1;
             case 2:
