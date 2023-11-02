@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @Slf4j
@@ -32,10 +33,23 @@ public class DiagnosisController {
         return ResponseFactory.success("진단 결과 조회 성공", result);
     }
 
+    @GetMapping("/latest")
+    public ResponseEntity<?> latestDiagnosisDetails(@AuthenticatedMember AuthMember member) {
+        Object result = diagnosisService.findLatestDiagnosis(member.getId());
+        return ResponseFactory.success("최신 진단 결과 조회 성공", result);
+    }
+
     @GetMapping
-    public ResponseEntity<?> diagnosisList(@RequestParam(value = "limit", required = false) Integer limit) {
-        DiagnosisListResponse result = diagnosisService.findDiagnoses(limit);
+    public ResponseEntity<?> diagnosisList(@RequestParam(value = "limit", required = false) Integer limit,
+                                           @AuthenticatedMember AuthMember member) {
+        DiagnosisListResponse result = diagnosisService.findDiagnoses(limit, member.getId());
         return ResponseFactory.success("진단 결과 리스트 조회 성공", DiagnosisListApiResponse.from(result));
+    }
+
+    @GetMapping("/dates")
+    public ResponseEntity<?> diagnosisIdList(@AuthenticatedMember AuthMember member) {
+        DiagnosisIdListApiResponse result = diagnosisService.findDiagnosisIds(member.getId());
+        return ResponseFactory.success("진단 결과 id 리스트 조회 성공", result);
     }
 
     @PostMapping(consumes = "multipart/form-data")

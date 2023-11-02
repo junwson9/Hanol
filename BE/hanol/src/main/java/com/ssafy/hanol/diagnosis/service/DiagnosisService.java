@@ -1,6 +1,7 @@
 package com.ssafy.hanol.diagnosis.service;
 
 import com.ssafy.hanol.common.util.s3.ImageUploadUtil;
+import com.ssafy.hanol.diagnosis.controller.DiagnosisIdListApiResponse;
 import com.ssafy.hanol.diagnosis.controller.dto.response.DiagnosisDetailApiResponse;
 import com.ssafy.hanol.diagnosis.domain.Diagnosis;
 import com.ssafy.hanol.diagnosis.repository.DiagnosisRepository;
@@ -11,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -28,10 +30,7 @@ public class DiagnosisService {
         return DiagnosisDetailApiResponse.from(DiagnosisInfo.from(diagnosis));
     }
 
-    public DiagnosisListResponse findDiagnoses(Integer limit) {
-        // 임시 데이터
-        Long memberId = 1L;
-
+    public DiagnosisListResponse findDiagnoses(Integer limit, Long memberId) {
         Boolean applyLimit = false;
         if(limit != null) {
             applyLimit = true;
@@ -53,4 +52,19 @@ public class DiagnosisService {
     }
 
 
+    public DiagnosisIdListApiResponse findDiagnosisIds(Long memberId) {
+        List<DiagnosisIdInfo> diagnosisIdList = diagnosisRepository.findDiagnosisIds(memberId);
+        return DiagnosisIdListApiResponse.from(diagnosisIdList);
+    }
+
+    public Object findLatestDiagnosis(Long memberId) {
+        Diagnosis diagnosis = diagnosisRepository.findTopByMemberIdOrderByIdDesc(memberId).orElse(null);
+
+        // 진단 결과가 존재하지 않는 경우 빈 배열 반환
+        if(diagnosis == null) {
+            return new ArrayList<>();
+        }
+
+        return DiagnosisDetailApiResponse.from(DiagnosisInfo.from(diagnosis));
+    }
 }
