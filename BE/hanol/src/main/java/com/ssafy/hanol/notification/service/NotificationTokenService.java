@@ -4,7 +4,7 @@ import com.ssafy.hanol.member.domain.Member;
 import com.ssafy.hanol.member.repository.MemberRepository;
 import com.ssafy.hanol.notification.domain.NotificationToken;
 import com.ssafy.hanol.notification.repository.NotificationTokenRepository;
-import com.ssafy.hanol.notification.service.dto.request.FCMTokenRequest;
+import com.ssafy.hanol.notification.service.dto.request.FcmTokenRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -21,7 +21,7 @@ public class NotificationTokenService {
     private final MemberRepository memberRepository;
 
     // 클라이언트에서 FCM token을 받아와 갱신
-    public void addToken(FCMTokenRequest fcmTokenRequest) {
+    public void addToken(FcmTokenRequest fcmTokenRequest) {
         Long memberId = fcmTokenRequest.getMemberId();
         String token = fcmTokenRequest.getFcmToken();
 
@@ -51,7 +51,7 @@ public class NotificationTokenService {
     }
 
 
-    public void removeToken(FCMTokenRequest fcmTokenRequest) {
+    public void removeToken(FcmTokenRequest fcmTokenRequest) {
         notificationTokenRepository.deleteByToken(fcmTokenRequest.getFcmToken());
     }
 

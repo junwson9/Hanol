@@ -38,16 +38,22 @@ INSERT INTO ROUTINE (routine_name, is_default, is_value_1, is_value_2, is_value_
 /* 회원 테스트 데이터 */
 INSERT INTO MEMBER (name, gender, birth, oauth_provider, oauth_id, role, created_date) VALUES ('test1', 1, '1999-01-05 00:00:00.000000', 'KAKAO', 'test1', 1, now());
 INSERT INTO MEMBER (name, gender, birth, oauth_provider, oauth_id, role, created_date) VALUES ('test2', 1, '1999-10-05 00:00:00.000000', 'KAKAO', 'test2', 1, now());
+INSERT INTO MEMBER (name, gender, birth, oauth_provider, oauth_id, role, created_date) VALUES ('test3', 1, '1999-10-05 00:00:00.000000', 'KAKAO', 'test3', 1, now());
 
 /* 회원별 루틴 테스트 데이터 */
 INSERT INTO Member_Routine (member_id, routine_id, is_notification_active, notification_time, created_date) VALUES (1, 3, 1, '13:00:00', now());
 INSERT INTO Member_Routine (member_id, routine_id, is_notification_active, notification_time, created_date) VALUES (1, 6, 1, '19:00:00', now());
-INSERT INTO Member_Routine (member_id, routine_id, is_notification_active, notification_time, created_date) VALUES (1, 9, 0, '12:00:00', now());
+INSERT INTO Member_Routine (member_id, routine_id, is_notification_active, notification_time, created_date) VALUES (1, 9, 0, '13:00:00', now());
 INSERT INTO Member_Routine (member_id, routine_id, is_notification_active, created_date) VALUES (1, 30, 0, now());
+INSERT INTO Member_Routine (member_id, routine_id, is_notification_active, notification_time, created_date) VALUES (2, 5, 1, '13:00:00', now());
 
 /* 회원-루틴 이력 테스트 데이터 */
-INSERT INTO Member_Routine_Log (member_id, routine_id, is_done, date) VALUES (1, 6, 0, '2023-10-25');
-INSERT INTO Member_Routine_Log (member_id, routine_id, is_done, date) VALUES (1, 9, 1, '2023-10-25');
+INSERT INTO member_routine_log (member_id, routine_id, is_done, date) VALUES (1, 6, 0, '2023-10-25');
+INSERT INTO member_routine_log (member_id, routine_id, is_done, date) VALUES (1, 9, 1, '2023-10-25');
+INSERT INTO member_routine_log (member_id, routine_id, is_done, date) VALUES (1, 6, 0, '2023-11-02');
+INSERT INTO member_routine_log (member_id, routine_id, is_done, date) VALUES (1, 9, 1, '2023-11-02');
+INSERT INTO member_routine_log (member_id, routine_id, is_done, date) VALUES (2, 9, 0, '2023-11-02');
+INSERT INTO member_routine_log (member_id, routine_id, is_done, date) VALUES (3, 9, 0, '2023-11-02');
 
 /* 진단 테스트 데이터 */
 INSERT INTO DIAGNOSIS (member_id, value_1, value_2, value_3, value_4, value_5, value_6, device_type, scan_part, created_date) VALUES (1, 0, 1, 2, 3, 2, 1, 1, 2, now());
@@ -55,3 +61,14 @@ INSERT INTO DIAGNOSIS (member_id, value_1, value_2, value_3, value_4, value_5, v
 INSERT INTO DIAGNOSIS (member_id, value_1, value_2, value_3, value_4, value_5, value_6, device_type, scan_part, created_date) VALUES (1, 1, 1, 2, 2, 3, 3, 1, 3, now());
 INSERT INTO DIAGNOSIS (member_id, value_1, value_2, value_3, value_4, value_5, value_6, device_type, scan_part, created_date) VALUES (1, 0, 0, 0, 0, 0, 0, 0, 4, now());
 INSERT INTO DIAGNOSIS (member_id, value_1, value_2, value_3, value_4, value_5, value_6, device_type, scan_part, created_date) VALUES (2, 0, 0, 0, 0, 0, 0, 0, 1, now());
+
+/* 알림 설정 테스트 데이터*/
+INSERT INTO notification_configuration (member_id, is_check_routine_active, is_individual_routine_active, created_date) values (1, 1, 1, now());
+INSERT INTO notification_configuration (member_id, is_check_routine_active, is_individual_routine_active, created_date) values (2, 1, 1, now());
+INSERT INTO notification_configuration (member_id, is_check_routine_active, is_individual_routine_active, created_date) values (3, 1, 1, now());
+
+/* 알림 토큰 테스트 데이터*/
+INSERT INTO notification_token (member_id, token, device_info, created_date, refresh_date) values (1, "token111", "usgeragent111", now(), now());
+INSERT INTO notification_token (member_id, token, device_info, created_date, refresh_date) values (1, "token111111", "usgeragent111111", now(), now());
+INSERT INTO notification_token (member_id, token, device_info, created_date, refresh_date) values (2, "token222", "usgeragent222", now(), now());
+INSERT INTO notification_token (member_id, token, device_info, created_date, refresh_date) values (3, "token3", "usgeragent3", now(), now());

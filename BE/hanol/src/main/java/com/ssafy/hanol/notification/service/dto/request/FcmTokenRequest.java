@@ -6,14 +6,14 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class FCMTokenRequest {
+public class FcmTokenRequest {
 
     private Long memberId;
     private String deviceInfo;
     private String fcmToken;
 
     @Builder
-    public FCMTokenRequest(Long memberId, String deviceInfo, String fcmToken) {
+    public FcmTokenRequest(Long memberId, String deviceInfo, String fcmToken) {
         this.memberId = memberId;
         this.deviceInfo = deviceInfo;
         this.fcmToken = fcmToken;

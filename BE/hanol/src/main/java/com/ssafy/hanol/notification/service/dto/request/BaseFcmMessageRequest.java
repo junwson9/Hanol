@@ -1,4 +1,4 @@
-package com.ssafy.hanol.notification.service;
+package com.ssafy.hanol.notification.service.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

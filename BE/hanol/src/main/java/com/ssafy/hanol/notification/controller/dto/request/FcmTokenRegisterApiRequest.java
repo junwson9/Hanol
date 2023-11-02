@@ -2,7 +2,7 @@ package com.ssafy.hanol.notification.controller.dto.request;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies.SnakeCaseStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import com.ssafy.hanol.notification.service.dto.request.FCMTokenRequest;
+import com.ssafy.hanol.notification.service.dto.request.FcmTokenRequest;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,18 +14,18 @@ import javax.validation.constraints.NotNull;
 @Setter
 @NoArgsConstructor
 @JsonNaming(SnakeCaseStrategy.class)
-public class FCMTokenRegisterApiRequest {
+public class FcmTokenRegisterApiRequest {
 
     @NotNull(message = "fcmToken cannot be null")
     private String fcmToken;
 
     @Builder
-    public FCMTokenRegisterApiRequest(String fcmToken) {
+    public FcmTokenRegisterApiRequest(String fcmToken) {
         this.fcmToken = fcmToken;
     }
 
-    public FCMTokenRequest toFCMTokenRequest(String userAgent, Long memberId) {
-        return FCMTokenRequest.builder()
+    public FcmTokenRequest toFcmTokenRequest(String userAgent, Long memberId) {
+        return FcmTokenRequest.builder()
                 .fcmToken(fcmToken)
                 .deviceInfo(userAgent)
                 .memberId(memberId)

@@ -4,7 +4,7 @@ package com.ssafy.hanol.notification.exception;
 import com.ssafy.hanol.common.exception.ErrorCode;
 
 public enum FcmErrorCode implements ErrorCode {
-    SEND_MULTICAST_ERROR("multicast 푸시 발송에 실패했습니다","FCM_001",500);
+    FCM_SEND_FAIL("FCM 푸시 발송 요청을 실패했습니다","FCM_001",500);
 
     private final String message;
     private final String errorCode;
