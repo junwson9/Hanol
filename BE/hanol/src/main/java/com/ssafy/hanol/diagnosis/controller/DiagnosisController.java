@@ -7,7 +7,6 @@ import com.ssafy.hanol.diagnosis.controller.dto.response.DiagnosisDetailApiRespo
 import com.ssafy.hanol.diagnosis.controller.dto.response.DiagnosisListApiResponse;
 import com.ssafy.hanol.diagnosis.exception.DiagnoseErrorCode;
 import com.ssafy.hanol.diagnosis.service.DiagnosisService;
-import com.ssafy.hanol.diagnosis.service.dto.response.DiagnosisDetailResponse;
 import com.ssafy.hanol.diagnosis.service.dto.response.DiagnosisListResponse;
 import com.ssafy.hanol.global.config.auth.AuthMember;
 import com.ssafy.hanol.global.config.auth.AuthenticatedMember;
@@ -18,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @Slf4j
@@ -28,15 +28,23 @@ public class DiagnosisController {
     private final DiagnosisService diagnosisService;
 
     @GetMapping("/{diagnosisId}")
-    public ResponseEntity<?> diagnosisDetails(@PathVariable Long diagnosisId) {
-        DiagnosisDetailResponse result = diagnosisService.findDiagnosis(diagnosisId);
-        return ResponseFactory.success("진단 결과 조회 성공", DiagnosisDetailApiResponse.from(result));
+    public ResponseEntity<?> diagnosisDetails(@PathVariable Long diagnosisId,
+                                              @AuthenticatedMember AuthMember member) {
+        DiagnosisDetailApiResponse result = diagnosisService.findDiagnosis(diagnosisId, member.getId());
+        return ResponseFactory.success("진단 결과 조회 성공", result);
     }
 
     @GetMapping
-    public ResponseEntity<?> diagnosisList(@RequestParam(value = "limit", required = false) Integer limit) {
-        DiagnosisListResponse result = diagnosisService.findDiagnoses(limit);
+    public ResponseEntity<?> diagnosisList(@RequestParam(value = "limit", required = false) Integer limit,
+                                           @AuthenticatedMember AuthMember member) {
+        DiagnosisListResponse result = diagnosisService.findDiagnoses(limit, member.getId());
         return ResponseFactory.success("진단 결과 리스트 조회 성공", DiagnosisListApiResponse.from(result));
+    }
+
+    @GetMapping("/dates")
+    public ResponseEntity<?> diagnosisIdList(@AuthenticatedMember AuthMember member) {
+        DiagnosisIdListApiResponse result = diagnosisService.findDiagnosisIds(member.getId());
+        return ResponseFactory.success("진단 결과 id 리스트 조회 성공", result);
     }
 
     @PostMapping(consumes = "multipart/form-data")
