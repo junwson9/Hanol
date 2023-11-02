@@ -3,11 +3,13 @@ package com.ssafy.hanol.notification.service.dto.request;
 import com.google.firebase.messaging.Message;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.HashMap;
 import java.util.Map;
 
 @Getter
+@NoArgsConstructor
 public class FcmMessageRequest extends BaseFcmMessageRequest {
 
     private String token;
