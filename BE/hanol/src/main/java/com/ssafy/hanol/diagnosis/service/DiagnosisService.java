@@ -1,10 +1,10 @@
 package com.ssafy.hanol.diagnosis.service;
 
 import com.ssafy.hanol.common.util.s3.ImageUploadUtil;
+import com.ssafy.hanol.diagnosis.controller.dto.response.DiagnosisDetailApiResponse;
 import com.ssafy.hanol.diagnosis.domain.Diagnosis;
 import com.ssafy.hanol.diagnosis.repository.DiagnosisRepository;
 import com.ssafy.hanol.diagnosis.service.dto.request.DiagnosisRequest;
-import com.ssafy.hanol.diagnosis.service.dto.response.DiagnosisDetailResponse;
 import com.ssafy.hanol.diagnosis.service.dto.response.DiagnosisListResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,10 +22,10 @@ public class DiagnosisService {
     private final DiagnosisRepository diagnosisRepository;
     private final ImageUploadUtil imageUploadUtil;
 
-    public DiagnosisDetailResponse findDiagnosis(Long diagnosisId) {
+    public DiagnosisDetailApiResponse findDiagnosis(Long diagnosisId) {
         // TODO 예외처리: 존재하지 않는 diagnosis, 본인 diagnosis가 아님
         Diagnosis diagnosis = diagnosisRepository.findById(diagnosisId).orElseThrow();
-        return DiagnosisDetailResponse.from(DiagnosisInfo.from(diagnosis));
+        return DiagnosisDetailApiResponse.from(DiagnosisInfo.from(diagnosis));
     }
 
     public DiagnosisListResponse findDiagnoses(Integer limit) {

@@ -7,7 +7,6 @@ import com.ssafy.hanol.diagnosis.controller.dto.response.DiagnosisDetailApiRespo
 import com.ssafy.hanol.diagnosis.controller.dto.response.DiagnosisListApiResponse;
 import com.ssafy.hanol.diagnosis.exception.DiagnoseErrorCode;
 import com.ssafy.hanol.diagnosis.service.DiagnosisService;
-import com.ssafy.hanol.diagnosis.service.dto.response.DiagnosisDetailResponse;
 import com.ssafy.hanol.diagnosis.service.dto.response.DiagnosisListResponse;
 import com.ssafy.hanol.global.config.auth.AuthMember;
 import com.ssafy.hanol.global.config.auth.AuthenticatedMember;
@@ -29,8 +28,8 @@ public class DiagnosisController {
 
     @GetMapping("/{diagnosisId}")
     public ResponseEntity<?> diagnosisDetails(@PathVariable Long diagnosisId) {
-        DiagnosisDetailResponse result = diagnosisService.findDiagnosis(diagnosisId);
-        return ResponseFactory.success("진단 결과 조회 성공", DiagnosisDetailApiResponse.from(result));
+        DiagnosisDetailApiResponse result = diagnosisService.findDiagnosis(diagnosisId);
+        return ResponseFactory.success("진단 결과 조회 성공", result);
     }
 
     @GetMapping
