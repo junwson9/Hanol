@@ -26,7 +26,7 @@ function DateBox({
   const roundedAchievement = Math.round(achievement);
   const bgStyle = roundedAchievement > 0 ? `bg-Main bg-opacity-[${roundedAchievement}%]` : `bg-Gray`;
   // console.log(bgStyle);
-  // console.log(roundedAchievement);
+  console.log(roundedAchievement);
   return (
     <button
       className={`bg-White w-[2.8rem] h-[4rem] flex flex-col justify-center items-center rounded-[0.75rem] border border-Gray ${

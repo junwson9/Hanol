@@ -17,6 +17,7 @@ export default function CalendarBasic({ onDateChange, isModalOpen, openModal, cl
   const handleDateChange = (date: Date | null) => {
     setSelectedDate(date || null);
     onDateChange(date);
+    console.log('캘린더 선택', selectedDate);
     closeModal();
   };
 

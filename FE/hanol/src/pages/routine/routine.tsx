@@ -39,19 +39,23 @@ function Routine() {
   });
   const [dailyRoutines, setDailyRoutine] = useState<DailyRoutine[]>([]);
   const [achievement, setAchievement] = useState<number[]>([]);
+
+  // 데이트박스 클릭되는곳
   const handleDateBoxClick = (dateInfo: DateInfo) => {
+    // console.log('여기', selectedDateInfo);
+    console.log('저기', dateInfo);
     setSelectedDateInfo(dateInfo);
     const dateInfoString = `${dateInfo.year}-${dateInfo.month.toString().padStart(2, '0')}-${dateInfo.day
       .toString()
       .padStart(2, '0')}`;
-    console.log(formatDateToYYYYMMDD(dateInfoString));
+    console.log('이날짜로 조회 드간다@@@@@@@', formatDateToYYYYMMDD(dateInfoString));
 
     const fetchDailyRoutine = async (dateInfoString: string) => {
       try {
         const response = await axiosInstance.get(
           `/routines/daily-routine?date=${formatDateToYYYYMMDD(dateInfoString)}`,
         );
-        console.log(response);
+        console.log('응답은 받냐?', response);
         setDailyRoutine(response.data.data.daily_routines);
       } catch (error) {
         console.error('Error fetching daily routine:', error);
@@ -65,11 +69,12 @@ function Routine() {
   const handleDateChange = (date: Date | null) => {
     if (date !== null) {
       const calenderDate = date.toISOString().slice(0, 10);
-      console.log('선택된 날짜:', calenderDate);
-      console.log('가즈앙', weekDates);
-      const tmp = getCurrentDateAndWeekDates(new Date(calenderDate));
-      console.log('드가자', tmp.weekDates[0]);
+      // console.log('선택된 날짜:', calenderDate);
+      // console.log('가즈앙', weekDates);
+      // const tmp = getCurrentDateAndWeekDates(new Date(calenderDate));
+      // console.log('드가자', tmp.weekDates[0]);
       setSelectedDate(new Date(calenderDate));
+      console.log('이거는?', selectedDate);
     }
   };
 
@@ -84,13 +89,13 @@ function Routine() {
     achievement: achievement[index], // achievement 배열의 해당 인덱스 값을 가져옴
   }));
   // updatedWeekDates 배열을 사용
-
+  console.log('바끼냐?', updatedWeekDates);
   const handlePrevDate = () => {
     const newDate = new Date(selectedDate);
     newDate.setDate(selectedDate.getDate() - 7); // 7일을 이전으로 이동
     setSelectedDate(newDate);
-    console.log('선택되는 날짜', selectedDate);
-    console.log(selectedDate);
+    // console.log('선택되는 날짜', selectedDate);
+    // console.log(selectedDate);
   };
 
   const handleNextDate = () => {
@@ -122,9 +127,10 @@ function Routine() {
     openCalenderModal();
   };
   useEffect(() => {
+    console.log('일별 조회 들어가요@@@@@@@@@@@@@@');
     const today = new Date();
     const formattedDate = formatDate(today);
-    console.log(formattedDate);
+    console.log('이날짜로 조회 드갑니다@@@@@@@', formattedDate);
     const fetchData = async () => {
       try {
         const response = await axiosInstance.get(`/routines/daily-routine?date=${formattedDate}`);
@@ -139,7 +145,7 @@ function Routine() {
   }, []);
 
   useEffect(() => {
-    console.log('바뀌냐?', weekDates);
+    console.log('weekdates가 바뀌었어요!!!!!!!!!!!');
     const startYear = weekDates[0].year.toString().padStart(2, '0');
     const startMonth = weekDates[0].month.toString().padStart(2, '0');
     const startDay = weekDates[0].day.toString().padStart(2, '0');
