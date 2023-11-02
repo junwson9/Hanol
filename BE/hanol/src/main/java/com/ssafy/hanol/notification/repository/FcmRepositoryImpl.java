@@ -8,7 +8,7 @@ import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
-public class FCMRepositoryImpl implements FCMRepository {
+public class FcmRepositoryImpl implements FcmRepository {
 
     private final JpaNotificationTokenRepository jpaNotificationTokenRepository;
 

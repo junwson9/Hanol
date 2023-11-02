@@ -3,24 +3,24 @@ package com.ssafy.hanol.notification.service;
 import com.ssafy.hanol.member.domain.Member;
 import com.ssafy.hanol.member.repository.MemberRepository;
 import com.ssafy.hanol.notification.domain.NotificationToken;
-import com.ssafy.hanol.notification.repository.FCMRepository;
+import com.ssafy.hanol.notification.repository.FcmRepository;
 import com.ssafy.hanol.notification.service.dto.request.FCMTokenRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.time.LocalDateTime;
 
 @Service
 @Slf4j
 @RequiredArgsConstructor
 @Transactional
-public class FCMService {
+public class NotificationTokenService {
 
-    private final FCMRepository fcmRepository;
+    private final FcmRepository fcmRepository;
     private final MemberRepository memberRepository;
 
+    // 클라이언트에서 FCM token을 받아와 갱신
     public void addToken(FCMTokenRequest fcmTokenRequest) {
         Long memberId = fcmTokenRequest.getMemberId();
         String token = fcmTokenRequest.getFcmToken();

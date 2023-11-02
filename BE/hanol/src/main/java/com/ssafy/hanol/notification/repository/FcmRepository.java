@@ -4,7 +4,7 @@ import com.ssafy.hanol.notification.domain.NotificationToken;
 
 import java.util.Optional;
 
-public interface FCMRepository {
+public interface FcmRepository {
     NotificationToken save(NotificationToken notificationToken);
     Optional<NotificationToken> findByToken(String token);
     void delete(NotificationToken notificationToken);
