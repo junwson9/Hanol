@@ -16,6 +16,7 @@ function DiagnoseError() {
             handleNavigate();
           }}
           propsIsBack={false}
+          completeBtn={false}
         />
       </div>
       <div className="col-start-2 col-end-6 mt-36">

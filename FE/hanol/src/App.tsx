@@ -21,6 +21,7 @@ import MyDetail from 'pages/myreport/MyreportDetailPage';
 import DiagnosisDetail from 'pages/diagnose/diagnosisDetail';
 import Analyzing from 'pages/diagnose/analyzingPage';
 import SelectPart from 'pages/diagnose/selectPart';
+import AboutNotiSetting from 'pages/about/aboutNotiSetting';
 
 function App() {
   const location = useLocation();
@@ -61,6 +62,7 @@ function App() {
             <Route path="/diagnosis" element={<DiagnosisDetail />} />
             <Route path="/analyzing" element={<Analyzing />} />
             <Route path="/select-part" element={<SelectPart />} />
+            <Route path="/about-noti-setting" element={<AboutNotiSetting />} />
           </Routes>
         </div>
         <div>

@@ -87,6 +87,7 @@ function Streaming() {
           navigate('/diagnose');
         }}
         propsIsBack={true}
+        completeBtn={false}
       />
       <div>
         {test1}

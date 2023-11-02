@@ -8,6 +8,7 @@ interface Props {
 const Toggle = ({ isToggleOn, setIsToggleOn }: Props) => {
   const toggleHandler = (prev: boolean) => {
     setIsToggleOn(!prev);
+    console.log('토글 변경');
   };
 
   return (
