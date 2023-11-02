@@ -8,6 +8,8 @@ interface Props {
 }
 
 const ValueCard = ({ title, value }: Props) => {
+  // console.log(title, ':', typeof value);
+  // console.log(title, ':', value);
   return (
     <ValueCardBox>
       <div className="value_title">{title}</div>

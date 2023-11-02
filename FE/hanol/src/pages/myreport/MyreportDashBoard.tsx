@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+// import axiosInstance from 'api/axiosInterceptor';
+import axios from 'axios';
 import styled from 'styled-components';
 import BannerButton from 'components/button/BannerButton';
 import ValueCard from 'components/DashboardPage/ValueCard';
@@ -8,9 +10,17 @@ import DivisionRectangle from 'components/common/DivisionRectangle';
 import RecommendCareRoutine from 'components/DashboardPage/RecommendCareRoutine';
 import Button from 'components/button/Button';
 import TopTab from 'components/common/TopTab';
+import { dignosisResultType } from 'types/DiagnosisResult';
 
-const MyreaportDashBoard = () => {
+const MyreportDashBoard = () => {
   const navigate = useNavigate();
+  const [diagnosisList, setDiagnosisList] = useState<dignosisResultType[]>();
+  const [value1, setValue1] = useState<number>();
+  const [value2, setValue2] = useState<number>();
+  const [value3, setValue3] = useState<number>();
+  const [value4, setValue4] = useState<number>();
+  const [value5, setValue5] = useState<number>();
+  const [value6, setValue6] = useState<number>();
 
   const handleButtonClick = () => {
     navigate('/test');
@@ -20,19 +30,48 @@ const MyreaportDashBoard = () => {
     navigate('/test');
   };
 
+  useEffect(() => {
+    // axiosInstance
+    // .get('/diagnoses?limit=20')
+    axios
+      .get('http://localhost:4000/diagnoses')
+      .then((response) => {
+        console.log('진단 결과 리스트 조회 성공:', response);
+        setDiagnosisList(response.data.diagnosis_info_list);
+      })
+      .catch((error) => {
+        console.error('진단 결과 리스트 조회 실패:', error);
+      });
+  }, []);
+  // console.log(`zz: ${diagnosisList?.[0].value1}`);
+
+  useEffect(() => {
+    if (diagnosisList) {
+      setValue1(diagnosisList[0].value1);
+      setValue2(diagnosisList[0].value2);
+      setValue3(diagnosisList[0].value3);
+      setValue4(diagnosisList[0].value4);
+      setValue5(diagnosisList[0].value5);
+      setValue6(diagnosisList[0].value6);
+    }
+  }, [diagnosisList]);
+
+  // console.log('value1:', value1);
+
   return (
     <div className="col-span-full">
       <TopTab Indicator="one" title1="대시보드" title2="진단 결과" link1="dashboard" link2="mydetail" />
       <BannerButton name="내 두피 분석 하러가기" onClick={() => handleBannerButtonClick()} />
       <ValueCardBox>
-        <ValueCard title="탈모" value={0} />
-        <ValueCard title="각질" value={2} />
-        <ValueCard title="피지" value={1} />
+        <ValueCard title="탈모" value={value6 || 0} />
+        {/* <ValueCard title="탈모" value={diag} /> */}
+        <ValueCard title="각질" value={value1 || 0} />
+        <ValueCard title="피지" value={value2 || 0} />
       </ValueCardBox>
       <ValueCardBox>
-        <ValueCard title="홍반" value={3} />
-        <ValueCard title="염증" value={2} />
-        <ValueCard title="비듬" value={1} />
+        <ValueCard title="홍반" value={value3 || 0} />
+        <ValueCard title="염증" value={value4 || 0} />
+        <ValueCard title="비듬" value={value5 || 0} />
       </ValueCardBox>
       <ValueGraph title="탈모" />
       <DivisionRectangle />
@@ -50,4 +89,4 @@ const ValueCardBox = styled.div`
   justify-content: space-between;
   margin-top: 1.25rem;
 `;
-export default MyreaportDashBoard;
+export default MyreportDashBoard;

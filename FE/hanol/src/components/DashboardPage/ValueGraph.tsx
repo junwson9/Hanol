@@ -23,8 +23,7 @@ interface Props {
 
 const ValueGraph = ({ title }: Props) => {
   useEffect(() => {
-    const myElement = document.getElementById('myElement'); // Replace 'myElement' with your element ID or reference
-
+    const myElement = document.getElementById('myElement');
     if (myElement) {
       const hammer = new Hammer(myElement as HTMLElement);
 
