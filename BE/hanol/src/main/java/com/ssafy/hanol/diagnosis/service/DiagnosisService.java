@@ -1,9 +1,11 @@
 package com.ssafy.hanol.diagnosis.service;
 
+import com.ssafy.hanol.common.exception.CustomException;
 import com.ssafy.hanol.common.util.s3.ImageUploadUtil;
 import com.ssafy.hanol.diagnosis.controller.DiagnosisIdListApiResponse;
 import com.ssafy.hanol.diagnosis.controller.dto.response.DiagnosisDetailApiResponse;
 import com.ssafy.hanol.diagnosis.domain.Diagnosis;
+import com.ssafy.hanol.diagnosis.exception.DiagnoseErrorCode;
 import com.ssafy.hanol.diagnosis.repository.DiagnosisRepository;
 import com.ssafy.hanol.diagnosis.service.dto.request.DiagnosisRequest;
 import com.ssafy.hanol.diagnosis.service.dto.response.DiagnosisListResponse;
@@ -24,11 +26,23 @@ public class DiagnosisService {
     private final DiagnosisRepository diagnosisRepository;
     private final ImageUploadUtil imageUploadUtil;
 
-    public DiagnosisDetailApiResponse findDiagnosis(Long diagnosisId) {
-        // TODO 예외처리: 존재하지 않는 diagnosis, 본인 diagnosis가 아님
-        Diagnosis diagnosis = diagnosisRepository.findById(diagnosisId).orElseThrow();
+    public DiagnosisDetailApiResponse findDiagnosis(Long diagnosisId, Long memberId) {
+        Diagnosis diagnosis = null;
+
+        // 최신 데이터 조회
+        if(diagnosisId == 0) {
+            diagnosis = diagnosisRepository.findTopByMemberIdOrderByIdDesc(memberId).orElse(null);
+            if(diagnosis == null) return null; // 진단이 존재하지 않으면 null 반환
+
+        } else { // 특정 id의 데이터 조회
+            diagnosis = diagnosisRepository.findById(diagnosisId)
+                    .orElseThrow(() -> new CustomException(DiagnoseErrorCode.NOT_FOUND_DIAGNOSIS));
+            validateAccessRights(diagnosis, memberId);
+        }
+
         return DiagnosisDetailApiResponse.from(DiagnosisInfo.from(diagnosis));
     }
+
 
     public DiagnosisListResponse findDiagnoses(Integer limit, Long memberId) {
         Boolean applyLimit = false;
@@ -50,21 +64,19 @@ public class DiagnosisService {
     public void diagnose(DiagnosisRequest diagnosisRequest) {
 
     }
-
+    
 
     public DiagnosisIdListApiResponse findDiagnosisIds(Long memberId) {
         List<DiagnosisIdInfo> diagnosisIdList = diagnosisRepository.findDiagnosisIds(memberId);
         return DiagnosisIdListApiResponse.from(diagnosisIdList);
     }
 
-    public Object findLatestDiagnosis(Long memberId) {
-        Diagnosis diagnosis = diagnosisRepository.findTopByMemberIdOrderByIdDesc(memberId).orElse(null);
 
-        // 진단 결과가 존재하지 않는 경우 빈 배열 반환
-        if(diagnosis == null) {
-            return new ArrayList<>();
+    // 본인의 진단 결과인지 검사
+    private void validateAccessRights(Diagnosis diagnosis, Long memberId) {
+        if(!diagnosis.getMember().getId().equals(memberId)) {
+            throw new CustomException(DiagnoseErrorCode.FORBIDDEN_ACCESS);
         }
-
-        return DiagnosisDetailApiResponse.from(DiagnosisInfo.from(diagnosis));
     }
+
 }

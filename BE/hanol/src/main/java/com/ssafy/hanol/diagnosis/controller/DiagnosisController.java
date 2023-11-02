@@ -28,15 +28,10 @@ public class DiagnosisController {
     private final DiagnosisService diagnosisService;
 
     @GetMapping("/{diagnosisId}")
-    public ResponseEntity<?> diagnosisDetails(@PathVariable Long diagnosisId) {
-        DiagnosisDetailApiResponse result = diagnosisService.findDiagnosis(diagnosisId);
+    public ResponseEntity<?> diagnosisDetails(@PathVariable Long diagnosisId,
+                                              @AuthenticatedMember AuthMember member) {
+        DiagnosisDetailApiResponse result = diagnosisService.findDiagnosis(diagnosisId, member.getId());
         return ResponseFactory.success("진단 결과 조회 성공", result);
-    }
-
-    @GetMapping("/latest")
-    public ResponseEntity<?> latestDiagnosisDetails(@AuthenticatedMember AuthMember member) {
-        Object result = diagnosisService.findLatestDiagnosis(member.getId());
-        return ResponseFactory.success("최신 진단 결과 조회 성공", result);
     }
 
     @GetMapping
