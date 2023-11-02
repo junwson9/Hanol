@@ -27,7 +27,7 @@
         "image_url": null,
         "device_type": 1,
         "scan_part": 1,
-        "created_date": "2023-10-30 20:26:19"
+        "created_date": "2023-10-10 20:26:19"
       },
       {
         "diagnosis_id": 3,
@@ -41,7 +41,7 @@
         "image_url": null,
         "device_type": 1,
         "scan_part": 3,
-        "created_date": "2023-10-30 20:26:19"
+        "created_date": "2023-09-12 20:26:19"
       },
       {
         "diagnosis_id": 4,
@@ -55,7 +55,7 @@
         "image_url": null,
         "device_type": 0,
         "scan_part": 4,
-        "created_date": "2023-10-30 20:26:19"
+        "created_date": "2023-05-25 20:26:19"
       }
     ]
   }

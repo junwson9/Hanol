@@ -1,4 +1,4 @@
-export interface dignosisResultType {
+export interface diagnosisResultType {
   diagnosis_id: number;
   member_id: number;
   value1: number;

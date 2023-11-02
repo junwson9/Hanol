@@ -5,13 +5,14 @@ import ValueDiv from 'components/common/ValueDiv';
 interface Props {
   title: string;
   value: number;
+  onClick: (arg: number) => void;
 }
 
-const ValueCard = ({ title, value }: Props) => {
+const ValueCard = ({ title, value, onClick }: Props) => {
   // console.log(title, ':', typeof value);
   // console.log(title, ':', value);
   return (
-    <ValueCardBox>
+    <ValueCardBox onClick={() => onClick(0)}>
       <div className="value_title">{title}</div>
       <ValueDiv valuenumber={value} />
     </ValueCardBox>

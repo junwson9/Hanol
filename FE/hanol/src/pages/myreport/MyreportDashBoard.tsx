@@ -10,11 +10,12 @@ import DivisionRectangle from 'components/common/DivisionRectangle';
 import RecommendCareRoutine from 'components/DashboardPage/RecommendCareRoutine';
 import Button from 'components/button/Button';
 import TopTab from 'components/common/TopTab';
-import { dignosisResultType } from 'types/DiagnosisResult';
+import { diagnosisResultType } from 'types/DiagnosisResult';
 
 const MyreportDashBoard = () => {
   const navigate = useNavigate();
-  const [diagnosisList, setDiagnosisList] = useState<dignosisResultType[]>();
+  const [diagnosisList, setDiagnosisList] = useState<diagnosisResultType[]>();
+  const [whatValue, setWhatValue] = useState<number>(6);
   const [value1, setValue1] = useState<number>();
   const [value2, setValue2] = useState<number>();
   const [value3, setValue3] = useState<number>();
@@ -28,6 +29,11 @@ const MyreportDashBoard = () => {
 
   const handleBannerButtonClick = () => {
     navigate('/test');
+  };
+
+  const handleValueCardClick = (arg: number) => {
+    setWhatValue(arg);
+    console.log('whatvalue:', whatValue);
   };
 
   useEffect(() => {
@@ -57,23 +63,24 @@ const MyreportDashBoard = () => {
   }, [diagnosisList]);
 
   // console.log('value1:', value1);
+  // 확인해보기@@@@@@
 
   return (
     <div className="col-span-full">
       <TopTab Indicator="one" title1="대시보드" title2="진단 결과" link1="dashboard" link2="mydetail" />
       <BannerButton name="내 두피 분석 하러가기" onClick={() => handleBannerButtonClick()} />
       <ValueCardBox>
-        <ValueCard title="탈모" value={value6 || 0} />
+        <ValueCard title="탈모" value={value6 || 0} onClick={() => handleValueCardClick(6)} />
         {/* <ValueCard title="탈모" value={diag} /> */}
-        <ValueCard title="각질" value={value1 || 0} />
-        <ValueCard title="피지" value={value2 || 0} />
+        <ValueCard title="각질" value={value1 || 0} onClick={() => handleValueCardClick(1)} />
+        <ValueCard title="피지" value={value2 || 0} onClick={() => handleValueCardClick(2)} />
       </ValueCardBox>
       <ValueCardBox>
-        <ValueCard title="홍반" value={value3 || 0} />
-        <ValueCard title="염증" value={value4 || 0} />
-        <ValueCard title="비듬" value={value5 || 0} />
+        <ValueCard title="홍반" value={value3 || 0} onClick={() => handleValueCardClick(3)} />
+        <ValueCard title="염증" value={value4 || 0} onClick={() => handleValueCardClick(4)} />
+        <ValueCard title="비듬" value={value5 || 0} onClick={() => handleValueCardClick(5)} />
       </ValueCardBox>
-      <ValueGraph title="탈모" />
+      <ValueGraph title="탈모" dataList={diagnosisList || []} whatValue={whatValue} />
       <DivisionRectangle />
       <RecommendCareRoutine />
       <Button name="두피 케어 루틴 추천 받기" onClick={() => handleButtonClick()} />
