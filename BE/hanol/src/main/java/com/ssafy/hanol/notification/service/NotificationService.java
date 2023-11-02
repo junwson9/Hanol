@@ -36,7 +36,7 @@ public class NotificationService {
         }
 
         return NotificationResponse.builder()
-                .notificationConfigurationId(notificationConfiguration.getNotificationConfigurationId())
+                .notificationConfigurationId(notificationConfiguration.getId())
                 .memberId(memberId)
                 .isCheckRoutineActive(notificationConfiguration.getIsCheckRoutineActive())
                 .isIndividualRoutineActive(notificationConfiguration.getIsIndividualRoutineActive())
