@@ -1,27 +1,23 @@
 package com.ssafy.hanol.notification.service;
 
 import com.google.firebase.messaging.MulticastMessage;
-import lombok.Builder;
 import lombok.Getter;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Getter
-public class FcmMulticastMessageRequest extends BaseFcmMessageRequest {
+public class FcmMessageRequest extends BaseFcmMessageRequest {
 
-    private List<String> tokens;
+    private String token;
 
-    @Builder
-    public FcmMulticastMessageRequest(Notification notification, Data data, List<String> tokens) {
+    public FcmMessageRequest(Notification notification, Data data) {
         super(notification, data);
-        this.tokens = tokens;
     }
 
     public MulticastMessage toMulticastMessage() {
         return MulticastMessage.builder()
-                .addAllTokens(this.tokens)
+                .addToken(this.token)
                 .setNotification(toNotification(this.notification))
                 .putAllData(toDataMap(this.data))
                 .build();
@@ -41,5 +37,4 @@ public class FcmMulticastMessageRequest extends BaseFcmMessageRequest {
         dataMap.put("click_action", data.getClickAction());
         return dataMap;
     }
-
 }
