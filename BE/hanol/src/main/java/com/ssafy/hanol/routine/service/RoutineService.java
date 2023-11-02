@@ -39,16 +39,14 @@ public class RoutineService {
 
 
     // 회원별 설정 루틴 및 추천 루틴 리스트 조회
-    public RoutineListResponse findRoutineList() {
-        // 임시 데이터
-        Long memberId = 1L;
-
+    public RoutineListResponse findRoutineList(Long memberId) {
         // 회원이 설정해둔 루틴 리스트 조회
         List<MemberRoutine> memberRoutines = memberRoutineRepository.findByMemberId(memberId);
 
         List<RoutineInfo> myRoutines = memberRoutines.stream()
                 .map(RoutineInfo::from)
                 .collect(Collectors.toList());
+        log.info("기존 루틴: {}", myRoutines);
 
         // 최신 진단 결과 조회
         Diagnosis latestDiagnosis = diagnosisRepository.findTopByMemberIdOrderByIdDesc(memberId).orElse(null);
@@ -71,9 +69,7 @@ public class RoutineService {
 
 
     // 회원별 설정 루틴 리스트 변경
-    public void modifyRoutineList(RoutineListModifyRequest routineListModifyRequest) {
-        // 임시 데이터
-        Long memberId = 1L;
+    public void modifyRoutineList(RoutineListModifyRequest routineListModifyRequest, Long memberId) {
         Member member = memberRepository.findById(memberId).orElseThrow();
 
         // TODO 예외 처리: 스케쥴링 작업 중인 경우, 존재하지 않는 루틴, 루틴 추가 시 유니크 제약 조건 위반
@@ -122,10 +118,7 @@ public class RoutineService {
 
 
     // 날짜별 루틴 이력 리스트 조회
-    public RoutineLogListResponse findMemberRoutineLogByDate(LocalDate date) {
-        // 임시 데이터
-        Long memberId = 1L;
-
+    public RoutineLogListResponse findMemberRoutineLogByDate(LocalDate date, Long memberId) {
         // TODO 예외 처리: 스케쥴링 작업 중인 경우
 
         List<RoutineLogInfo> routineLogInfos = memberRoutineLogRepository.selectRoutineLogsByMemberIdAndDate(memberId, date);
@@ -138,10 +131,7 @@ public class RoutineService {
 
 
     // 기간 내 일별 루틴 달성률 조회
-    public RoutineAchievementRatesResponse findRoutineAchievementRates(LocalDate startDate, LocalDate endDate) {
-        // 임시 데이터
-        Long memberId = 1L;
-
+    public RoutineAchievementRatesResponse findRoutineAchievementRates(LocalDate startDate, LocalDate endDate, Long memberId) {
         // TODO 예외 처리: 스케쥴링 작업 중인 경우
 
         log.info("startDate: {}, endDate: {}", startDate, endDate);
@@ -154,10 +144,8 @@ public class RoutineService {
     
     // 루틴 달성여부 변경
     public RoutineAchievementStatusResponse modifyRoutineAchievementStatus(Long memberRoutineLogId,
-                                                                           RoutineAchievementStatusRequest request) {
-        // 임시 데이터
-        Long memberId = 1L;
-
+                                                                           RoutineAchievementStatusRequest request,
+                                                                           Long memberId) {
         // TODO 예외 처리: 스케쥴링 작업 중인 경우, 존재하지 않는 루틴
 
         MemberRoutineLog routineLog = memberRoutineLogRepository.findById(memberRoutineLogId).orElseThrow();
@@ -187,11 +175,10 @@ public class RoutineService {
                 .build();
     }
 
-    public RoutineNotificationModifyResponse modifyRoutineNotification(Long memberRoutineId, RoutineNotificationModifyRequest request) {
-
-        // 임시 데이터
-        Long memberId = 1L;
-
+    // 루틴 알림 설정 변경
+    public RoutineNotificationModifyResponse modifyRoutineNotification(Long memberRoutineId,
+                                                                       RoutineNotificationModifyRequest request,
+                                                                       Long memberId) {
         // TODO 예외 처리: 존재하지 않는 루틴
         MemberRoutine memberRoutine = memberRoutineRepository.findById(memberRoutineId).orElseThrow();
         if(!memberRoutine.getMember().getId().equals(memberId)) {

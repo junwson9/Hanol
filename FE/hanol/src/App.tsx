@@ -20,6 +20,7 @@ import Dashboard from 'pages/myreport/MyreportDashBoard';
 import MyDetail from 'pages/myreport/MyreportDetailPage';
 import DiagnosisDetail from 'pages/diagnose/diagnosisDetail';
 import Analyzing from 'pages/diagnose/analyzingPage';
+import SelectPart from 'pages/diagnose/selectPart';
 
 function App() {
   const location = useLocation();
@@ -54,16 +55,16 @@ function App() {
               }
             />
             <Route path="/mypage" element={<MyPage />} />
+            <Route path="/IoTstreaming" element={<IoTstreaming />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/mydetail" element={<MyDetail />} />
             <Route path="/diagnosis" element={<DiagnosisDetail />} />
             <Route path="/analyzing" element={<Analyzing />} />
+            <Route path="/select-part" element={<SelectPart />} />
           </Routes>
         </div>
         <div>
-          <Routes>
-            <Route path="/IoTstreaming" element={<IoTstreaming />} />
-          </Routes>
+          <Routes></Routes>
         </div>
       </div>
       {shouldShowNavBar && <NavBar />}

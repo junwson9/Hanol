@@ -4,14 +4,13 @@ import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.ssafy.hanol.diagnosis.domain.QDiagnosis;
+import com.ssafy.hanol.diagnosis.service.DiagnosisIdInfo;
 import com.ssafy.hanol.diagnosis.service.DiagnosisInfo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-
-import static com.querydsl.jpa.JPAExpressions.select;
 
 @Repository
 @Slf4j
@@ -34,16 +33,33 @@ public class QueryDslDiagnosisRepository {
                         diagnosis.imageUrl,
                         diagnosis.deviceType,
                         diagnosis.scanPart,
-                        diagnosis.createDate
+                        diagnosis.createdDate
                 ))
                 .from(diagnosis)
                 .where(diagnosis.member.id.eq(memberId))
-                .orderBy(diagnosis.createDate.desc());
+                .orderBy(diagnosis.createdDate.desc());
 
         if(applyLimit) {
             query = query.limit(limit);
         }
 
         return query.fetch();
+    }
+
+    public List<DiagnosisIdInfo> findDiagnosisIds(Long memberId) {
+
+        QDiagnosis diagnosis = QDiagnosis.diagnosis;
+
+        List<DiagnosisIdInfo> result = jpaQueryFactory.select(
+                        Projections.constructor(DiagnosisIdInfo.class,
+                                diagnosis.id,
+                                diagnosis.createdDate
+                        ))
+                .from(diagnosis)
+                .where(diagnosis.member.id.eq(memberId))
+                .orderBy(diagnosis.createdDate.desc())
+                .fetch();
+
+        return result;
     }
 }
