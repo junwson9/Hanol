@@ -21,7 +21,7 @@ public class KakaoIdTokenValidator extends AbstractIdTokenValidator {
     private final KakaoOAuthProvider kakaoOAuthProvider;
     private final String KAKAO_ID_KEY = "sub";
     private final String KAKAO_NAME_KEY = "nickname";
-    private final String KAKAO_PROFILE_EMAIL_KEY = "email";
+    private final String KAKAO_EMAIL_KEY = "email";
     private final RedisCacheRepository redisCacheRepository;
     private final String  KAKAO_JWKS_CACHE_KEY = "kakao-jwks";
 
@@ -48,22 +48,24 @@ public class KakaoIdTokenValidator extends AbstractIdTokenValidator {
     OauthMemberInfo extractMemberInfoFromPayload(Map<String, Object> payload) {
         String oauthId = (String) payload.get(KAKAO_ID_KEY);
         String name = (String) payload.get(KAKAO_NAME_KEY);
-        if (requireValueIsNull(oauthId, name)) {
+        String email = (String) payload.get(KAKAO_EMAIL_KEY);
+        if (requireValueIsNull(oauthId, name, email)) {
             throw new CustomException(CommonErrorCode.SERVER_ERROR);
         }
 
         return OauthMemberInfo.builder()
-                              .oauthId(oauthId)
-                              .name(name)
-                              .oauthProvider(OauthProvider.KAKAO)
-                              .build();
+                .oauthId(oauthId)
+                .name(name)
+                .email(email)
+                .oauthProvider(OauthProvider.KAKAO)
+                .build();
     }
 
 
     /*
      * 해당 예외가 발생하는건 카카오에서 프로퍼티 key 값을 바꾸지 않는 이상은 발생하지 않는다.
      */
-    private boolean requireValueIsNull(String oauthId, String name) {
-        return oauthId == null || name == null;
+    private boolean requireValueIsNull(String oauthId, String name, String email) {
+        return oauthId == null || name == null || email == null;
     }
 }
