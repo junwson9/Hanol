@@ -23,6 +23,7 @@ function Login() {
         console.log('data', response.data.data);
         localStorage.setItem('access_token', access_token);
         localStorage.setItem('refresh_token', refresh_token);
+        // 여기서 role에 따라 -> navigate 다르게해서 ㄱㄱ
         navigate('/');
       })
       // eslint-disable-next-line

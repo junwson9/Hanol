@@ -32,7 +32,7 @@ const reIssuedToken = async () => {
     localStorage.removeItem('refresh_token');
     const navigate = useNavigate();
 
-    navigate('/login');
+    navigate('/login-error');
   }
 };
 
