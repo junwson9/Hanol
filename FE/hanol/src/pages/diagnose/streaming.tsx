@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { DeviceState } from 'recoil/atoms';
 import { PartState } from 'recoil/atoms';
-const CONSTRAINTS = { video: true };
+const CONSTRAINTS = { video: { facingMode: 'environment' } };
 
 function Streaming() {
   const test1 = useRecoilValue(DeviceState);
@@ -98,9 +98,9 @@ function Streaming() {
         사진을 찍어주세요!
       </p>
       {capturedImage ? (
-        <img src={capturedImage} alt="Captured" className="rounded-xl mt-20" />
+        <img src={capturedImage} alt="Captured" className="rounded-xl mt-20" style={{ transform: 'scaleX(-1)' }} />
       ) : (
-        <video autoPlay ref={videoRef} playsInline className="rounded-xl mt-20" />
+        <video autoPlay ref={videoRef} playsInline className="rounded-xl mt-20" style={{ transform: 'scaleX(-1)' }} />
       )}
       {showCaptureButtons ? (
         <div className="absolute w-[100%] bottom-5 text-center">
