@@ -5,7 +5,9 @@ import FemaleIcon from '../../assets/images/female_icon.png';
 import DisabledButton from 'components/button/DisabledButton';
 import TapBarDepth2 from './../../components/common/TapBarDepth2';
 import { GenderInfo } from 'recoil/atoms';
-import { useSetRecoilState } from 'recoil';
+import { useSetRecoilState, useRecoilValue } from 'recoil';
+import { BirthInfo } from 'recoil/atoms';
+import axiosInstance from 'api/axiosInterceptor';
 
 function SignupGender() {
   const buttonName = '확인';
@@ -13,10 +15,10 @@ function SignupGender() {
 
   const [gender, setGender] = useState<string | null>(null); // 초기값은 null 또는 문자열
   const setGenderInfo = useSetRecoilState(GenderInfo);
-
+  const birth = useRecoilValue(BirthInfo);
+  const Gender = useRecoilValue(GenderInfo);
   const handleManClick = () => {
     setGender('man');
-
     setGenderInfo('MALE');
   };
 
@@ -25,7 +27,15 @@ function SignupGender() {
     setGenderInfo('FEMALE');
   };
 
-  const handleButtonClick = () => {
+  const handleButtonClick = async () => {
+    try {
+      const requsetBody = { birth: birth, gender: Gender };
+      const response = await axiosInstance.post('/members/signup', requsetBody);
+      const access_token = response.data.data.access_token;
+      localStorage.setItem('access_token', access_token);
+    } catch (error) {
+      console.error('데이터 가져오기 오류:', error);
+    }
     navigate('/login-done');
   };
 

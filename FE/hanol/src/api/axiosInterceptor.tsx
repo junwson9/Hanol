@@ -11,12 +11,12 @@ const axiosInstance: AxiosInstance = axios.create({
 const reIssuedToken = async () => {
   try {
     const refresh_token = localStorage.getItem('refresh_token'); // refresh_token 가져오기
-
+    console.log('reissue 드가자!!!!!!!!');
     if (!refresh_token) {
       // refresh_token이 없을 경우 처리
       console.log('refresh_token이 없습니다.');
       const navigate = useNavigate();
-      navigate('/login');
+      navigate('/login-error');
       return null;
     }
 
