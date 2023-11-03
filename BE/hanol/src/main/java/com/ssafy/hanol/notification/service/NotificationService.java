@@ -30,13 +30,13 @@ public class NotificationService {
         // 변경하려는 Notification 유형에 따라 업데이트
         NotificationType notificationType = notificationModifyRequest.getNotificationType();
         if(notificationType.equals(NotificationType.CHECK_ROUTINE)) {
-            notificationConfiguration.updateIsCheckRoutineActive(notificationModifyRequest.getIsActive());
+            notificationConfiguration.changeIsCheckRoutineActive(notificationModifyRequest.getIsActive());
         } else if(notificationType.equals(NotificationType.INDIVIDUAL_ROUTINE)) {
-            notificationConfiguration.updateIsIndividualRoutineActive(notificationModifyRequest.getIsActive());
+            notificationConfiguration.changeIsIndividualRoutineActive(notificationModifyRequest.getIsActive());
         }
 
         return NotificationResponse.builder()
-                .notificationConfigurationId(notificationConfiguration.getNotificationConfigurationId())
+                .notificationConfigurationId(notificationConfiguration.getId())
                 .memberId(memberId)
                 .isCheckRoutineActive(notificationConfiguration.getIsCheckRoutineActive())
                 .isIndividualRoutineActive(notificationConfiguration.getIsIndividualRoutineActive())
