@@ -23,7 +23,7 @@ public class QueryDslNotificationRepository {
 
         NotificationResponse result = jpaQueryFactory
                 .select(Projections.constructor(NotificationResponse.class,
-                        notification.notificationConfigurationId,
+                        notification.id,
                         notification.member.id,
                         notification.isCheckRoutineActive,
                         notification.isIndividualRoutineActive

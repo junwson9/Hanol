@@ -20,6 +20,11 @@ public class NotificationRepositoryImpl implements NotificationRepository{
     }
 
     @Override
+    public NotificationConfiguration save(NotificationConfiguration notificationConfiguration) {
+        return jpaNotificationRepository.save(notificationConfiguration);
+    }
+
+    @Override
     public Optional<NotificationResponse> findNotificationResponseByMemberId(Long memberId) {
         return queryDslNotificationRepository.findNotificationResponseByMemberId(memberId);
     }

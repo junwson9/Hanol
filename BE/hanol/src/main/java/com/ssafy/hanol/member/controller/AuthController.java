@@ -11,6 +11,7 @@ import com.ssafy.hanol.member.service.AuthService;
 import com.ssafy.hanol.member.service.dto.OauthLoginResponse;
 import com.ssafy.hanol.member.service.dto.TokenReissueRequest;
 import com.ssafy.hanol.member.service.dto.TokenReissueResponse;
+import com.ssafy.hanol.notification.controller.dto.request.FcmTokenApiRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -37,9 +38,10 @@ public class AuthController {
         return ResponseFactory.success("재발급 성공", new TokenReissueApiResponse(result.getAccessToken().getToken()));
     }
 
-    @GetMapping("/logout")
-    public ResponseEntity<?> logout(@AuthenticatedMember AuthMember authMember) {
-        authService.logout(authMember.getId());
+    @PatchMapping("/logout")
+    public ResponseEntity<?> logout(@AuthenticatedMember AuthMember authMember,
+                                    @RequestBody FcmTokenApiRequest fcmTokenApiRequest) {
+        authService.logout(authMember.getId(), fcmTokenApiRequest);
         return ResponseFactory.success("로그아웃 완료");
     }
 
