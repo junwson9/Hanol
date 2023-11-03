@@ -13,6 +13,7 @@ import com.ssafy.hanol.global.config.auth.AuthenticatedMember;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -47,20 +48,12 @@ public class DiagnosisController {
         return ResponseFactory.success("진단 결과 id 리스트 조회 성공", result);
     }
 
-    @PostMapping(consumes = "multipart/form-data")
-    public ResponseEntity<?> diagnoseImage(@RequestPart(value = "file") MultipartFile file,
-                                           @RequestPart(value = "data") DiagnosisApiRequest diagnosisApiRequest,
-                                           @AuthenticatedMember AuthMember member) {
-//        // 관리자 권한 확인
-//        List<String> roles = member.getRoles();
-//        boolean isAdmin = roles.stream().anyMatch(role -> role.equals("ADMIN"));
-//
-//        if (!isAdmin) {
-//            throw new CustomException(DiagnoseErrorCode.FORBIDDEN_ACCESS);
-//        }
+    @PostMapping
+    public ResponseEntity<?> diagnoseImage(@RequestPart MultipartFile file,
+                                           @Validated @RequestPart DiagnosisApiRequest diagnosisApiRequest) {
 
         // 진단 이벤트 시작
-        diagnosisService.diagnose(diagnosisApiRequest.toDiagnosisRequest(member.getId()));
+        diagnosisService.diagnose(diagnosisApiRequest.toDiagnosisRequest(1L));
 
         return ResponseFactory.success("진단 성공");
     }

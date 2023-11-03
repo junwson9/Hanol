@@ -68,10 +68,14 @@ public class DiagnosisService {
     //
     //
     //  진단 결과 listen -> 이미지 업로드, 데이터 저장 -> 결과 return
-    public void diagnose(DiagnosisRequest diagnosisRequest) throws InterruptedException {
+    public void diagnose(DiagnosisRequest diagnosisRequest){
         //diagnosisRequestProducer.sendDiagnosisRequest();
 
-        sleep(10000);
+        try {
+            sleep(10000);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         // 임시 로직
         DiagnoseAiResponse response = DiagnoseAiResponse.builder()
                 .imageUrl("test.com")
