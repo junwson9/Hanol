@@ -28,6 +28,7 @@ const reIssuedToken = async () => {
     return localStorage.getItem('access_token'); // 재발급받은 access_token 반환
   } catch (e) {
     console.log('reissue실패');
+    console.log(e);
     localStorage.removeItem('access_token');
     localStorage.removeItem('refresh_token');
     const navigate = useNavigate();
@@ -56,8 +57,11 @@ axiosInstance.interceptors.response.use(
       config.headers.Authorization = `Bearer ${access_token}`; // 헤더에 넣어서
 
       return axiosInstance(config); // 다시 요청
-    }
+    } else {
+      const navigate = useNavigate();
 
+      navigate('/login-error');
+    }
     return Promise.reject(error);
   },
 );

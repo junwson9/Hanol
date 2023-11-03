@@ -16,7 +16,7 @@ function SelectPart() {
   const navigate = useNavigate();
   const handleNavigate = () => {
     if (activePart) {
-      if (selectedDevice === 'IoT') {
+      if (selectedDevice === 0) {
         navigate('/IoTstreaming');
       } else {
         navigate('/streaming');
