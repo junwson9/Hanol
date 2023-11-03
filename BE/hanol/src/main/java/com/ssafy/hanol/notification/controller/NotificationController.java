@@ -5,7 +5,7 @@ import com.google.firebase.messaging.Notification;
 import com.ssafy.hanol.common.response.ResponseFactory;
 import com.ssafy.hanol.global.config.auth.AuthMember;
 import com.ssafy.hanol.global.config.auth.AuthenticatedMember;
-import com.ssafy.hanol.notification.controller.dto.request.FcmTokenRegisterApiRequest;
+import com.ssafy.hanol.notification.controller.dto.request.FcmTokenApiRequest;
 import com.ssafy.hanol.notification.controller.dto.request.NotificationModifyApiRequest;
 import com.ssafy.hanol.notification.controller.dto.response.NotificationApiResponse;
 import com.ssafy.hanol.notification.service.FcmService;
@@ -50,10 +50,10 @@ public class NotificationController {
 
     @PostMapping("/token")
     public ResponseEntity<?> fcmTokenAdd(@RequestHeader("User-Agent") String userAgent,
-                                         @RequestBody FcmTokenRegisterApiRequest fcmTokenRegisterApiRequest,
+                                         @RequestBody FcmTokenApiRequest fcmTokenApiRequest,
                                          @AuthenticatedMember AuthMember authMember) {
         log.info("fcm token 등록 요청. AuthMemberId: {}, User-Agent: {}", authMember.getId(), userAgent);
-        notificationTokenService.addToken(fcmTokenRegisterApiRequest.toFcmTokenRequest(userAgent, authMember.getId()));
+        notificationTokenService.addToken(fcmTokenApiRequest.toFcmTokenRequest(userAgent, authMember.getId()));
         return ResponseFactory.success("FCM token 등록 완료");
     }
 

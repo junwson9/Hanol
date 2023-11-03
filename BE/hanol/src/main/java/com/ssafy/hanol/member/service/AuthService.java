@@ -13,8 +13,10 @@ import com.ssafy.hanol.member.service.dto.TokenReissueRequest;
 import com.ssafy.hanol.member.service.dto.TokenReissueResponse;
 import com.ssafy.hanol.member.service.oidc.IdTokenValidator;
 import com.ssafy.hanol.member.service.token.TokenService;
+import com.ssafy.hanol.notification.controller.dto.request.FcmTokenApiRequest;
 import com.ssafy.hanol.notification.domain.NotificationConfiguration;
 import com.ssafy.hanol.notification.repository.NotificationRepository;
+import com.ssafy.hanol.notification.service.NotificationTokenService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +30,7 @@ public class AuthService {
     private final MemberRepository memberRepository;
     private final TokenService tokenService;
     private final NotificationRepository notificationRepository;
+    private final NotificationTokenService notificationTokenService;
 
     public OauthLoginResponse login(OauthLoginRequest oauthLoginRequest) {
         OauthMemberInfo oauthMemberInfo = idTokenValidator.validateIdToken(
@@ -65,8 +68,9 @@ public class AuthService {
         return new TokenReissueResponse(tokenService.createAccessToken(member));
     }
 
-    public void logout(Long memberId){
+    public void logout(Long memberId, FcmTokenApiRequest fcmTokenApiRequest){
         tokenService.deleteRefreshToken(memberId);
+        notificationTokenService.deleteToken(fcmTokenApiRequest);
     }
 
     private boolean isRequireSignUp(Member oauthMember) {

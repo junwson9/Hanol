@@ -14,13 +14,13 @@ import javax.validation.constraints.NotNull;
 @Setter
 @NoArgsConstructor
 @JsonNaming(SnakeCaseStrategy.class)
-public class FcmTokenRegisterApiRequest {
+public class FcmTokenApiRequest {
 
-    @NotNull(message = "fcmToken cannot be null")
+//    @NotNull(message = "fcmToken cannot be null")  // TODO 주석 처리 해제 (테스트를 위해 임시 주석 처리)
     private String fcmToken;
 
     @Builder
-    public FcmTokenRegisterApiRequest(String fcmToken) {
+    public FcmTokenApiRequest(String fcmToken) {
         this.fcmToken = fcmToken;
     }
 

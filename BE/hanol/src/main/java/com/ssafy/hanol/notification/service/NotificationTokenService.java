@@ -2,6 +2,7 @@ package com.ssafy.hanol.notification.service;
 
 import com.ssafy.hanol.member.domain.Member;
 import com.ssafy.hanol.member.repository.MemberRepository;
+import com.ssafy.hanol.notification.controller.dto.request.FcmTokenApiRequest;
 import com.ssafy.hanol.notification.domain.NotificationToken;
 import com.ssafy.hanol.notification.repository.NotificationTokenRepository;
 import com.ssafy.hanol.notification.service.dto.request.FcmTokenRequest;
@@ -51,8 +52,8 @@ public class NotificationTokenService {
     }
 
 
-    public void removeToken(FcmTokenRequest fcmTokenRequest) {
-        notificationTokenRepository.deleteByToken(fcmTokenRequest.getFcmToken());
+    public void deleteToken(FcmTokenApiRequest fcmTokenApiRequest) {
+        notificationTokenRepository.deleteByToken(fcmTokenApiRequest.getFcmToken());
     }
 
 }
