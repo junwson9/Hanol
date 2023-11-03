@@ -21,8 +21,16 @@ def request_handler(ch, method, properties, body):
     sse_id = body.sse_id
     image = body.image
 
-    response = diag.process_diagnostic(image)
-    response = {"sse_id":sse_id, "value1": response.value1, "value2": response.value2}
+    response = diag.process_diagnostic(image,sse_id)
+    response = {
+                "sse_id": sse_id, 
+                "value1": response.value1, 
+                "value2": response.value2,
+                "value3": response.value3,
+                "value4": response.value4,
+                "value5": response.value5,
+                "value6": response.value6
+                }
 
     print("로직 처리 완료")
     time.sleep(6)

@@ -10,8 +10,13 @@ services:
       - --character-set-server=utf8mb4
       - --collation-server=utf8mb4_unicode_ci
       - --character-set-client-handshake=FALSE
+      - --lower_case_table_names=1
     env_file: .env
     environment:
+      - MYSQL_ROOT_PASSWORD=${MARIADB_ROOT_PASSWORD}
+      - MYSQL_DATABASE=${MARIADB_DATABASE}
+      - MYSQL_USER=${MARIADB_USER}
+      - MYSQL_PASSWORD=${MARIADB_PASSWORD}
       - TZ=Asia/Seoul
     restart: always
     volumes:

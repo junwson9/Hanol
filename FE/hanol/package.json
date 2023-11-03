@@ -29,6 +29,7 @@
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-prettier": "^5.0.1",
     "event-source-polyfill": "^1.0.31",
+    "firebase": "^10.5.2",
     "isomorphic-ws": "^5.0.0",
     "lottie-react": "^2.4.0",
     "prettier": "^3.0.3",
