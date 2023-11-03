@@ -51,13 +51,13 @@ public class DiagnosisController {
     public ResponseEntity<?> diagnoseImage(@RequestPart(value = "file") MultipartFile file,
                                            @RequestPart(value = "data") DiagnosisApiRequest diagnosisApiRequest,
                                            @AuthenticatedMember AuthMember member) {
-        // 관리자 권한 확인
-        List<String> roles = member.getRoles();
-        boolean isAdmin = roles.stream().anyMatch(role -> role.equals("ADMIN"));
-
-        if (!isAdmin) {
-            throw new CustomException(DiagnoseErrorCode.FORBIDDEN_ACCESS);
-        }
+//        // 관리자 권한 확인
+//        List<String> roles = member.getRoles();
+//        boolean isAdmin = roles.stream().anyMatch(role -> role.equals("ADMIN"));
+//
+//        if (!isAdmin) {
+//            throw new CustomException(DiagnoseErrorCode.FORBIDDEN_ACCESS);
+//        }
 
         // 진단 이벤트 시작
         diagnosisService.diagnose(diagnosisApiRequest.toDiagnosisRequest(member.getId()));
