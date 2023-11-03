@@ -4,8 +4,8 @@ from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split,GridSearchCV,StratifiedKFold
 import joblib
 
-# path = 'data/total_type_data.xlsx'
-path = 'data/total_new_type_data.xlsx'
+path = 'data/total_type_data.xlsx'
+# path = 'data/total_new_type_data.xlsx'
 
 df = pd.read_excel(path)
 df = df.dropna()
@@ -14,15 +14,17 @@ target = 'type'
 
 df = df[df.groupby('type')['type'].transform('count') != 1]
 
-features = df.columns(['Age','Gender','Answer7','treatment','Answer2','Answer3','Answer1','rinse'])
+features = df[['Age', 'Gender', 'Answer7', 'treatment', 'Answer2', 'Answer3', 'Answer1', 'rinse']]
 
 target_frequencies = df['type'].value_counts()
 print(target_frequencies)
 
 class_weights = {class_label: 1.0 / frequency for class_label, frequency in target_frequencies.items()}
 
-X = df[features]
+X = df[features.columns]
+
 Y = df[target]
+
 X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.2, random_state=0)
 
 # params = {
@@ -65,5 +67,5 @@ clf = RandomForestClassifier(
 # 모델 학습
 clf.fit(X_train, Y_train)
 
-model_filename = 'model/random_forest_model.pkl'
+model_filename = 'model/random_forest_model3.pkl'
 joblib.dump(clf,model_filename)
