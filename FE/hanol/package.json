@@ -28,6 +28,7 @@
     "eslint": "^8.52.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-prettier": "^5.0.1",
+    "event-source-polyfill": "^1.0.31",
     "isomorphic-ws": "^5.0.0",
     "lottie-react": "^2.4.0",
     "prettier": "^3.0.3",
@@ -85,6 +86,7 @@
   },
   "devDependencies": {
     "@mui/x-date-pickers": "^6.16.3",
+    "@types/event-source-polyfill": "^1.0.3",
     "@types/hammerjs": "^2.0.43",
     "@types/react-datepicker": "^4.19.1",
     "autoprefixer": "^10.4.16",

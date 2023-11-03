@@ -7,7 +7,7 @@ export const selectedMenuState = atom({
 
 export const DeviceState = atom({
   key: 'device',
-  default: '',
+  default: 0,
 });
 
 export const PartState = atom({
@@ -22,5 +22,10 @@ export const GenderInfo = atom<string>({
 
 export const BirthInfo = atom<string>({
   key: 'Birth',
+  default: '',
+});
+
+export const ImageState = atom<string>({
+  key: 'Image',
   default: '',
 });
