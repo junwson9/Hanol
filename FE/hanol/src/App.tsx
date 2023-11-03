@@ -1,4 +1,5 @@
 import { Routes, Route, useLocation } from 'react-router-dom';
+import './firebase-messaging-sw.js';
 import Login from './pages/auth/login';
 import LoginError from './pages/auth/loginError';
 import SignupBirth from 'pages/auth/signupBirth';
