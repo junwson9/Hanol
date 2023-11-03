@@ -1,19 +1,20 @@
 package com.ssafy.hanol.examination.controller;
 
 import com.ssafy.hanol.common.response.ResponseFactory;
-import com.ssafy.hanol.examination.controller.dto.request.ExaminationRegisterApiRequest;
-import com.ssafy.hanol.examination.controller.dto.response.ExaminationRegisterApiResponse;
+import com.ssafy.hanol.examination.controller.dto.request.ExaminationSurveyApiRequest;
+import com.ssafy.hanol.examination.controller.dto.response.ExaminationApiResponse;
 import com.ssafy.hanol.examination.service.ExaminationService;
-import com.ssafy.hanol.examination.service.dto.response.ExaminationRegisterResponse;
+import com.ssafy.hanol.examination.service.dto.response.ExaminationSurveyResponse;
+import com.ssafy.hanol.global.config.auth.AuthMember;
+import com.ssafy.hanol.global.config.auth.AuthenticatedMember;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-@RestController("/api/examinations")
+@RestController
+@RequestMapping("/api/examinations")
 @Slf4j
 @RequiredArgsConstructor
 public class ExaminationController {
@@ -21,8 +22,16 @@ public class ExaminationController {
     private final ExaminationService examinationService;
 
     @PostMapping
-    public ResponseEntity<?> examinationAdd(@Validated @RequestBody ExaminationRegisterApiRequest request) {
-        ExaminationRegisterResponse result = examinationService.addExamination(request.toApplicationDto());
-        return ResponseFactory.success("문진 완료", ExaminationRegisterApiResponse.from(result));
+    public ResponseEntity<?> examinationAdd(@Validated @RequestBody ExaminationSurveyApiRequest request,
+                                            @AuthenticatedMember AuthMember authMember) {
+        log.info("request: {}", request);
+        ExaminationSurveyResponse result = examinationService.addExamination(request, authMember.getId());
+        return ResponseFactory.success("문진 완료", ExaminationApiResponse.from(result));
+    }
+
+    @GetMapping
+    public ResponseEntity<?> examinationDetail(@AuthenticatedMember AuthMember authMember) {
+        examinationService.findExamination(authMember.getId());
+        return ResponseFactory.success("문진 결과 조회 완료");
     }
 }

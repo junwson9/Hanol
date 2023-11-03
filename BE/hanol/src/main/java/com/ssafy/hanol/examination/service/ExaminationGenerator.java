@@ -1,7 +1,7 @@
-package com.ssafy.hanol.global.examinationSurvey;
+package com.ssafy.hanol.examination.service;
 
-import com.ssafy.hanol.global.examinationSurvey.dto.ExaminationGenerationApiRequest;
-import com.ssafy.hanol.global.examinationSurvey.dto.ExaminationGenerationApiResponse;
+import com.ssafy.hanol.examination.service.dto.request.ExaminationSurveyRequest;
+import com.ssafy.hanol.examination.service.dto.response.ExaminationSurveyResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -10,27 +10,25 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
 
-import java.util.List;
-
 @Component
 @Slf4j
 @RequiredArgsConstructor
 public class ExaminationGenerator {
 
-    @Value("${examination_survey.url}")
-    private String serverUrl;
+//    private final String serverUrl = "fastapi-survey:8001";
+    private final String serverUrl = "localhost:8001"; // 로컬 테스트용
 
     private final WebClient defaultWebClient;
 
-    public ExaminationGenerationApiResponse getExaminationResult(ExaminationGenerationApiRequest request) {
-        log.info("[GENERATING-EXAMINATION-RESULT CALL]");
+    public ExaminationSurveyResponse getExaminationResult(ExaminationSurveyRequest request) {
+        log.info("[EXAMINATION-SURVEY-RESULT CALL]");
         String url = serverUrl + "/examinations";
-        ExaminationGenerationApiResponse result = defaultWebClient.post()
+        ExaminationSurveyResponse result = defaultWebClient.post()
                 .uri(url)
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(BodyInserters.fromValue(request))
                 .retrieve()
-                .bodyToMono(ExaminationGenerationApiResponse.class)
+                .bodyToMono(ExaminationSurveyResponse.class)
                 .block();
         return result;
     }
