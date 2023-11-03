@@ -11,16 +11,16 @@ const axiosInstance: AxiosInstance = axios.create({
 const reIssuedToken = async () => {
   try {
     const refresh_token = localStorage.getItem('refresh_token'); // refresh_token 가져오기
-
+    console.log('reissue 드가자!!!!!!!!');
     if (!refresh_token) {
       // refresh_token이 없을 경우 처리
       console.log('refresh_token이 없습니다.');
       const navigate = useNavigate();
-      navigate('/login');
+      navigate('/login-error');
       return null;
     }
 
-    const response = await axiosInstance.post('/member/reissue', {
+    const response = await axiosInstance.post('/members/reissue', {
       refresh_token: refresh_token, // refresh_token을 요청의 본문에 추가
     });
     console.log(response);
@@ -32,7 +32,7 @@ const reIssuedToken = async () => {
     localStorage.removeItem('refresh_token');
     const navigate = useNavigate();
 
-    navigate('/login');
+    navigate('/login-error');
   }
 };
 
@@ -49,7 +49,7 @@ axiosInstance.interceptors.response.use(
     // 토큰 자동 재발급 필요 외 다른 에러
     console.log('에러발생 ============================');
 
-    if (config.url !== '/member/reissue' && response && response.status === 401) {
+    if (config.url !== '/members/reissue' && response && response.status === 401) {
       console.log('재발급요청하기 ============================');
       const access_token = await reIssuedToken();
 
