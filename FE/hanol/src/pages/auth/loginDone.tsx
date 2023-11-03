@@ -1,24 +1,12 @@
 import CheckLottie from '../../components/routine/CheckLottie';
 import SuccessButton from 'components/button/Button';
 import { useNavigate } from 'react-router';
-import TopBarDepth2 from 'components/common/TapBarDepth2';
 
 function LoginDone() {
   const navigate = useNavigate();
-  const handleNavigate = () => {
-    navigate('/');
-  };
+
   return (
     <div className="relative col-span-full h-screen">
-      <div className="col-start-1 col-end-7">
-        <TopBarDepth2
-          name="두피 케어 루틴 설정"
-          onClick={() => {
-            handleNavigate();
-          }}
-          propsIsBack={false}
-        />
-      </div>
       <div className="col-start-2 col-end-6 mt-36">
         <CheckLottie />
       </div>

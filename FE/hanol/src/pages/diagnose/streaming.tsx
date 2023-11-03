@@ -5,11 +5,15 @@ import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { DeviceState } from 'recoil/atoms';
 import { PartState } from 'recoil/atoms';
+import { ImageState } from 'recoil/atoms';
+import { useRecoilState } from 'recoil';
 const CONSTRAINTS = { video: { facingMode: 'environment' } };
 
 function Streaming() {
   const test1 = useRecoilValue(DeviceState);
   const test2 = useRecoilValue(PartState);
+  const [, setImageURL] = useRecoilState<string>(ImageState);
+
   const navigate = useNavigate();
   const videoRef = useRef<HTMLVideoElement>(null);
   const [capturedImage, setCapturedImage] = useState<string | null>(null);
@@ -54,7 +58,10 @@ function Streaming() {
 
   const confirmCapture = () => {
     if (capturedImage) {
-      console.log('촬영 성공');
+      console.log('진단을 받아봅시다');
+      // console.log(capturedImage);
+      setImageURL(capturedImage);
+      navigate('/analyzing');
       // 여기에서 이미지를 저장하거나 서버에 업로드할 수 있습니다.
       // capturedImage에 캡처된 이미지 데이터가 있습니다.
     }

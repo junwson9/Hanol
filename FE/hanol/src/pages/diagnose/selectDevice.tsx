@@ -8,20 +8,16 @@ import { DeviceState } from 'recoil/atoms';
 
 function SelectDevice() {
   const [selectedButton, setSelectedButton] = useState<number>(0);
-  const [selectedDevice, setSelectedDevice] = useRecoilState<string>(DeviceState);
+  const [, setSelectedDevice] = useRecoilState<number>(DeviceState);
   const handleButtonSelect = (index: number) => {
     setSelectedButton(index);
   };
   const navigate = useNavigate();
   const handleNavigate = () => {
     if (selectedButton === 1) {
-      if (selectedDevice !== 'phone') {
-        setSelectedDevice('phone');
-      }
+      setSelectedDevice(1);
     } else if (selectedButton === 0) {
-      if (selectedDevice !== 'IoT') {
-        setSelectedDevice('IoT');
-      }
+      setSelectedDevice(0);
     }
     navigate('/select-part');
   };
