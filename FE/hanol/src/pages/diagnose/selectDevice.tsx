@@ -1,25 +1,33 @@
 import { useState } from 'react';
 import StartButton from 'components/button/Button';
 import { useNavigate } from 'react-router';
-import TopBarDepth2 from 'components/common/TapBarDepth2';
+import TapBarDepth2 from 'components/common/TapBarDepth2';
 import { ReactComponent as Ex } from 'assets/images/scalpExample.svg';
+import { useRecoilState } from 'recoil';
+import { DeviceState } from 'recoil/atoms';
 
 function SelectDevice() {
   const [selectedButton, setSelectedButton] = useState<number>(0);
+  const [selectedDevice, setSelectedDevice] = useRecoilState<string>(DeviceState);
   const handleButtonSelect = (index: number) => {
     setSelectedButton(index);
   };
   const navigate = useNavigate();
   const handleNavigate = () => {
     if (selectedButton === 1) {
-      navigate('/streaming');
+      if (selectedDevice !== 'phone') {
+        setSelectedDevice('phone');
+      }
     } else if (selectedButton === 0) {
-      navigate('/IoTstreaming');
+      if (selectedDevice !== 'IoT') {
+        setSelectedDevice('IoT');
+      }
     }
+    navigate('/select-part');
   };
   return (
     <div className="col-span-full relative h-screen">
-      <TopBarDepth2
+      <TapBarDepth2
         name="진단하기"
         onClick={() => {
           navigate('/diagnose');

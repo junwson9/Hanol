@@ -43,7 +43,7 @@ const AlopeciaDiagnosisBox = styled.div`
   flex-direction: column;
   align-items: start;
 
-  margin-top: 1.438rem;
+  margin-top: 1.563rem;
 
   .title {
     color: var(--Black, #252321);

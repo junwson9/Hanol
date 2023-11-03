@@ -25,13 +25,13 @@ public class AuthenticatedMemberArgumentResolver  implements HandlerMethodArgume
             NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
         Authentication authentication = SecurityContextHolder.getContext()
                                                              .getAuthentication();
-
         if(authentication == null || authentication.getPrincipal() == null){
             throw new CustomException(AuthenticationErrorCode.REQUIRE_LOGIN);
         }
 
         Long memberId = Long.valueOf(authentication.getPrincipal()
                                                  .toString());
-        return new AuthMember(memberId);
+
+        return new AuthMember(memberId, authentication.getAuthorities());
     }
 }

@@ -1,5 +1,6 @@
 package com.ssafy.hanol.routine.service;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.ssafy.hanol.routine.domain.MemberRoutine;
@@ -18,6 +19,7 @@ public class RoutineLogInfo {
     private Long memberRoutineLogId;
     private Long routineId;
     private String routineName;
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate date;
     private Boolean isDone;
     private Long memberRoutineId;

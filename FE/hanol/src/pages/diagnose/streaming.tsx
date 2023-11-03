@@ -1,10 +1,15 @@
-import React, { useRef, useEffect, useState } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import { ReactComponent as Camera } from 'assets/icons/diagnoseCamera.svg';
 import TopBarDepth2 from 'components/common/TapBarDepth2';
 import { useNavigate } from 'react-router-dom';
-const CONSTRAINTS = { video: true };
+import { useRecoilValue } from 'recoil';
+import { DeviceState } from 'recoil/atoms';
+import { PartState } from 'recoil/atoms';
+const CONSTRAINTS = { video: { facingMode: 'environment' } };
 
 function Streaming() {
+  const test1 = useRecoilValue(DeviceState);
+  const test2 = useRecoilValue(PartState);
   const navigate = useNavigate();
   const videoRef = useRef<HTMLVideoElement>(null);
   const [capturedImage, setCapturedImage] = useState<string | null>(null);
@@ -83,15 +88,19 @@ function Streaming() {
         }}
         propsIsBack={true}
       />
+      <div>
+        {test1}
+        {test2}
+      </div>
       <p className="text-lg text-center font-bold mt-20">
         원하시는 부위에 카메라를 대고
         <br />
         사진을 찍어주세요!
       </p>
       {capturedImage ? (
-        <img src={capturedImage} alt="Captured" className="rounded-xl mt-20" />
+        <img src={capturedImage} alt="Captured" className="rounded-xl mt-20" style={{ transform: 'scaleX(-1)' }} />
       ) : (
-        <video autoPlay ref={videoRef} playsInline className="rounded-xl mt-20" />
+        <video autoPlay ref={videoRef} playsInline className="rounded-xl mt-20" style={{ transform: 'scaleX(-1)' }} />
       )}
       {showCaptureButtons ? (
         <div className="absolute w-[100%] bottom-5 text-center">
