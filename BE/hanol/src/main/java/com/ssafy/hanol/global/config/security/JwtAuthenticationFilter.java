@@ -76,7 +76,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     }
 
     private boolean isRefreshApi(HttpServletRequest request) {
-        RequestMatcher matcher = new AntPathRequestMatcher("/api/member/reissue",
+        RequestMatcher matcher = new AntPathRequestMatcher("/api/members/reissue",
                 HttpMethod.POST.name());
         return matcher.matches(request);
     }

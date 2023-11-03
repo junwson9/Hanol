@@ -14,10 +14,12 @@ import com.ssafy.hanol.member.service.dto.TokenReissueResponse;
 import com.ssafy.hanol.member.service.oidc.IdTokenValidator;
 import com.ssafy.hanol.member.service.token.TokenService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -45,7 +47,7 @@ public class AuthService {
         Token refreshToken = tokenService.createRefreshToken();
         tokenService.saveRefreshToken(refreshToken, oauthMember.getId());
 
-        return new OauthLoginResponse(accessToken, refreshToken, Role.GUEST.toString());
+        return new OauthLoginResponse(accessToken, refreshToken, oauthMember.getRole().toString());
     }
 
     public TokenReissueResponse reissue(TokenReissueRequest request){
