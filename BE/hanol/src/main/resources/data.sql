@@ -36,9 +36,9 @@ INSERT INTO routine (routine_name, is_default, is_value_1, is_value_2, is_value_
 INSERT INTO routine (routine_name, is_default, is_value_1, is_value_2, is_value_3, is_value_4, is_value_5, is_value_6) VALUES ('아누카 사과 먹기', 0, 0, 0, 0, 0, 0, 1);
 
 /* 회원 테스트 데이터 */
-INSERT INTO MEMBER (name, gender, birth, oauth_provider, oauth_id, role, created_date) VALUES ('test1', 1, '1999-01-05 00:00:00.000000', 'KAKAO', 'test1', 1, now());
-INSERT INTO MEMBER (name, gender, birth, oauth_provider, oauth_id, role, created_date) VALUES ('test2', 1, '1999-10-05 00:00:00.000000', 'KAKAO', 'test2', 1, now());
-INSERT INTO MEMBER (name, gender, birth, oauth_provider, oauth_id, role, created_date) VALUES ('test3', 1, '1999-10-05 00:00:00.000000', 'KAKAO', 'test3', 1, now());
+INSERT INTO MEMBER (name, email, gender, birth, oauth_provider, oauth_id, role, created_date) VALUES ('test1', "ssafy1@ssafy.com", 1, '1999-01-05 00:00:00.000000', 'KAKAO', 'test1', 1, now());
+INSERT INTO MEMBER (name, email, gender, birth, oauth_provider, oauth_id, role, created_date) VALUES ('test2', "ssafy2@ssafy.com", 1, '1999-10-05 00:00:00.000000', 'KAKAO', 'test2', 1, now());
+INSERT INTO MEMBER (name, email, gender, birth, oauth_provider, oauth_id, role, created_date) VALUES ('test3', "ssafy3@ssafy.com", 1, '1999-10-05 00:00:00.000000', 'KAKAO', 'test3', 1, now());
 
 /* 회원별 루틴 테스트 데이터 */
 INSERT INTO Member_Routine (member_id, routine_id, is_notification_active, notification_time, created_date) VALUES (1, 3, 1, '13:00:00', now());
