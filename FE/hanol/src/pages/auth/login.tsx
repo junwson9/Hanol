@@ -16,14 +16,19 @@ function Login() {
     };
     console.log(requestData);
     axios
-      .post<{ access_token: string; refresh_token: string }>(`${APP_URI}/member/oauth`, requestData)
+      .post<{ access_token: string; refresh_token: string }>(`${APP_URI}/members/oauth`, requestData)
       // eslint-disable-next-line
       .then((response: any) => {
         const { access_token, refresh_token } = response.data.data;
         console.log('data', response.data.data);
         localStorage.setItem('access_token', access_token);
         localStorage.setItem('refresh_token', refresh_token);
-        navigate('/');
+        const role = response.data.data.role;
+        if (role == 'GUEST') {
+          navigate('/signup-birth');
+        } else {
+          navigate('/');
+        }
       })
       // eslint-disable-next-line
       .catch((error: any) => {

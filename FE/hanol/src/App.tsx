@@ -21,10 +21,11 @@ import MyDetail from 'pages/myreport/MyreportDetailPage';
 import DiagnosisDetail from 'pages/diagnose/diagnosisDetail';
 import Analyzing from 'pages/diagnose/analyzingPage';
 import SelectPart from 'pages/diagnose/selectPart';
+import LoginDone from 'pages/auth/loginDone';
 
 function App() {
   const location = useLocation();
-  const showNavBarPaths = ['/examination', '/routine', '/', '/myreport', '/about', '/diagnose'];
+  const showNavBarPaths = ['/examination', '/routine', '/', '/myreport', '/about', '/diagnose', '/explain-routine'];
   const shouldShowNavBar = showNavBarPaths.includes(location.pathname);
   return (
     <div className="App">
@@ -33,6 +34,7 @@ function App() {
           <Routes>
             <Route path="/diagnose" element={<ExplainDiagnose />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/login-done" element={<LoginDone />} />
             <Route path="/set-routine" element={<SetRoutine />} />
             <Route path="/" element={<Home />} />
             <Route path="/signup-birth" element={<SignupBirth />} />
@@ -41,7 +43,6 @@ function App() {
             <Route path="/examination" element={<Home />} />
             <Route path="/routine" element={<Routine />} />
             <Route path="/about" element={<About />} />
-            <Route path="/login-error" element={<LoginError />} />
             <Route path="/explain-routine" element={<ExplainRoutine />} />
             <Route path="/select-device" element={<SelectDevice />} />
             <Route path="/streaming" element={<Streaming />} />
@@ -64,7 +65,9 @@ function App() {
           </Routes>
         </div>
         <div>
-          <Routes></Routes>
+          <Routes>
+            <Route path="/login-error" element={<LoginError />} />
+          </Routes>
         </div>
       </div>
       {shouldShowNavBar && <NavBar />}
