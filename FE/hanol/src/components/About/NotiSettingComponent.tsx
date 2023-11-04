@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import axiosInstance from 'api/axiosInterceptor';
+import React from 'react';
+// import axiosInstance from 'api/axiosInterceptor';
 import styled from 'styled-components';
 import Toggle from 'components/common/Toggle';
 
@@ -7,26 +7,10 @@ interface Props {
   title: string;
   desc: string;
   toggleState: boolean;
-  noti_type?: string;
-  setToggleState: (arg: boolean) => void;
+  noti_type: string;
 }
 
-const NotiSettingComponent = ({ title, desc, toggleState, setToggleState, noti_type }: Props) => {
-  useEffect(() => {
-    const data = {
-      notification_type: noti_type,
-      is_active: toggleState,
-    };
-    axiosInstance
-      .patch('/notifications', data)
-      .then((response) => {
-        console.log('알림 설정 변경 요청 성공:', response);
-      })
-      .catch((error) => {
-        console.error('알림 설정 변경 요청 실패:', error);
-      });
-  }, [toggleState]);
-
+const NotiSettingComponent = ({ title, desc, toggleState, noti_type }: Props) => {
   return (
     <div className="col-span-full">
       <NotiSettingComponentBox>
@@ -34,7 +18,7 @@ const NotiSettingComponent = ({ title, desc, toggleState, setToggleState, noti_t
           <div className="noti_setting_title">{title}</div>
           <div className="setting_desc">{desc}</div>
         </TextBox>
-        <Toggle isToggleOn={toggleState} setIsToggleOn={setToggleState} />
+        <Toggle toggleState={toggleState} noti_type={noti_type} />
       </NotiSettingComponentBox>
     </div>
   );
