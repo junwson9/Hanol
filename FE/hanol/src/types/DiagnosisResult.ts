@@ -19,3 +19,8 @@ export interface aboutnotiSettingType {
   is_check_routine_active: boolean;
   is_individual_routine_active: boolean;
 }
+
+export interface datelistType {
+  diagnosis_id: number;
+  created_date: string;
+}

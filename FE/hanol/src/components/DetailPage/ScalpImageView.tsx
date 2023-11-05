@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import ScalpImg from '../../assets/images/scalp.jpg';
+// import ScalpImg from '../../assets/images/scalp.jpg';
 
 interface Props {
-  sub_title: string;
+  sub_title: number;
   scalp_img: string;
 }
 
@@ -16,7 +16,7 @@ const ScalpImageView = ({ sub_title, scalp_img }: Props) => {
           <div className="sub_title">{sub_title}</div>
         </TitleBox>
         <ImgBox>
-          <img src={ScalpImg} alt={scalp_img} className="scalp_img" />
+          <img src={scalp_img} alt={scalp_img} className="scalp_img" />
         </ImgBox>
       </ScalpViewBox>
     </div>
