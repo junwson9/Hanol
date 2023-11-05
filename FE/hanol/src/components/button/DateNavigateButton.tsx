@@ -1,23 +1,41 @@
 import React from 'react';
 import styled from 'styled-components';
-import { ReactComponent as LeftNavigateIcon } from '../../assets/icons/chevron_right_FILL0_wght400_GRAD0_opsz24 2.svg';
+import { ReactComponent as LeftNavigateIcon } from '../../assets/icons/chevron_left_FILL0_wght400_GRAD0_opsz24.svg';
 import { ReactComponent as RightNavigateIcon } from '../../assets/icons/chevron_right_FILL0_wght400_GRAD0_opsz24 1.svg';
 
 interface Props {
   date: string;
   onClick: (arg: boolean) => void;
+  index: number;
+  setIndex: (arg: number) => void;
+  length: number;
 }
 
-const DateNavigateButton = ({ date, onClick }: Props) => {
+const DateNavigateButton = ({ date, onClick, index, setIndex, length }: Props) => {
+  const handleLeftClick = () => {
+    setIndex(index + 1);
+  };
+
+  const handleRightClick = () => {
+    setIndex(index - 1);
+  };
   return (
     <div className="col-span-full">
       <ButtonBox>
         <DateNavigateButtonBox>
-          <LeftNavigateIcon className="left_icon" />
+          {index < length - 1 ? (
+            <LeftNavigateIcon className="left_icon" onClick={handleLeftClick} />
+          ) : (
+            <LeftNavigateIcon className="left_icon_invisible" />
+          )}
           <div className="date_box" onClick={() => onClick(true)}>
             {date}
           </div>
-          <RightNavigateIcon className="right_icon" />
+          {index > 0 ? (
+            <RightNavigateIcon className="right_icon" onClick={handleRightClick} />
+          ) : (
+            <RightNavigateIcon className="right_icon_invisible" />
+          )}
         </DateNavigateButtonBox>
       </ButtonBox>
     </div>
@@ -47,9 +65,19 @@ const DateNavigateButtonBox = styled.div`
     margin-left: 0.625rem;
     cursor: pointer;
   }
+
+  .left_icon_invisible {
+    margin-left: 0.625rem;
+    visibility: hidden;
+  }
   .right_icon {
     margin-right: 0.625rem;
     cursor: pointer;
+  }
+
+  .right_icon_invisible {
+    margin-right: 0.625rem;
+    visibility: hidden;
   }
   .date_box {
     /* display: flex;

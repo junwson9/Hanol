@@ -13,7 +13,7 @@ const PushSetting = () => {
         <PushNotificationBox>
           <div className="push_notification_text">푸시 알림</div>
           <div className="toggle_box">
-            <Toggle isToggleOn={isToggleOn} setIsToggleOn={setIsToggleOn} />
+            <Toggle toggleState={isToggleOn} />
           </div>
         </PushNotificationBox>
 

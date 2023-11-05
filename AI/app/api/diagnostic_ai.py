@@ -8,10 +8,12 @@ import concurrent.futures
 
 class DiagnosticAI:
     def __init__(self):
+        self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
         self.models = [self.load_model(f'AI_model/model{i}.pt') for i in range(1, 7)]
 
     def load_model(self, model_path):
-        return torch.load(model_path, map_location=torch.device('cuda' if torch.cuda.is_available() else 'cpu'))
+        model = torch.load(model_path)
+        return model.to(self.device)
 
     def predict(self, model, input_batch):
         with torch.no_grad():
@@ -36,7 +38,7 @@ class DiagnosticAI:
             normalize
         ])
 
-        input_tensor = preprocess(image)
+        input_tensor = preprocess(image).to(self.device)
         input_batch = input_tensor.unsqueeze(0)
 
         # 병렬로 모델 처리
