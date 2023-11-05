@@ -66,5 +66,22 @@
     "is_individual_routine_active": false,
     "notification_type": "CHECK_ROUTINE",
     "is_active": false
+  },
+
+  "dates": {
+    "diagnosis_id_list": [
+      {
+        "diagnosis_id": 7,
+        "created_date": "2023-11-02 10:40:10"
+      },
+      {
+        "diagnosis_id": 1,
+        "created_date": "2023-10-30 20:26:19"
+      },
+      {
+        "diagnosis_id": 2,
+        "created_date": "2023-10-10 20:26:19"
+      }
+    ]
   }
 }

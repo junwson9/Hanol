@@ -42,7 +42,7 @@ public class SecurityConfig {
         http.cors()
                 .and()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.GET, "/api/member/info", "/api/member/logout", "/api/member/reissue").authenticated()
+                .antMatchers(HttpMethod.GET, "/api/members/info", "/api/members/logout", "/api/members/reissue").authenticated()
                 .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
                 .antMatchers("/**").permitAll();
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);

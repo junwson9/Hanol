@@ -36,18 +36,40 @@ INSERT INTO routine (routine_name, is_default, is_value_1, is_value_2, is_value_
 INSERT INTO routine (routine_name, is_default, is_value_1, is_value_2, is_value_3, is_value_4, is_value_5, is_value_6) VALUES ('아누카 사과 먹기', 0, 0, 0, 0, 0, 0, 1);
 
 /* 회원 테스트 데이터 */
-INSERT INTO member (name, gender, birth, oauth_provider, oauth_id, role, created_date) VALUES ('test1', 1, '1999-01-05 00:00:00.000000', 'KAKAO', 'test1', 1, now());
-INSERT INTO member (name, gender, birth, oauth_provider, oauth_id, role, created_date) VALUES ('test2', 1, '1999-10-05 00:00:00.000000', 'KAKAO', 'test2', 1, now());
+INSERT INTO MEMBER (name, email, gender, birth, oauth_provider, oauth_id, role, created_date) VALUES ('test1', "ssafy1@ssafy.com", 1, '1999-01-05 00:00:00.000000', 'KAKAO', 'test1', 1, now());
+INSERT INTO MEMBER (name, email, gender, birth, oauth_provider, oauth_id, role, created_date) VALUES ('test2', "ssafy2@ssafy.com", 1, '1999-10-05 00:00:00.000000', 'KAKAO', 'test2', 1, now());
+INSERT INTO MEMBER (name, email, gender, birth, oauth_provider, oauth_id, role, created_date) VALUES ('test3', "ssafy3@ssafy.com", 1, '1999-10-05 00:00:00.000000', 'KAKAO', 'test3', 1, now());
 
 /* 회원별 루틴 테스트 데이터 */
-INSERT INTO member_routine (member_id, routine_id, is_notification_active, notification_time, created_date) VALUES (1, 3, 1, '13:00:00', now());
-INSERT INTO member_routine (member_id, routine_id, is_notification_active, notification_time, created_date) VALUES (1, 6, 1, '19:00:00', now());
-INSERT INTO member_routine (member_id, routine_id, is_notification_active, notification_time, created_date) VALUES (1, 9, 0, '12:00:00', now());
-INSERT INTO member_routine (member_id, routine_id, is_notification_active, created_date) VALUES (1, 30, 0, now());
+INSERT INTO Member_Routine (member_id, routine_id, is_notification_active, notification_time, created_date) VALUES (1, 3, 1, '13:00:00', now());
+INSERT INTO Member_Routine (member_id, routine_id, is_notification_active, notification_time, created_date) VALUES (1, 6, 1, '19:00:00', now());
+INSERT INTO Member_Routine (member_id, routine_id, is_notification_active, notification_time, created_date) VALUES (1, 9, 0, '13:00:00', now());
+INSERT INTO Member_Routine (member_id, routine_id, is_notification_active, created_date) VALUES (1, 30, 0, now());
+INSERT INTO Member_Routine (member_id, routine_id, is_notification_active, notification_time, created_date) VALUES (2, 5, 1, '13:00:00', now());
 
 /* 회원-루틴 이력 테스트 데이터 */
-INSERT INTO member_routine_log (member_id, routine_id, is_done, date) VALUES (1, 6, 0, '2023-10-25');
-INSERT INTO member_routine_log (member_id, routine_id, is_done, date) VALUES (1, 9, 1, '2023-10-25');
+INSERT INTO member_routine_log (member_id, routine_id, is_done, date) VALUES (1, 6, 0, '2023-11-05');
+INSERT INTO member_routine_log (member_id, routine_id, is_done, date) VALUES (1, 9, 1, '2023-11-05');
+INSERT INTO member_routine_log (member_id, routine_id, is_done, date) VALUES (2, 9, 0, '2023-11-05');
+INSERT INTO member_routine_log (member_id, routine_id, is_done, date) VALUES (3, 9, 0, '2023-11-05');
+
+/* 진단 테스트 데이터 */
+INSERT INTO DIAGNOSIS (member_id, value_1, value_2, value_3, value_4, value_5, value_6, device_type, scan_part, created_date) VALUES (1, 0, 1, 2, 3, 2, 1, 1, 2, now());
+INSERT INTO DIAGNOSIS (member_id, value_1, value_2, value_3, value_4, value_5, value_6, device_type, scan_part, created_date) VALUES (1, 3, 3, 3, 2, 2, 2, 1, 1, now());
+INSERT INTO DIAGNOSIS (member_id, value_1, value_2, value_3, value_4, value_5, value_6, device_type, scan_part, created_date) VALUES (1, 1, 1, 2, 2, 3, 3, 1, 3, now());
+INSERT INTO DIAGNOSIS (member_id, value_1, value_2, value_3, value_4, value_5, value_6, device_type, scan_part, created_date) VALUES (1, 0, 0, 0, 0, 0, 0, 0, 4, now());
+INSERT INTO DIAGNOSIS (member_id, value_1, value_2, value_3, value_4, value_5, value_6, device_type, scan_part, created_date) VALUES (2, 0, 0, 0, 0, 0, 0, 0, 1, now());
+
+/* 알림 설정 테스트 데이터*/
+INSERT INTO notification_configuration (member_id, is_check_routine_active, is_individual_routine_active, created_date) values (1, 1, 1, now());
+INSERT INTO notification_configuration (member_id, is_check_routine_active, is_individual_routine_active, created_date) values (2, 1, 1, now());
+INSERT INTO notification_configuration (member_id, is_check_routine_active, is_individual_routine_active, created_date) values (3, 1, 1, now());
+
+/* 알림 토큰 테스트 데이터*/
+INSERT INTO notification_token (member_id, token, device_info, created_date, refresh_date) values (1, "token111", "usgeragent111", now(), now());
+INSERT INTO notification_token (member_id, token, device_info, created_date, refresh_date) values (1, "token111111", "usgeragent111111", now(), now());
+INSERT INTO notification_token (member_id, token, device_info, created_date, refresh_date) values (2, "token222", "usgeragent222", now(), now());
+INSERT INTO notification_token (member_id, token, device_info, created_date, refresh_date) values (3, "token3", "usgeragent3", now(), now());
 
 /* 진단 테스트 데이터 */
 INSERT INTO diagnosis (member_id, value_1, value_2, value_3, value_4, value_5, value_6, device_type, scan_part, created_date) VALUES (1, 0, 1, 2, 3, 2, 1, 1, 2, now());
@@ -55,3 +77,9 @@ INSERT INTO diagnosis (member_id, value_1, value_2, value_3, value_4, value_5, v
 INSERT INTO diagnosis (member_id, value_1, value_2, value_3, value_4, value_5, value_6, device_type, scan_part, created_date) VALUES (1, 1, 1, 2, 2, 3, 3, 1, 3, now());
 INSERT INTO diagnosis (member_id, value_1, value_2, value_3, value_4, value_5, value_6, device_type, scan_part, created_date) VALUES (1, 0, 0, 0, 0, 0, 0, 0, 4, now());
 INSERT INTO diagnosis (member_id, value_1, value_2, value_3, value_4, value_5, value_6, device_type, scan_part, created_date) VALUES (2, 0, 0, 0, 0, 0, 0, 0, 1, now());
+
+/* 문진 설문 테스트 데이터 */
+INSERT INTO examination_survey (member_id, age, gender, answer_1, answer_2, answer_3, answer_4, answer_5, answer_6, answer_7, created_date) VALUES (1, 25, "MALE", "1", "1", "1", "1,2","2,3","1","1", now());
+
+/* 문진 결과 테스트 데이터 */
+INSERT INTO examination_result (member_id, examination_survey_id, created_date, type_0, type_1, type_2, type_3, type_4, type_5, type_6) VALUES (1, 1, now(), 0, 1, 0, 0, 1, 0, 0);
