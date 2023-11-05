@@ -1,19 +1,25 @@
 package com.ssafy.hanol.examination.service.dto.response;
 
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.ssafy.hanol.examination.domain.ExaminationResult;
 import com.ssafy.hanol.examination.domain.ExaminationSurvey;
 import com.ssafy.hanol.member.domain.Member;
-import lombok.Getter;
-import lombok.ToString;
+import lombok.*;
 
 import java.util.List;
 
 @Getter
 @ToString
+@Setter
+@NoArgsConstructor
+@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class ExaminationSurveyResponse {
+
 
     private List<Integer> examinationResult; // 해당 인덱스 타입에 해당하는 지 순서대로 담은 리스트
 
+    @Builder
     public ExaminationSurveyResponse(List<Integer> examinationResult) {
         this.examinationResult = examinationResult;
     }
