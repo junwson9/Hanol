@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router';
 function ExplainRoutine() {
   const navigate = useNavigate();
   const handleClick = () => {
-    navigate('/routine');
+    navigate('/login-error');
   };
   return (
     <div className="col-span-full flex flex-col justify-between">

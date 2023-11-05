@@ -29,3 +29,8 @@ export const ImageState = atom<string>({
   key: 'Image',
   default: '',
 });
+
+export const MemberRoleState = atom<string>({
+  key: 'Role',
+  default: 'GUEST',
+});
