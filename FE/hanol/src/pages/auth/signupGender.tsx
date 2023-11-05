@@ -1,26 +1,42 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ReactComponent as Man } from '../../assets/images/man.svg';
-import { ReactComponent as Woman } from '../../assets/images/woman.svg';
+import MaleIcon from '../../assets/images/male_icon.png';
+import FemaleIcon from '../../assets/images/female_icon.png';
 import DisabledButton from 'components/button/DisabledButton';
 import TapBarDepth2 from './../../components/common/TapBarDepth2';
+import { GenderInfo } from 'recoil/atoms';
+import { useSetRecoilState, useRecoilValue } from 'recoil';
+import { BirthInfo } from 'recoil/atoms';
+import axiosInstance from 'api/axiosInterceptor';
 
 function SignupGender() {
   const buttonName = '확인';
   const navigate = useNavigate();
 
   const [gender, setGender] = useState<string | null>(null); // 초기값은 null 또는 문자열
-
+  const setGenderInfo = useSetRecoilState(GenderInfo);
+  const birth = useRecoilValue(BirthInfo);
+  const Gender = useRecoilValue(GenderInfo);
   const handleManClick = () => {
     setGender('man');
+    setGenderInfo('MALE');
   };
 
   const handleWomanClick = () => {
     setGender('woman');
+    setGenderInfo('FEMALE');
   };
 
-  const handleButtonClick = () => {
-    navigate('/');
+  const handleButtonClick = async () => {
+    try {
+      const requsetBody = { birth: birth, gender: Gender };
+      const response = await axiosInstance.post('/members/signup', requsetBody);
+      const access_token = response.data.data.access_token;
+      localStorage.setItem('access_token', access_token);
+    } catch (error) {
+      console.error('데이터 가져오기 오류:', error);
+    }
+    navigate('/login-done');
   };
 
   const handleCloseClick = () => {
@@ -31,8 +47,8 @@ function SignupGender() {
       <div>
         <TapBarDepth2 name={'회원가입'} onClick={handleCloseClick} propsIsBack={true} />
         <div className="flex">
-          <div className="h-[0.188rem] w-[67%] bg-Main absolute left-0"></div>
-          <div className="h-[0.188rem] w-[33%] bg-Gray absolute left-[67%]"></div>
+          <div className="h-[0.188rem] w-[67%] bg-Main  left-0"></div>
+          <div className="h-[0.188rem] w-[33%] bg-Gray  left-[67%]"></div>
         </div>
       </div>
       <div>
@@ -44,14 +60,17 @@ function SignupGender() {
       </div>
       <div className="flex justify-center items-center">
         <div
-          className={`mr-[1rem] rounded-[1rem] ${gender === 'man' ? 'shadow-lg' : 'shadow'}`}
+          className={`w-[10rem] mr-[1rem] rounded-[1rem] ${gender === 'man' ? 'shadow-lg' : 'shadow'}`}
           onClick={handleManClick}
         >
-          <Man />
+          <img src={MaleIcon} />
           <div className="font-medium text-[1rem] mb-[0.5rem]">남성</div>
         </div>
-        <div className={`rounded-[1rem] ${gender === 'woman' ? 'shadow-lg' : 'shadow'}`} onClick={handleWomanClick}>
-          <Woman />
+        <div
+          className={`w-[10rem] rounded-[1rem] ${gender === 'woman' ? 'shadow-lg' : 'shadow'}`}
+          onClick={handleWomanClick}
+        >
+          <img src={FemaleIcon} />
           <div className="font-medium text-[1rem] mb-[0.5rem]">여성</div>
         </div>
       </div>

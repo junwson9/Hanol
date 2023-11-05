@@ -28,6 +28,7 @@ out/
 
 application-local.yml
 application-dev.yml
+firebase-sdk.json
 
 docker-compose/db*
 

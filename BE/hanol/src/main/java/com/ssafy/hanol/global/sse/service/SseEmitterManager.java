@@ -7,7 +7,6 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @Component
 public class SseEmitterManager {
-
     private final ConcurrentHashMap<Long, SseEmitter> concurrentHashMap = new ConcurrentHashMap<>();
 
     public void addSseEmitter(Long id, SseEmitter emitter) {

@@ -1,6 +1,5 @@
 package com.ssafy.hanol.global.sse.exception;
 
-
 import com.ssafy.hanol.common.exception.ErrorCode;
 
 public enum SseErrorCode implements ErrorCode {
