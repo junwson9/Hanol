@@ -1,20 +1,64 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import styled from 'styled-components';
 import { ReactComponent as CloseIcon } from '../../assets/icons/close_FILL0_wght400_GRAD0_opsz24 1.svg';
 import { ReactComponent as SelectedIcon } from '../../assets/icons/check_FILL0_wght400_GRAD0_opsz24 1.svg';
+import { datelistType, diagnosisResultType } from 'types/DiagnosisResult';
 
 interface Props {
   date: string;
-  setSelectedDate: (arg: string) => void;
+  setIndex: (arg: number) => void;
   setIsModalOpen: (arg: boolean) => void;
+  diagnosisResults: diagnosisResultType[];
 }
 
-const DateNavigateModal = ({ date, setSelectedDate, setIsModalOpen }: Props) => {
-  const handleDateBoxClick = () => {
-    setIsModalOpen(false);
-    setSelectedDate('11.11.11');
+const DateNavigateModal = ({ date, setIndex, setIsModalOpen, diagnosisResults }: Props) => {
+  const [dateList, setDateList] = useState<datelistType[]>();
+  // const findIndex = (diag_id: number) => {
+  //   diagnosisResults.map((diagnosisResults, index) => {
+  //     if (diagnosisResults.diagnosis_id === diag_id) return index;
+  //   });
+  // };
+
+  // const handleDateBoxClick = (arg: number) => {
+  //   setIsModalOpen(false);
+
+  //   setIndex(findIndex(arg));
+  // };
+
+  const findIndex = (diag_id: number) => {
+    let foundIndex = -1; // Default to -1 if not found
+    diagnosisResults.map((result, index) => {
+      if (result.diagnosis_id === diag_id) {
+        foundIndex = index;
+      }
+    });
+    return foundIndex;
   };
 
+  const handleDateBoxClick = (arg: number) => {
+    setIsModalOpen(false);
+
+    const index = findIndex(arg);
+    if (index !== -1) {
+      setIndex(index);
+    } else {
+      console.log('Diagnosis ID not found');
+    }
+  };
+
+  useEffect(() => {
+    axios
+      .get('http://localhost:4000/dates')
+      .then((response) => {
+        setDateList(response.data.diagnosis_id_list);
+        console.log('모든 날짜 조회 성공', response.data.diagnosis_id_list);
+      })
+      .catch((error) => console.error('모든 날짜 조회 실패', error));
+  }, []);
+  dateList?.map((date) => {
+    console.log('date.created_date:', date.created_date);
+  });
   return (
     <div className="col-span-full">
       <ModalBackgroundBox>
@@ -24,72 +68,24 @@ const DateNavigateModal = ({ date, setSelectedDate, setIsModalOpen }: Props) => 
             <CloseIcon className="close_icon" onClick={() => setIsModalOpen(false)} />
           </TitleBox>
           <DateListBox>
-            <DateBox onClick={() => handleDateBoxClick()}>
+            {/* <DateBox onClick={() => handleDateBoxClick()}>
               <div className="date">23.10.14 (금) 18:09</div>
-              {/* api에서 들어온 날짜들(=위에 div안에 들어가는거)랑,  date로 넘어온거랑 같으면 표시*/}
-              {/* 추가: 선택하면 date를 선택한 날짜와 같게 표시 */}
+              api에서 들어온 날짜들(=위에 div안에 들어가는거)랑,  date로 넘어온거랑 같으면 표시
+              추가: 선택하면 date를 선택한 날짜와 같게 표시
               {date === '22.12.11' && <SelectedIcon className="selected_icon" />}
             </DateBox>
             <DateBox>
               <div className="date">23.10.14 (금) 18:09</div>
               {date === '23.12.29' && <SelectedIcon className="selected_icon" />}
             </DateBox>
-            <DateBox>
-              <div className="date">23.10.14 (금) 18:09</div>
-              {date === '23.12.29' && <SelectedIcon className="selected_icon" />}
-            </DateBox>
-            <DateBox>
-              <div className="date">23.10.14 (금) 18:09</div>
-              {date === '23.12.29' && <SelectedIcon className="selected_icon" />}
-            </DateBox>
-            <DateBox>
-              <div className="date">23.10.14 (금) 18:09</div>
-              {date === '23.12.29' && <SelectedIcon className="selected_icon" />}
-            </DateBox>
-            <DateBox>
-              <div className="date">23.10.14 (금) 18:09</div>
-              {date === '23.12.29' && <SelectedIcon className="selected_icon" />}
-            </DateBox>
-            <DateBox>
-              <div className="date">23.10.14 (금) 18:09</div>
-              {date === '23.12.29' && <SelectedIcon className="selected_icon" />}
-            </DateBox>
-            <DateBox>
-              <div className="date">23.10.14 (금) 18:09</div>
-              {date === '23.12.29' && <SelectedIcon className="selected_icon" />}
-            </DateBox>
-            <DateBox>
-              <div className="date">23.10.14 (금) 18:09</div>
-              {date === '23.12.29' && <SelectedIcon className="selected_icon" />}
-            </DateBox>
-            <DateBox>
-              <div className="date">23.10.14 (금) 18:09</div>
-              {date === '23.12.29' && <SelectedIcon className="selected_icon" />}
-            </DateBox>
-            <DateBox>
-              <div className="date">23.10.14 (금) 18:09</div>
-              {date === '23.12.29' && <SelectedIcon className="selected_icon" />}
-            </DateBox>
-            <DateBox>
-              <div className="date">23.10.14 (금) 18:09</div>
-              {date === '23.12.29' && <SelectedIcon className="selected_icon" />}
-            </DateBox>
-            <DateBox>
-              <div className="date">23.10.14 (금) 18:09</div>
-              {date === '23.12.29' && <SelectedIcon className="selected_icon" />}
-            </DateBox>
-            <DateBox>
-              <div className="date">23.10.14 (금) 18:09</div>
-              {date === '23.12.29' && <SelectedIcon className="selected_icon" />}
-            </DateBox>
-            <DateBox>
-              <div className="date">23.10.14 (금) 18:09</div>
-              {date === '23.12.29' && <SelectedIcon className="selected_icon" />}
-            </DateBox>
-            <DateBox>
-              <div className="date">23.10.14 (금) 18:09</div>
-              {date === '23.12.29' && <SelectedIcon className="selected_icon" />}
-            </DateBox>
+         */}
+
+            {dateList?.map((dateItem, index) => (
+              <DateBox key={index} onClick={() => handleDateBoxClick(dateItem.diagnosis_id)}>
+                <div className="date">{dateItem.created_date}</div>
+                {date === dateItem.created_date && <SelectedIcon className="selected_icon" />}
+              </DateBox>
+            ))}
           </DateListBox>
         </ModalBox>
       </ModalBackgroundBox>

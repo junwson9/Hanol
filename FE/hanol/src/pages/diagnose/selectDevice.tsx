@@ -29,6 +29,7 @@ function SelectDevice() {
           navigate('/diagnose');
         }}
         propsIsBack={false}
+        completeBtn={false}
       />
       <p className="text-lg  text-left font-bold mt-12 text-center">촬영 기기를 선택해 주세요.</p>
       <div className="flex justify-center mt-6 gap-6">
