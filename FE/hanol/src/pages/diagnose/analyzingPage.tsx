@@ -56,6 +56,7 @@ const AnalyzingPage = () => {
     ];
 
     const blob = new Blob([JSON.stringify(value)], { type: 'application/json' });
+    console.log(blob);
     formData.append('data', blob);
     const fetchData = async () => {
       try {

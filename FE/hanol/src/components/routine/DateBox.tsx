@@ -24,7 +24,7 @@ function DateBox({
   };
   // console.log(achievement);
   const roundedAchievement = Math.round(achievement);
-  const bgStyle = roundedAchievement > 0 ? `bg-Main bg-opacity-[${roundedAchievement}%]` : `bg-Gray`;
+  const bgStyle = roundedAchievement > 0 ? `bg-Main opacity-${roundedAchievement}` : `bg-Gray`;
   // console.log(bgStyle);
   console.log(roundedAchievement);
   return (
