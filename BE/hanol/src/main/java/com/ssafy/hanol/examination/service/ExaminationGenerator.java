@@ -4,7 +4,6 @@ import com.ssafy.hanol.examination.service.dto.request.ExaminationSurveyRequest;
 import com.ssafy.hanol.examination.service.dto.response.ExaminationSurveyResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.BodyInserters;

@@ -28,22 +28,22 @@ public class ExaminationResult extends BaseTimeEntity {
     @JoinColumn(name = "examination_survey_id", nullable = false)
     private ExaminationSurvey examinationSurvey;
 
-    @JoinColumn(name = "type_1", nullable = false, columnDefinition = "TINYINT(1)")
+    @Column(name = "type_1", nullable = false, columnDefinition = "TINYINT(1)")
     private Boolean type1;
 
-    @JoinColumn(name = "type_2", nullable = false, columnDefinition = "TINYINT(1)")
+    @Column(name = "type_2", nullable = false, columnDefinition = "TINYINT(1)")
     private Boolean type2;
 
-    @JoinColumn(name = "type_3", nullable = false, columnDefinition = "TINYINT(1)")
+    @Column(name = "type_3", nullable = false, columnDefinition = "TINYINT(1)")
     private Boolean type3;
 
-    @JoinColumn(name = "type_4", nullable = false, columnDefinition = "TINYINT(1)")
+    @Column(name = "type_4", nullable = false, columnDefinition = "TINYINT(1)")
     private Boolean type4;
 
-    @JoinColumn(name = "type_5", nullable = false, columnDefinition = "TINYINT(1)")
+    @Column(name = "type_5", nullable = false, columnDefinition = "TINYINT(1)")
     private Boolean type5;
 
-    @JoinColumn(name = "type_6", nullable = false, columnDefinition = "TINYINT(1)")
+    @Column(name = "type_6", nullable = false, columnDefinition = "TINYINT(1)")
     private Boolean type6;
 
     @Builder

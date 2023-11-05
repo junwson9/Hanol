@@ -4,10 +4,12 @@ import com.ssafy.hanol.examination.domain.ExaminationResult;
 import com.ssafy.hanol.examination.domain.ExaminationSurvey;
 import com.ssafy.hanol.member.domain.Member;
 import lombok.Getter;
+import lombok.ToString;
 
 import java.util.List;
 
 @Getter
+@ToString
 public class ExaminationSurveyResponse {
 
     private List<Integer> examinationResult; // 해당 인덱스 타입에 해당하는 지 순서대로 담은 리스트

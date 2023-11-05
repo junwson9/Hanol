@@ -5,7 +5,8 @@ import com.ssafy.hanol.common.exception.ErrorCode;
 
 public enum ExaminationErrorCode implements ErrorCode {
 
-    NOT_FOUND_EXAMINATION("문진 결과가 없습니다","EXM_001",404);
+    NOT_FOUND_EXAMINATION("문진 결과가 없습니다","EXM_001",404),
+    INVALID_INPUT("잘못된 입력 값입니다.","EXM_002",400);
 
     private final String message;
     private final String errorCode;

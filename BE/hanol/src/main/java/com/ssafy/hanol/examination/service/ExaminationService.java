@@ -1,7 +1,9 @@
 package com.ssafy.hanol.examination.service;
 
+import com.ssafy.hanol.common.exception.CommonErrorCode;
 import com.ssafy.hanol.common.exception.CustomException;
 import com.ssafy.hanol.examination.controller.dto.request.ExaminationSurveyApiRequest;
+import com.ssafy.hanol.examination.controller.dto.response.ExaminationApiResponse;
 import com.ssafy.hanol.examination.domain.ExaminationResult;
 import com.ssafy.hanol.examination.domain.ExaminationSurvey;
 import com.ssafy.hanol.examination.execption.ExaminationErrorCode;
@@ -31,33 +33,36 @@ public class ExaminationService {
     private final ExaminationRepository examinationRepository;
 
 
-    public ExaminationSurveyResponse addExamination(ExaminationSurveyApiRequest examinationSurveyApiRequest, Long memberId) {
+    public ExaminationApiResponse addExamination(ExaminationSurveyApiRequest examinationSurveyApiRequest, Long memberId) {
         Member member = findMemberByMemberId(memberId);
         String gender = member.getGender().equals(Gender.MALE) ? "0" : "1";
         int ageRange = getAgeRange(member);
 
         // 문진 결과 도출 요청
-        ExaminationSurveyRequest request = ExaminationSurveyRequest.fromApiRequest(examinationSurveyApiRequest, gender, ageRange, member);
-        ExaminationSurveyResponse response = examinationGenerator.getExaminationResult(request);
-        log.info("문진 결과 도착: {}", response);
+        ExaminationSurveyRequest surveyRequest = ExaminationSurveyRequest.fromApiRequest(examinationSurveyApiRequest, gender, ageRange, member);
+        ExaminationSurveyResponse surveyResponse = examinationGenerator.getExaminationResult(surveyRequest);
+        log.info("문진 결과 도착: {}", surveyResponse);
 
         // 문진 설문 데이터 저장
-        ExaminationSurvey examinationSurvey = request.toExaminationSurvey();
+        ExaminationSurvey examinationSurvey = surveyRequest.toExaminationSurvey();
         examinationRepository.saveSurvey(examinationSurvey);
 
         // 문진 결과 데이터 저장
-        ExaminationResult examinationResult = response.toExaminationResult(member, examinationSurvey);
+        ExaminationResult examinationResult = surveyResponse.toExaminationResult(member, examinationSurvey);
         examinationRepository.saveResult(examinationResult);
 
-        return null; // TODO 반환 타입 정하기
+        return ExaminationApiResponse.from(examinationResult);
     }
 
 
-    public void findExamination(Long memberId) {
+    public ExaminationApiResponse findExamination(Long memberId) {
         Member member = findMemberByMemberId(memberId);
-        ExaminationResult examinationResult = examinationRepository.findResultTopByMemberIdOrderByIdDesc(memberId)
-                .orElseThrow(() -> new CustomException(ExaminationErrorCode.NOT_FOUND_EXAMINATION));
-        // TODO 반환 타입 정하기
+        ExaminationResult examinationResult = examinationRepository.findResultTopByMemberIdOrderByIdDesc(memberId).orElse(null);
+        if(examinationResult == null) return null; // 문진 결과가 없는 경우 null 반환
+//        ExaminationResult examinationResult = examinationRepository.findResultTopByMemberIdOrderByIdDesc(memberId)
+//                .orElseThrow(() -> new CustomException(ExaminationErrorCode.NOT_FOUND_EXAMINATION));
+
+        return ExaminationApiResponse.from(examinationResult);
     }
 
     
@@ -65,9 +70,7 @@ public class ExaminationService {
     private int getAgeRange(Member member) {
         LocalDate currentDate = LocalDate.now();
         LocalDate birthDate = member.getBirth();
-        if(birthDate == null) {
-            // TODO 예외처리 : 생일이 없는 경우
-        }
+        validateBirth(birthDate);
 
         int age = Period.between(birthDate, currentDate).getYears();
         if(age < 10) return 0;
@@ -78,9 +81,15 @@ public class ExaminationService {
         if(age < 60) return 50;
         if(age < 70) return 60;
         if(age < 80) return 70;
-        return 80;              // 80세 이상은 모두 80대로 설정
+        if(age < 90) return 80;
+        return 90;              // 90세 이상은 모두 90대로 설정
     }
 
+    private void validateBirth(LocalDate birthDate) {
+        if(birthDate == null) {
+            throw new CustomException(ExaminationErrorCode.INVALID_INPUT);
+        }
+    }
 
     private Member findMemberByMemberId(Long memberId) {
         return memberRepository.findById(memberId).orElseThrow(() -> new CustomException(MemberErrorCode.NOT_FOUND_MEMBER));
