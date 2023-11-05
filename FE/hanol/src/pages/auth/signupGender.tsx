@@ -8,6 +8,7 @@ import { GenderInfo } from 'recoil/atoms';
 import { useSetRecoilState, useRecoilValue } from 'recoil';
 import { BirthInfo } from 'recoil/atoms';
 import axiosInstance from 'api/axiosInterceptor';
+import { MemberRoleState } from 'recoil/atoms';
 
 function SignupGender() {
   const buttonName = '확인';
@@ -17,6 +18,8 @@ function SignupGender() {
   const setGenderInfo = useSetRecoilState(GenderInfo);
   const birth = useRecoilValue(BirthInfo);
   const Gender = useRecoilValue(GenderInfo);
+  const setMemberRole = useSetRecoilState(MemberRoleState);
+
   const handleManClick = () => {
     setGender('man');
     setGenderInfo('MALE');
@@ -37,6 +40,7 @@ function SignupGender() {
       console.error('데이터 가져오기 오류:', error);
     }
     navigate('/login-done');
+    setMemberRole('USER');
   };
 
   const handleCloseClick = () => {
