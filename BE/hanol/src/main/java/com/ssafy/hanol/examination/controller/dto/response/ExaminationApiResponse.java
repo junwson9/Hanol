@@ -20,8 +20,8 @@ public class ExaminationApiResponse {
     private Boolean type6;
 
     public ExaminationApiResponse(Boolean type0, Boolean type1, Boolean type2, Boolean type3, Boolean type4, Boolean type5, Boolean type6) {
-        this.type1 = type1;
         this.type0 = type0;
+        this.type1 = type1;
         this.type2 = type2;
         this.type3 = type3;
         this.type4 = type4;
