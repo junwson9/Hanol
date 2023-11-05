@@ -87,7 +87,7 @@ public class NotificationController {
                 .putData("click_action", request.getData().getClickAction())
                 .build();
         messages.add(message);
-        fcmService.sendBatchMessage(messages, true);
+        fcmService.sendBatchMessage(messages, false);
         return ResponseFactory.success("푸시 발송 테스트 완료");
     }
 

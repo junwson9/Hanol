@@ -32,25 +32,8 @@ public class FcmService {
             try {
                 // 비동기로 푸시 요청 후 모든 결과가 반환될 때까지 대기
                 BatchResponse response = sendFuture.get();
-
-                // == 테스트용 임시 코드 ==
-                // 성공한 메시지 수 출력
-                log.info("Successfully sent messages: {}", response.getSuccessCount());
-
-                // 실패한 메시지 수 출력
-                log.info("Failed to send messages: {}", response.getFailureCount());
-
-                // 실패한 메시지의 오류 내용 출력
-                if (response.getFailureCount() > 0) {
-                    List<SendResponse> responses = response.getResponses();
-                    for (int idx = 0; idx < responses.size(); idx++) {
-                        if (!responses.get(idx).isSuccessful()) {
-                            log.warn("Failed to send message at index {}: {}", idx, responses.get(idx).getException().getMessage());
-                        }
-                    }
-                }
-                // == 테스트용 임시 코드 ==
-
+                // 푸시 요청 결과 로그 출력
+                printPushLog(response);
 
                 // TODO 실패 시 처리 로직 추가 (실패 토큰 관리, 재시도 등)
             } catch (InterruptedException | ExecutionException e) {
@@ -76,4 +59,20 @@ public class FcmService {
         }
     }
 
+
+    // 푸시 발송 결과 로그 출력
+    private void printPushLog(BatchResponse response) {
+        log.info("Successfully sent messages: {}", response.getSuccessCount());
+        log.info("Failed to send messages: {}", response.getFailureCount());
+
+        // 실패한 메시지의 오류 내용 출력
+        if (response.getFailureCount() > 0) {
+            List<SendResponse> responses = response.getResponses();
+            for (int idx = 0; idx < responses.size(); idx++) {
+                if (!responses.get(idx).isSuccessful()) {
+                    log.warn("Failed to send message at index {}: {}", idx, responses.get(idx).getException().getMessage());
+                }
+            }
+        }
+    }
 }
