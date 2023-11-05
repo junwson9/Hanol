@@ -19,9 +19,9 @@ const DiagnosisDetail = () => {
   return (
     <div className="col-span-full">
       <AlopeciaDiagnosis valuenumber={1} />
-      <ScalpScaleView />
+      <ScalpScaleView value1={0} value2={1} value3={2} value4={2} value5={3} value6={1} />
       <DiagnosisDetailResult />
-      <ScalpImageView sub_title="전두부" scalp_img="adfd" />
+      <ScalpImageView sub_title={1} scalp_img="adfd" />
       <EmptyButton name="지난 내역 확인 하기" onClick={() => handleButtonClick()} />
       <DivisionRectangle />
       <RecommendCareRoutine2 />

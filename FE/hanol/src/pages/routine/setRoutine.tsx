@@ -93,6 +93,7 @@ function SetRoutine() {
                   handleNavigate();
                 }}
                 propsIsBack={true}
+                completeBtn={false}
               />
             </div>
             <p className="text-[1.25rem]  text-left font-bold mt-20 col-start-1 col-end-5 whitespace-nowrap">

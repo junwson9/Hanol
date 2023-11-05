@@ -26,7 +26,7 @@ function MyPage() {
   return (
     <div className="col-span-full h-screen flex flex-col justify-between">
       <div>
-        <TopBarDepth2 name={'마이페이지'} onClick={handleCloseClick} propsIsBack={false} />
+        <TopBarDepth2 name={'마이페이지'} onClick={handleCloseClick} propsIsBack={false} completeBtn={false} />
       </div>
       <div className="items-center text-left ml-[6rem]">
         <div className="text-[1rem] font-medium mb-[2rem]">이름 : {userInfo.name}</div>
