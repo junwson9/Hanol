@@ -47,7 +47,6 @@ public class NotificationController {
         return ResponseFactory.success("알림 설정 변경 완료", NotificationApiResponse.from(result));
     }
 
-
     @PostMapping("/token")
     public ResponseEntity<?> fcmTokenAdd(@RequestHeader("User-Agent") String userAgent,
                                          @RequestBody FcmTokenApiRequest fcmTokenApiRequest,

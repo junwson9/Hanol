@@ -51,7 +51,7 @@ public class NotificationSchedulerService {
 
 
     /**
-     * 개별 루틴 알림
+     * 개별 루틴 알림 스케쥴
      *
      * 매일 9시, 13시, 17시 수행
      * 개별 루틴 알림 활성화한 회원이 해당 시간에 알림 설정을 해둔 루틴이 있으면 푸시 발송
