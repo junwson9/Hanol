@@ -28,7 +28,6 @@ public class MemberService {
 
     public MemberSignUpResponse signUp(MemberSignUpRequest memberSignUpRequest, Long memberId) {
         Member member = findMemberByMemberId(memberId);
-
         member.updateMemberGenderAndBirth(memberSignUpRequest);
         member.updateMemberRole(Role.MEMBER);
 

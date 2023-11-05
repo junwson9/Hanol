@@ -13,10 +13,12 @@ import com.ssafy.hanol.member.service.dto.TokenReissueRequest;
 import com.ssafy.hanol.member.service.dto.TokenReissueResponse;
 import com.ssafy.hanol.notification.controller.dto.request.FcmTokenApiRequest;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/members")

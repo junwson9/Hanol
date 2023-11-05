@@ -47,7 +47,6 @@ public class NotificationController {
         return ResponseFactory.success("알림 설정 변경 완료", NotificationApiResponse.from(result));
     }
 
-
     @PostMapping("/token")
     public ResponseEntity<?> fcmTokenAdd(@RequestHeader("User-Agent") String userAgent,
                                          @RequestBody FcmTokenApiRequest fcmTokenApiRequest,
@@ -87,7 +86,7 @@ public class NotificationController {
                 .putData("click_action", request.getData().getClickAction())
                 .build();
         messages.add(message);
-        fcmService.sendBatchMessage(messages, true);
+        fcmService.sendBatchMessage(messages, false);
         return ResponseFactory.success("푸시 발송 테스트 완료");
     }
 
