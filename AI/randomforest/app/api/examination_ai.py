@@ -4,7 +4,7 @@ import pandas as pd
 
 class ExaiminationAI:
     async def process_examination(self, request: SurveyRequest):
-        path = 'randomforest_model/random_forest_model.pkl'
+        path = 'randomforest_model/random_forest_model2.pkl'
         model = joblib.load(path)
 
         gender = request.gender
