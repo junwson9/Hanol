@@ -48,10 +48,10 @@ INSERT INTO Member_Routine (member_id, routine_id, is_notification_active, creat
 INSERT INTO Member_Routine (member_id, routine_id, is_notification_active, notification_time, created_date) VALUES (2, 5, 1, '13:00:00', now());
 
 /* 회원-루틴 이력 테스트 데이터 */
-INSERT INTO member_routine_log (member_id, routine_id, is_done, date) VALUES (1, 6, 0, '2023-11-03');
-INSERT INTO member_routine_log (member_id, routine_id, is_done, date) VALUES (1, 9, 1, '2023-11-03');
-INSERT INTO member_routine_log (member_id, routine_id, is_done, date) VALUES (2, 9, 0, '2023-11-03');
-INSERT INTO member_routine_log (member_id, routine_id, is_done, date) VALUES (3, 9, 0, '2023-11-03');
+INSERT INTO member_routine_log (member_id, routine_id, is_done, date) VALUES (1, 6, 0, '2023-11-05');
+INSERT INTO member_routine_log (member_id, routine_id, is_done, date) VALUES (1, 9, 1, '2023-11-05');
+INSERT INTO member_routine_log (member_id, routine_id, is_done, date) VALUES (2, 9, 0, '2023-11-05');
+INSERT INTO member_routine_log (member_id, routine_id, is_done, date) VALUES (3, 9, 0, '2023-11-05');
 
 /* 진단 테스트 데이터 */
 INSERT INTO DIAGNOSIS (member_id, value_1, value_2, value_3, value_4, value_5, value_6, device_type, scan_part, created_date) VALUES (1, 0, 1, 2, 3, 2, 1, 1, 2, now());

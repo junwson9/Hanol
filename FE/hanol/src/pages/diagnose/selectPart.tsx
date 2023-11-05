@@ -16,7 +16,7 @@ function SelectPart() {
   const navigate = useNavigate();
   const handleNavigate = () => {
     if (activePart) {
-      if (selectedDevice === 'IoT') {
+      if (selectedDevice === 0) {
         navigate('/IoTstreaming');
       } else {
         navigate('/streaming');
@@ -43,6 +43,7 @@ function SelectPart() {
           navigate('/diagnose');
         }}
         propsIsBack={true}
+        completeBtn={false}
       />
       <p className="text-lg  text-left font-bold mt-12 text-center">촬영 부위를 선택해 주세요!</p>
       <div className="flex justify-center">

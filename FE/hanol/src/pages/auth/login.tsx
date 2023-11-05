@@ -3,12 +3,16 @@ import axios from 'axios';
 import KakaoLogin from 'react-kakao-login';
 import { useNavigate } from 'react-router-dom';
 import { getMessaging, getToken } from 'firebase/messaging';
+import { MemberRoleState } from 'recoil/atoms';
+import { useSetRecoilState } from 'recoil';
 
 function Login() {
   const kakaoID = process.env.REACT_APP_KAKAO_CLIENT_ID;
   const APP_URI = process.env.REACT_APP_API_URL;
   const navigate = useNavigate();
   console.log(kakaoID);
+  const setMemberRole = useSetRecoilState(MemberRoleState);
+
   // eslint-disable-next-line
   const kakaoSuccessHandler = (data: any) => {
     const requestData = {
@@ -26,8 +30,10 @@ function Login() {
         localStorage.setItem('refresh_token', refresh_token);
         const role = response.data.data.role;
         if (role == 'GUEST') {
+          setMemberRole(role);
           navigate('/signup-birth');
         } else {
+          setMemberRole(role);
           navigate('/');
         }
         // FCM 토큰 관련

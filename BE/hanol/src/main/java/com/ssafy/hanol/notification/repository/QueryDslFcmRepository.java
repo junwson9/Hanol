@@ -25,7 +25,8 @@ public class QueryDslFcmRepository {
 
     private final JPAQueryFactory jpaQueryFactory;
 
-    /** 전체 루틴 확인 푸시 대상 추출
+    /**
+     * 전체 루틴 확인 푸시 대상 추출
      * member_routineLog 테이블에서 is_done = false 이고 date = 오늘인 회원 중
      * notification_configuration 테이블에서 is_check_routine_active = true 인 회원 중
      * notification_token 테이블의 member_id 가 일치하는 회원의 token, member_id, member_nickname 조회
@@ -60,11 +61,13 @@ public class QueryDslFcmRepository {
     }
 
 
-    /** 개별 루틴 알림 푸시 대상 추출
+    /**
+     * 개별 루틴 알림 푸시 대상 추출
      * notification_configuration 테이블에서 is_individual_routine_active = true 인 member_id 이면서
      * member_routine 테이블의 is_notification_active = true 이고 notification_time = time(LocalTime 형태의 파라미터)인 데이터의 member_id와 routine_id를 가져온다.
      * notification_token 테이블의 member_id 가 일치하는 회원의 token, member_id, member_nickname 조회한다.
      * routine 테이블을 조인해서 routine_id 로 routine_name을 가져와야 한다.
+     *
      * @return List<PushTargetInfo>
      */
 
