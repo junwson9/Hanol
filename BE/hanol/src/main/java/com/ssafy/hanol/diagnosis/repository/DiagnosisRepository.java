@@ -9,6 +9,7 @@ import java.util.Optional;
 
 public interface DiagnosisRepository {
 
+    void save(Diagnosis diagnosis);
     Optional<Diagnosis> findById(Long id);
 
     Optional<Diagnosis> findTopByMemberIdOrderByIdDesc(Long memberId);

@@ -12,6 +12,8 @@ import com.ssafy.hanol.diagnosis.service.dto.request.DiagnosisRequest;
 import com.ssafy.hanol.diagnosis.service.dto.response.DiagnosisListResponse;
 import com.ssafy.hanol.diagnosis.service.rabbitmq.DiagnosisRequestProducer;
 import com.ssafy.hanol.global.sse.service.SseService;
+import com.ssafy.hanol.member.domain.Member;
+import com.ssafy.hanol.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -29,6 +31,7 @@ public class DiagnosisService {
     private final ImageUploadUtil imageUploadUtil;
     private final DiagnosisRequestProducer diagnosisRequestProducer;
     private final SseService sseService;
+    private final MemberService memberService;
 
     public DiagnosisDetailApiResponse findDiagnosis(Long diagnosisId, Long memberId) {
         Diagnosis diagnosis = null;
@@ -61,32 +64,31 @@ public class DiagnosisService {
     }
 
     // TODO: 진단하기 -> AI 서버 통신(RabbitMQ) -> 이벤트 등록
-    //
-    //
-    //
     //  진단 결과 listen -> 이미지 업로드, 데이터 저장 -> 결과 return
     public void diagnose(DiagnosisRequest diagnosisRequest) {
-        //diagnosisRequestProducer.sendDiagnosisRequest();
+
+        Member member = memberService.findMemberByMemberId(diagnosisRequest.getMemberId());
+        // AI 서버로 이미지 진단 요청 전송
         DiagnosisAiRequest diagnosisAiRequest = null;
         try {
-            diagnosisAiRequest = DiagnosisAiRequest.from(diagnosisRequest.getMemberId(), diagnosisRequest.getFile());
+            diagnosisAiRequest = DiagnosisAiRequest.from(member.getId(), diagnosisRequest.getFile());
             diagnosisRequestProducer.sendDiagnosisRequest(diagnosisAiRequest);
         } catch (Exception e) {
-            log.error("파일 에러");
-            e.printStackTrace();
+            throw new CustomException(DiagnoseErrorCode.FILE_CONVERSION_ERROR);
         }
 
-//        // 임시 로직
-//        DiagnoseAiResponse response = DiagnoseAiResponse.builder()
-//                .imageUrl("test.com")
-//                .value1(1)
-//                .value2(1)
-//                .value3(1)
-//                .value4(1)
-//                .value5(1)
-//                .value6(1)
-//                .build();
-//        sseService.sendDiagnosisResult(diagnosisRequest.getMemberId(), response);
+        // 이미지 저장
+        String imageUrl = imageUploadUtil.uploadImage("test", diagnosisRequest.getFile(), member.getId());
+        log.info("imageUrl : {}", imageUrl);
+
+        Diagnosis diagnosis = Diagnosis.builder()
+                .member(member)
+                .scanPart(diagnosisRequest.getScanPart())
+                .deviceType(diagnosisRequest.getDeviceType())
+                .imageUrl(imageUrl)
+                .build();
+
+        diagnosisRepository.save(diagnosis);
     }
 
 

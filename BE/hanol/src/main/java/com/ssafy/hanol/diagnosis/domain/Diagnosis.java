@@ -52,6 +52,14 @@ public class Diagnosis extends BaseTimeEntity {
     private int scanPart;
 
     @Builder
+    public Diagnosis(Member member, String imageUrl, int deviceType, int scanPart) {
+        this.member = member;
+        this.imageUrl = imageUrl;
+        this.deviceType = deviceType;
+        this.scanPart = scanPart;
+    }
+
+    @Builder
     public Diagnosis(Member member, int value1, int value2, int value3, int value4, int value5, int value6, String imageUrl, int deviceType, int scanPart) {
         this.member = member;
         this.value1 = value1;

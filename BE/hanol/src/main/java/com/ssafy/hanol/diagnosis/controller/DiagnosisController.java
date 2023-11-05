@@ -48,7 +48,6 @@ public class DiagnosisController {
     public ResponseEntity<?> diagnoseImage(@RequestPart MultipartFile file,
                                            @Validated @RequestPart(value = "data") DiagnosisApiRequest diagnosisApiRequest) {
 
-
         log.info("image : {}", file.getOriginalFilename());
         log.info("data : {}", diagnosisApiRequest.toString());
         // 진단 이벤트 시작
