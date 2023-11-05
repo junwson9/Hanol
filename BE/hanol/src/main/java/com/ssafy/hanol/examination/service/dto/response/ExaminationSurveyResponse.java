@@ -22,10 +22,11 @@ public class ExaminationSurveyResponse {
         return new ExaminationSurveyResponse(examinationResult);
     }
 
-    public ExaminationResult toExaminationResult(Member member, ExaminationSurvey examinationSurvey) {
+    public ExaminationResult toExaminationResult(Member member, Boolean type0, ExaminationSurvey examinationSurvey) {
         return ExaminationResult.builder()
                 .member(member)
                 .examinationSurvey(examinationSurvey)
+                .type0(type0)
                 .type1(IntegerToBoolean(examinationResult.get(0)))
                 .type2(IntegerToBoolean(examinationResult.get(1)))
                 .type3(IntegerToBoolean(examinationResult.get(2)))

@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class ExaminationApiResponse {
 
+    private Boolean type0;
     private Boolean type1;
     private Boolean type2;
     private Boolean type3;
@@ -18,8 +19,9 @@ public class ExaminationApiResponse {
     private Boolean type5;
     private Boolean type6;
 
-    public ExaminationApiResponse(Boolean type1, Boolean type2, Boolean type3, Boolean type4, Boolean type5, Boolean type6) {
+    public ExaminationApiResponse(Boolean type0, Boolean type1, Boolean type2, Boolean type3, Boolean type4, Boolean type5, Boolean type6) {
         this.type1 = type1;
+        this.type0 = type0;
         this.type2 = type2;
         this.type3 = type3;
         this.type4 = type4;
@@ -28,6 +30,6 @@ public class ExaminationApiResponse {
     }
 
     public static ExaminationApiResponse from(ExaminationResult result) {
-        return new ExaminationApiResponse(result.getType1(), result.getType2(), result.getType3(), result.getType4(), result.getType5(), result.getType6());
+        return new ExaminationApiResponse(result.getType0(), result.getType1(), result.getType2(), result.getType3(), result.getType4(), result.getType5(), result.getType6());
     }
 }

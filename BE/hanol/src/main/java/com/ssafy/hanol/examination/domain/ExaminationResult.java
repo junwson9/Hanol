@@ -28,6 +28,9 @@ public class ExaminationResult extends BaseTimeEntity {
     @JoinColumn(name = "examination_survey_id", nullable = false)
     private ExaminationSurvey examinationSurvey;
 
+    @Column(name = "type_0", nullable = false, columnDefinition = "TINYINT(1)")
+    private Boolean type0;
+
     @Column(name = "type_1", nullable = false, columnDefinition = "TINYINT(1)")
     private Boolean type1;
 
@@ -47,9 +50,10 @@ public class ExaminationResult extends BaseTimeEntity {
     private Boolean type6;
 
     @Builder
-    public ExaminationResult(Member member, ExaminationSurvey examinationSurvey, Boolean type1, Boolean type2, Boolean type3, Boolean type4, Boolean type5, Boolean type6) {
+    public ExaminationResult(Member member, ExaminationSurvey examinationSurvey, Boolean type0, Boolean type1, Boolean type2, Boolean type3, Boolean type4, Boolean type5, Boolean type6) {
         this.member = member;
         this.examinationSurvey = examinationSurvey;
+        this.type0 = type0;
         this.type1 = type1;
         this.type2 = type2;
         this.type3 = type3;

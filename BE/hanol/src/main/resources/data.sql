@@ -82,4 +82,4 @@ INSERT INTO diagnosis (member_id, value_1, value_2, value_3, value_4, value_5, v
 INSERT INTO examination_survey (member_id, age, gender, answer_1, answer_2, answer_3, answer_4, answer_5, answer_6, answer_7, created_date) VALUES (1, 25, "MALE", "1", "1", "1", "1,2","2,3","1","1", now());
 
 /* 문진 결과 테스트 데이터 */
-INSERT INTO examination_result (member_id, examination_survey_id, created_date, type_1, type_2, type_3, type_4, type_5, type_6) VALUES (1, 1, now(), 1, 0, 0, 1, 0, 0);
+INSERT INTO examination_result (member_id, examination_survey_id, created_date, type_0, type_1, type_2, type_3, type_4, type_5, type_6) VALUES (1, 1, now(), 0, 1, 0, 0, 1, 0, 0);

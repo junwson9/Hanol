@@ -1,6 +1,5 @@
 package com.ssafy.hanol.examination.service;
 
-import com.ssafy.hanol.common.exception.CommonErrorCode;
 import com.ssafy.hanol.common.exception.CustomException;
 import com.ssafy.hanol.examination.controller.dto.request.ExaminationSurveyApiRequest;
 import com.ssafy.hanol.examination.controller.dto.response.ExaminationApiResponse;
@@ -35,6 +34,7 @@ public class ExaminationService {
 
     public ExaminationApiResponse addExamination(ExaminationSurveyApiRequest examinationSurveyApiRequest, Long memberId) {
         Member member = findMemberByMemberId(memberId);
+        validateGenderAndBirth(member);
         String gender = member.getGender().equals(Gender.MALE) ? "0" : "1";
         int ageRange = getAgeRange(member);
 
@@ -48,12 +48,21 @@ public class ExaminationService {
         examinationRepository.saveSurvey(examinationSurvey);
 
         // 문진 결과 데이터 저장
-        ExaminationResult examinationResult = surveyResponse.toExaminationResult(member, examinationSurvey);
+        Boolean type0 = isDefaultType(surveyResponse); // type1~6이 모두 false이면 default type으로 배정
+        ExaminationResult examinationResult = surveyResponse.toExaminationResult(member, type0, examinationSurvey);
         examinationRepository.saveResult(examinationResult);
 
         return ExaminationApiResponse.from(examinationResult);
     }
 
+    private Boolean isDefaultType(ExaminationSurveyResponse surveyResponse) {
+        for(Integer result : surveyResponse.getExaminationResult()) {
+            if(result != 0) {
+                return false;
+            }
+        }
+        return true;
+    }
 
     public ExaminationApiResponse findExamination(Long memberId) {
         Member member = findMemberByMemberId(memberId);
@@ -70,7 +79,6 @@ public class ExaminationService {
     private int getAgeRange(Member member) {
         LocalDate currentDate = LocalDate.now();
         LocalDate birthDate = member.getBirth();
-        validateBirth(birthDate);
 
         int age = Period.between(birthDate, currentDate).getYears();
         if(age < 10) return 0;
@@ -85,8 +93,8 @@ public class ExaminationService {
         return 90;              // 90세 이상은 모두 90대로 설정
     }
 
-    private void validateBirth(LocalDate birthDate) {
-        if(birthDate == null) {
+    private void validateGenderAndBirth(Member member) {
+        if(member.getGender() == null || member.getBirth() == null) {
             throw new CustomException(ExaminationErrorCode.INVALID_INPUT);
         }
     }

@@ -23,7 +23,6 @@ public class ExaminationController {
     @PostMapping
     public ResponseEntity<?> examinationAdd(@Validated @RequestBody ExaminationSurveyApiRequest request,
                                             @AuthenticatedMember AuthMember authMember) {
-        log.info("request: {}", request);
         ExaminationApiResponse result = examinationService.addExamination(request, authMember.getId());
         return ResponseFactory.success("문진 완료", result);
     }
