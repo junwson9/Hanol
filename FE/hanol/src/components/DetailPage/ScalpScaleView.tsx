@@ -3,37 +3,46 @@ import styled from 'styled-components';
 import { ReactComponent as HelpIcon } from '../../assets/icons/help_FILL0_wght400_GRAD0_opsz24 1.svg';
 import { ResponsiveRadar } from '@nivo/radar';
 
-const ScalpScaleView = () => {
+interface Props {
+  value1: number;
+  value2: number;
+  value3: number;
+  value4: number;
+  value5: number;
+  value6: number;
+}
+
+const ScalpScaleView = ({ value1, value2, value3, value4, value5, value6 }: Props) => {
   const data = [
     {
       category: '탈모',
 
-      점수: 1,
+      점수: value6,
     },
     {
       category: '각질',
 
-      점수: 2,
+      점수: value1,
     },
     {
       category: '피지',
 
-      점수: 3,
+      점수: value2,
     },
     {
       category: '홍반',
 
-      점수: 4,
+      점수: value3,
     },
     {
       category: '비듬',
 
-      점수: 2,
+      점수: value4,
     },
     {
       category: '염증',
 
-      점수: 1,
+      점수: value5,
     },
   ];
 
@@ -109,6 +118,7 @@ const TitleBox = styled.div`
 const ScalpImageViewBox = styled.div`
   display: flex;
   flex-direction: column;
+  margin-top: 1.563rem;
 `;
 
 export default ScalpScaleView;

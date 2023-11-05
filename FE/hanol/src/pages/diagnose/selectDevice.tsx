@@ -1,30 +1,35 @@
 import { useState } from 'react';
 import StartButton from 'components/button/Button';
 import { useNavigate } from 'react-router';
-import TopBarDepth2 from 'components/common/TapBarDepth2';
+import TapBarDepth2 from 'components/common/TapBarDepth2';
 import { ReactComponent as Ex } from 'assets/images/scalpExample.svg';
+import { useRecoilState } from 'recoil';
+import { DeviceState } from 'recoil/atoms';
 
 function SelectDevice() {
   const [selectedButton, setSelectedButton] = useState<number>(0);
+  const [, setSelectedDevice] = useRecoilState<number>(DeviceState);
   const handleButtonSelect = (index: number) => {
     setSelectedButton(index);
   };
   const navigate = useNavigate();
   const handleNavigate = () => {
     if (selectedButton === 1) {
-      navigate('/streaming');
+      setSelectedDevice(1);
     } else if (selectedButton === 0) {
-      navigate('/IoTstreaming');
+      setSelectedDevice(0);
     }
+    navigate('/select-part');
   };
   return (
     <div className="col-span-full relative h-screen">
-      <TopBarDepth2
+      <TapBarDepth2
         name="진단하기"
         onClick={() => {
           navigate('/diagnose');
         }}
         propsIsBack={false}
+        completeBtn={false}
       />
       <p className="text-lg  text-left font-bold mt-12 text-center">촬영 기기를 선택해 주세요.</p>
       <div className="flex justify-center mt-6 gap-6">
@@ -57,7 +62,7 @@ function SelectDevice() {
           <div className="mt-6 flex justify-center">
             <Ex />
           </div>
-          <p className="text-left mt-6">
+          <p className="text-left mt-5">
             3. 사진이 선명할 수록 분석이 정확해집니다.
             <br />
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;촬영 시 타인의 도움을 받아보세요.
@@ -65,11 +70,16 @@ function SelectDevice() {
         </>
       ) : (
         <>
-          <p className="text-left mt-6">1. 와이파이를 연결해주세요.</p>
-          <p className="text-left mt-6">
+          <p className="text-left mt-5">1. 와이파이를 연결해주세요.</p>
+          <p className="text-left mt-5">
             2. 고민부위에 기기를 대고
             <br />
             &nbsp;&nbsp;&nbsp;&nbsp;두피를 촬영해 주세요.
+          </p>
+          <p className="text-left mt-5">
+            3. 사진이 선명할 수록 분석이 정확해집니다.
+            <br />
+            &nbsp;&nbsp;&nbsp;&nbsp;휴대폰 화면을 보고 기기 위치를 조정해 주세요!
           </p>
         </>
       )}

@@ -1,8 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
+// import ScalpImg from '../../assets/images/scalp.jpg';
 
 interface Props {
-  sub_title: string;
+  sub_title: number;
   scalp_img: string;
 }
 
@@ -15,7 +16,7 @@ const ScalpImageView = ({ sub_title, scalp_img }: Props) => {
           <div className="sub_title">{sub_title}</div>
         </TitleBox>
         <ImgBox>
-          <img src={scalp_img} alt="두피 이미지가 들어갈 자리입니다." className="scalp_img" />
+          <img src={scalp_img} alt={scalp_img} className="scalp_img" />
         </ImgBox>
       </ScalpViewBox>
     </div>
@@ -23,12 +24,11 @@ const ScalpImageView = ({ sub_title, scalp_img }: Props) => {
 };
 
 const ImgBox = styled.div`
-  width: 14.125rem;
-  /* width: 226px; */
+  width: 70%;
   object-fit: cover;
   margin-top: 1.5rem;
+  margin-bottom: 2.876rem;
   align-self: center;
-  /* border-radius: 18px; */
 
   .scalp_img {
     border-radius: 18px;
@@ -64,6 +64,8 @@ const TitleBox = styled.div`
 const ScalpViewBox = styled.div`
   display: flex;
   flex-direction: column;
+
+  margin-top: 1.563rem;
 `;
 
 export default ScalpImageView;

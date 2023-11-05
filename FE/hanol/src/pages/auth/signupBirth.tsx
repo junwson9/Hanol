@@ -4,10 +4,21 @@ import DateValidationDisableFuture from 'components/picker/DatePicker';
 import Button from 'components/button/Button';
 import { useNavigate } from 'react-router-dom';
 import TapBarDepth2 from 'components/common/TapBarDepth2';
+import { useSetRecoilState } from 'recoil';
+import { BirthInfo } from 'recoil/atoms';
 
 function SignupBirth() {
   const buttonName = '확인';
   const navigate = useNavigate();
+  const setInfo = useSetRecoilState(BirthInfo);
+
+  const handleDateChange = (formattedDate: string | null) => {
+    if (formattedDate) {
+      setInfo(formattedDate);
+    } else {
+      setInfo('');
+    }
+  };
 
   const handleButtonClick = () => {
     navigate('/signup-gender');
@@ -20,10 +31,10 @@ function SignupBirth() {
   return (
     <div className="col-span-full h-screen flex flex-col justify-between">
       <div>
-        <TapBarDepth2 name={'회원가입'} onClick={handleCloseClick} propsIsBack={true} />
+        <TapBarDepth2 name={'회원가입'} onClick={handleCloseClick} propsIsBack={true} completeBtn={false} />
         <div className="flex">
-          <div className="h-[0.188rem] w-[33%] bg-Main absolute left-0"></div>
-          <div className="h-[0.188rem] w-[67%] bg-Gray absolute left-[33%]"></div>
+          <div className="h-[0.188rem] w-[33%] bg-Main left-0"></div>
+          <div className="h-[0.188rem] w-[67%] bg-Gray left-[33%]"></div>
         </div>
       </div>
       <div>
@@ -34,7 +45,7 @@ function SignupBirth() {
         </div>
       </div>
       <div>
-        <DateValidationDisableFuture />
+        <DateValidationDisableFuture onDateChange={handleDateChange} />
       </div>
       <div></div>
       <div className="mb-[4rem]">

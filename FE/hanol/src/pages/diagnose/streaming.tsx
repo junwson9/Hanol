@@ -1,10 +1,19 @@
-import React, { useRef, useEffect, useState } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import { ReactComponent as Camera } from 'assets/icons/diagnoseCamera.svg';
 import TopBarDepth2 from 'components/common/TapBarDepth2';
 import { useNavigate } from 'react-router-dom';
-const CONSTRAINTS = { video: true };
+import { useRecoilValue } from 'recoil';
+import { DeviceState } from 'recoil/atoms';
+import { PartState } from 'recoil/atoms';
+import { ImageState } from 'recoil/atoms';
+import { useRecoilState } from 'recoil';
+const CONSTRAINTS = { video: { facingMode: 'environment' } };
 
 function Streaming() {
+  const test1 = useRecoilValue(DeviceState);
+  const test2 = useRecoilValue(PartState);
+  const [, setImageURL] = useRecoilState<string>(ImageState);
+
   const navigate = useNavigate();
   const videoRef = useRef<HTMLVideoElement>(null);
   const [capturedImage, setCapturedImage] = useState<string | null>(null);
@@ -49,7 +58,10 @@ function Streaming() {
 
   const confirmCapture = () => {
     if (capturedImage) {
-      console.log('촬영 성공');
+      console.log('진단을 받아봅시다');
+      // console.log(capturedImage);
+      setImageURL(capturedImage);
+      navigate('/analyzing');
       // 여기에서 이미지를 저장하거나 서버에 업로드할 수 있습니다.
       // capturedImage에 캡처된 이미지 데이터가 있습니다.
     }
@@ -82,16 +94,21 @@ function Streaming() {
           navigate('/diagnose');
         }}
         propsIsBack={true}
+        completeBtn={false}
       />
+      <div>
+        {test1}
+        {test2}
+      </div>
       <p className="text-lg text-center font-bold mt-20">
         원하시는 부위에 카메라를 대고
         <br />
         사진을 찍어주세요!
       </p>
       {capturedImage ? (
-        <img src={capturedImage} alt="Captured" className="rounded-xl mt-20" />
+        <img src={capturedImage} alt="Captured" className="rounded-xl mt-20" style={{ transform: 'scaleX(-1)' }} />
       ) : (
-        <video autoPlay ref={videoRef} className="rounded-xl mt-20" />
+        <video autoPlay ref={videoRef} playsInline className="rounded-xl mt-20" style={{ transform: 'scaleX(-1)' }} />
       )}
       {showCaptureButtons ? (
         <div className="absolute w-[100%] bottom-5 text-center">

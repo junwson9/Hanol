@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,16 +23,19 @@ public class JdbcMemberRoutineRepository {
     public void saveAll(List<MemberRoutine> memberRoutines) {
 
         String sql = "INSERT INTO member_routine "
-                + "(member_id, routine_id, is_notification_active, notification_time) VALUES (?, ?, ?, ?)";
+                + "(member_id, routine_id, is_notification_active, notification_time, created_date) VALUES (?, ?, ?, ?, ?)";
 
         List<Object[]> batchArgs = new ArrayList<>();
+
+        LocalDateTime createdDate = LocalDateTime.now();
 
         for (MemberRoutine memberRoutine : memberRoutines) {
             Object[] values = new Object[]{
                     memberRoutine.getMember().getId(),
                     memberRoutine.getRoutine().getId(),
                     memberRoutine.getIsNotificationActive() ? 1 : 0,
-                    memberRoutine.getNotificationTime()
+                    memberRoutine.getNotificationTime(),
+                    createdDate
             };
             batchArgs.add(values);
 

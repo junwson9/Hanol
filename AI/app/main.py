@@ -1,5 +1,4 @@
-from fastapi import FastAPI,UploadFile
-from models.image_request import ImageRequest
+from fastapi import FastAPI, UploadFile, Form
 from api.diagnostic_ai import DiagnosticAI
 
 app = FastAPI()
@@ -11,5 +10,5 @@ async def test():
     return 'test page'
 
 @app.post("/image")
-async def process_diagnostic(file: UploadFile):
-    return await diag.process_diagnostic(file)
+async def process_diagnostic(image_bytes: UploadFile = Form(...), sse_id: int = Form(...)):
+    return await diag.process_diagnostic(image_bytes, sse_id)
