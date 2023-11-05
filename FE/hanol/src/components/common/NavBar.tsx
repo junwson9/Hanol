@@ -10,16 +10,16 @@ import { ReactComponent as MyReportUnActive } from 'assets/icons/myReport-unacti
 import { ReactComponent as MyReport } from 'assets/icons/myReport.svg';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
-import { selectedMenuState } from 'recoil/atoms';
-
+import { MemberRoleState, selectedMenuState } from 'recoil/atoms';
+import { useRecoilValue } from 'recoil';
 function NavBar() {
   const location = useLocation();
   const navigate = useNavigate();
   const [selectedMenu, setSelectedMenu] = useRecoilState<string>(selectedMenuState);
+  const Role = useRecoilValue(MemberRoleState);
   const handleNavigate = (route: string) => {
     navigate(route);
   };
-
   useEffect(() => {
     const path = location.pathname;
     if (path === '/myreport') {
@@ -81,8 +81,13 @@ function NavBar() {
         <button
           className="flex flex-col items-center justify-center w-[66px] h-[66px] gap-[7px]"
           onClick={() => {
-            handleNavigate('/routine');
-            setSelectedMenu('routine');
+            if (Role == 'GUEST') {
+              handleNavigate('/explain-routine');
+              setSelectedMenu('routine');
+            } else {
+              handleNavigate('/routine');
+              setSelectedMenu('routine');
+            }
           }}
         >
           {selectedMenu === 'routine' ? <Routine /> : <RoutineUnActive />}

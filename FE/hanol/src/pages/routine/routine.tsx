@@ -39,6 +39,8 @@ function Routine() {
   });
   const [dailyRoutines, setDailyRoutine] = useState<DailyRoutine[]>([]);
   const [achievement, setAchievement] = useState<number[]>([]);
+  const [render, setRender] = useState<boolean>(false);
+  console.log('======================================================', render);
 
   // 데이트박스 클릭되는곳
   const handleDateBoxClick = (dateInfo: DateInfo) => {
@@ -55,7 +57,12 @@ function Routine() {
         const response = await axiosInstance.get(
           `/routines/daily-routine?date=${formatDateToYYYYMMDD(dateInfoString)}`,
         );
-        console.log('응답은 받냐?', response);
+        console.log('-------------------------------', response.data);
+        if (response.data.data.daily_routines.length === 0) {
+          setRender(false);
+        } else {
+          setRender(true);
+        }
         setDailyRoutine(response.data.data.daily_routines);
       } catch (error) {
         console.error('Error fetching daily routine:', error);
@@ -135,6 +142,7 @@ function Routine() {
       try {
         const response = await axiosInstance.get(`/routines/daily-routine?date=${formattedDate}`);
         setDailyRoutine(response.data.data.daily_routines);
+
         console.log(response);
       } catch (error) {
         console.error('데이터 가져오기 오류:', error);
@@ -197,17 +205,6 @@ function Routine() {
           <ArrorRight />
         </button>
       </div>
-      <div className="mt-[2rem] z-1">
-        <div className="flex justify-center">
-          <Error />
-        </div>
-        <div className="mt-[1rem]">두피 건강을 위한 루틴을 설정하세요.</div>
-        <div>꾸준한 실천이 건강한 모발을 만들어줄거에요.</div>
-      </div>
-
-      <div className="my-[2rem] sticky bottom-5 mb-[3rem] z-1">
-        <FloatingButton name={'두피 케어 루틴 설정하기'} onClick={handleClick} />
-      </div>
       <div style={{ position: 'relative', zIndex: 1000 }}>
         <CalenderBasic
           isModalOpen={isCalenderOpen}
@@ -217,20 +214,32 @@ function Routine() {
         />
         {/* <CalenderBasic /> */}
       </div>
-      <div className="z-1">
-        {dailyRoutines.map((routine, index) => (
-          <div className="mb-[1rem]">
-            <RoutineButton
-              key={index} // 고유한 키 사용
-              index={index} // index를 명시적으로 전달
-              is_done={routine.is_done}
-              routine_id={routine.routine_id}
-              routine_name={routine.routine_name}
-              member_routine_log_id={routine.member_routine_log_id}
-              onDataChange={handleDataChange}
-            />
+      {render ? (
+        <div className="z-1 mt-[4rem]">
+          {dailyRoutines.map((routine, index) => (
+            <div className="mb-[1rem]" key={index}>
+              <RoutineButton
+                index={index}
+                is_done={routine.is_done}
+                routine_id={routine.routine_id}
+                routine_name={routine.routine_name}
+                member_routine_log_id={routine.member_routine_log_id}
+                onDataChange={handleDataChange}
+              />
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div className="mt-[4rem] z-1">
+          <div className="flex justify-center">
+            <Error />
           </div>
-        ))}
+          <div className="mt-[1rem]">두피 건강을 위한 루틴을 설정하세요.</div>
+          <div>꾸준한 실천이 건강한 모발을 만들어줄거에요.</div>
+        </div>
+      )}
+      <div className="my-[2rem] sticky bottom-5 mb-[3rem] z-1">
+        <FloatingButton name={'두피 케어 루틴 설정하기'} onClick={handleClick} />
       </div>
     </div>
   );
