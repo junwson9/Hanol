@@ -21,7 +21,7 @@ const app = initializeApp(firebaseConfig);
 const messaging = getMessaging(app);
 
 async function requestPermission() {
-  console.log('권한 요청 중...');
+  console.log('알림 권한 요청 중...');
 
   const permission = await Notification.requestPermission();
   if (permission === 'denied') {
