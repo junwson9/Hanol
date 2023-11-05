@@ -24,6 +24,7 @@ import Analyzing from 'pages/diagnose/analyzingPage';
 import SelectPart from 'pages/diagnose/selectPart';
 import AboutNotiSetting from 'pages/about/aboutNotiSetting';
 import LoginDone from 'pages/auth/loginDone';
+import SetScalpTI from 'pages/scalpti/SetScalpTI';
 
 function App() {
   const location = useLocation();
@@ -65,6 +66,7 @@ function App() {
             <Route path="/analyzing" element={<Analyzing />} />
             <Route path="/select-part" element={<SelectPart />} />
             <Route path="/about-noti-setting" element={<AboutNotiSetting />} />
+            <Route path="/set-scalpTI" element={<SetScalpTI />} />
           </Routes>
         </div>
         <div>
