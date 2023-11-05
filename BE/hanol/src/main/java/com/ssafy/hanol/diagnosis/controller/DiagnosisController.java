@@ -1,11 +1,9 @@
 package com.ssafy.hanol.diagnosis.controller;
 
-import com.ssafy.hanol.common.exception.CustomException;
 import com.ssafy.hanol.common.response.ResponseFactory;
 import com.ssafy.hanol.diagnosis.controller.dto.request.DiagnosisApiRequest;
 import com.ssafy.hanol.diagnosis.controller.dto.response.DiagnosisDetailApiResponse;
 import com.ssafy.hanol.diagnosis.controller.dto.response.DiagnosisListApiResponse;
-import com.ssafy.hanol.diagnosis.exception.DiagnoseErrorCode;
 import com.ssafy.hanol.diagnosis.service.DiagnosisService;
 import com.ssafy.hanol.diagnosis.service.dto.response.DiagnosisListResponse;
 import com.ssafy.hanol.global.config.auth.AuthMember;
@@ -16,9 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.util.List;
-import java.util.Objects;
 
 @RestController
 @Slf4j
@@ -51,12 +46,15 @@ public class DiagnosisController {
 
     @PostMapping
     public ResponseEntity<?> diagnoseImage(@RequestPart MultipartFile file,
-                                           @Validated @RequestPart DiagnosisApiRequest diagnosisApiRequest) {
+                                           @Validated @RequestPart(value = "data") DiagnosisApiRequest diagnosisApiRequest) {
 
+
+        log.info("image : {}", file.getOriginalFilename());
+        log.info("data : {}", diagnosisApiRequest.toString());
         // 진단 이벤트 시작
-        diagnosisService.diagnose(diagnosisApiRequest.toDiagnosisRequest(1L));
+        diagnosisService.diagnose(diagnosisApiRequest.toDiagnosisRequest(1L, file));
 
-        return ResponseFactory.success("진단 성공");
+        return ResponseFactory.success("진단 요청 전송 성공");
     }
 
 
