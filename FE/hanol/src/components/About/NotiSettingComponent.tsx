@@ -1,6 +1,7 @@
 import React from 'react';
 import axiosInstance from 'api/axiosInterceptor';
 import styled from 'styled-components';
+import { getMessaging, getToken } from 'firebase/messaging';
 import Toggle from 'components/common/Toggle';
 
 interface Props {
@@ -13,6 +14,27 @@ interface Props {
 
 const NotiSettingComponent = ({ title, desc, toggleState, noti_type, onToggle }: Props) => {
   // console.log('toggleState', toggleState, 'noti_type', noti_type);
+
+  // FCM 토큰 관련
+  // eslint-disable-next-line
+  async function sendTokenToServer(messaging: any) {
+    const token = await getToken(messaging, {
+      vapidKey: process.env.REACT_APP_VAPID_KEY,
+    });
+
+    if (token) {
+      // console.log('token: ', token);
+      try {
+        const response = await axiosInstance.post('/notifications/token', { fcm_token: token });
+        console.log('알림설정 변경 후 토큰을 서버로 전송했습니다.', response.data);
+      } catch (error) {
+        console.error('알림설정 변경 후 토큰을 서버로 전송하는 중 에러 발생:', error);
+      }
+    } else {
+      console.log('토큰을 가져오지 못했습니다.');
+    }
+  }
+
   const toggleHandler = () => {
     const data = {
       notification_type: noti_type,
@@ -29,6 +51,10 @@ const NotiSettingComponent = ({ title, desc, toggleState, noti_type, onToggle }:
       .catch((error) => {
         console.error('알림 설정 변경 실패:', error);
       });
+
+    //FCM 토큰 관련
+    const messaging = getMessaging();
+    sendTokenToServer(messaging);
   };
   return (
     <div className="col-span-full">
