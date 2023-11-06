@@ -10,8 +10,10 @@ import com.ssafy.hanol.diagnosis.repository.DiagnosisRepository;
 import com.ssafy.hanol.diagnosis.service.dto.request.DiagnosisAiRequest;
 import com.ssafy.hanol.diagnosis.service.dto.request.DiagnosisRequest;
 import com.ssafy.hanol.diagnosis.service.dto.response.DiagnosisListResponse;
+import com.ssafy.hanol.diagnosis.service.dto.response.RabbitmqResponse;
 import com.ssafy.hanol.diagnosis.service.rabbitmq.DiagnosisRequestProducer;
 import com.ssafy.hanol.global.sse.service.SseService;
+import com.ssafy.hanol.global.sse.service.dto.response.DiagnoseAiResultResponse;
 import com.ssafy.hanol.member.domain.Member;
 import com.ssafy.hanol.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
@@ -68,14 +70,6 @@ public class DiagnosisService {
     public void diagnose(DiagnosisRequest diagnosisRequest) {
 
         Member member = memberService.findMemberByMemberId(diagnosisRequest.getMemberId());
-        // AI 서버로 이미지 진단 요청 전송
-        DiagnosisAiRequest diagnosisAiRequest = null;
-        try {
-            diagnosisAiRequest = DiagnosisAiRequest.from(member.getId(), diagnosisRequest.getFile());
-            diagnosisRequestProducer.sendDiagnosisRequest(diagnosisAiRequest);
-        } catch (Exception e) {
-            throw new CustomException(DiagnoseErrorCode.FILE_CONVERSION_ERROR);
-        }
 
         // 이미지 저장
         String imageUrl = imageUploadUtil.uploadImage("test", diagnosisRequest.getFile(), member.getId());
@@ -88,7 +82,31 @@ public class DiagnosisService {
                 .imageUrl(imageUrl)
                 .build();
 
-        diagnosisRepository.save(diagnosis);
+        Diagnosis savedDiagnosis = diagnosisRepository.save(diagnosis);
+
+        // AI 서버로 이미지 진단 요청 전송
+        DiagnosisAiRequest diagnosisAiRequest = null;
+        try {
+            diagnosisAiRequest = DiagnosisAiRequest.from(savedDiagnosis.getId(), member.getId(), diagnosisRequest.getFile());
+            diagnosisRequestProducer.sendDiagnosisRequest(diagnosisAiRequest);
+        } catch (Exception e) {
+            throw new CustomException(DiagnoseErrorCode.FILE_CONVERSION_ERROR);
+        }
+
+
+    }
+
+    public void saveDiagnosisAndSend(RabbitmqResponse rabbitmqResponse) {
+        Diagnosis diagnosis = diagnosisRepository.findById(rabbitmqResponse.getKeyId()).orElseThrow();
+
+        // 진단 결과 저장
+        log.info("지단 결과 저장");
+        diagnosis.updateValues(rabbitmqResponse);
+
+        log.info("diagnose info : {}", diagnosis);
+
+        //sseService.sendDiagnosisResult(rabbitmqResponse.getSseId(), DiagnoseAiResultResponse.from(diagnosis));
+
     }
 
 

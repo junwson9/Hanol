@@ -1,6 +1,7 @@
 package com.ssafy.hanol.diagnosis.domain;
 
 import com.ssafy.hanol.common.model.BaseTimeEntity;
+import com.ssafy.hanol.diagnosis.service.dto.response.RabbitmqResponse;
 import com.ssafy.hanol.member.domain.Member;
 import lombok.*;
 
@@ -24,22 +25,22 @@ public class Diagnosis extends BaseTimeEntity {
     @JoinColumn(name = "member_id", nullable = false)
     private Member member;
 
-    @Column(name = "value_1", nullable = false)
+    @Column(name = "value_1")
     private int value1;
 
-    @Column(name = "value_2", nullable = false)
+    @Column(name = "value_2")
     private int value2;
 
-    @Column(name = "value_3", nullable = false)
+    @Column(name = "value_3")
     private int value3;
 
-    @Column(name = "value_4", nullable = false)
+    @Column(name = "value_4")
     private int value4;
 
-    @Column(name = "value_5", nullable = false)
+    @Column(name = "value_5")
     private int value5;
 
-    @Column(name = "value_6", nullable = false)
+    @Column(name = "value_6")
     private int value6;
 
     @Column(name = "image_url")
@@ -76,6 +77,15 @@ public class Diagnosis extends BaseTimeEntity {
     // value값만 리스트로 추출하는 메서드
     public List<Integer> getValuesAsList() {
         return Arrays.asList(value1, value2, value3, value4, value5, value6);
+    }
+
+    public void updateValues(RabbitmqResponse response) {
+        this.value1 = response.getValue1();
+        this.value2 = response.getValue2();
+        this.value3 = response.getValue3();
+        this.value4 = response.getValue4();
+        this.value5 = response.getValue5();
+        this.value6 = response.getValue6();
     }
 
 }

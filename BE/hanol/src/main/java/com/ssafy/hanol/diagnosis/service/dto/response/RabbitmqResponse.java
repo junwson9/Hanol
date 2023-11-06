@@ -11,7 +11,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class RabbitmqResponse {
-    private String sseId;
+    private Long keyId;
+    private Long sseId;
     private int value1;
     private int value2;
     private int value3;
@@ -19,7 +20,8 @@ public class RabbitmqResponse {
     private int value5;
     private int value6;
 
-    public RabbitmqResponse(String sseId, int value1, int value2, int value3, int value4, int value5, int value6) {
+    public RabbitmqResponse(Long keyId, Long sseId, int value1, int value2, int value3, int value4, int value5, int value6) {
+        this.keyId = keyId;
         this.sseId = sseId;
         this.value1 = value1;
         this.value2 = value2;

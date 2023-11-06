@@ -13,17 +13,20 @@ import java.io.IOException;
 @NoArgsConstructor
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class DiagnosisAiRequest {
+    Long keyId;
     Long sseId;
     byte[] image;
 
     @Builder
-    public DiagnosisAiRequest(Long sseId, byte[] image) {
+    public DiagnosisAiRequest(Long keyId, Long sseId, byte[] image) {
+        this.keyId = keyId;
         this.sseId = sseId;
         this.image = image;
     }
 
-    public static DiagnosisAiRequest from(Long sseId, MultipartFile file) throws IOException {
+    public static DiagnosisAiRequest from(Long keyId, Long sseId, MultipartFile file) throws IOException {
         return DiagnosisAiRequest.builder()
+                .keyId(keyId)
                 .sseId(sseId)
                 .image(file.getBytes())
                 .build();

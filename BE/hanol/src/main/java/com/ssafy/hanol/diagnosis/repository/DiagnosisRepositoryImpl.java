@@ -18,8 +18,8 @@ public class DiagnosisRepositoryImpl implements DiagnosisRepository {
 
 
     @Override
-    public void save(Diagnosis diagnosis) {
-        jpaDiagnosisRepository.save(diagnosis);
+    public Diagnosis save(Diagnosis diagnosis) {
+        return jpaDiagnosisRepository.save(diagnosis);
     }
 
     @Override
