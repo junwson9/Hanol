@@ -15,7 +15,6 @@ import { aboutnotiSettingType } from 'types/DiagnosisResult';
 const aboutNotiSetting = () => {
   const [notiSettingData, setNotiSettingData] = useState<aboutnotiSettingType>();
   useEffect(() => {
-    // axiosInstance
     // .get('/diagnoses?limit=20')
     axiosInstance
       // axios
@@ -39,7 +38,7 @@ const aboutNotiSetting = () => {
 
   return (
     <div className="col-span-full">
-      <TapBarDepth2 name="알림 설정" propsIsBack completeBtn />
+      <TapBarDepth2 name="알림 설정" propsIsBack rightBtnType={3} />
       {notiSettingData && (
         <NotiSettingComponent
           title="데일리 루틴 확인 알림"

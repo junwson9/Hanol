@@ -91,7 +91,7 @@ function IoTstreaming() {
               navigate('/diagnose');
             }}
             propsIsBack={true}
-            completeBtn={false}
+            rightBtnType={2}
           />
           <p className="text-lg text-center font-bold mt-20">
             원하시는 부위에 카메라를 대고
