@@ -105,7 +105,7 @@ public class DiagnosisService {
 
         log.info("diagnose info : {}", diagnosis);
 
-        //sseService.sendDiagnosisResult(rabbitmqResponse.getSseId(), DiagnoseAiResultResponse.from(diagnosis));
+        sseService.sendDiagnosisResult(rabbitmqResponse.getSseId(), DiagnoseAiResultResponse.from(diagnosis));
 
     }
 
