@@ -4,12 +4,13 @@ import axiosInstance from 'api/axiosInterceptor';
 import styled from 'styled-components';
 
 interface Props {
-  toggleState: boolean;
+  toggleState?: boolean;
   noti_type?: string;
   onToggle?: (newState: boolean) => void;
 }
 const Toggle = ({ toggleState, noti_type, onToggle }: Props) => {
-  // console.log('toggleState', toggleState, 'noti_type', noti_type);
+  console.log('toggleState', toggleState, 'noti_type', noti_type);
+
   const toggleHandler = () => {
     const data = {
       notification_type: noti_type,

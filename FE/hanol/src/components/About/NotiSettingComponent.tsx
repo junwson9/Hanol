@@ -6,9 +6,9 @@ import Toggle from 'components/common/Toggle';
 interface Props {
   title: string;
   desc: string;
-  toggleState: boolean;
+  toggleState?: boolean;
   noti_type: string;
-  onToggle: (newState: boolean) => void;
+  onToggle?: (newState: boolean) => void;
 }
 
 const NotiSettingComponent = ({ title, desc, toggleState, noti_type, onToggle }: Props) => {
