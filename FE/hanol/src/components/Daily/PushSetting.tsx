@@ -7,10 +7,10 @@ interface Props {
   onToggle?: (newState: boolean) => void;
   toggleState?: boolean;
   notiTime?: string;
-  setNotitime: (arg: string) => void;
+  setNotiTime: (arg: string) => void;
 }
 
-const PushSetting = ({ onToggle, toggleState, notiTime, setNotitime }: Props) => {
+const PushSetting = ({ onToggle, toggleState, notiTime, setNotiTime }: Props) => {
   console.log('toggleState', toggleState);
 
   const toggleHandler = () => {
@@ -32,19 +32,19 @@ const PushSetting = ({ onToggle, toggleState, notiTime, setNotitime }: Props) =>
             <NotificationTime
               timename="오전 9시"
               isActive={notiTime === '09:00:00'}
-              setNotitime={() => setNotitime('09:00:00')}
+              setNotiTime={() => setNotiTime('09:00:00')}
               time="09:00:00"
             />
             <NotificationTime
               timename="오후 1시"
               isActive={notiTime === '13:00:00'}
-              setNotitime={() => setNotitime('13:00:00')}
+              setNotiTime={() => setNotiTime('13:00:00')}
               time="13:00:00"
             />
             <NotificationTime
               timename="오후 7시"
               isActive={notiTime === '19:00:00'}
-              setNotitime={() => setNotitime('19:00:00')}
+              setNotiTime={() => setNotiTime('19:00:00')}
               time="19:00:00"
             />
           </NotificationTimeBox>

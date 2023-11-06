@@ -52,7 +52,7 @@ const routineNotiSetting = () => {
         {routineNotiSettingData && (
           <PushSetting
             notiTime={notiTime}
-            setNotitime={setNotiTime}
+            setNotiTime={setNotiTime}
             toggleState={routineNotiSettingData?.is_notification_active}
             onToggle={(newState) =>
               setRoutineNotiSettingData((prevState) => ({

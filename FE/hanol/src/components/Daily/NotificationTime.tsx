@@ -4,13 +4,13 @@ import styled from 'styled-components';
 interface Props {
   timename: string;
   isActive: boolean;
-  setNotitime: (arg: string) => void;
+  setNotiTime: (arg: string) => void;
   time: string;
 }
-const NotificationTime = ({ timename, isActive, setNotitime, time }: Props) => {
+const NotificationTime = ({ timename, isActive, setNotiTime, time }: Props) => {
   return (
     <div className="col-span-full">
-      <TimeBox onClick={() => setNotitime(time)}>
+      <TimeBox onClick={() => setNotiTime(time)}>
         <BoxDiv className={`${isActive ? 'active_div' : null}`}>
           <div className={`time_txt ${isActive ? 'active_txt' : null}`}>{timename}</div>
         </BoxDiv>
