@@ -8,6 +8,7 @@ import com.ssafy.hanol.routine.controller.dto.request.RoutineListModifyApiReques
 import com.ssafy.hanol.routine.controller.dto.request.RoutineNotificationModifyApiRequest;
 import com.ssafy.hanol.routine.controller.dto.response.*;
 import com.ssafy.hanol.routine.service.RoutineService;
+import com.ssafy.hanol.routine.service.batch.RoutineBatchScheduler;
 import com.ssafy.hanol.routine.service.dto.response.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,6 +25,7 @@ import java.time.LocalDate;
 public class RoutineController {
 
     private final RoutineService routineService;
+    private final RoutineBatchScheduler routineBatchScheduler;
 
     @GetMapping
     public ResponseEntity<?> routineList(@AuthenticatedMember AuthMember authMember) {
@@ -75,4 +77,11 @@ public class RoutineController {
         return ResponseFactory.success("루틴 알림 설정 변경 완료", MemberRoutineDetailApiResponse.from(result));
     }
 
+
+    // 데일리 루틴 생성을 위한 테스트 코드
+    @PostMapping("/daily-routine/batch")
+    public ResponseEntity<?> dailyRoutineBatchRun() {
+        routineBatchScheduler.runDailyRoutineJob();
+        return ResponseFactory.success("데일리 루틴 생성 배치 실행");
+    }
 }

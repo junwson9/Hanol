@@ -7,7 +7,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
 @EnableScheduling
-@EnableBatchProcessing
+@EnableBatchProcessing // 배치 기능 활성화
 public class HanolApplication {
 
 	public static void main(String[] args) {

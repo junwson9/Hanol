@@ -8,18 +8,22 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
+import org.springframework.batch.core.configuration.annotation.JobScope;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
-import org.springframework.batch.core.step.tasklet.Tasklet;
+import org.springframework.batch.core.configuration.annotation.StepScope;
+import org.springframework.batch.item.ItemProcessor;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.database.JpaPagingItemReader;
-import org.springframework.batch.repeat.RepeatStatus;
+import org.springframework.batch.item.database.builder.JpaPagingItemReaderBuilder;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import javax.persistence.EntityManagerFactory;
 import java.time.LocalDate;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Configuration
 @Slf4j
@@ -29,66 +33,69 @@ public class RoutineBatchConfiguration {
     private final JobBuilderFactory jobBuilderFactory;
     private final StepBuilderFactory stepBuilderFactory;
     private final EntityManagerFactory entityManagerFactory;
+    private final MemberRoutineLogRepository memberRoutineLogRepository;
 
-    private static final int CHUNK_SIZE = 100;
+    private static final String JOB_NAME = "dailyRoutineJob";
+    public static final int CHUNK_SIZE = 2;
 
-    @Bean
+
+    @Bean(name = JOB_NAME)
     public Job dailyRoutineJob(Step dailyRoutineStep) {
-        return jobBuilderFactory.get("dailyRoutineJob")
-                .start(dailyRoutineStep)
+        log.info("======= DailyRoutineJob 시작");
+        return jobBuilderFactory.get(JOB_NAME)
+                .start(dailyRoutineStep())
                 .build();
     }
 
-//    @Bean
-//    public Step dailyRoutineStep() {
-//        return stepBuilderFactory.get("dailyRoutineStep")
-//                .tasklet(routineTasklet)
-//                .build();
-//    }
-
-    @Bean
+    @Bean(name = JOB_NAME + "_step")
+    @JobScope
     public Step dailyRoutineStep() {
-        return stepBuilderFactory.get("dailyRoutineStep")
-                .tasklet(routineTasklet())
+        log.info("======= DailyRoutineStep 시작");
+        return stepBuilderFactory.get(JOB_NAME+"_step")
+                .<MemberRoutine, MemberRoutineLog>chunk(CHUNK_SIZE)
+                .reader(reader(null))
+                .processor(processor())
+                .writer(writer())
+                .faultTolerant()
+                .retry(Exception.class)
+                .retryLimit(3)  // Chunk 실패 시 재시도 3회
                 .build();
     }
 
-    @Bean
-    public Tasklet routineTasklet() {
-        return ((contribution, chunkContext) -> {
-            // Tasklet 내부 로직 작성
-            log.info(">>> 데일리 루틴 입력 tasklet 수행");
-            return RepeatStatus.FINISHED;
-        });
+    @Bean(name = JOB_NAME + "_reader")
+    @StepScope
+    public JpaPagingItemReader<MemberRoutine> reader(@Value("#{jobParameters[createdDate]}") String createdDate) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("createdDate", createdDate);
+        log.info(">>>> 리더 createdDate={}", createdDate);
+
+        return new JpaPagingItemReaderBuilder<MemberRoutine>()
+                .name(JOB_NAME+"_reader")
+                .entityManagerFactory(entityManagerFactory)
+                .pageSize(CHUNK_SIZE)   // 한 번에 읽어올 데이터 수
+                .queryString("SELECT mr FROM MemberRoutine mr")
+                .parameterValues(params)
+                .build();
     }
 
 
-    @Bean
-    public JpaPagingItemReader<MemberRoutine> memberRoutineJpaPagingItemReader() {
-        JpaPagingItemReader<MemberRoutine> reader = new JpaPagingItemReader<>();
-        reader.setEntityManagerFactory(entityManagerFactory);
-        reader.setPageSize(CHUNK_SIZE); // 한 번에 읽어올 데이터의 수
-
-        reader.setQueryString("SELECT mr FROM MemberRoutine mr");
-        return reader;
-    }
-
-    @Bean
-    public ItemWriter<MemberRoutineLog> memberRoutineLogItemWriter(MemberRoutineLogRepository memberRoutineLogRepository) {
-        return items -> {
-            List<MemberRoutineLog> routineLogs = new ArrayList<>();
+    public ItemProcessor<MemberRoutine, MemberRoutineLog> processor() {
+        log.info("프로세서 시작");
+        return memberRoutine -> {
             LocalDate today = LocalDate.now();
+            return MemberRoutineLog.builder()
+                    .member(memberRoutine.getMember())
+                    .routine(memberRoutine.getRoutine())
+                    .date(today)
+                    .isDone(false)
+                    .build();
+        };
+    }
 
-            for (MemberRoutineLog memberRoutine : items) {
-                MemberRoutineLog routineLog = MemberRoutineLog.builder()
-                        .member(memberRoutine.getMember())
-                        .routine(memberRoutine.getRoutine())
-                        .date(today)
-                        .isDone(false)
-                        .build();
-                routineLogs.add(routineLog);
-            }
-            memberRoutineLogRepository.saveAll(routineLogs);
+    public ItemWriter<MemberRoutineLog> writer() {
+        log.info("쓰기 시작");
+        return memberRoutineLogs -> {
+            memberRoutineLogRepository.saveAll((List<MemberRoutineLog>) memberRoutineLogs);
         };
     }
 
