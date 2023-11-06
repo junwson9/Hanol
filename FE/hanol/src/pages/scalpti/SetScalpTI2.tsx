@@ -9,27 +9,26 @@ import { useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { examinationState } from 'recoil/atoms';
 
-function SetScalpTI1() {
+function SetScalpTI2() {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const navigate = useNavigate();
-  const question_1 = ['1일 1회', '1일 2회', '2일 1회'];
+  const question_1 = ['하지않음', '연 1~3회', '연 4~6회', '연 7회이상'];
   const [selectedOption, setSelectedOption] = useState<string | null>(null); // 선택된 옵션을 상태로 관리
   const [select, setSelect] = useRecoilState(examinationState);
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
-
   const handleOptionClick = (option: string, index: number) => {
     setSelectedOption(option);
     setSelectedIndex(index);
-    console.log(select);
   };
 
   const handleButtonClick = () => {
     setSelect((prevSelect) => {
       const updatedSelect = [...prevSelect];
-      updatedSelect[0] = selectedIndex as number;
+      updatedSelect[1] = selectedIndex as number;
       return updatedSelect;
     });
-    navigate('/set-scalpti2');
+    console.log(select);
+    navigate('/set-scalpti3');
   };
   return (
     <>
@@ -43,12 +42,12 @@ function SetScalpTI1() {
               onClick={() => navigate('/examination')}
             />
             <div className="flex">
-              <div className="h-[0.188rem] w-[14%] bg-Main"></div>
-              <div className="h-[0.188rem] w-[86%] bg-Gray"></div>
+              <div className="h-[0.188rem] w-[28%] bg-Main "></div>
+              <div className="h-[0.188rem] w-[72%] bg-Gray "></div>
             </div>
           </div>
           <p className="text-[1.25rem]  text-left font-bold mt-20 col-start-1 col-end-5 whitespace-nowrap">
-            샴푸 사용 빈도를
+            펌 주기를
             <br />
             선택해주세요.
           </p>
@@ -71,4 +70,4 @@ function SetScalpTI1() {
     </>
   );
 }
-export default SetScalpTI1;
+export default SetScalpTI2;

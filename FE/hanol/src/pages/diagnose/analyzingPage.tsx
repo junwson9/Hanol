@@ -47,24 +47,24 @@ const AnalyzingPage = () => {
   useEffect(() => {
     const eventSource = setupSSE(); // 이벤트 소스를 생성하고 캡처
     const formData = new FormData();
+    //const imageBlob = new Blob([image], { type: 'image/jpg' });
+    const imageBlob = new Blob([image], { type: 'image/jpeg' });
+    formData.append('file', imageBlob, 'image.jpg');
 
-    const value = [
-      {
-        divice_type: { device },
-        scan_part: 0,
-      },
-    ];
+    const data = {
+      device_type: 0,
+      scan_part: 0,
+    };
 
-    const blob = new Blob([JSON.stringify(value)], { type: 'application/json' });
-    console.log(blob);
-    formData.append('data', blob);
+    formData.append('data', new Blob([JSON.stringify(data)], { type: 'application/json' }));
+
+    console.log(formData);
     const fetchData = async () => {
       try {
-        const response = await axiosInstance.post(`/diagnoses`, {
+        const response = await axiosInstance.post(`/diagnoses`, formData, {
           headers: {
-            'Content-Type': 'multipart/form-data', // Content-Type을 반드시 이렇게 하여야 한다.
+            'Content-Type': 'multipart/form-data',
           },
-          data: formData, // data 전송시에 반드시 생성되어 있는 formData 객체만 전송 하여야 한다.
         });
         console.log(response);
       } catch (error) {

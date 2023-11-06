@@ -25,6 +25,7 @@ type DailyRoutine = {
   is_done: boolean;
   routine_name: string;
   member_routine_log_id: number;
+  member_routine_id: number | null;
 };
 
 function Routine() {
@@ -227,6 +228,7 @@ function Routine() {
                 routine_id={routine.routine_id}
                 routine_name={routine.routine_name}
                 member_routine_log_id={routine.member_routine_log_id}
+                member_routine_id={routine.member_routine_id}
                 onDataChange={handleDataChange}
               />
             </div>

@@ -8,28 +8,43 @@ import RoutineSetButton from 'components/button/RoutineSetButton';
 import { useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { examinationState } from 'recoil/atoms';
+import axiosInstance from 'api/axiosInterceptor';
 
-function SetScalpTI1() {
+function SetScalpTI7() {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const navigate = useNavigate();
-  const question_1 = ['1일 1회', '1일 2회', '2일 1회'];
+  const question_1 = ['향', '머릿결', '가격', '헹굼후느낌', '두피자극', '세정력'];
   const [selectedOption, setSelectedOption] = useState<string | null>(null); // 선택된 옵션을 상태로 관리
   const [select, setSelect] = useRecoilState(examinationState);
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
-
   const handleOptionClick = (option: string, index: number) => {
     setSelectedOption(option);
     setSelectedIndex(index);
-    console.log(select);
   };
 
-  const handleButtonClick = () => {
+  const handleButtonClick = async () => {
     setSelect((prevSelect) => {
       const updatedSelect = [...prevSelect];
-      updatedSelect[0] = selectedIndex as number;
+      updatedSelect[6] = selectedIndex as number;
       return updatedSelect;
     });
-    navigate('/set-scalpti2');
+    const answer = {
+      answer1: select[0],
+      answer2: select[1],
+      answer3: select[2],
+      answer4: select[3],
+      answer5: select[4],
+      answer6: select[5],
+      answer7: select[6],
+    };
+    console.log(answer);
+    try {
+      const response = await axiosInstance.post('/examinations', answer);
+      console.log(response);
+      navigate('/set-scalpt-done');
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
   };
   return (
     <>
@@ -43,14 +58,14 @@ function SetScalpTI1() {
               onClick={() => navigate('/examination')}
             />
             <div className="flex">
-              <div className="h-[0.188rem] w-[14%] bg-Main"></div>
-              <div className="h-[0.188rem] w-[86%] bg-Gray"></div>
+              <div className="h-[0.188rem] w-[100%] bg-Main "></div>
+              <div className="h-[0.188rem] w-[0%] bg-Gray "></div>
             </div>
           </div>
           <p className="text-[1.25rem]  text-left font-bold mt-20 col-start-1 col-end-5 whitespace-nowrap">
-            샴푸 사용 빈도를
+            샴푸 구매시
             <br />
-            선택해주세요.
+            고려사항은 무엇인가요?
           </p>
           <div className="mt-[2.5rem] col-start-1 col-end-7">
             {question_1.map((element, index) => (
@@ -71,4 +86,4 @@ function SetScalpTI1() {
     </>
   );
 }
-export default SetScalpTI1;
+export default SetScalpTI7;
