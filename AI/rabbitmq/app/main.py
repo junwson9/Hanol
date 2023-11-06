@@ -17,6 +17,7 @@ channel = connection.channel()
 
 diag = DiagnosticAI()
 
+
 # 메시지 받을 큐 이름
 queue_request_name = 'scalp-diagnose-request-queue'
 # 로직 처리하고 다시 전달할 큐 이름
@@ -34,12 +35,14 @@ def request_handler(ch, method, properties, body):
     print("rabbitmq 구독 완료")
     try:
         data = json.loads(body)
+        key_id = data.get("key_id")
         sse_id = data.get("sse_id")
         image_base64 = data.get("image")
         image_bytes = b64decode(image_base64)
 
         response = diag.process_diagnostic(image_bytes,sse_id)
         response_data = {
+                    "key_id" : key_id,
                     "sse_id": sse_id, 
                     "value1": response["value1"], 
                     "value2": response["value2"], 

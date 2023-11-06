@@ -46,12 +46,13 @@ public class DiagnosisController {
 
     @PostMapping
     public ResponseEntity<?> diagnoseImage(@RequestPart MultipartFile file,
-                                           @Validated @RequestPart(value = "data") DiagnosisApiRequest diagnosisApiRequest) {
+                                           @Validated @RequestPart(value = "data") DiagnosisApiRequest diagnosisApiRequest,
+                                           @AuthenticatedMember AuthMember member) {
 
         log.info("image : {}", file.getOriginalFilename());
         log.info("data : {}", diagnosisApiRequest.toString());
         // 진단 이벤트 시작
-        diagnosisService.diagnose(diagnosisApiRequest.toDiagnosisRequest(1L, file));
+        diagnosisService.diagnose(diagnosisApiRequest.toDiagnosisRequest(member.getId(), file));
 
         return ResponseFactory.success("진단 요청 전송 성공");
     }
