@@ -26,6 +26,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -178,17 +179,33 @@ public class RoutineService {
     }
 
     // 루틴 알림 설정 변경
-    public RoutineNotificationModifyResponse modifyRoutineNotification(Long memberRoutineId,
-                                                                       RoutineNotificationModifyRequest request,
-                                                                       Long memberId) {
+    public MemberRoutineDetailResponse modifyRoutineNotification(Long memberRoutineId,
+                                                                 RoutineNotificationModifyRequest request,
+                                                                 Long memberId) {
         MemberRoutine memberRoutine = memberRoutineRepository.findById(memberRoutineId)
                 .orElseThrow(() -> new CustomException(RoutineErrorCode.NOT_FOUND_MEMBER_ROUTINE));
         validateMemberAccess(memberRoutine.getMember().getId(), memberId);
 
         memberRoutine.updateNotification(request.getIsNotificationActive(), request.getNotificationTime());
 
-        return RoutineNotificationModifyResponse.builder()
+        return MemberRoutineDetailResponse.builder()
                 .memberRoutineId(memberRoutineId)
+                .routineName(memberRoutine.getRoutine().getRoutineName())
+                .isNotificationActive(memberRoutine.getIsNotificationActive())
+                .notificationTime(memberRoutine.getNotificationTime())
+                .build();
+    }
+
+
+    //  회원별 루틴 상세 조회
+    public MemberRoutineDetailResponse findMemberRoutineDetail(Long memberRoutineId, Long memberId) {
+        MemberRoutine memberRoutine = memberRoutineRepository.findById(memberRoutineId)
+                .orElseThrow(() -> new CustomException(RoutineErrorCode.NOT_FOUND_MEMBER_ROUTINE));
+        validateMemberAccess(memberRoutine.getMember().getId(), memberId);
+
+        return MemberRoutineDetailResponse.builder()
+                .memberRoutineId(memberRoutineId)
+                .routineName(memberRoutine.getRoutine().getRoutineName())
                 .isNotificationActive(memberRoutine.getIsNotificationActive())
                 .notificationTime(memberRoutine.getNotificationTime())
                 .build();

@@ -7,9 +7,10 @@ import java.time.LocalTime;
 
 @Getter
 @Builder
-public class RoutineNotificationModifyResponse {
+public class MemberRoutineDetailResponse {
 
     private final Long memberRoutineId;
+    private final String routineName;
     private final Boolean isNotificationActive;
     private LocalTime notificationTime;
 
