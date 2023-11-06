@@ -24,3 +24,10 @@ export interface datelistType {
   diagnosis_id: number;
   created_date: string;
 }
+
+export interface routineNotiSettingType {
+  member_routine_id: number;
+  routine_name: string;
+  is_notification_active: boolean;
+  notification_time: string;
+}

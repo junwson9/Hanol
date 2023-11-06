@@ -43,7 +43,7 @@ function SelectPart() {
           navigate('/diagnose');
         }}
         propsIsBack={true}
-        completeBtn={false}
+        rightBtnType={2}
       />
       <p className="text-lg  text-left font-bold mt-12 text-center">촬영 부위를 선택해 주세요!</p>
       <div className="flex justify-center">

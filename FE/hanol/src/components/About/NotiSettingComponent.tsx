@@ -1,5 +1,5 @@
 import React from 'react';
-// import axiosInstance from 'api/axiosInterceptor';
+import axiosInstance from 'api/axiosInterceptor';
 import styled from 'styled-components';
 import Toggle from 'components/common/Toggle';
 
@@ -13,7 +13,23 @@ interface Props {
 
 const NotiSettingComponent = ({ title, desc, toggleState, noti_type, onToggle }: Props) => {
   // console.log('toggleState', toggleState, 'noti_type', noti_type);
-
+  const toggleHandler = () => {
+    const data = {
+      notification_type: noti_type,
+      is_active: !toggleState,
+    };
+    axiosInstance
+      // axios
+      // .patch('http://localhost:4000/notifications', data)
+      .patch('/notifications', data)
+      .then((response) => {
+        onToggle?.(!toggleState);
+        console.log('알림 설정 변경 성공:', response);
+      })
+      .catch((error) => {
+        console.error('알림 설정 변경 실패:', error);
+      });
+  };
   return (
     <div className="col-span-full">
       <NotiSettingComponentBox>
@@ -21,7 +37,7 @@ const NotiSettingComponent = ({ title, desc, toggleState, noti_type, onToggle }:
           <div className="noti_setting_title">{title}</div>
           <div className="setting_desc">{desc}</div>
         </TextBox>
-        <Toggle toggleState={toggleState} noti_type={noti_type} onToggle={onToggle} />
+        <Toggle toggleState={toggleState} onClick={toggleHandler} />
       </NotiSettingComponentBox>
     </div>
   );
