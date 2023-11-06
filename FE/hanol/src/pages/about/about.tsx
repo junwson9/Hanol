@@ -37,6 +37,9 @@ function About() {
     navigate('/mypage');
   };
 
+  const handleterms = () => {
+    navigate('/terms');
+  };
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -82,7 +85,9 @@ function About() {
       <div className="">
         <button className="font-bold text-[1.125rem] w-full my-[1rem] text-left">알림설정</button>
         <button className="font-bold text-[1.125rem] w-full my-[1rem] text-left">ABOUT</button>
-        <button className="font-bold text-[1.125rem] w-full my-[1rem] text-left">약관 및 정책</button>
+        <button onClick={handleterms} className="font-bold text-[1.125rem] w-full my-[1rem] text-left">
+          약관 및 정책
+        </button>
         <button className="font-bold text-[1.125rem] w-full my-[1rem] text-left">오픈소스 라이브러리</button>
         {role === 'logined' && (
           <button onClick={handleLogout} className="font-bold text-[1.125rem] w-full my-[1rem] text-left">

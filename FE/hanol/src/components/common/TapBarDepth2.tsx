@@ -19,7 +19,7 @@ function TapBarDepth2({ name, onClick, propsIsBack, rightBtnType }: TapBarDepth2
       ) : (
         <div className="w-[24px] h-[24px]"></div>
       )}
-      <div className="flex items-center ">
+      <div className="flex items-center justify-center " style={{ flex: 1 }}>
         <div className="font-medium text-[1.063rem] whitespace-nowrap">{name}</div>
       </div>
       <button className="items-center" onClick={onClick}>
