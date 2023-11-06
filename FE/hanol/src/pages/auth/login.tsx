@@ -2,10 +2,7 @@ import { ReactComponent as IconKakaoLogin } from '../../assets/rescureImg/KakaoL
 import axios from 'axios';
 import KakaoLogin from 'react-kakao-login';
 import { useNavigate } from 'react-router-dom';
-<<<<<<< HEAD
-=======
 import { getMessaging, getToken } from 'firebase/messaging';
->>>>>>> develop
 import { MemberRoleState } from 'recoil/atoms';
 import { useSetRecoilState } from 'recoil';
 
