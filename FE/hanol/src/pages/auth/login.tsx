@@ -2,12 +2,17 @@ import { ReactComponent as IconKakaoLogin } from '../../assets/rescureImg/KakaoL
 import axios from 'axios';
 import KakaoLogin from 'react-kakao-login';
 import { useNavigate } from 'react-router-dom';
+import { getMessaging, getToken } from 'firebase/messaging';
+import { MemberRoleState } from 'recoil/atoms';
+import { useSetRecoilState } from 'recoil';
 
 function Login() {
   const kakaoID = process.env.REACT_APP_KAKAO_CLIENT_ID;
   const APP_URI = process.env.REACT_APP_API_URL;
   const navigate = useNavigate();
   console.log(kakaoID);
+  const setMemberRole = useSetRecoilState(MemberRoleState);
+
   // eslint-disable-next-line
   const kakaoSuccessHandler = (data: any) => {
     const requestData = {
@@ -25,13 +30,39 @@ function Login() {
         localStorage.setItem('refresh_token', refresh_token);
         const role = response.data.data.role;
         if (role == 'GUEST') {
+          setMemberRole(role);
           navigate('/signup-birth');
         } else {
+          setMemberRole(role);
           navigate('/');
         }
+        // FCM 토큰 관련
+        const messaging = getMessaging();
+
+        async function sendTokenToServer() {
+          const token = await getToken(messaging, {
+            vapidKey: process.env.REACT_APP_VAPID_KEY,
+          });
+
+          // 사용자가 로그인한 후, 해당 토큰을 서버로 전송하고 서버에서 필요한 처리를 진행합니다.
+          if (token) {
+            // 토큰을 서버로 전송하기 위해 Axios나 fetch 등을 사용할 수 있습니다.
+            console.log('token: ', token);
+            try {
+              const response = await axios.post(`${APP_URI}/notifications/token`, { fcm_token: token });
+              console.log('토큰을 서버로 전송했습니다.', response.data);
+            } catch (error) {
+              console.error('토큰을 서버로 전송하는 중 에러 발생:', error);
+            }
+          } else {
+            console.log('토큰을 가져오지 못했습니다.');
+          }
+        }
+
+        sendTokenToServer();
       })
-      // eslint-disable-next-line
-      .catch((error: any) => {
+
+      .catch((error) => {
         console.error('로그인 또는 회원가입에 실패했습니다.', error);
       });
   };

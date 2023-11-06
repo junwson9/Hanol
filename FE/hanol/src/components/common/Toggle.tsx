@@ -1,23 +1,42 @@
 import React from 'react';
+// import axios from 'axios';
+import axiosInstance from 'api/axiosInterceptor';
 import styled from 'styled-components';
 
 interface Props {
-  isToggleOn: boolean;
-  setIsToggleOn(value: boolean): void;
+  toggleState?: boolean;
+  noti_type?: string;
+  onToggle?: (newState: boolean) => void;
 }
-const Toggle = ({ isToggleOn, setIsToggleOn }: Props) => {
-  const toggleHandler = (prev: boolean) => {
-    setIsToggleOn(!prev);
+const Toggle = ({ toggleState, noti_type, onToggle }: Props) => {
+  console.log('toggleState', toggleState, 'noti_type', noti_type);
+
+  const toggleHandler = () => {
+    const data = {
+      notification_type: noti_type,
+      is_active: !toggleState,
+    };
+    axiosInstance
+      // axios
+      // .patch('http://localhost:4000/notifications', data)
+      .patch('/notifications', data)
+      .then((response) => {
+        onToggle?.(!toggleState);
+        console.log('알림 설정 변경 성공:', response);
+      })
+      .catch((error) => {
+        console.error('알림 설정 변경 실패:', error);
+      });
   };
 
   return (
     <div className="col-span-full">
       <ToggleBox>
         <ToggleBackground
-          onClick={() => toggleHandler(isToggleOn)}
-          className={`${isToggleOn ? 'on_background' : 'off_background'}`}
+          onClick={() => toggleHandler()}
+          className={`${toggleState ? 'on_background' : 'off_background'}`}
         >
-          <ToggleSwitch className={`${isToggleOn ? 'on_switch' : 'off_switch'}`} />
+          <ToggleSwitch className={`${toggleState ? 'on_switch' : 'off_switch'}`} />
         </ToggleBackground>
       </ToggleBox>
     </div>

@@ -16,6 +16,11 @@ function About() {
     localStorage.removeItem('refresh_token');
     handleButtonClick();
   };
+
+  const navToMypage = () => {
+    navigate('/mypage');
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -49,11 +54,13 @@ function About() {
           </button>
         </div>
       ) : (
-        <div className="h-[7rem] flex items-center justify-between border-y mb-[1rem]">
-          <div className="text-Black font-bold text-[1.125rem]">{name}</div>
-          <div className="ml-[2rem]">
-            <Arrow />
-          </div>
+        <div className="border-y mb-[1rem]">
+          <button onClick={navToMypage} className="h-[7rem] flex items-center justify-between">
+            <div className="text-Black font-bold text-[1.125rem]">{name}</div>
+            <div className="ml-[2rem] mr-auto">
+              <Arrow />
+            </div>
+          </button>
         </div>
       )}
       <div className="">

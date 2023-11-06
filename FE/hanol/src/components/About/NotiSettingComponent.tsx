@@ -1,14 +1,18 @@
-import React, { useState } from 'react';
+import React from 'react';
+// import axiosInstance from 'api/axiosInterceptor';
 import styled from 'styled-components';
 import Toggle from 'components/common/Toggle';
 
 interface Props {
   title: string;
   desc: string;
+  toggleState?: boolean;
+  noti_type: string;
+  onToggle?: (newState: boolean) => void;
 }
 
-const NotiSettingComponent = ({ title, desc }: Props) => {
-  const [isToggleOn, setIsToggleOn] = useState(false);
+const NotiSettingComponent = ({ title, desc, toggleState, noti_type, onToggle }: Props) => {
+  // console.log('toggleState', toggleState, 'noti_type', noti_type);
 
   return (
     <div className="col-span-full">
@@ -17,7 +21,7 @@ const NotiSettingComponent = ({ title, desc }: Props) => {
           <div className="noti_setting_title">{title}</div>
           <div className="setting_desc">{desc}</div>
         </TextBox>
-        <Toggle isToggleOn={isToggleOn} setIsToggleOn={setIsToggleOn} />
+        <Toggle toggleState={toggleState} noti_type={noti_type} onToggle={onToggle} />
       </NotiSettingComponentBox>
     </div>
   );
