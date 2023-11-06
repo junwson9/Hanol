@@ -1,21 +1,27 @@
 import React from 'react';
-import axios from 'axios';
+// import axios from 'axios';
+import axiosInstance from 'api/axiosInterceptor';
 import styled from 'styled-components';
 
 interface Props {
-  toggleState: boolean;
+  toggleState?: boolean;
   noti_type?: string;
+  onToggle?: (newState: boolean) => void;
 }
-const Toggle = ({ toggleState, noti_type }: Props) => {
+const Toggle = ({ toggleState, noti_type, onToggle }: Props) => {
+  console.log('toggleState', toggleState, 'noti_type', noti_type);
+
   const toggleHandler = () => {
     const data = {
       notification_type: noti_type,
       is_active: !toggleState,
     };
-    // axiosInstance
-    axios
-      .patch('http://localhost:4000/notifications', data)
+    axiosInstance
+      // axios
+      // .patch('http://localhost:4000/notifications', data)
+      .patch('/notifications', data)
       .then((response) => {
+        onToggle?.(!toggleState);
         console.log('알림 설정 변경 성공:', response);
       })
       .catch((error) => {
