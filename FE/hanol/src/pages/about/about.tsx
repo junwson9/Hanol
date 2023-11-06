@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import axiosInstance from 'api/axiosInterceptor';
 import { ReactComponent as Arrow } from '../../assets/icons/arrow_right.svg';
+import { getMessaging, getToken } from 'firebase/messaging';
 
 function About() {
   const navigate = useNavigate();
@@ -11,10 +12,25 @@ function About() {
   const handleButtonClick = () => {
     navigate('/login');
   };
-  const handleLogout = () => {
-    localStorage.removeItem('access_token');
-    localStorage.removeItem('refresh_token');
-    handleButtonClick();
+  const handleLogout = async () => {
+    try {
+      console.log(1111);
+      const messaging = getMessaging();
+      console.log(messaging);
+      const token = await getToken(messaging, {
+        vapidKey: process.env.REACT_APP_VAPID_KEY,
+      });
+      console.log(333);
+      console.log(token);
+      if (token) {
+        await axiosInstance.patch(`/members/logout`, { fcm_token: token });
+      }
+      localStorage.removeItem('access_token');
+      localStorage.removeItem('refresh_token');
+      handleButtonClick();
+    } catch (error) {
+      console.error('데이터 가져오기 오류:', error);
+    }
   };
 
   const navToMypage = () => {
