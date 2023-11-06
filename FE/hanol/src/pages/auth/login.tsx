@@ -1,5 +1,6 @@
 import { ReactComponent as IconKakaoLogin } from '../../assets/rescureImg/KakaoLogin.svg';
 import axios from 'axios';
+import axiosInstance from 'api/axiosInterceptor';
 import KakaoLogin from 'react-kakao-login';
 import { useNavigate } from 'react-router-dom';
 import { getMessaging, getToken } from 'firebase/messaging';
@@ -12,7 +13,25 @@ function Login() {
   const navigate = useNavigate();
   console.log(kakaoID);
   const setMemberRole = useSetRecoilState(MemberRoleState);
+  // FCM 토큰 관련
+  // eslint-disable-next-line
+  async function sendTokenToServer(messaging: any) {
+    const token = await getToken(messaging, {
+      vapidKey: process.env.REACT_APP_VAPID_KEY,
+    });
 
+    if (token) {
+      console.log('token: ', token);
+      try {
+        const response = await axiosInstance.post('/notifications/token', { fcm_token: token });
+        console.log('로그인 후 토큰을 서버로 전송했습니다.', response.data);
+      } catch (error) {
+        console.error('로그인 후 토큰을 서버로 전송하는 중 에러 발생:', error);
+      }
+    } else {
+      console.log('토큰을 가져오지 못했습니다.');
+    }
+  }
   // eslint-disable-next-line
   const kakaoSuccessHandler = (data: any) => {
     const requestData = {
@@ -35,31 +54,10 @@ function Login() {
         } else {
           setMemberRole(role);
           navigate('/');
+          //FCM 토큰 관련
+          const messaging = getMessaging();
+          sendTokenToServer(messaging);
         }
-        // FCM 토큰 관련
-        const messaging = getMessaging();
-
-        async function sendTokenToServer() {
-          const token = await getToken(messaging, {
-            vapidKey: process.env.REACT_APP_VAPID_KEY,
-          });
-
-          // 사용자가 로그인한 후, 해당 토큰을 서버로 전송하고 서버에서 필요한 처리를 진행합니다.
-          if (token) {
-            // 토큰을 서버로 전송하기 위해 Axios나 fetch 등을 사용할 수 있습니다.
-            console.log('token: ', token);
-            try {
-              const response = await axios.post(`${APP_URI}/notifications/token`, { fcm_token: token });
-              console.log('토큰을 서버로 전송했습니다.', response.data);
-            } catch (error) {
-              console.error('토큰을 서버로 전송하는 중 에러 발생:', error);
-            }
-          } else {
-            console.log('토큰을 가져오지 못했습니다.');
-          }
-        }
-
-        sendTokenToServer();
       })
 
       .catch((error) => {
