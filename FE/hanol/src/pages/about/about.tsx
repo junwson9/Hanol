@@ -84,9 +84,11 @@ function About() {
         <button className="font-bold text-[1.125rem] w-full my-[1rem] text-left">ABOUT</button>
         <button className="font-bold text-[1.125rem] w-full my-[1rem] text-left">약관 및 정책</button>
         <button className="font-bold text-[1.125rem] w-full my-[1rem] text-left">오픈소스 라이브러리</button>
-        <button onClick={handleLogout} className="font-bold text-[1.125rem] w-full my-[1rem] text-left">
-          로그아웃
-        </button>
+        {role === 'logined' && (
+          <button onClick={handleLogout} className="font-bold text-[1.125rem] w-full my-[1rem] text-left">
+            로그아웃
+          </button>
+        )}
       </div>
     </div>
   );
