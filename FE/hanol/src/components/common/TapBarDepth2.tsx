@@ -5,10 +5,10 @@ type TapBarDepth2Props = {
   name: string;
   onClick?: () => void;
   propsIsBack: boolean;
-  completeBtn: boolean;
+  rightBtnType?: number;
 };
 
-function TapBarDepth2({ name, onClick, propsIsBack, completeBtn }: TapBarDepth2Props) {
+function TapBarDepth2({ name, onClick, propsIsBack, rightBtnType }: TapBarDepth2Props) {
   const navigate = useNavigate();
   return (
     <div className="h-[3.75rem] flex items-center justify-between ">
@@ -23,13 +23,13 @@ function TapBarDepth2({ name, onClick, propsIsBack, completeBtn }: TapBarDepth2P
         <div className="font-medium text-[1.063rem] whitespace-nowrap">{name}</div>
       </div>
       <button className="items-center" onClick={onClick}>
-        {completeBtn ? (
+        {rightBtnType === 1 && (
           <div className="w-[34px] h-[22px] text-center text-black text-base font-normal font-['Noto Sans KR'] leading-snug tracking-wide">
             완료
           </div>
-        ) : (
-          <Close />
         )}
+        {rightBtnType === 2 && <Close />}
+        {rightBtnType === 3 && ''}
       </button>
     </div>
   );

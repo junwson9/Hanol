@@ -7,20 +7,21 @@ import com.ssafy.hanol.diagnosis.controller.dto.response.DiagnosisDetailApiRespo
 import com.ssafy.hanol.diagnosis.domain.Diagnosis;
 import com.ssafy.hanol.diagnosis.exception.DiagnoseErrorCode;
 import com.ssafy.hanol.diagnosis.repository.DiagnosisRepository;
+import com.ssafy.hanol.diagnosis.service.dto.request.DiagnosisAiRequest;
 import com.ssafy.hanol.diagnosis.service.dto.request.DiagnosisRequest;
 import com.ssafy.hanol.diagnosis.service.dto.response.DiagnosisListResponse;
+import com.ssafy.hanol.diagnosis.service.dto.response.RabbitmqResponse;
 import com.ssafy.hanol.diagnosis.service.rabbitmq.DiagnosisRequestProducer;
 import com.ssafy.hanol.global.sse.service.SseService;
-import com.ssafy.hanol.global.sse.service.dto.response.DiagnoseAiResponse;
+import com.ssafy.hanol.global.sse.service.dto.response.DiagnoseAiResultResponse;
+import com.ssafy.hanol.member.domain.Member;
+import com.ssafy.hanol.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.List;
-
-import static java.lang.Thread.sleep;
 
 @Service
 @Slf4j
@@ -32,6 +33,7 @@ public class DiagnosisService {
     private final ImageUploadUtil imageUploadUtil;
     private final DiagnosisRequestProducer diagnosisRequestProducer;
     private final SseService sseService;
+    private final MemberService memberService;
 
     public DiagnosisDetailApiResponse findDiagnosis(Long diagnosisId, Long memberId) {
         Diagnosis diagnosis = null;
@@ -64,28 +66,48 @@ public class DiagnosisService {
     }
 
     // TODO: 진단하기 -> AI 서버 통신(RabbitMQ) -> 이벤트 등록
-    //
-    //
-    //
     //  진단 결과 listen -> 이미지 업로드, 데이터 저장 -> 결과 return
-    public void diagnose(DiagnosisRequest diagnosisRequest) throws InterruptedException {
-        //diagnosisRequestProducer.sendDiagnosisRequest();
+    public void diagnose(DiagnosisRequest diagnosisRequest) {
 
-        sleep(10000);
-        // 임시 로직
-        DiagnoseAiResponse response = DiagnoseAiResponse.builder()
-                .imageUrl("test.com")
-                .value1(1)
-                .value2(1)
-                .value3(1)
-                .value4(1)
-                .value5(1)
-                .value6(1)
+        Member member = memberService.findMemberByMemberId(diagnosisRequest.getMemberId());
+
+        // 이미지 저장
+        String imageUrl = imageUploadUtil.uploadImage("test", diagnosisRequest.getFile(), member.getId());
+        log.info("imageUrl : {}", imageUrl);
+
+        Diagnosis diagnosis = Diagnosis.builder()
+                .member(member)
+                .scanPart(diagnosisRequest.getScanPart())
+                .deviceType(diagnosisRequest.getDeviceType())
+                .imageUrl(imageUrl)
                 .build();
-        sseService.sendDiagnosisResult(diagnosisRequest.getMemberId(), response);
+
+        Diagnosis savedDiagnosis = diagnosisRepository.save(diagnosis);
+
+        // AI 서버로 이미지 진단 요청 전송
+        DiagnosisAiRequest diagnosisAiRequest = null;
+        try {
+            diagnosisAiRequest = DiagnosisAiRequest.from(savedDiagnosis.getId(), member.getId(), diagnosisRequest.getFile());
+            diagnosisRequestProducer.sendDiagnosisRequest(diagnosisAiRequest);
+        } catch (Exception e) {
+            throw new CustomException(DiagnoseErrorCode.FILE_CONVERSION_ERROR);
+        }
+
+
     }
 
+    public void saveDiagnosisAndSend(RabbitmqResponse rabbitmqResponse) {
+        Diagnosis diagnosis = diagnosisRepository.findById(rabbitmqResponse.getKeyId()).orElseThrow();
 
+        // 진단 결과 저장
+        log.info("지단 결과 저장");
+        diagnosis.updateValues(rabbitmqResponse);
+
+        log.info("diagnose info : {}", diagnosis);
+
+        //sseService.sendDiagnosisResult(rabbitmqResponse.getSseId(), DiagnoseAiResultResponse.from(diagnosis));
+
+    }
 
 
     public DiagnosisIdListApiResponse findDiagnosisIds(Long memberId) {

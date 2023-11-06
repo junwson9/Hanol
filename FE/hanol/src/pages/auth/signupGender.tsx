@@ -49,7 +49,7 @@ function SignupGender() {
   return (
     <div className="col-span-full h-screen flex flex-col justify-between">
       <div>
-        <TapBarDepth2 name={'회원가입'} onClick={handleCloseClick} propsIsBack={true} completeBtn={false} />
+        <TapBarDepth2 name={'회원가입'} onClick={handleCloseClick} propsIsBack={true} rightBtnType={2} />
         <div className="flex">
           <div className="h-[0.188rem] w-[67%] bg-Main  left-0"></div>
           <div className="h-[0.188rem] w-[33%] bg-Gray  left-[67%]"></div>

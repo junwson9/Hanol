@@ -33,6 +33,7 @@ import SetScalpTI6 from 'pages/scalpti/SetScalpTI6';
 import SetScalpTI7 from 'pages/scalpti/SetScalpTI7';
 import SetScalpDone from 'pages/scalpti/SetScalpDone';
 import Examination from 'pages/scalpti/examination';
+import RoutineNotiSetting from 'pages/routine/routineNotiSetting';
 
 function App() {
   const location = useLocation();
@@ -82,6 +83,7 @@ function App() {
             <Route path="/set-scalpti6" element={<SetScalpTI6 />} />
             <Route path="/set-scalpti7" element={<SetScalpTI7 />} />
             <Route path="/set-scalp-done" element={<SetScalpDone />} />
+            <Route path="/routine-noti-setting/:member_routine_id" element={<RoutineNotiSetting />} />
           </Routes>
         </div>
         <div>

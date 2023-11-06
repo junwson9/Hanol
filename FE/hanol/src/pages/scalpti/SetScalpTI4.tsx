@@ -47,12 +47,7 @@ function SetScalpTI4() {
       <div className="col-span-full relative h-screen">
         <div ref={containerRef}>
           <div className="col-start-1 col-end-7">
-            <TopBarDepth2
-              name="두피TI"
-              propsIsBack={true}
-              completeBtn={false}
-              onClick={() => navigate('/examination')}
-            />
+            <TopBarDepth2 name="두피TI" propsIsBack={true} rightBtnType={2} onClick={() => navigate('/examination')} />
             <div className="flex">
               <div className="h-[0.188rem] w-[56%] bg-Main "></div>
               <div className="h-[0.188rem] w-[44%] bg-Gray "></div>
