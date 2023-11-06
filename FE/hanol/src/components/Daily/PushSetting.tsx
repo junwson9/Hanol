@@ -1,11 +1,21 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import Toggle from 'components/common/Toggle';
 import NotificationTime from './NotificationTime';
 
-const PushSetting = () => {
-  const [activeTime, setActiveTime] = useState(2);
-  const [isToggleOn, setIsToggleOn] = useState(false);
+interface Props {
+  onToggle?: (newState: boolean) => void;
+  toggleState?: boolean;
+  notiTime?: string;
+  setNotitime: (arg: string) => void;
+}
+
+const PushSetting = ({ onToggle, toggleState, notiTime, setNotitime }: Props) => {
+  console.log('toggleState', toggleState);
+
+  const toggleHandler = () => {
+    onToggle?.(!toggleState);
+  };
 
   return (
     <div className="col-span-full">
@@ -13,15 +23,30 @@ const PushSetting = () => {
         <PushNotificationBox>
           <div className="push_notification_text">푸시 알림</div>
           <div className="toggle_box">
-            <Toggle toggleState={isToggleOn} />
+            <Toggle toggleState={toggleState} onClick={toggleHandler} />
           </div>
         </PushNotificationBox>
 
-        {isToggleOn ? (
+        {toggleState ? (
           <NotificationTimeBox>
-            <NotificationTime timename="오전 9시" isActive={activeTime === 0} setActiveTime={setActiveTime} index={0} />
-            <NotificationTime timename="오후 1시" isActive={activeTime === 1} setActiveTime={setActiveTime} index={1} />
-            <NotificationTime timename="오후 7시" isActive={activeTime === 2} setActiveTime={setActiveTime} index={2} />
+            <NotificationTime
+              timename="오전 9시"
+              isActive={notiTime === '09:00:00'}
+              setNotitime={() => setNotitime('09:00:00')}
+              time="09:00:00"
+            />
+            <NotificationTime
+              timename="오후 1시"
+              isActive={notiTime === '13:00:00'}
+              setNotitime={() => setNotitime('13:00:00')}
+              time="13:00:00"
+            />
+            <NotificationTime
+              timename="오후 7시"
+              isActive={notiTime === '19:00:00'}
+              setNotitime={() => setNotitime('19:00:00')}
+              time="19:00:00"
+            />
           </NotificationTimeBox>
         ) : (
           ''

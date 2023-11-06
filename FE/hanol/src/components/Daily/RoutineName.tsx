@@ -1,12 +1,17 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const RoutineName = () => {
+interface Props {
+  routineName?: string;
+}
+
+const RoutineName = ({ routineName }: Props) => {
   return (
     <div className="col-span-full">
       <RoutineNameBox>
         <div className="routine_name">
-          루틴 이름이 들어갈 자리입니다.루틴 이름이 들어갈 자리입니다.루틴 이름이 들어갈 자리입니다.
+          {/* 루틴 이름이 들어갈 자리입니다.루틴 이름이 들어갈 자리입니다.루틴 이름이 들어갈 자리입니다. */}
+          {routineName}
         </div>
         <div className="underline"></div>
       </RoutineNameBox>
