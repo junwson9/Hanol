@@ -8,7 +8,7 @@ function TapBar({ name, icon }: TapBarProps) {
     <div className="h-[3.75rem] flex items-center mb-[2rem]">
       <div className="flex ">
         <div className="flex items-center font-bold text-[1.25rem]">
-          <div className="mr-[0.3rem]">{name}</div>
+          <div className="mr-[0.3rem] ">{name}</div>
           <button>{icon}</button>
         </div>
       </div>
