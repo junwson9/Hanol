@@ -6,11 +6,14 @@ import Toggle from 'components/common/Toggle';
 interface Props {
   title: string;
   desc: string;
-  toggleState: boolean;
+  toggleState?: boolean;
   noti_type: string;
+  onToggle?: (newState: boolean) => void;
 }
 
-const NotiSettingComponent = ({ title, desc, toggleState, noti_type }: Props) => {
+const NotiSettingComponent = ({ title, desc, toggleState, noti_type, onToggle }: Props) => {
+  // console.log('toggleState', toggleState, 'noti_type', noti_type);
+
   return (
     <div className="col-span-full">
       <NotiSettingComponentBox>
@@ -18,7 +21,7 @@ const NotiSettingComponent = ({ title, desc, toggleState, noti_type }: Props) =>
           <div className="noti_setting_title">{title}</div>
           <div className="setting_desc">{desc}</div>
         </TextBox>
-        <Toggle toggleState={toggleState} noti_type={noti_type} />
+        <Toggle toggleState={toggleState} noti_type={noti_type} onToggle={onToggle} />
       </NotiSettingComponentBox>
     </div>
   );
