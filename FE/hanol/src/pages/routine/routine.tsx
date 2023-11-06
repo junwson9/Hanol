@@ -25,6 +25,7 @@ type DailyRoutine = {
   is_done: boolean;
   routine_name: string;
   member_routine_log_id: number;
+  member_routine_id: number | null;
 };
 
 function Routine() {
@@ -134,15 +135,18 @@ function Routine() {
     openCalenderModal();
   };
   useEffect(() => {
-    console.log('일별 조회 들어가요@@@@@@@@@@@@@@');
     const today = new Date();
     const formattedDate = formatDate(today);
-    console.log('이날짜로 조회 드갑니다@@@@@@@', formattedDate);
     const fetchData = async () => {
       try {
         const response = await axiosInstance.get(`/routines/daily-routine?date=${formattedDate}`);
         setDailyRoutine(response.data.data.daily_routines);
-
+        console.log('일별 조회 들어가요@@@@@@@@@@@@@@');
+        if (response.data.data.daily_routines.length === 0) {
+          setRender(false);
+        } else {
+          setRender(true);
+        }
         console.log(response);
       } catch (error) {
         console.error('데이터 가져오기 오류:', error);
@@ -224,6 +228,7 @@ function Routine() {
                 routine_id={routine.routine_id}
                 routine_name={routine.routine_name}
                 member_routine_log_id={routine.member_routine_log_id}
+                member_routine_id={routine.member_routine_id}
                 onDataChange={handleDataChange}
               />
             </div>

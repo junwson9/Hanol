@@ -81,6 +81,7 @@ function NavBar() {
         <button
           className="flex flex-col items-center justify-center w-[66px] h-[66px] gap-[7px]"
           onClick={() => {
+            console.log(Role);
             if (Role == 'GUEST') {
               handleNavigate('/explain-routine');
               setSelectedMenu('routine');
