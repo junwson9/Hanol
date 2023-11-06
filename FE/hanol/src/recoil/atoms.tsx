@@ -34,3 +34,8 @@ export const MemberRoleState = atom<string>({
   key: 'Role',
   default: 'GUEST',
 });
+
+export const examinationState = atom({
+  key: 'Examination',
+  default: [0, 0, 0, [] as number[], [] as number[], 0, 0],
+});
