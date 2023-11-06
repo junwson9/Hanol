@@ -2,7 +2,7 @@ package com.ssafy.hanol.global.sse.service;
 
 import com.ssafy.hanol.common.exception.CustomException;
 import com.ssafy.hanol.global.sse.exception.SseErrorCode;
-import com.ssafy.hanol.global.sse.service.dto.response.DiagnoseAiResponse;
+import com.ssafy.hanol.global.sse.service.dto.response.DiagnoseAiResultResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -27,10 +27,11 @@ public class SseService {
         return sseEmitter;
     }
 
+
     /**
      * 이미지 진단 완료 시 클라이언트에게 진단 결과 전달
      */
-    public void sendDiagnosisResult(Long memberId, DiagnoseAiResponse response) {
+    public void sendDiagnosisResult(Long memberId, DiagnoseAiResultResponse response) {
         SseEmitter sseEmitter = sseEmitterManager.getSseEmitter(memberId);
 
         if (sseEmitter == null) {
@@ -50,9 +51,6 @@ public class SseService {
             sseEmitter.complete();
             log.info("클라이언트에게 진단 결과 전송 완료");
         }
-
-
     }
-
 
 }

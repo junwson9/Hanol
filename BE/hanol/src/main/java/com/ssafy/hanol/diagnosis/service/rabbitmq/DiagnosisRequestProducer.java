@@ -1,5 +1,6 @@
 package com.ssafy.hanol.diagnosis.service.rabbitmq;
 
+import com.ssafy.hanol.diagnosis.service.dto.request.DiagnosisAiRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -13,13 +14,15 @@ public class DiagnosisRequestProducer {
 
     private final RabbitTemplate rabbitTemplate;
 
-    @Value("${rabbitmq.queue.request.name}")
-    private String requestQueueName;
+    @Value("${rabbitmq.exchange.name}")
+    private String exchange;
 
     @Value("${rabbitmq.queue.request.routing-key}")
     private String requestRoutingKey;
 
-    public void sendDiagnosisRequest() {
+    public void sendDiagnosisRequest(DiagnosisAiRequest request) {
+
+        rabbitTemplate.convertAndSend(exchange, requestRoutingKey, request);
         log.info("두피 진단 요청 전송");
     }
 }

@@ -4,6 +4,7 @@ import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.ssafy.hanol.common.exception.CustomException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
@@ -12,6 +13,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class ImageUploadUtil {
@@ -41,6 +43,7 @@ public class ImageUploadUtil {
             amazonS3Client.putObject(bucket, imageKey, multipartFile.getInputStream(), objectMetadata);
             url = amazonS3Client.getUrl(bucket, imageKey).toString();
         } catch (Exception e) {
+            e.printStackTrace();
             throw new CustomException(S3Exception.IMAGE_UPLOAD_FAIL);
         }
 

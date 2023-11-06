@@ -16,6 +16,12 @@ public class DiagnosisRepositoryImpl implements DiagnosisRepository {
     private final JpaDiagnosisRepository jpaDiagnosisRepository;
     private final QueryDslDiagnosisRepository queryDslDiagnosisRepository;
 
+
+    @Override
+    public Diagnosis save(Diagnosis diagnosis) {
+        return jpaDiagnosisRepository.save(diagnosis);
+    }
+
     @Override
     public Optional<Diagnosis> findById(Long id) {
         return jpaDiagnosisRepository.findById(id);
