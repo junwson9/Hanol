@@ -61,12 +61,18 @@ public class RoutineController {
         return ResponseFactory.success("루틴 달성 여부 변경 완료", RoutineAchievementStatusApiResponse.from(result));
     }
 
+    @GetMapping("/{memberRoutineId}")
+    public ResponseEntity<?> routineDetails(@PathVariable Long memberRoutineId, @AuthenticatedMember AuthMember authMember) {
+        MemberRoutineDetailResponse result = routineService.findMemberRoutineDetail(memberRoutineId, authMember.getId());
+        return ResponseFactory.success("루틴 상세 조회 성공", MemberRoutineDetailApiResponse.from(result));
+    }
+
     @PatchMapping("/{memberRoutineId}/notification")
     public ResponseEntity<?> routineNotificationModify(@PathVariable Long memberRoutineId,
                                                        @Validated @RequestBody RoutineNotificationModifyApiRequest request,
                                                        @AuthenticatedMember AuthMember authMember) {
-        RoutineNotificationModifyResponse result = routineService.modifyRoutineNotification(memberRoutineId, request.toApplicationDto(), authMember.getId());
-        return ResponseFactory.success("루틴 알림 설정 변경 완료", RoutineNotificationModifyApiResponse.from(result));
+        MemberRoutineDetailResponse result = routineService.modifyRoutineNotification(memberRoutineId, request.toApplicationDto(), authMember.getId());
+        return ResponseFactory.success("루틴 알림 설정 변경 완료", MemberRoutineDetailApiResponse.from(result));
     }
 
 }

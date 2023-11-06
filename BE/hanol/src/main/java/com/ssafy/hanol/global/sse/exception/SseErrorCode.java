@@ -33,4 +33,3 @@ public enum SseErrorCode implements ErrorCode {
         return statusCode;
     }
 }
-

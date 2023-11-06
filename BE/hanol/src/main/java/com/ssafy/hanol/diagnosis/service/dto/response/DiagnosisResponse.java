@@ -1,5 +1,7 @@
-package com.ssafy.hanol.global.sse.service.dto.response;
+package com.ssafy.hanol.diagnosis.service.dto.response;
 
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,7 +10,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class DiagnoseAiResponse {
+@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
+public class DiagnosisResponse {
     private String imageUrl;
     private int value1;
     private int value2;
@@ -18,7 +21,7 @@ public class DiagnoseAiResponse {
     private int value6;
 
     @Builder
-    public DiagnoseAiResponse(String imageUrl, int value1, int value2, int value3, int value4, int value5, int value6) {
+    public DiagnosisResponse(String imageUrl, int value1, int value2, int value3, int value4, int value5, int value6) {
         this.imageUrl = imageUrl;
         this.value1 = value1;
         this.value2 = value2;
@@ -27,5 +30,4 @@ public class DiagnoseAiResponse {
         this.value5 = value5;
         this.value6 = value6;
     }
-
 }

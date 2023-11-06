@@ -46,7 +46,7 @@ public class MemberService {
         return MemberInfoResponse.from(member);
     }
 
-    private Member findMemberByMemberId(Long memberId) {
+    public Member findMemberByMemberId(Long memberId) {
         return memberRepository.findById(memberId).orElseThrow(() -> new CustomException(MemberErrorCode.NOT_FOUND_MEMBER));
     }
 }

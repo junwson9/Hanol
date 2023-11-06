@@ -1,12 +1,15 @@
 package com.ssafy.hanol.routine.service;
 
+import com.ssafy.hanol.common.exception.CustomException;
 import com.ssafy.hanol.diagnosis.domain.Diagnosis;
 import com.ssafy.hanol.diagnosis.repository.DiagnosisRepository;
 import com.ssafy.hanol.member.domain.Member;
+import com.ssafy.hanol.member.exception.MemberErrorCode;
 import com.ssafy.hanol.member.repository.MemberRepository;
 import com.ssafy.hanol.routine.domain.MemberRoutine;
 import com.ssafy.hanol.routine.domain.MemberRoutineLog;
 import com.ssafy.hanol.routine.domain.Routine;
+import com.ssafy.hanol.routine.exception.RoutineErrorCode;
 import com.ssafy.hanol.routine.repository.MemberRoutineLogRepository;
 import com.ssafy.hanol.routine.repository.MemberRoutineRepository;
 import com.ssafy.hanol.routine.repository.RoutineRepository;
@@ -23,6 +26,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -40,6 +44,7 @@ public class RoutineService {
 
     // 회원별 설정 루틴 및 추천 루틴 리스트 조회
     public RoutineListResponse findRoutineList(Long memberId) {
+        Member member = findMemberByMemberId(memberId);
         // 회원이 설정해둔 루틴 리스트 조회
         List<MemberRoutine> memberRoutines = memberRoutineRepository.findByMemberId(memberId);
 
@@ -70,9 +75,8 @@ public class RoutineService {
 
     // 회원별 설정 루틴 리스트 변경
     public void modifyRoutineList(RoutineListModifyRequest routineListModifyRequest, Long memberId) {
-        Member member = memberRepository.findById(memberId).orElseThrow();
-
-        // TODO 예외 처리: 스케쥴링 작업 중인 경우, 존재하지 않는 루틴, 루틴 추가 시 유니크 제약 조건 위반
+        Member member = findMemberByMemberId(memberId);
+        // TODO 예외 처리: 스케쥴링 작업 중인 경우
 
         List<Long> removedRoutines = routineListModifyRequest.getRemovedRoutines();
         List<Long> addedRoutines = routineListModifyRequest.getAddedRoutines();
@@ -119,6 +123,7 @@ public class RoutineService {
 
     // 날짜별 루틴 이력 리스트 조회
     public RoutineLogListResponse findMemberRoutineLogByDate(LocalDate date, Long memberId) {
+        Member member = findMemberByMemberId(memberId);
         // TODO 예외 처리: 스케쥴링 작업 중인 경우
 
         List<RoutineLogInfo> routineLogInfos = memberRoutineLogRepository.selectRoutineLogsByMemberIdAndDate(memberId, date);
@@ -132,6 +137,7 @@ public class RoutineService {
 
     // 기간 내 일별 루틴 달성률 조회
     public RoutineAchievementRatesResponse findRoutineAchievementRates(LocalDate startDate, LocalDate endDate, Long memberId) {
+        Member member = findMemberByMemberId(memberId);
         // TODO 예외 처리: 스케쥴링 작업 중인 경우
 
         log.info("startDate: {}, endDate: {}", startDate, endDate);
@@ -146,13 +152,10 @@ public class RoutineService {
     public RoutineAchievementStatusResponse modifyRoutineAchievementStatus(Long memberRoutineLogId,
                                                                            RoutineAchievementStatusRequest request,
                                                                            Long memberId) {
-        // TODO 예외 처리: 스케쥴링 작업 중인 경우, 존재하지 않는 루틴
-
-        MemberRoutineLog routineLog = memberRoutineLogRepository.findById(memberRoutineLogId).orElseThrow();
-        if(!routineLog.getMember().getId().equals(memberId)) {
-            // TODO 예외 처리: 본인이 아님
-            log.info("수정 권한이 없습니다");
-        }
+        // TODO 예외 처리: 스케쥴링 작업 중인 경우
+        MemberRoutineLog routineLog = memberRoutineLogRepository.findById(memberRoutineLogId)
+                .orElseThrow(() -> new CustomException(RoutineErrorCode.NOT_FOUNT_ROUTINE_LOG));
+        validateMemberAccess(routineLog.getMember().getId(), memberId);
 
         // 달성여부 변경
         routineLog.updateDoneStatus(request.getIsDone());
@@ -176,21 +179,48 @@ public class RoutineService {
     }
 
     // 루틴 알림 설정 변경
-    public RoutineNotificationModifyResponse modifyRoutineNotification(Long memberRoutineId,
-                                                                       RoutineNotificationModifyRequest request,
-                                                                       Long memberId) {
-        // TODO 예외 처리: 존재하지 않는 루틴
-        MemberRoutine memberRoutine = memberRoutineRepository.findById(memberRoutineId).orElseThrow();
-        if(!memberRoutine.getMember().getId().equals(memberId)) {
-            // TODO 예외 처리: 권한 없음
-            log.info("수정 권한이 없습니다");
-        }
+    public MemberRoutineDetailResponse modifyRoutineNotification(Long memberRoutineId,
+                                                                 RoutineNotificationModifyRequest request,
+                                                                 Long memberId) {
+        MemberRoutine memberRoutine = memberRoutineRepository.findById(memberRoutineId)
+                .orElseThrow(() -> new CustomException(RoutineErrorCode.NOT_FOUND_MEMBER_ROUTINE));
+        validateMemberAccess(memberRoutine.getMember().getId(), memberId);
+
         memberRoutine.updateNotification(request.getIsNotificationActive(), request.getNotificationTime());
 
-        return RoutineNotificationModifyResponse.builder()
+        return MemberRoutineDetailResponse.builder()
                 .memberRoutineId(memberRoutineId)
+                .routineName(memberRoutine.getRoutine().getRoutineName())
                 .isNotificationActive(memberRoutine.getIsNotificationActive())
                 .notificationTime(memberRoutine.getNotificationTime())
                 .build();
     }
+
+
+    //  회원별 루틴 상세 조회
+    public MemberRoutineDetailResponse findMemberRoutineDetail(Long memberRoutineId, Long memberId) {
+        MemberRoutine memberRoutine = memberRoutineRepository.findById(memberRoutineId)
+                .orElseThrow(() -> new CustomException(RoutineErrorCode.NOT_FOUND_MEMBER_ROUTINE));
+        validateMemberAccess(memberRoutine.getMember().getId(), memberId);
+
+        return MemberRoutineDetailResponse.builder()
+                .memberRoutineId(memberRoutineId)
+                .routineName(memberRoutine.getRoutine().getRoutineName())
+                .isNotificationActive(memberRoutine.getIsNotificationActive())
+                .notificationTime(memberRoutine.getNotificationTime())
+                .build();
+    }
+
+
+    private Member findMemberByMemberId(Long memberId) {
+        return memberRepository.findById(memberId).orElseThrow(() -> new CustomException(MemberErrorCode.NOT_FOUND_MEMBER));
+    }
+
+    private void validateMemberAccess(Long memberId, Long authMemberId) {
+        if(memberId != authMemberId) {
+            throw new CustomException(RoutineErrorCode.FORBIDDEN_ACCESS);
+        }
+    }
+
+
 }
