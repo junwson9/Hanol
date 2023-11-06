@@ -5,7 +5,7 @@ type TapBarDepth2Props = {
   name: string;
   onClick?: () => void;
   propsIsBack: boolean;
-  completeBtn: boolean;
+  completeBtn?: boolean;
 };
 
 function TapBarDepth2({ name, onClick, propsIsBack, completeBtn }: TapBarDepth2Props) {
@@ -24,9 +24,10 @@ function TapBarDepth2({ name, onClick, propsIsBack, completeBtn }: TapBarDepth2P
       </div>
       <button className="items-center" onClick={onClick}>
         {completeBtn ? (
-          <div className="w-[34px] h-[22px] text-center text-black text-base font-normal font-['Noto Sans KR'] leading-snug tracking-wide">
-            완료
-          </div>
+          // <div className="w-[34px] h-[22px] text-center text-black text-base font-normal font-['Noto Sans KR'] leading-snug tracking-wide">
+          //   완료
+          // </div>
+          ''
         ) : (
           <Close />
         )}

@@ -64,10 +64,9 @@
     "member_id": 1,
     "is_check_routine_active": true,
     "is_individual_routine_active": false,
-    "notification_type": "CHECK_ROUTINE",
-    "is_active": false
+    "notification_type": "INDIVIDUAL_ROUTINE",
+    "is_active": true
   },
-
   "dates": {
     "diagnosis_id_list": [
       {
