@@ -1,4 +1,4 @@
-package com.ssafy.hanol.routine.service;
+package com.ssafy.hanol.routine.service.batch;
 
 import com.ssafy.hanol.common.util.SchedulingStatusUtil;
 import com.ssafy.hanol.routine.domain.MemberRoutine;
