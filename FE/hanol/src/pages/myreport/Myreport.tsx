@@ -17,28 +17,28 @@ import DateNavigateModal from 'components/DetailPage/DateNavigateModal';
 import { diagnosisResultType } from 'types/DiagnosisResult';
 import TapBar from 'components/common/TopBar';
 
-const initData: diagnosisResultType[] = [
-  {
-    diagnosis_id: 0,
-    member_id: 0,
-    value1: 0,
-    value2: 0,
-    value3: 0,
-    value4: 0,
-    value5: 0,
-    value6: 0,
-    image_url: '',
-    device_type: 0,
-    scan_part: 0,
-    created_date: '',
-  },
-];
+// const initData: diagnosisResultType[] = [
+//   {
+//     diagnosis_id: 0,
+//     member_id: 0,
+//     value1: 0,
+//     value2: 0,
+//     value3: 0,
+//     value4: 0,
+//     value5: 0,
+//     value6: 0,
+//     image_url: '',
+//     device_type: 0,
+//     scan_part: 0,
+//     created_date: '',
+//   },
+// ];
 
 const MyreportDashBoard = () => {
   const navigate = useNavigate();
   //대시보드
   const [isTabActive, setTabActive] = useState<boolean>(true);
-  const [diagnosisList, setDiagnosisList] = useState<diagnosisResultType[]>(initData);
+  const [diagnosisList, setDiagnosisList] = useState<diagnosisResultType[]>();
   const [graphValue, setgraphValue] = useState<number>(6);
   // const [diagnosisId, setDiagnosisId] = useState<number>();
   const [value1, setValue1] = useState<number>();
@@ -88,19 +88,15 @@ const MyreportDashBoard = () => {
         console.error('진단 결과 리스트 조회 실패:', error);
       });
   }, []);
-  // console.log(`zz: ${diagnosisList?.[0].value1}`);
 
-  //   useEffect(() => {
-  //     if (diagnosisList) {
-  //       setValue1(diagnosisList[0].value1);
-  //       setValue2(diagnosisList[0].value2);
-  //       setValue3(diagnosisList[0].value3);
-  //       setValue4(diagnosisList[0].value4);
-  //       setValue5(diagnosisList[0].value5);
-  //       setValue6(diagnosisList[0].value6);
-  //     }
-  //   }, [diagnosisList]);
-
+  useEffect(() => {
+    setValue1(diagnosisList?.[index].value1);
+    setValue2(diagnosisList?.[index].value2);
+    setValue3(diagnosisList?.[index].value3);
+    setValue4(diagnosisList?.[index].value4);
+    setValue5(diagnosisList?.[index].value5);
+    setValue6(diagnosisList?.[index].value6);
+  }, [index]);
   return (
     <MyreportContainer>
       <div className="grid grid-cols-6 gap-[10px] mx-[23px]">
@@ -111,22 +107,25 @@ const MyreportDashBoard = () => {
 
       <TopTab active={isTabActive} title1="대시보드" title2="상세보기" onTabClick={handleTabClick} />
       {isTabActive ? (
-        <>
+        <DashBoardBox>
           <div className="grid grid-cols-6 gap-[10px] mx-[23px]">
             <div className="col-span-full">
-              <BannerButton name="내 두피 분석 하러가기" onClick={() => handleBannerButtonClick()} />
-              <ValueCardBox>
-                <ValueCard title="탈모" value={value6 || 0} onClick={() => handleValueCardClick(6)} />
-                {/* <ValueCard title="탈모" value={diag} /> */}
-                <ValueCard title="각질" value={value1 || 0} onClick={() => handleValueCardClick(1)} />
-                <ValueCard title="피지" value={value2 || 0} onClick={() => handleValueCardClick(2)} />
-              </ValueCardBox>
-              <ValueCardBox>
-                <ValueCard title="홍반" value={value3 || 0} onClick={() => handleValueCardClick(3)} />
-                <ValueCard title="염증" value={value4 || 0} onClick={() => handleValueCardClick(4)} />
-                <ValueCard title="비듬" value={value5 || 0} onClick={() => handleValueCardClick(5)} />
-              </ValueCardBox>
-              <ValueGraph title="탈모" dataList={diagnosisList || []} graphValue={graphValue} />
+              {diagnosisList && (
+                <>
+                  <BannerButton name="내 두피 분석 하러가기" onClick={() => handleBannerButtonClick()} />
+                  <ValueCardBox>
+                    <ValueCard title="탈모" value={value6} onClick={() => handleValueCardClick(6)} />
+                    <ValueCard title="각질" value={value1} onClick={() => handleValueCardClick(1)} />
+                    <ValueCard title="피지" value={value2} onClick={() => handleValueCardClick(2)} />
+                  </ValueCardBox>
+                  <ValueCardBox>
+                    <ValueCard title="홍반" value={value3} onClick={() => handleValueCardClick(3)} />
+                    <ValueCard title="염증" value={value4} onClick={() => handleValueCardClick(4)} />
+                    <ValueCard title="비듬" value={value5} onClick={() => handleValueCardClick(5)} />
+                  </ValueCardBox>
+                  <ValueGraph title="탈모" dataList={diagnosisList} graphValue={graphValue} setIndex={setIndex} />
+                </>
+              )}
             </div>
           </div>
           <DivisionRectangle />
@@ -139,12 +138,12 @@ const MyreportDashBoard = () => {
               <br />
             </div>
           </div>
-        </>
+        </DashBoardBox>
       ) : (
         <div className="grid grid-cols-6 gap-[10px] mx-[23px]">
           <div className="col-span-full">
             <OverwrapContainer1>
-              {diagnosisList.length > 0 && index < diagnosisList.length && (
+              {diagnosisList && index < diagnosisList.length && (
                 <>
                   <DateNavigateButton
                     index={index}
@@ -202,6 +201,7 @@ const OverwrapContainer2 = styled.div`
 
 const OverwrapContainer1 = styled.div``;
 
+const DashBoardBox = styled.div``;
 const MyreportContainer = styled.div`
   position: relative;
 `;

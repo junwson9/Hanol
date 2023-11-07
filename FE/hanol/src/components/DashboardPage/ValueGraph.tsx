@@ -22,10 +22,10 @@ interface Props {
   title: string;
   dataList: diagnosisResultType[];
   graphValue: number;
-  // setDiagnosisId: (arg: number) => void;
+  setIndex: (arg: number) => void;
 }
 
-const ValueGraph = ({ title, dataList, graphValue }: Props) => {
+const ValueGraph = ({ title, dataList, graphValue, setIndex }: Props) => {
   // useEffect(() => {
   //   const myElement = document.getElementById('myElement');
   //   if (myElement) {
@@ -40,6 +40,24 @@ const ValueGraph = ({ title, dataList, graphValue }: Props) => {
 
   // 그래프 커스텀
   const options = {
+    // eslint-disable-next-line
+    // onClick: (elements: any, chart: any) => {
+    //   if (elements.length > 0) {
+    //     const index = elements[0].index;
+    //     const label = chart.data.labels[index];
+    //     const value = chart.data.datasets[0].data[index];
+    //     // alert(`${label}: ${value}`);
+    //     console.log(`zz:${label}: ${value}`);
+    //   }
+    // },
+    // eslint-disable-next-line
+    onClick: function (point: any, event: any) {
+      if (event[0]) {
+        // console.log('event : ', event[0].index);
+        // console.log('point : ', point);
+        setIndex(dataList.length - 1 - event[0].index);
+      }
+    },
     responsive: true,
     plugins: {
       legend: {
@@ -71,7 +89,7 @@ const ValueGraph = ({ title, dataList, graphValue }: Props) => {
         // },
       },
     },
-    elements: { point: { radius: 3 } },
+    elements: { point: { radius: 5 } },
     scales: { y: { display: false } },
   };
   const data = {
@@ -89,13 +107,13 @@ const ValueGraph = ({ title, dataList, graphValue }: Props) => {
     //   '2주 전',
     //   '1주 전',
     // ],
-    labels: dataList.map((data) => data.created_date.split(' ')[0].slice(2)),
+    labels: dataList?.reverse().map((data) => data.created_date.split(' ')[0].slice(2)),
     datasets: [
       {
         label: `${title}`,
         // data: [123403, 123603, 125079, 126030, 123403, 123603, 125079, 126030, 123403, 123603, 125079, 126030],
         // data: artistLikesCountperWeek.reverse().map((data) => data.scrapCount),
-        data: dataList.map((data) => {
+        data: dataList?.reverse().map((data) => {
           switch (graphValue) {
             case 1:
               return data.value1;

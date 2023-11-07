@@ -57,7 +57,6 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/login-done" element={<LoginDone />} />
             <Route path="/set-routine" element={<SetRoutine />} />
-            <Route path="/" element={<Home />} />
             <Route path="/signup-birth" element={<SignupBirth />} />
             <Route path="/signup-gender" element={<SignupGender />} />
             <Route path="/examination" element={<Examination />} />
@@ -89,6 +88,7 @@ function App() {
         <div>
           <Routes>
             <Route path="/login-error" element={<LoginError />} />
+            <Route path="/" element={<Home />} />
             <Route path="/myreport" element={<Home />} />
           </Routes>
         </div>
