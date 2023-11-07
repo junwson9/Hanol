@@ -4,11 +4,14 @@ import { useEffect, useState } from 'react';
 import axiosInstance from 'api/axiosInterceptor';
 import { ReactComponent as Arrow } from '../../assets/icons/arrow_right.svg';
 import { getMessaging, getToken } from 'firebase/messaging';
+import { MemberRoleState } from 'recoil/atoms';
+import { useRecoilValue } from 'recoil';
 
 function About() {
   const navigate = useNavigate();
   const [role, setRole] = useState<string | null>(null);
   const [name, setName] = useState<string | null>(null);
+  const memberRole = useRecoilValue(MemberRoleState);
   const handleButtonClick = () => {
     navigate('/login');
   };
@@ -53,8 +56,9 @@ function About() {
         console.error('데이터 가져오기 오류:', error);
       }
     };
-
-    fetchData();
+    if (memberRole != 'GUEST') {
+      fetchData();
+    }
   }, []);
 
   return (
