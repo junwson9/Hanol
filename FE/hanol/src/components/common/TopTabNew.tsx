@@ -17,7 +17,7 @@ const TopTab = ({ active, title1, title2, onTabClick }: Props) => {
     // 탭을 클릭할 때마다 상위 컴포넌트에서 제공한 `onTabClick` 콜백 함수를 호출합니다.
     onTabClick();
   };
-
+  console.log(active);
   return (
     <TopTabBox>
       <LeftBox active={active} onClick={handleTabClick}>
@@ -57,7 +57,7 @@ const RightBox = styled.div<StyleProps>`
   gap: 13px;
   cursor: pointer;
   .top_tab_title {
-    color: ${(props) => (props.active === false ? '#353d4a !important' : '#6d7582')};
+    color: ${(props) => (props.active === true ? '#353d4a !important' : '#6d7582')};
   }
 };
 `;
