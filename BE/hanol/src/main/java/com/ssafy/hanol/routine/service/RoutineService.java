@@ -23,6 +23,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -100,6 +101,7 @@ public class RoutineService {
                         .member(member)
                         .routine(routine)
                         .isNotificationActive(false)
+                        .notificationTime(LocalTime.of(13, 0))
                         .build())
                     .collect(Collectors.toList());
 
