@@ -15,6 +15,18 @@ const AnalyzingPage = () => {
   console.log(image);
   const navigate = useNavigate();
   const access_token = localStorage.getItem('access_token');
+
+  const base64ToBlob = (base64: string, type: string) => {
+    const byteString = atob(base64.split(',')[1]);
+    const arrayBuffer = new ArrayBuffer(byteString.length);
+    const uint8Array = new Uint8Array(arrayBuffer);
+    console.log(type);
+    for (let i = 0; i < byteString.length; i++) {
+      uint8Array[i] = byteString.charCodeAt(i);
+    }
+    return new Blob([arrayBuffer], { type });
+  };
+
   const setupSSE = () => {
     const API_URL = process.env.REACT_APP_API_URL;
     const EventSource = EventSourcePolyfill || NativeEventSource;
@@ -46,19 +58,14 @@ const AnalyzingPage = () => {
 
   useEffect(() => {
     const eventSource = setupSSE(); // 이벤트 소스를 생성하고 캡처
+    const imageBlob = base64ToBlob(image, 'image/jpeg');
     const formData = new FormData();
-    //const imageBlob = new Blob([image], { type: 'image/jpg' });
-    const imageBlob = new Blob([image], { type: 'image/jpeg' });
     formData.append('file', imageBlob, 'image.jpg');
-
     const data = {
       device_type: 0,
       scan_part: 0,
     };
-
     formData.append('data', new Blob([JSON.stringify(data)], { type: 'application/json' }));
-
-    console.log(formData);
     const fetchData = async () => {
       try {
         const response = await axiosInstance.post(`/diagnoses`, formData, {
@@ -114,3 +121,14 @@ const AnalyzingPageBox = styled.div`
   }
 `;
 export default AnalyzingPage;
+
+// eslint-disable-next-line
+function base64ToArrayBuffer(base64: any) {
+  const binaryString = window.atob(base64);
+  const length = binaryString.length;
+  const bytes = new Uint8Array(length);
+  for (let i = 0; i < length; i++) {
+    bytes[i] = binaryString.charCodeAt(i);
+  }
+  return bytes.buffer;
+}
