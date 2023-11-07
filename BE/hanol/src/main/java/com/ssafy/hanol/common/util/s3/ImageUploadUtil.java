@@ -31,7 +31,7 @@ public class ImageUploadUtil {
         objectMetadata.setContentLength(multipartFile.getSize());
         String originalFilename = multipartFile.getOriginalFilename();
         String type = getFileType(originalFilename);
-
+        log.info("image type : {}", type);
         if (!isValidImageExtension(type)) {
             throw new CustomException(S3Exception.NOT_SUPPORT_IMAGE_EXTENSION);
         }
@@ -57,7 +57,7 @@ public class ImageUploadUtil {
 
         StringBuilder sb = new StringBuilder();
 
-        sb.append(uuid).append("_").append(date).append(type);
+        sb.append(uuid).append("_").append(date).append(".").append(type);
         return sb.toString();
     }
 
