@@ -3,6 +3,7 @@ package com.ssafy.hanol.routine.service.batch;
 import com.ssafy.hanol.routine.domain.MemberRoutine;
 import com.ssafy.hanol.routine.domain.MemberRoutineLog;
 import com.ssafy.hanol.routine.repository.MemberRoutineLogRepository;
+import io.netty.channel.ConnectTimeoutException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.Job;
@@ -15,11 +16,17 @@ import org.springframework.batch.item.ItemProcessor;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.database.JpaPagingItemReader;
 import org.springframework.batch.item.database.builder.JpaPagingItemReaderBuilder;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.dao.DeadlockLoserDataAccessException;
+import org.springframework.dao.TransientDataAccessException;
+import org.springframework.retry.RetryPolicy;
+import org.springframework.retry.backoff.BackOffPolicy;
+import org.springframework.retry.backoff.FixedBackOffPolicy;
+import org.springframework.retry.policy.SimpleRetryPolicy;
 
 import javax.persistence.EntityManagerFactory;
+import java.net.SocketTimeoutException;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
@@ -36,12 +43,12 @@ public class RoutineBatchConfiguration {
     private final MemberRoutineLogRepository memberRoutineLogRepository;
 
     private static final String JOB_NAME = "dailyRoutineJob";
-    public static final int CHUNK_SIZE = 2;
+    public static final int CHUNK_SIZE = 100;
 
 
     @Bean(name = JOB_NAME)
-    public Job dailyRoutineJob(Step dailyRoutineStep) {
-        log.info("======= DailyRoutineJob 시작");
+    public Job dailyRoutineJob() {
+        log.info("Starting DailyRoutineJob");
         return jobBuilderFactory.get(JOB_NAME)
                 .start(dailyRoutineStep())
                 .build();
@@ -50,37 +57,55 @@ public class RoutineBatchConfiguration {
     @Bean(name = JOB_NAME + "_step")
     @JobScope
     public Step dailyRoutineStep() {
-        log.info("======= DailyRoutineStep 시작");
+        log.info("Configuring step for {}", JOB_NAME);
         return stepBuilderFactory.get(JOB_NAME+"_step")
                 .<MemberRoutine, MemberRoutineLog>chunk(CHUNK_SIZE)
-                .reader(reader(null))
+                .reader(reader())
                 .processor(processor())
                 .writer(writer())
                 .faultTolerant()
-                .retry(Exception.class)
-                .retryLimit(3)  // Chunk 실패 시 재시도 3회
+                .retryPolicy(retryPolicy()) // 해당 예외가 발생하면 Chunk 재시도
+                .backOffPolicy(backOffPolicy())
                 .build();
     }
 
+    private BackOffPolicy backOffPolicy() {
+        FixedBackOffPolicy backOffPolicy = new FixedBackOffPolicy();
+        backOffPolicy.setBackOffPeriod(5000); // chunk 실패 시 5초 간격으로 재시도
+        log.debug("BackOffPolicy set with a fixed back-off period of 5 seconds");
+        return backOffPolicy;
+    }
+
+    private RetryPolicy retryPolicy() {
+        // retry를 시도할 예외 추가
+        Map<Class<? extends Throwable>, Boolean> retryableExceptions = new HashMap<>();
+        retryableExceptions.put(ConnectTimeoutException.class, true);
+        retryableExceptions.put(DeadlockLoserDataAccessException.class, true);
+        retryableExceptions.put(SocketTimeoutException.class, true);
+        retryableExceptions.put(TransientDataAccessException.class, true);
+
+        // 위의 예외가 발생하면 최대 3번 retry
+        SimpleRetryPolicy retryPolicy = new SimpleRetryPolicy(3, retryableExceptions);
+        log.debug("RetryPolicy configured with a limit of 3 attempts for transient errors");
+        return retryPolicy;
+    }
+
+
     @Bean(name = JOB_NAME + "_reader")
     @StepScope
-    public JpaPagingItemReader<MemberRoutine> reader(@Value("#{jobParameters[createdDate]}") String createdDate) {
-        Map<String, Object> params = new HashMap<>();
-        params.put("createdDate", createdDate);
-        log.info(">>>> 리더 createdDate={}", createdDate);
-
+    public JpaPagingItemReader<MemberRoutine> reader() {
+        log.info("Configuring reader for {}", JOB_NAME);
         return new JpaPagingItemReaderBuilder<MemberRoutine>()
                 .name(JOB_NAME+"_reader")
                 .entityManagerFactory(entityManagerFactory)
                 .pageSize(CHUNK_SIZE)   // 한 번에 읽어올 데이터 수
-                .queryString("SELECT mr FROM MemberRoutine mr")
-                .parameterValues(params)
+                .queryString("SELECT mr FROM MemberRoutine mr ORDER BY mr.id DESC") // JOB 실행 후 추가된 MEMBER_ROUTINE 은 WRITE 되면 안되기 때문에 id 내림차순으로 조회
                 .build();
     }
 
 
     public ItemProcessor<MemberRoutine, MemberRoutineLog> processor() {
-        log.info("프로세서 시작");
+        log.info("Configuring processor for {}", JOB_NAME);
         return memberRoutine -> {
             LocalDate today = LocalDate.now();
             return MemberRoutineLog.builder()
@@ -93,7 +118,7 @@ public class RoutineBatchConfiguration {
     }
 
     public ItemWriter<MemberRoutineLog> writer() {
-        log.info("쓰기 시작");
+        log.info("Configuring writer for {}", JOB_NAME);
         return memberRoutineLogs -> {
             memberRoutineLogRepository.saveAll((List<MemberRoutineLog>) memberRoutineLogs);
         };

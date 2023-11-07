@@ -41,7 +41,7 @@ function SetScalpTI7() {
     try {
       const response = await axiosInstance.post('/examinations', answer);
       console.log(response);
-      navigate('/set-scalpt-done');
+      navigate('/set-scalp-done');
     } catch (error) {
       console.error('Error fetching data:', error);
     }
