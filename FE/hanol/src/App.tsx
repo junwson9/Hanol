@@ -5,7 +5,7 @@ import LoginError from './pages/auth/loginError';
 import SignupBirth from 'pages/auth/signupBirth';
 import SignupGender from 'pages/auth/signupGender';
 import './App.css';
-import Home from 'pages/home';
+import Home from 'pages/myreport/Myreport';
 import SetRoutine from 'pages/routine/setRoutine';
 import NavBar from 'components/common/NavBar';
 import ExplainRoutine from 'pages/routine/explainRoutine';
@@ -38,7 +38,16 @@ import Terms from 'pages/about/terms';
 
 function App() {
   const location = useLocation();
-  const showNavBarPaths = ['/examination', '/routine', '/', '/myreport', '/about', '/diagnose', '/explain-routine'];
+  const showNavBarPaths = [
+    '/examination',
+    '/routine',
+    '/',
+    '/myreport',
+    '/about',
+    '/diagnose',
+    '/explain-routine',
+    '/dashboard',
+  ];
   const shouldShowNavBar = showNavBarPaths.includes(location.pathname);
   return (
     <div className="App">
@@ -49,10 +58,8 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/login-done" element={<LoginDone />} />
             <Route path="/set-routine" element={<SetRoutine />} />
-            <Route path="/" element={<Home />} />
             <Route path="/signup-birth" element={<SignupBirth />} />
             <Route path="/signup-gender" element={<SignupGender />} />
-            <Route path="/myreport" element={<Home />} />
             <Route path="/examination" element={<Examination />} />
             <Route path="/routine" element={<Routine />} />
             <Route path="/about" element={<About />} />
@@ -83,6 +90,8 @@ function App() {
         <div>
           <Routes>
             <Route path="/login-error" element={<LoginError />} />
+            <Route path="/" element={<Home />} />
+            <Route path="/myreport" element={<Home />} />
           </Routes>
         </div>
       </div>
