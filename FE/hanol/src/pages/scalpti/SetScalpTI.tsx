@@ -6,8 +6,10 @@ import TopBarDepth2 from 'components/common/TapBarDepth2';
 import { useNavigate } from 'react-router-dom';
 import RoutineSetButton from 'components/button/RoutineSetButton';
 import { useState } from 'react';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { examinationState } from 'recoil/atoms';
+import { MemberRoleState } from 'recoil/atoms';
+import { useEffect } from 'react';
 
 function SetScalpTI1() {
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -16,7 +18,7 @@ function SetScalpTI1() {
   const [selectedOption, setSelectedOption] = useState<string | null>(null); // 선택된 옵션을 상태로 관리
   const [select, setSelect] = useRecoilState(examinationState);
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
-
+  const MemberRole = useRecoilValue(MemberRoleState);
   const handleOptionClick = (option: string, index: number) => {
     setSelectedOption(option);
     setSelectedIndex(index);
@@ -31,6 +33,13 @@ function SetScalpTI1() {
     });
     navigate('/set-scalpti2');
   };
+
+  useEffect(() => {
+    if (MemberRole === 'GUEST') {
+      navigate('/login-error');
+    }
+  }, []);
+
   return (
     <>
       <div className="col-span-full relative h-screen">
