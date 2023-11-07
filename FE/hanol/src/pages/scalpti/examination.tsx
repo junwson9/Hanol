@@ -54,10 +54,10 @@ function Examination() {
   return (
     <div className="col-span-full">
       <div>
-        <TapBar name={'간편문진'} noMargin={true} />
+        <TapBar name={'두피TI'} noMargin={true} />
       </div>
       <div>
-        <TopTab active={isTabActive} title1="두피TI" title2="문진 결과" onTabClick={handleTabClick} />
+        <TopTab active={isTabActive} title1="두피TI" title2="상세결과" onTabClick={handleTabClick} />
       </div>
       {isTabActive ? (
         <div>
