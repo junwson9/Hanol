@@ -50,6 +50,7 @@ const UnderBar = styled.div`
 const RightBox = styled.div<StyleProps>`
   display: flex;
   width: 50%;
+  padding-top: 12px;
   flex-direction: column;
   justify-content: flex-end;
   align-items: center;
@@ -63,6 +64,7 @@ const RightBox = styled.div<StyleProps>`
 const LeftBox = styled.div<StyleProps>`
   display: flex;
   width: 50%;
+  padding-top: 12px;
   flex-direction: column;
   justify-content: flex-end;
   align-items: center;
