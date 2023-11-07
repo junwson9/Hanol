@@ -59,7 +59,6 @@ const RightBox = styled.div<StyleProps>`
   .top_tab_title {
     color: ${(props) => (props.active === true ? '#353d4a !important' : '#6d7582')};
   }
-};
 `;
 const LeftBox = styled.div<StyleProps>`
   display: flex;
@@ -73,7 +72,6 @@ const LeftBox = styled.div<StyleProps>`
   .top_tab_title {
     color: ${(props) => (props.active === true ? '#353d4a !important' : '#6d7582')};
   }
-};
 `;
 const TopTabBox = styled.div`
   display: inline-flex;
@@ -91,6 +89,5 @@ const TopTabBox = styled.div`
     line-height: 140%;
     letter-spacing: 0.1px;
   }
-};
 `;
 export default TopTab;
