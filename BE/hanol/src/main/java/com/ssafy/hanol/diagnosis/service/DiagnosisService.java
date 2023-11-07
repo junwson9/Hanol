@@ -92,21 +92,15 @@ public class DiagnosisService {
         } catch (Exception e) {
             throw new CustomException(DiagnoseErrorCode.FILE_CONVERSION_ERROR);
         }
-
-
     }
 
     public void saveDiagnosisAndSend(RabbitmqResponse rabbitmqResponse) {
         Diagnosis diagnosis = diagnosisRepository.findById(rabbitmqResponse.getKeyId()).orElseThrow();
 
         // 진단 결과 저장
-        log.info("지단 결과 저장");
         diagnosis.updateValues(rabbitmqResponse);
 
-        log.info("diagnose info : {}", diagnosis);
-
-        //sseService.sendDiagnosisResult(rabbitmqResponse.getSseId(), DiagnoseAiResultResponse.from(diagnosis));
-
+        sseService.sendDiagnosisResult(rabbitmqResponse.getSseId(), DiagnoseAiResultResponse.from(diagnosis));
     }
 
 

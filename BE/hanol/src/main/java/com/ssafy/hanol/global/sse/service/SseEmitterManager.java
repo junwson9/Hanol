@@ -22,6 +22,6 @@ public class SseEmitterManager {
     }
 
     public boolean isValidSseEmitter(Long id) {
-        return concurrentHashMap.contains(id);
+        return concurrentHashMap.containsKey(id);
     }
 }

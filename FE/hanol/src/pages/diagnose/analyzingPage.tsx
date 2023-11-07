@@ -42,6 +42,8 @@ const AnalyzingPage = () => {
         eventSource.close();
       }
       console.log(data);
+      // 서버로부터 받은 데이터 처리
+      // SSE 연결 닫기
       eventSource.close();
     };
 
