@@ -43,3 +43,8 @@ export const examinationState = atom({
   key: 'Examination',
   default: [0, 0, 0, [] as number[], [] as number[], 0, 0],
 });
+
+export const diagnoseState = atom({
+  key: 'Diagnose',
+  default: '',
+});
