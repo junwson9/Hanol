@@ -5,7 +5,7 @@ import LoginError from './pages/auth/loginError';
 import SignupBirth from 'pages/auth/signupBirth';
 import SignupGender from 'pages/auth/signupGender';
 import './App.css';
-import Home from 'pages/home';
+import Home from 'pages/myreport/Myreport';
 import SetRoutine from 'pages/routine/setRoutine';
 import NavBar from 'components/common/NavBar';
 import ExplainRoutine from 'pages/routine/explainRoutine';
@@ -37,7 +37,16 @@ import RoutineNotiSetting from 'pages/routine/routineNotiSetting';
 
 function App() {
   const location = useLocation();
-  const showNavBarPaths = ['/examination', '/routine', '/', '/myreport', '/about', '/diagnose', '/explain-routine'];
+  const showNavBarPaths = [
+    '/examination',
+    '/routine',
+    '/',
+    '/myreport',
+    '/about',
+    '/diagnose',
+    '/explain-routine',
+    '/dashboard',
+  ];
   const shouldShowNavBar = showNavBarPaths.includes(location.pathname);
   return (
     <div className="App">

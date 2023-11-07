@@ -9,11 +9,13 @@ import ValueGraph from 'components/DashboardPage/ValueGraph';
 import DivisionRectangle from 'components/common/DivisionRectangle';
 import RecommendCareRoutine from 'components/DashboardPage/RecommendCareRoutine';
 import Button from 'components/button/Button';
-import TopTab from 'components/common/TopTab';
+import TopTab from 'components/common/TopTabNew';
 import { diagnosisResultType } from 'types/DiagnosisResult';
+import TapBar from 'components/common/TopBar';
 
 const MyreportDashBoard = () => {
   const navigate = useNavigate();
+  const [isTabActive, setTabActive] = useState<boolean>(false);
   const [diagnosisList, setDiagnosisList] = useState<diagnosisResultType[]>();
   const [graphValue, setgraphValue] = useState<number>(6);
   // const [diagnosisId, setDiagnosisId] = useState<number>();
@@ -23,6 +25,10 @@ const MyreportDashBoard = () => {
   const [value4, setValue4] = useState<number>();
   const [value5, setValue5] = useState<number>();
   const [value6, setValue6] = useState<number>();
+
+  const handleTabClick = () => {
+    setTabActive((prevActive: boolean) => !prevActive);
+  };
 
   const handleButtonClick = () => {
     navigate('/test');
@@ -80,26 +86,33 @@ const MyreportDashBoard = () => {
 
   return (
     <div className="col-span-full">
-      <TopTab Indicator="one" title1="대시보드" title2="진단 결과" link1="dashboard" link2="mydetail" />
-      <BannerButton name="내 두피 분석 하러가기" onClick={() => handleBannerButtonClick()} />
-      <ValueCardBox>
-        <ValueCard title="탈모" value={value6 || 0} onClick={() => handleValueCardClick(6)} />
-        {/* <ValueCard title="탈모" value={diag} /> */}
-        <ValueCard title="각질" value={value1 || 0} onClick={() => handleValueCardClick(1)} />
-        <ValueCard title="피지" value={value2 || 0} onClick={() => handleValueCardClick(2)} />
-      </ValueCardBox>
-      <ValueCardBox>
-        <ValueCard title="홍반" value={value3 || 0} onClick={() => handleValueCardClick(3)} />
-        <ValueCard title="염증" value={value4 || 0} onClick={() => handleValueCardClick(4)} />
-        <ValueCard title="비듬" value={value5 || 0} onClick={() => handleValueCardClick(5)} />
-      </ValueCardBox>
-      <ValueGraph title="탈모" dataList={diagnosisList || []} graphValue={graphValue} />
-      <DivisionRectangle />
-      <RecommendCareRoutine />
-      <Button name="두피 케어 루틴 추천 받기" onClick={() => handleButtonClick()} />
-      <br />
-      <br />
-      <br />
+      <TapBar name="마이리포트" noMargin />
+      <TopTab active={isTabActive} title1="대시보드" title2="상세보기" onTabClick={handleTabClick} />
+      {isTabActive ? (
+        <>
+          <BannerButton name="내 두피 분석 하러가기" onClick={() => handleBannerButtonClick()} />
+          <ValueCardBox>
+            <ValueCard title="탈모" value={value6 || 0} onClick={() => handleValueCardClick(6)} />
+            {/* <ValueCard title="탈모" value={diag} /> */}
+            <ValueCard title="각질" value={value1 || 0} onClick={() => handleValueCardClick(1)} />
+            <ValueCard title="피지" value={value2 || 0} onClick={() => handleValueCardClick(2)} />
+          </ValueCardBox>
+          <ValueCardBox>
+            <ValueCard title="홍반" value={value3 || 0} onClick={() => handleValueCardClick(3)} />
+            <ValueCard title="염증" value={value4 || 0} onClick={() => handleValueCardClick(4)} />
+            <ValueCard title="비듬" value={value5 || 0} onClick={() => handleValueCardClick(5)} />
+          </ValueCardBox>
+          <ValueGraph title="탈모" dataList={diagnosisList || []} graphValue={graphValue} />
+          <DivisionRectangle />
+          <RecommendCareRoutine />
+          <Button name="두피 케어 루틴 추천 받기" onClick={() => handleButtonClick()} />
+          <br />
+          <br />
+          <br />
+        </>
+      ) : (
+        ''
+      )}
     </div>
   );
 };
