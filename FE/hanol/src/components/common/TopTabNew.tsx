@@ -2,45 +2,46 @@ import React from 'react';
 import styled from 'styled-components';
 
 interface Props {
-  Indicator: string;
+  active: boolean;
   title1: string;
   title2: string;
+  onTabClick: () => void;
 }
 
 interface StyleProps {
-  Indicator: string;
+  active: boolean;
 }
 
-const TopTab = ({ Indicator, title1, title2 }: Props) => {
-  const handleTabClick = () => {};
+const TopTab = ({ active, title1, title2, onTabClick }: Props) => {
+  const handleTabClick = () => {
+    // 탭을 클릭할 때마다 상위 컴포넌트에서 제공한 `onTabClick` 콜백 함수를 호출합니다.
+    onTabClick();
+  };
+
   return (
     <TopTabBox>
-      <LeftBox Indicator={Indicator} onClick={() => handleTabClick()}>
+      <LeftBox active={active} onClick={handleTabClick}>
         <div className="top_tab_title">{title1}</div>
-
-        <UnderBar>{Indicator === 'one' && <ActiveBar />}</UnderBar>
+        <UnderBar>{active && <ActiveBar />}</UnderBar>
       </LeftBox>
 
-      <RightBox Indicator={Indicator} onClick={() => handleTabClick()}>
+      <RightBox active={!active} onClick={handleTabClick}>
         <div className="top_tab_title">{title2} </div>
-        <UnderBar>{Indicator === 'two' && <ActiveBar />} </UnderBar>
+        <UnderBar>{!active && <ActiveBar />} </UnderBar>
       </RightBox>
     </TopTabBox>
   );
 };
-
 const ActiveBar = styled.div`
   width: 142px;
   height: 2px;
   flex-shrink: 0;
-
   border-radius: 1px;
   background: #353d4a;
 `;
 const UnderBar = styled.div`
   display: flex;
   justify-content: center;
-
   width: 100%;
   height: 1px;
   background: #d1d5db;
@@ -56,8 +57,9 @@ const RightBox = styled.div<StyleProps>`
   gap: 13px;
   cursor: pointer;
   .top_tab_title {
-    color: ${(props) => (props.Indicator === 'two' ? '#353d4a !important' : '#6d7582')};
+    color: ${(props) => (props.active === false ? '#353d4a !important' : '#6d7582')};
   }
+};
 `;
 const LeftBox = styled.div<StyleProps>`
   display: flex;
@@ -69,8 +71,9 @@ const LeftBox = styled.div<StyleProps>`
   gap: 13px;
   cursor: pointer;
   .top_tab_title {
-    color: ${(props) => (props.Indicator === 'one' ? '#353d4a !important' : '#6d7582')};
+    color: ${(props) => (props.active === true ? '#353d4a !important' : '#6d7582')};
   }
+};
 `;
 const TopTabBox = styled.div`
   display: inline-flex;
@@ -88,6 +91,6 @@ const TopTabBox = styled.div`
     line-height: 140%;
     letter-spacing: 0.1px;
   }
+};
 `;
-
 export default TopTab;

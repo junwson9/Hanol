@@ -1,9 +1,18 @@
 import DiagnoseExplain from 'assets/images/diagnoseExplain.png';
 import FloatingButton from 'components/button/FloatingButton';
 import { useNavigate } from 'react-router-dom';
-
+import { useRecoilValue } from 'recoil';
+import { MemberRoleState } from 'recoil/atoms';
 function ExplainDiagnose() {
   const navigate = useNavigate();
+  const role = useRecoilValue(MemberRoleState);
+  const handleClick = () => {
+    if (role == 'GUEST') {
+      navigate('/login-error');
+    } else {
+      navigate('/select-device');
+    }
+  };
   return (
     <div className="col-span-full">
       <p className="text-lg  text-left font-bold mt-20">
@@ -22,7 +31,7 @@ function ExplainDiagnose() {
       </p>
       <div className="bg-GrayForTab h-[300px] mt-10">그래프가 들어갑니다.</div>
       <div className="sticky mt-10 bottom-5">
-        <FloatingButton name="시작하기" onClick={() => navigate('/select-device')} />
+        <FloatingButton name="시작하기" onClick={handleClick} />
       </div>
     </div>
   );
