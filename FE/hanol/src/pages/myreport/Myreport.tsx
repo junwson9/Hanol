@@ -102,72 +102,87 @@ const MyreportDashBoard = () => {
   //   }, [diagnosisList]);
 
   return (
-    <div className="col-span-full">
-      <MyreportContainer>
-        <TapBar name="마이리포트" noMargin />
-        <TopTab active={isTabActive} title1="대시보드" title2="상세보기" onTabClick={handleTabClick} />
-        {isTabActive ? (
-          <>
-            <BannerButton name="내 두피 분석 하러가기" onClick={() => handleBannerButtonClick()} />
-            <ValueCardBox>
-              <ValueCard title="탈모" value={value6 || 0} onClick={() => handleValueCardClick(6)} />
-              {/* <ValueCard title="탈모" value={diag} /> */}
-              <ValueCard title="각질" value={value1 || 0} onClick={() => handleValueCardClick(1)} />
-              <ValueCard title="피지" value={value2 || 0} onClick={() => handleValueCardClick(2)} />
-            </ValueCardBox>
-            <ValueCardBox>
-              <ValueCard title="홍반" value={value3 || 0} onClick={() => handleValueCardClick(3)} />
-              <ValueCard title="염증" value={value4 || 0} onClick={() => handleValueCardClick(4)} />
-              <ValueCard title="비듬" value={value5 || 0} onClick={() => handleValueCardClick(5)} />
-            </ValueCardBox>
-            <ValueGraph title="탈모" dataList={diagnosisList || []} graphValue={graphValue} />
-            <DivisionRectangle />
-            <RecommendCareRoutine />
-            <Button name="두피 케어 루틴 추천 받기" onClick={() => handleButtonClick()} />
-            <br />
-            <br />
-            <br />
-          </>
-        ) : (
-          <OverwrapContainer1>
-            {diagnosisList.length > 0 && index < diagnosisList.length && (
-              <>
-                <DateNavigateButton
-                  index={index}
-                  setIndex={setIndex}
-                  date={diagnosisList[index].created_date}
-                  onClick={() => setIsModalOpen(true)}
-                  length={diagnosisList.length}
-                />
-                <ScalpScaleView
-                  value1={diagnosisList[index].value1}
-                  value2={diagnosisList[index].value2}
-                  value3={diagnosisList[index].value3}
-                  value4={diagnosisList[index].value4}
-                  value5={diagnosisList[index].value5}
-                  value6={diagnosisList[index].value6}
-                />
-                <ScalpImageView
-                  sub_title={diagnosisList[index].scan_part}
-                  // scalp_img="../.../src/assets/images/scalp.jpg"
-                  scalp_img={diagnosisList[index].image_url}
-                />
-                {isModalOpen && (
-                  <OverwrapContainer2>
-                    <DateNavigateModal
-                      date={diagnosisList[index].created_date}
-                      setIndex={setIndex}
-                      setIsModalOpen={setIsModalOpen}
-                      diagnosisResults={diagnosisList}
-                    />
-                  </OverwrapContainer2>
-                )}
-              </>
-            )}
-          </OverwrapContainer1>
-        )}
-      </MyreportContainer>
-    </div>
+    <MyreportContainer>
+      <div className="grid grid-cols-6 gap-[10px] mx-[23px]">
+        <div className="col-span-full">
+          <TapBar name="마이리포트" noMargin />
+        </div>
+      </div>
+
+      <TopTab active={isTabActive} title1="대시보드" title2="상세보기" onTabClick={handleTabClick} />
+      {isTabActive ? (
+        <>
+          <div className="grid grid-cols-6 gap-[10px] mx-[23px]">
+            <div className="col-span-full">
+              <BannerButton name="내 두피 분석 하러가기" onClick={() => handleBannerButtonClick()} />
+              <ValueCardBox>
+                <ValueCard title="탈모" value={value6 || 0} onClick={() => handleValueCardClick(6)} />
+                {/* <ValueCard title="탈모" value={diag} /> */}
+                <ValueCard title="각질" value={value1 || 0} onClick={() => handleValueCardClick(1)} />
+                <ValueCard title="피지" value={value2 || 0} onClick={() => handleValueCardClick(2)} />
+              </ValueCardBox>
+              <ValueCardBox>
+                <ValueCard title="홍반" value={value3 || 0} onClick={() => handleValueCardClick(3)} />
+                <ValueCard title="염증" value={value4 || 0} onClick={() => handleValueCardClick(4)} />
+                <ValueCard title="비듬" value={value5 || 0} onClick={() => handleValueCardClick(5)} />
+              </ValueCardBox>
+              <ValueGraph title="탈모" dataList={diagnosisList || []} graphValue={graphValue} />
+            </div>
+          </div>
+          <DivisionRectangle />
+          <div className="grid grid-cols-6 gap-[10px] mx-[23px]">
+            <div className="col-span-full">
+              <RecommendCareRoutine />
+              <Button name="두피 케어 루틴 추천 받기" onClick={() => handleButtonClick()} />
+              <br />
+              <br />
+              <br />
+            </div>
+          </div>
+        </>
+      ) : (
+        <div className="grid grid-cols-6 gap-[10px] mx-[23px]">
+          <div className="col-span-full">
+            <OverwrapContainer1>
+              {diagnosisList.length > 0 && index < diagnosisList.length && (
+                <>
+                  <DateNavigateButton
+                    index={index}
+                    setIndex={setIndex}
+                    date={diagnosisList[index].created_date}
+                    onClick={() => setIsModalOpen(true)}
+                    length={diagnosisList.length}
+                  />
+                  <ScalpScaleView
+                    value1={diagnosisList[index].value1}
+                    value2={diagnosisList[index].value2}
+                    value3={diagnosisList[index].value3}
+                    value4={diagnosisList[index].value4}
+                    value5={diagnosisList[index].value5}
+                    value6={diagnosisList[index].value6}
+                  />
+                  <ScalpImageView
+                    sub_title={diagnosisList[index].scan_part}
+                    // scalp_img="../.../src/assets/images/scalp.jpg"
+                    scalp_img={diagnosisList[index].image_url}
+                  />
+                  {isModalOpen && (
+                    <OverwrapContainer2>
+                      <DateNavigateModal
+                        date={diagnosisList[index].created_date}
+                        setIndex={setIndex}
+                        setIsModalOpen={setIsModalOpen}
+                        diagnosisResults={diagnosisList}
+                      />
+                    </OverwrapContainer2>
+                  )}
+                </>
+              )}
+            </OverwrapContainer1>
+          </div>
+        </div>
+      )}
+    </MyreportContainer>
   );
 };
 

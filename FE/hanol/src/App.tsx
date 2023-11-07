@@ -60,7 +60,6 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/signup-birth" element={<SignupBirth />} />
             <Route path="/signup-gender" element={<SignupGender />} />
-            <Route path="/myreport" element={<Home />} />
             <Route path="/examination" element={<Examination />} />
             <Route path="/routine" element={<Routine />} />
             <Route path="/about" element={<About />} />
@@ -90,6 +89,7 @@ function App() {
         <div>
           <Routes>
             <Route path="/login-error" element={<LoginError />} />
+            <Route path="/myreport" element={<Home />} />
           </Routes>
         </div>
       </div>
