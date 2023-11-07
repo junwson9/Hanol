@@ -4,11 +4,14 @@ import { useEffect, useState } from 'react';
 import axiosInstance from 'api/axiosInterceptor';
 import { ReactComponent as Arrow } from '../../assets/icons/arrow_right.svg';
 import { getMessaging, getToken } from 'firebase/messaging';
+import { MemberRoleState } from 'recoil/atoms';
+import { useRecoilValue } from 'recoil';
 
 function About() {
   const navigate = useNavigate();
   const [role, setRole] = useState<string | null>(null);
   const [name, setName] = useState<string | null>(null);
+  const memberRole = useRecoilValue(MemberRoleState);
   const handleButtonClick = () => {
     navigate('/login');
   };
@@ -37,6 +40,9 @@ function About() {
     navigate('/mypage');
   };
 
+  const handleterms = () => {
+    navigate('/terms');
+  };
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -50,8 +56,9 @@ function About() {
         console.error('데이터 가져오기 오류:', error);
       }
     };
-
-    fetchData();
+    if (memberRole != 'GUEST') {
+      fetchData();
+    }
   }, []);
 
   return (
@@ -82,11 +89,15 @@ function About() {
       <div className="">
         <button className="font-bold text-[1.125rem] w-full my-[1rem] text-left">알림설정</button>
         <button className="font-bold text-[1.125rem] w-full my-[1rem] text-left">ABOUT</button>
-        <button className="font-bold text-[1.125rem] w-full my-[1rem] text-left">약관 및 정책</button>
-        <button className="font-bold text-[1.125rem] w-full my-[1rem] text-left">오픈소스 라이브러리</button>
-        <button onClick={handleLogout} className="font-bold text-[1.125rem] w-full my-[1rem] text-left">
-          로그아웃
+        <button onClick={handleterms} className="font-bold text-[1.125rem] w-full my-[1rem] text-left">
+          약관 및 정책
         </button>
+        <button className="font-bold text-[1.125rem] w-full my-[1rem] text-left">오픈소스 라이브러리</button>
+        {role === 'logined' && (
+          <button onClick={handleLogout} className="font-bold text-[1.125rem] w-full my-[1rem] text-left">
+            로그아웃
+          </button>
+        )}
       </div>
     </div>
   );

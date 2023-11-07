@@ -1,6 +1,7 @@
 package com.ssafy.hanol.routine.repository;
 
 import com.ssafy.hanol.routine.domain.MemberRoutineLog;
+import com.ssafy.hanol.routine.service.batch.RoutineBatchConfiguration;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -14,7 +15,7 @@ public class JdbcMemberRoutineLogRepository {
 
     private final JdbcTemplate jdbcTemplate;
 
-    private static final int BATCH_SIZE = 100;
+    private static final int BATCH_SIZE = RoutineBatchConfiguration.CHUNK_SIZE;
 
     public void saveAll(List<MemberRoutineLog> memberRoutineLogs) {
 
