@@ -3,7 +3,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 interface Props {
-  valuenumber: number;
+  valuenumber?: number;
 }
 
 interface ValueColorProps {
@@ -56,12 +56,12 @@ const ValueDiv = ({ valuenumber }: Props) => {
         return 'white';
     }
   };
-  const textColor = determineTextColor(valuenumber);
-  const backgroundColor = determineBackgroundColor(valuenumber);
+  const textColor = determineTextColor(valuenumber || 0);
+  const backgroundColor = determineBackgroundColor(valuenumber || 0);
 
   return (
     <ValueBox textColor={textColor} backgroundColor={backgroundColor}>
-      <div className="valuenumber">{determineValueTitle(valuenumber)}</div>
+      <div className="valuenumber">{determineValueTitle(valuenumber || 0)}</div>
     </ValueBox>
   );
 };
