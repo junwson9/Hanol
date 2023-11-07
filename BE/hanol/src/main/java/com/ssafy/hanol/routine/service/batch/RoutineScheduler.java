@@ -1,3 +1,8 @@
+/**
+ * 매일 자정 MemberRoutineLog 데이터를 삽입하는 스케쥴러
+ * Spring Batch(RoutineBatchScheduler.class)로 대체하여 스케쥴링 중단
+ */
+
 package com.ssafy.hanol.routine.service.batch;
 
 import com.ssafy.hanol.common.util.SchedulingStatusUtil;
@@ -7,23 +12,22 @@ import com.ssafy.hanol.routine.repository.MemberRoutineLogRepository;
 import com.ssafy.hanol.routine.repository.MemberRoutineRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-@Service
+@Component
 @Slf4j
 @RequiredArgsConstructor
-public class RoutineSchedulerService {
+public class RoutineScheduler {
     private final SchedulingStatusUtil schedulingStatusUtil;
     private final MemberRoutineLogRepository memberRoutineLogRepository;
     private final MemberRoutineRepository memberRoutineRepository;
 
-    @Scheduled(cron = "0 0 0 * * ?") // 매일 자정 수행
+//    @Scheduled(cron = "0 0 0 * * ?") // 매일 자정 수행
     @Transactional
     public void registerDailyRoutine() {
         LocalDate today = LocalDate.now();
