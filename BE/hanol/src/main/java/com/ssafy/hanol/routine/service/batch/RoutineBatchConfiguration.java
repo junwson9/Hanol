@@ -43,7 +43,7 @@ public class RoutineBatchConfiguration {
     private final MemberRoutineLogRepository memberRoutineLogRepository;
 
     private static final String JOB_NAME = "dailyRoutineJob";
-    public static final int CHUNK_SIZE = 2;
+    public static final int CHUNK_SIZE = 100;
 
 
     @Bean(name = JOB_NAME)
