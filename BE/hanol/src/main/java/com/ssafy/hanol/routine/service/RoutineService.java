@@ -6,6 +6,7 @@ import com.ssafy.hanol.diagnosis.repository.DiagnosisRepository;
 import com.ssafy.hanol.member.domain.Member;
 import com.ssafy.hanol.member.exception.MemberErrorCode;
 import com.ssafy.hanol.member.repository.MemberRepository;
+import com.ssafy.hanol.member.service.MemberService;
 import com.ssafy.hanol.routine.domain.MemberRoutine;
 import com.ssafy.hanol.routine.domain.MemberRoutineLog;
 import com.ssafy.hanol.routine.domain.Routine;
@@ -23,6 +24,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -39,12 +41,12 @@ public class RoutineService {
     private final MemberRoutineRepository memberRoutineRepository;
     private final MemberRoutineLogRepository memberRoutineLogRepository;
     private final DiagnosisRepository diagnosisRepository;
-    private final MemberRepository memberRepository;
+    private final MemberService memberService;
 
 
     // 회원별 설정 루틴 및 추천 루틴 리스트 조회
     public RoutineListResponse findRoutineList(Long memberId) {
-        Member member = findMemberByMemberId(memberId);
+        Member member = memberService.findMemberByMemberId(memberId);
         // 회원이 설정해둔 루틴 리스트 조회
         List<MemberRoutine> memberRoutines = memberRoutineRepository.findByMemberId(memberId);
 
@@ -75,8 +77,7 @@ public class RoutineService {
 
     // 회원별 설정 루틴 리스트 변경
     public void modifyRoutineList(RoutineListModifyRequest routineListModifyRequest, Long memberId) {
-        Member member = findMemberByMemberId(memberId);
-        // TODO 예외 처리: 스케쥴링 작업 중인 경우
+        Member member = memberService.findMemberByMemberId(memberId);
 
         List<Long> removedRoutines = routineListModifyRequest.getRemovedRoutines();
         List<Long> addedRoutines = routineListModifyRequest.getAddedRoutines();
@@ -100,6 +101,7 @@ public class RoutineService {
                         .member(member)
                         .routine(routine)
                         .isNotificationActive(false)
+                        .notificationTime(LocalTime.of(13, 0))
                         .build())
                     .collect(Collectors.toList());
 
@@ -123,8 +125,7 @@ public class RoutineService {
 
     // 날짜별 루틴 이력 리스트 조회
     public RoutineLogListResponse findMemberRoutineLogByDate(LocalDate date, Long memberId) {
-        Member member = findMemberByMemberId(memberId);
-        // TODO 예외 처리: 스케쥴링 작업 중인 경우
+        Member member = memberService.findMemberByMemberId(memberId);
 
         List<RoutineLogInfo> routineLogInfos = memberRoutineLogRepository.selectRoutineLogsByMemberIdAndDate(memberId, date);
         log.info("특정일의 루틴 이력 조회, {}", routineLogInfos);
@@ -137,8 +138,7 @@ public class RoutineService {
 
     // 기간 내 일별 루틴 달성률 조회
     public RoutineAchievementRatesResponse findRoutineAchievementRates(LocalDate startDate, LocalDate endDate, Long memberId) {
-        Member member = findMemberByMemberId(memberId);
-        // TODO 예외 처리: 스케쥴링 작업 중인 경우
+        Member member = memberService.findMemberByMemberId(memberId);
 
         log.info("startDate: {}, endDate: {}", startDate, endDate);
         Map<LocalDate, Double> achievementRates = memberRoutineLogRepository.computeAchievementRates(memberId, startDate, endDate);
@@ -152,7 +152,6 @@ public class RoutineService {
     public RoutineAchievementStatusResponse modifyRoutineAchievementStatus(Long memberRoutineLogId,
                                                                            RoutineAchievementStatusRequest request,
                                                                            Long memberId) {
-        // TODO 예외 처리: 스케쥴링 작업 중인 경우
         MemberRoutineLog routineLog = memberRoutineLogRepository.findById(memberRoutineLogId)
                 .orElseThrow(() -> new CustomException(RoutineErrorCode.NOT_FOUNT_ROUTINE_LOG));
         validateMemberAccess(routineLog.getMember().getId(), memberId);
@@ -211,10 +210,6 @@ public class RoutineService {
                 .build();
     }
 
-
-    private Member findMemberByMemberId(Long memberId) {
-        return memberRepository.findById(memberId).orElseThrow(() -> new CustomException(MemberErrorCode.NOT_FOUND_MEMBER));
-    }
 
     private void validateMemberAccess(Long memberId, Long authMemberId) {
         if(memberId != authMemberId) {

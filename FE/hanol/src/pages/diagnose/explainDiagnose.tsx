@@ -3,6 +3,7 @@ import FloatingButton from 'components/button/FloatingButton';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { MemberRoleState } from 'recoil/atoms';
+import scoreEx from 'assets/images/scoreEx.png';
 function ExplainDiagnose() {
   const navigate = useNavigate();
   const role = useRecoilValue(MemberRoleState);
@@ -29,7 +30,9 @@ function ExplainDiagnose() {
         <br />
         확인 할 수 있어요.
       </p>
-      <div className="bg-GrayForTab h-[300px] mt-10">그래프가 들어갑니다.</div>
+      <div className="flex mt-10 justify-center">
+        <img src={scoreEx} className="w-64 h-64" />
+      </div>
       <div className="sticky mt-10 bottom-5">
         <FloatingButton name="시작하기" onClick={handleClick} />
       </div>

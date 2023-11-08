@@ -13,10 +13,10 @@ public class DiagnosisIdInfo {
 
     private Long diagnosisId;
     @JsonFormat(pattern = "yyyy-MM-dd' 'HH:mm:ss")
-    private LocalDateTime createDate;
+    private LocalDateTime createdDate;
 
-    public DiagnosisIdInfo(Long diagnosisId, LocalDateTime createDate) {
+    public DiagnosisIdInfo(Long diagnosisId, LocalDateTime createdDate) {
         this.diagnosisId = diagnosisId;
-        this.createDate = createDate;
+        this.createdDate = createdDate;
     }
 }

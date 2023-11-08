@@ -71,7 +71,7 @@ const MyreportDetailPage = () => {
             {isModalOpen && (
               <OverwrapContainer2>
                 <DateNavigateModal
-                  date={diagnosisResults[index].created_date}
+                  diagnosis_id={diagnosisResults[index].diagnosis_id}
                   setIndex={setIndex}
                   setIsModalOpen={setIsModalOpen}
                   diagnosisResults={diagnosisResults}

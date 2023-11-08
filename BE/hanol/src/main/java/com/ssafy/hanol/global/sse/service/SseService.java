@@ -21,7 +21,6 @@ public class SseService {
         // callback 함수 등록
         sseEmitter.onCompletion(() -> sseEmitterManager.removeSseEmitter(memberId));
         sseEmitter.onTimeout(() -> sseEmitterManager.removeSseEmitter(memberId));
-
         sseEmitterManager.addSseEmitter(memberId, sseEmitter);
 
         return sseEmitter;
@@ -33,7 +32,6 @@ public class SseService {
      */
     public void sendDiagnosisResult(Long memberId, DiagnoseAiResultResponse response) {
         SseEmitter sseEmitter = sseEmitterManager.getSseEmitter(memberId);
-
         if (sseEmitter == null) {
             throw new CustomException(SseErrorCode.SSE_EMITTER_NOT_FOUND);
         }

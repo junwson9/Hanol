@@ -46,6 +46,7 @@ public class DiagnosisService {
         } else { // 특정 id의 데이터 조회
             diagnosis = diagnosisRepository.findById(diagnosisId)
                     .orElseThrow(() -> new CustomException(DiagnoseErrorCode.NOT_FOUND_DIAGNOSIS));
+            validateValue(diagnosis);
             validateAccessRights(diagnosis, memberId);
         }
 
@@ -92,21 +93,15 @@ public class DiagnosisService {
         } catch (Exception e) {
             throw new CustomException(DiagnoseErrorCode.FILE_CONVERSION_ERROR);
         }
-
-
     }
 
     public void saveDiagnosisAndSend(RabbitmqResponse rabbitmqResponse) {
         Diagnosis diagnosis = diagnosisRepository.findById(rabbitmqResponse.getKeyId()).orElseThrow();
 
         // 진단 결과 저장
-        log.info("지단 결과 저장");
         diagnosis.updateValues(rabbitmqResponse);
 
-        log.info("diagnose info : {}", diagnosis);
-
-        //sseService.sendDiagnosisResult(rabbitmqResponse.getSseId(), DiagnoseAiResultResponse.from(diagnosis));
-
+        sseService.sendDiagnosisResult(rabbitmqResponse.getSseId(), DiagnoseAiResultResponse.from(diagnosis));
     }
 
 
@@ -120,6 +115,13 @@ public class DiagnosisService {
     private void validateAccessRights(Diagnosis diagnosis, Long memberId) {
         if (!diagnosis.getMember().getId().equals(memberId)) {
             throw new CustomException(DiagnoseErrorCode.FORBIDDEN_ACCESS);
+        }
+    }
+
+    // AI 진단 결과가 없는 데이터
+    private static void validateValue(Diagnosis diagnosis) {
+        if(diagnosis.getValue1() == null) {
+            throw new CustomException(DiagnoseErrorCode.EMPTY_VALUE);
         }
     }
 

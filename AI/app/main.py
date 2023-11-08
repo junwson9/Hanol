@@ -10,5 +10,5 @@ async def test():
     return 'test page'
 
 @app.post("/image")
-async def process_diagnostic(image_bytes: UploadFile = Form(...), sse_id: int = Form(...)):
-    return await diag.process_diagnostic(image_bytes, sse_id)
+def process_diagnostic(image_bytes: UploadFile = Form(...), sse_id: int = Form(...)):
+    return diag.process_diagnostic(image_bytes, sse_id)
