@@ -70,7 +70,9 @@ public class QueryDslMemberRoutineLogRepository {
                             memberRoutine.notificationTime))
                     .from(memberRoutineLog)
                     .join(memberRoutineLog.routine, routine)
-                    .join(memberRoutine).on(memberRoutineLog.routine.id.eq(memberRoutine.routine.id))
+                    .join(memberRoutine)
+                        .on(memberRoutineLog.member.id.eq(memberRoutine.member.id)
+                            .and(memberRoutineLog.routine.id.eq(memberRoutine.routine.id)))
                     .where(criteria)
                     .fetch();
         } else {
