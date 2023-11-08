@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-// import axiosInstance from 'api/axiosInterceptor';
-import axios from 'axios';
+import axiosInstance from 'api/axiosInterceptor';
+// import axios from 'axios';
 import styled from 'styled-components';
 import BannerButton from 'components/button/BannerButton';
 import ValueCard from 'components/DashboardPage/ValueCard';
@@ -70,19 +70,19 @@ const MyreportDashBoard = () => {
   };
 
   useEffect(() => {
-    // axiosInstance
-    // .get('/diagnoses?limit=20')
-    axios
-      .get('http://localhost:4000/diagnoses')
+    axiosInstance
+      .get('/diagnoses?limit=20')
+      // axios
+      // .get('http://localhost:4000/diagnoses')
       .then((response) => {
         console.log('진단 결과 리스트 조회 성공:', response);
         setDiagnosisList(response.data.diagnosis_info_list);
-        setValue1(response.data.diagnosis_info_list[0].value1);
-        setValue2(response.data.diagnosis_info_list[0].value2);
-        setValue3(response.data.diagnosis_info_list[0].value3);
-        setValue4(response.data.diagnosis_info_list[0].value4);
-        setValue5(response.data.diagnosis_info_list[0].value5);
-        setValue6(response.data.diagnosis_info_list[0].value6);
+        setValue1(response.data.diagnosis_info_list?.[0].value1);
+        setValue2(response.data.diagnosis_info_list?.[0].value2);
+        setValue3(response.data.diagnosis_info_list?.[0].value3);
+        setValue4(response.data.diagnosis_info_list?.[0].value4);
+        setValue5(response.data.diagnosis_info_list?.[0].value5);
+        setValue6(response.data.diagnosis_info_list?.[0].value6);
       })
       .catch((error) => {
         console.error('진단 결과 리스트 조회 실패:', error);
