@@ -1,19 +1,20 @@
 import React, { useEffect, useState } from 'react';
 // import axios from 'axios';
+import axiosInstance from 'api/axiosInterceptor';
 import styled from 'styled-components';
 import { ReactComponent as CloseIcon } from '../../assets/icons/close_FILL0_wght400_GRAD0_opsz24 1.svg';
 import { ReactComponent as SelectedIcon } from '../../assets/icons/check_FILL0_wght400_GRAD0_opsz24 1.svg';
 import { datelistType, diagnosisResultType } from 'types/DiagnosisResult';
-import axiosInstance from 'api/axiosInterceptor';
 
 interface Props {
-  date: string;
+  diagnosis_id: number;
   setIndex: (arg: number) => void;
   setIsModalOpen: (arg: boolean) => void;
   diagnosisResults: diagnosisResultType[];
+  formatDate?: (arg: string) => string;
 }
 
-const DateNavigateModal = ({ date, setIndex, setIsModalOpen, diagnosisResults }: Props) => {
+const DateNavigateModal = ({ diagnosis_id, setIndex, setIsModalOpen, diagnosisResults, formatDate }: Props) => {
   const [dateList, setDateList] = useState<datelistType[]>();
   // const findIndex = (diag_id: number) => {
   //   diagnosisResults.map((diagnosisResults, index) => {
@@ -50,17 +51,17 @@ const DateNavigateModal = ({ date, setIndex, setIsModalOpen, diagnosisResults }:
 
   useEffect(() => {
     // axios
-    // .get('http://localhost:4000/dates')
+    //   .get('http://localhost:4000/dates')
     axiosInstance
       .get('/diagnoses/dates')
       .then((response) => {
-        setDateList(response.data.diagnosis_id_list);
-        console.log('모든 날짜 조회 성공', response.data.diagnosis_id_list);
+        console.log('모든 날짜 조회 성공', response.data.data.diagnosis_id_list);
+        setDateList(response.data.data.diagnosis_id_list);
       })
       .catch((error) => console.error('모든 날짜 조회 실패', error));
   }, []);
   dateList?.map((date) => {
-    console.log('date.created_date:', date.created_date);
+    console.log('date:', date.created_date);
   });
   return (
     <div className="col-span-full">
@@ -85,8 +86,8 @@ const DateNavigateModal = ({ date, setIndex, setIsModalOpen, diagnosisResults }:
 
             {dateList?.map((dateItem, index) => (
               <DateBox key={index} onClick={() => handleDateBoxClick(dateItem.diagnosis_id)}>
-                <div className="date">{dateItem.created_date}</div>
-                {date === dateItem.created_date && <SelectedIcon className="selected_icon" />}
+                <div className="date">{formatDate?.(dateItem.created_date)}</div>
+                {diagnosis_id === dateItem.diagnosis_id && <SelectedIcon className="selected_icon" />}
               </DateBox>
             ))}
           </DateListBox>
@@ -119,7 +120,7 @@ const DateListBox = styled.div`
   align-self: flex-start;
   /* margin-left: 1.438rem; */
 
-  height: 55vh;
+  height: 62vh;
   overflow-y: auto;
 `;
 const TitleBox = styled.div`

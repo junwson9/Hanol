@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { ReactComponent as HelpIcon } from '../../assets/icons/help_FILL0_wght400_GRAD0_opsz24 1.svg';
 import { ResponsiveRadar } from '@nivo/radar';
@@ -13,52 +13,74 @@ interface Props {
 }
 
 const ScalpScaleView = ({ value1, value2, value3, value4, value5, value6 }: Props) => {
-  console.log(
-    'value1: ',
-    value1,
-    'value2: ',
-    value2,
-    'value3:',
-    value3,
-    'value4: ',
-    value4,
-    'value5: ',
-    value5,
-    'value6:',
-    value6,
-  );
-  const data = [
+  const defaultData = [
     {
       category: '탈모',
 
-      점수: value6,
+      score: 0,
     },
     {
       category: '각질',
 
-      점수: value1,
+      score: 0,
     },
     {
       category: '피지',
 
-      점수: value2,
+      score: 0,
     },
     {
       category: '홍반',
 
-      점수: value3,
+      score: 0,
     },
     {
       category: '비듬',
 
-      점수: value4,
+      score: 0,
     },
     {
       category: '염증',
 
-      점수: value5,
+      score: 0,
     },
   ];
+  const wantedData = [
+    {
+      category: '탈모',
+
+      score: value6,
+    },
+    {
+      category: '각질',
+
+      score: value1,
+    },
+    {
+      category: '피지',
+
+      score: value2,
+    },
+    {
+      category: '홍반',
+
+      score: value3,
+    },
+    {
+      category: '비듬',
+
+      score: value4,
+    },
+    {
+      category: '염증',
+
+      score: value5,
+    },
+  ];
+  const [graphicData, setGraphicData] = useState(defaultData);
+  useEffect(() => {
+    setGraphicData(wantedData);
+  }, [value1, value2, value3, value4, value5, value6]);
 
   return (
     <div className="col-span-full">
@@ -69,8 +91,8 @@ const ScalpScaleView = ({ value1, value2, value3, value4, value5, value6 }: Prop
         </TitleBox>
         <GraphBox>
           <ResponsiveRadar
-            data={data}
-            keys={['점수']}
+            data={graphicData}
+            keys={['score']}
             indexBy="category"
             margin={{ top: 30, right: 30, bottom: 30, left: 30 }}
             borderColor={{ from: 'color', modifiers: [] }}
@@ -84,7 +106,7 @@ const ScalpScaleView = ({ value1, value2, value3, value4, value5, value6 }: Prop
             dotLabel="value"
             dotLabelYOffset={-14}
             colors={{ scheme: 'pastel1' }}
-            animate={false}
+            animate={true}
             // motionConfig="wobbly"
           />
         </GraphBox>
