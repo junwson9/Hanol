@@ -24,6 +24,11 @@ public class DiagnosisResponseConsumer {
         log.info("value 4 : {}", response.getValue4());
         log.info("value 5 : {}", response.getValue5());
         log.info("value 6 : {}", response.getValue6());
-        diagnosisService.saveDiagnosisAndSend(response);
+
+        try {
+            diagnosisService.saveDiagnosisAndSend(response);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

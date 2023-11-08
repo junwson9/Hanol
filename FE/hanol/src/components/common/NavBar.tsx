@@ -67,7 +67,7 @@ function NavBar() {
               selectedMenu === 'examination' ? 'text-NavActive' : 'text-GrayForText'
             } text-xs whitespace-nowrap`}
           >
-            간편문진
+            두피TI
           </p>
         </button>
         <button>

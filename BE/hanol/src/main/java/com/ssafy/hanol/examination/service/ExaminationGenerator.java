@@ -17,7 +17,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ExaminationGenerator {
 
-    private final String serverUrl = "fastapi-survey:8001";
+    private final String serverUrl = "http://fastapi-survey:8001";
 //    private final String serverUrl = "http://localhost:8001"; // 로컬 테스트용
 
     private final WebClient defaultWebClient;
