@@ -26,3 +26,8 @@ build:
     - echo "DOCKER_PASSWORD: $DOCKER_PASSWORD"
   dependencies:
     - download_secure_files  # download_secure_files 단계가 성공적으로 완료되어야만 실행됨
+
+  tags:
+    - hanol
+  only:
+    - master
