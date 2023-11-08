@@ -16,6 +16,8 @@ import ScalpImageView from 'components/DetailPage/ScalpImageView';
 import DateNavigateModal from 'components/DetailPage/DateNavigateModal';
 import { diagnosisResultType } from 'types/DiagnosisResult';
 import TapBar from 'components/common/TopBar';
+import { MemberRoleState } from 'recoil/atoms';
+import { useRecoilValue } from 'recoil';
 
 // const initData: diagnosisResultType[] = [
 //   {
@@ -34,8 +36,10 @@ import TapBar from 'components/common/TopBar';
 //   },
 // ];
 
-const MyreportDashBoard = () => {
+const Myreport = () => {
   const navigate = useNavigate();
+  const Role = useRecoilValue(MemberRoleState);
+
   //대시보드
   const [isTabActive, setTabActive] = useState<boolean>(true);
   const [diagnosisList, setDiagnosisList] = useState<diagnosisResultType[]>();
@@ -69,11 +73,11 @@ const MyreportDashBoard = () => {
   };
 
   const handleButtonClick = () => {
-    navigate('/test');
+    navigate('/routine');
   };
 
   const handleBannerButtonClick = () => {
-    navigate('/test');
+    navigate('/diagnose');
   };
 
   const handleValueCardClick = (arg: number) => {
@@ -83,7 +87,7 @@ const MyreportDashBoard = () => {
 
   useEffect(() => {
     axiosInstance
-      .get('/diagnoses?limit=20')
+      .get('/diagnoses?limit=10')
       // axios
       // .get('http://localhost:4000/diagnoses')
       .then((response) => {
@@ -119,38 +123,75 @@ const MyreportDashBoard = () => {
 
       <TopTab active={isTabActive} title1="대시보드" title2="상세보기" onTabClick={handleTabClick} />
       {isTabActive ? (
-        <DashBoardBox>
-          <div className="grid grid-cols-6 gap-[10px] mx-[23px]">
-            <div className="col-span-full">
-              {diagnosisList && (
-                <>
-                  <BannerButton name="내 두피 분석 하러가기" onClick={() => handleBannerButtonClick()} />
-                  <ValueCardBox>
-                    <ValueCard title="탈모" value={value6} onClick={() => handleValueCardClick(6)} />
-                    <ValueCard title="각질" value={value1} onClick={() => handleValueCardClick(1)} />
-                    <ValueCard title="피지" value={value2} onClick={() => handleValueCardClick(2)} />
-                  </ValueCardBox>
-                  <ValueCardBox>
-                    <ValueCard title="홍반" value={value3} onClick={() => handleValueCardClick(3)} />
-                    <ValueCard title="염증" value={value4} onClick={() => handleValueCardClick(4)} />
-                    <ValueCard title="비듬" value={value5} onClick={() => handleValueCardClick(5)} />
-                  </ValueCardBox>
-                  <ValueGraph title="탈모" dataList={diagnosisList} graphValue={graphValue} setIndex={setIndex} />
-                </>
-              )}
-            </div>
-          </div>
-          <DivisionRectangle />
-          <div className="grid grid-cols-6 gap-[10px] mx-[23px]">
-            <div className="col-span-full">
-              <RecommendCareRoutine />
-              <Button name="두피 케어 루틴 추천 받기" onClick={() => handleButtonClick()} />
-              <br />
-              <br />
-              <br />
-            </div>
-          </div>
-        </DashBoardBox>
+        <>
+          {Role === 'GUEST' ? (
+            <DashBoardBox>
+              <div className="grid grid-cols-6 gap-[10px] mx-[23px]">
+                <div className="col-span-full">
+                  {diagnosisList && (
+                    <>
+                      <BannerButton name="내 두피 분석 하러가기" onClick={() => handleBannerButtonClick()} />
+                      <ValueCardBox>
+                        <ValueCard title="탈모" value={5} onClick={() => handleValueCardClick(6)} />
+                        <ValueCard title="각질" value={5} onClick={() => handleValueCardClick(1)} />
+                        <ValueCard title="피지" value={5} onClick={() => handleValueCardClick(2)} />
+                      </ValueCardBox>
+                      <ValueCardBox>
+                        <ValueCard title="홍반" value={5} onClick={() => handleValueCardClick(3)} />
+                        <ValueCard title="염증" value={5} onClick={() => handleValueCardClick(4)} />
+                        <ValueCard title="비듬" value={5} onClick={() => handleValueCardClick(5)} />
+                      </ValueCardBox>
+                      <ValueGraph title="탈모" dataList={diagnosisList} graphValue={graphValue} setIndex={setIndex} />
+                    </>
+                  )}
+                </div>
+              </div>
+              <DivisionRectangle />
+              <div className="grid grid-cols-6 gap-[10px] mx-[23px]">
+                <div className="col-span-full">
+                  <RecommendCareRoutine />
+                  <Button name="두피 케어 루틴 추천 받기" onClick={() => handleButtonClick()} />
+                  <br />
+                  <br />
+                  <br />
+                </div>
+              </div>
+            </DashBoardBox>
+          ) : (
+            <DashBoardBox>
+              <div className="grid grid-cols-6 gap-[10px] mx-[23px]">
+                <div className="col-span-full">
+                  {diagnosisList && (
+                    <>
+                      <BannerButton name="내 두피 분석 하러가기" onClick={() => handleBannerButtonClick()} />
+                      <ValueCardBox>
+                        <ValueCard title="탈모" value={value6} onClick={() => handleValueCardClick(6)} />
+                        <ValueCard title="각질" value={value1} onClick={() => handleValueCardClick(1)} />
+                        <ValueCard title="피지" value={value2} onClick={() => handleValueCardClick(2)} />
+                      </ValueCardBox>
+                      <ValueCardBox>
+                        <ValueCard title="홍반" value={value3} onClick={() => handleValueCardClick(3)} />
+                        <ValueCard title="염증" value={value4} onClick={() => handleValueCardClick(4)} />
+                        <ValueCard title="비듬" value={value5} onClick={() => handleValueCardClick(5)} />
+                      </ValueCardBox>
+                      <ValueGraph title="탈모" dataList={diagnosisList} graphValue={graphValue} setIndex={setIndex} />
+                    </>
+                  )}
+                </div>
+              </div>
+              <DivisionRectangle />
+              <div className="grid grid-cols-6 gap-[10px] mx-[23px]">
+                <div className="col-span-full">
+                  <RecommendCareRoutine />
+                  <Button name="두피 케어 루틴 추천 받기" onClick={() => handleButtonClick()} />
+                  <br />
+                  <br />
+                  <br />
+                </div>
+              </div>
+            </DashBoardBox>
+          )}
+        </>
       ) : (
         <div className="grid grid-cols-6 gap-[10px] mx-[23px]">
           <div className="col-span-full">
@@ -218,4 +259,4 @@ const DashBoardBox = styled.div``;
 const MyreportContainer = styled.div`
   position: relative;
 `;
-export default MyreportDashBoard;
+export default Myreport;
