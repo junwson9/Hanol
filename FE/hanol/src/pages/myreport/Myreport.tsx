@@ -52,6 +52,18 @@ const MyreportDashBoard = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [index, setIndex] = useState<number>(0);
 
+  // 날짜 포맷 변경
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = `0${date.getMonth() + 1}`.slice(-2);
+    const day = `0${date.getDate()}`.slice(-2);
+    const hours = `0${date.getHours()}`.slice(-2);
+    const minutes = `0${date.getMinutes()}`.slice(-2);
+
+    return `${year}-${month}-${day} ${hours}:${minutes}`;
+  };
+
   const handleTabClick = () => {
     setTabActive((prevActive: boolean) => !prevActive);
   };
@@ -148,7 +160,7 @@ const MyreportDashBoard = () => {
                   <DateNavigateButton
                     index={index}
                     setIndex={setIndex}
-                    date={diagnosisList[index].created_date}
+                    date={formatDate(diagnosisList[index].created_date)}
                     onClick={() => setIsModalOpen(true)}
                     length={diagnosisList.length}
                   />
@@ -168,10 +180,11 @@ const MyreportDashBoard = () => {
                   {isModalOpen && (
                     <OverwrapContainer2>
                       <DateNavigateModal
-                        date={diagnosisList[index].created_date}
+                        diagnosis_id={diagnosisList[index].diagnosis_id}
                         setIndex={setIndex}
                         setIsModalOpen={setIsModalOpen}
                         diagnosisResults={diagnosisList}
+                        formatDate={formatDate}
                       />
                     </OverwrapContainer2>
                   )}

@@ -7,13 +7,14 @@ import { ReactComponent as SelectedIcon } from '../../assets/icons/check_FILL0_w
 import { datelistType, diagnosisResultType } from 'types/DiagnosisResult';
 
 interface Props {
-  date: string;
+  diagnosis_id: number;
   setIndex: (arg: number) => void;
   setIsModalOpen: (arg: boolean) => void;
   diagnosisResults: diagnosisResultType[];
+  formatDate?: (arg: string) => string;
 }
 
-const DateNavigateModal = ({ date, setIndex, setIsModalOpen, diagnosisResults }: Props) => {
+const DateNavigateModal = ({ diagnosis_id, setIndex, setIsModalOpen, diagnosisResults, formatDate }: Props) => {
   const [dateList, setDateList] = useState<datelistType[]>();
   // const findIndex = (diag_id: number) => {
   //   diagnosisResults.map((diagnosisResults, index) => {
@@ -85,8 +86,8 @@ const DateNavigateModal = ({ date, setIndex, setIsModalOpen, diagnosisResults }:
 
             {dateList?.map((dateItem, index) => (
               <DateBox key={index} onClick={() => handleDateBoxClick(dateItem.diagnosis_id)}>
-                <div className="date">{dateItem.created_date}</div>
-                {date === dateItem.created_date && <SelectedIcon className="selected_icon" />}
+                <div className="date">{formatDate?.(dateItem.created_date)}</div>
+                {diagnosis_id === dateItem.diagnosis_id && <SelectedIcon className="selected_icon" />}
               </DateBox>
             ))}
           </DateListBox>
