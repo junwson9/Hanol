@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router';
 import { useEffect } from 'react';
 import axiosInstance from 'api/axiosInterceptor';
 import { ReactComponent as Error } from 'assets/icons/error.svg';
+import { useLocation } from 'react-router-dom';
 
 type scalpType = {
   type0: boolean;
@@ -20,6 +21,9 @@ type scalpType = {
 };
 
 function Examination() {
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const isTabActiveParam = queryParams.get('isTabActive');
   // false가 오른쪽 탭 active
   const [isTabActive, setTabActive] = useState<boolean>(true);
   const [name, setName] = useState<string>('');
@@ -38,6 +42,11 @@ function Examination() {
     navigate('/set-scalpti1');
   };
 
+  useEffect(() => {
+    if (isTabActiveParam == 'false') {
+      setTabActive(false);
+    }
+  }, []);
   useEffect(() => {
     if (isTabActive == true) {
       return;
