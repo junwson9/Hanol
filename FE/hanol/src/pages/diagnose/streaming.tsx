@@ -106,9 +106,9 @@ function Streaming() {
         사진을 찍어주세요!
       </p>
       {capturedImage ? (
-        <img src={capturedImage} alt="Captured" className="rounded-xl mt-20" style={{ transform: 'scaleX(-1)' }} />
+        <img src={capturedImage} alt="Captured" className="rounded-xl mt-20" />
       ) : (
-        <video autoPlay ref={videoRef} playsInline className="rounded-xl mt-20" style={{ transform: 'scaleX(-1)' }} />
+        <video autoPlay ref={videoRef} playsInline className="rounded-xl mt-20" />
       )}
       {showCaptureButtons ? (
         <div className="absolute w-[100%] bottom-5 text-center">

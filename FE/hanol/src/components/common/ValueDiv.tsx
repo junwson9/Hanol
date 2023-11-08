@@ -7,8 +7,8 @@ interface Props {
 }
 
 interface ValueColorProps {
-  textColor: string;
-  backgroundColor: string;
+  textcolor: string;
+  backgroundcolor: string;
 }
 
 const ValueDiv = ({ valuenumber }: Props) => {
@@ -62,11 +62,11 @@ const ValueDiv = ({ valuenumber }: Props) => {
         return 'white';
     }
   };
-  const textColor = determineTextColor(valuenumber || 0);
-  const backgroundColor = determineBackgroundColor(valuenumber || 0);
+  const textcolor = determineTextColor(valuenumber || 0);
+  const backgroundcolor = determineBackgroundColor(valuenumber || 0);
 
   return (
-    <ValueBox textColor={textColor} backgroundColor={backgroundColor}>
+    <ValueBox textcolor={textcolor} backgroundcolor={backgroundcolor}>
       <div className="valuenumber">{determineValueTitle(valuenumber || 0)}</div>
     </ValueBox>
   );
@@ -80,7 +80,7 @@ const ValueBox = styled.div<ValueColorProps>`
   height: 35px;
   flex-shrink: 0;
   /* background-color: #f2fefe; */
-  background-color: ${(props) => props.backgroundColor};
+  background-color: ${(props) => props.backgroundcolor};
   border-radius: 20px;
 
   .valuenumber {
@@ -89,7 +89,7 @@ const ValueBox = styled.div<ValueColorProps>`
     flex-shrink: 0;
 
     /* color: #5bc3c4; */
-    color: ${(props) => props.textColor};
+    color: ${(props) => props.textcolor};
     text-align: center;
 
     /* Body Header */

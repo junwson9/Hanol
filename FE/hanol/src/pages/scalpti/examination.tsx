@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router';
 import { useEffect } from 'react';
 import axiosInstance from 'api/axiosInterceptor';
 import { ReactComponent as Error } from 'assets/icons/error.svg';
+import { useLocation } from 'react-router-dom';
 
 type scalpType = {
   type0: boolean;
@@ -20,8 +21,12 @@ type scalpType = {
 };
 
 function Examination() {
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const isTabActiveParam = queryParams.get('isTabActive');
   // false가 오른쪽 탭 active
   const [isTabActive, setTabActive] = useState<boolean>(true);
+  const [name, setName] = useState<string>('');
   const [scalpType, setScalpType] = useState<scalpType | null>();
   // const type0 =
   //   '완벽한 두피 상태! 건성, 지성, 염증, 비듬, 자극, 탈모에서 자유로운 당신의 두피는 건강형입니다.\n지금 그대로 생활 습관을 유지해주세요.';
@@ -38,6 +43,11 @@ function Examination() {
   };
 
   useEffect(() => {
+    if (isTabActiveParam == 'false') {
+      setTabActive(false);
+    }
+  }, []);
+  useEffect(() => {
     if (isTabActive == true) {
       return;
     }
@@ -51,8 +61,18 @@ function Examination() {
         navigate('/login-error');
       }
     };
-
+    const fetchMemberData = async () => {
+      try {
+        const response = await axiosInstance.get('/members/info');
+        console.log(response.data.data);
+        setName(response.data.data.name);
+      } catch (error) {
+        console.error(error);
+        navigate('/login-error');
+      }
+    };
     fetchData();
+    fetchMemberData();
   }, [isTabActive]);
 
   return (
@@ -94,7 +114,7 @@ function Examination() {
       ) : (
         <div>
           <p className="text-[1.125rem] text-left font-regular mt-[2rem] whitespace-nowrap">
-            최홍준님,
+            {name}님,
             <br />
             지금 생활습관을 계속 유지하시면
             <br />
@@ -114,9 +134,8 @@ function Examination() {
               <div>
                 <div className="font-bold text-[1.125rem]">"건강형" </div>
                 <div className="text-[0.8125rem]">
-                  “완벽한 두피 상태! <br />
-                  건성, 지성, 염증, 비듬, 자극, 탈모에서 자유로운 당신의 두피는 건강형입니다. <br />
-                  지금 그대로 생활 습관을 유지해주세요.”
+                  “완벽한 두피 상태! 건성, 지성, 염증, 비듬, 자극, 탈모에서 자유로운 당신의 두피는 건강형입니다. 지금
+                  그대로 생활 습관을 유지해주세요.”
                   <br />
                 </div>
               </div>
