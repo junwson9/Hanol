@@ -62,6 +62,7 @@ async def websocket_endpoint(websocket: WebSocket):
         manager.disconnect(websocket)
         print('연결끊김')
     except Exception as e:
+        manager.disconnect(websocket)
         print(f"WebSocket Error: {e}")
 
 if __name__ == "__main__":
