@@ -92,6 +92,8 @@ const Myreport = () => {
       // .get('http://localhost:4000/diagnoses')
       .then((response) => {
         console.log('진단 결과 리스트 조회 성공:', response);
+        const fetchedDiagnosisList = response.data.data.diagnosis_info_list;
+
         setDiagnosisList(response.data.data.diagnosis_info_list);
         setValue1(response.data.data.diagnosis_info_list?.[0].value1);
         setValue2(response.data.data.diagnosis_info_list?.[0].value2);
@@ -99,6 +101,10 @@ const Myreport = () => {
         setValue4(response.data.data.diagnosis_info_list?.[0].value4);
         setValue5(response.data.data.diagnosis_info_list?.[0].value5);
         setValue6(response.data.data.diagnosis_info_list?.[0].value6);
+
+        if (!fetchedDiagnosisList || fetchedDiagnosisList.length === 0) {
+          navigate('/myreport-explain');
+        }
       })
       .catch((error) => {
         console.error('진단 결과 리스트 조회 실패:', error);
