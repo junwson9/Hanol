@@ -13,7 +13,7 @@ function LoginDone() {
       <p className="col-span-full font-bold text-[1.125rem] whitespace-nowrap">회원가입이 완료 되었어요!</p>
       <p className="col-start-2 col-end-6 text-[0.75rem] text-GrayForText whitespace-nowrap mt-5"></p>
       <div className="absolute w-[100%] bottom-5">
-        <SuccessButton name="머라하지?" onClick={() => navigate('/')} />
+        <SuccessButton name="메인 이동" onClick={() => navigate('/')} />
       </div>
     </div>
   );

@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { MemberRoleState } from 'recoil/atoms';
 import scoreEx from 'assets/images/scoreEx.png';
+import TapBar from 'components/common/TopBar';
 function ExplainDiagnose() {
   const navigate = useNavigate();
   const role = useRecoilValue(MemberRoleState);
@@ -14,9 +15,13 @@ function ExplainDiagnose() {
       navigate('/select-device');
     }
   };
+  console.log(role);
   return (
     <div className="col-span-full">
-      <p className="text-lg  text-left font-bold mt-20">
+      <div>
+        <TapBar name={'두피진단'} />
+      </div>
+      <p className="text-lg text-left font-bold">
         두피 사진을 촬영하면
         <br /> AI가 회원님의 두피 상태를
         <br />

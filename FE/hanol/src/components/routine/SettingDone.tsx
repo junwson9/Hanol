@@ -6,7 +6,7 @@ import TopBarDepth2 from 'components/common/TapBarDepth2';
 function SettingDone() {
   const navigate = useNavigate();
   const handleNavigate = () => {
-    navigate('/');
+    navigate('/routine');
   };
   return (
     <div className="relative col-span-full h-screen">
@@ -28,7 +28,7 @@ function SettingDone() {
         루틴 알림을 설정하시면 <br /> 까먹지 않고 실천할 수 있어요.
       </p>
       <div className="absolute w-[100%] bottom-5">
-        <SuccessButton name="루틴 확인하기" onClick={() => navigate('/')} />
+        <SuccessButton name="루틴 확인하기" onClick={() => navigate('/routine')} />
       </div>
     </div>
   );
