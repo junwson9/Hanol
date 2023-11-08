@@ -20,9 +20,16 @@ build:
   stage: build
   script:
     - echo "Using downloaded application-dev.yml for the build..."  # Secure Files을 사용한 빌드 작업 수행
-    - cat $SECURE_FILES_DOWNLOAD_PATH/application-dev.yml  # 다운로드한 application-dev.yml 파일 내용 출력
-    # 다운로드한 Secure Files을 이용한 빌드 또는 배포 작업을 여기에 추가
+    # 도커 로그인
     - echo "DOCKER USERNAME = $DOCKER_USERNAME"
+    - echo "DOCKER PASSWORD = $DOCKER_PASSWORD"
+    - echo "Login to Docker using username, password"
+    - docker login --username $DOCKER_USERNAME --password $DOCKER_PASSWORD
+    # hanol server docker image build
+    - echo "hanol server 이미지 빌드 시작"
+    - docker build -t hanol/hanol-repo:server --platform linux/amd64 ./BE/hanol/
+    - echo "hanol server 이미지 빌드 성공"
+
   dependencies:
     - download_secure_files  # download_secure_files 단계가 성공적으로 완료되어야만 실행됨
 
