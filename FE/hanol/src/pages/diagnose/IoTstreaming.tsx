@@ -4,6 +4,8 @@ import { ReactComponent as Camera } from 'assets/icons/diagnoseCamera.svg';
 import { useNavigate } from 'react-router-dom';
 import ErrorPage from '../../components/Diagnose/DiagnoseError';
 import Loading from 'components/Diagnose/SocketLoading';
+import { useRecoilState } from 'recoil';
+import { ImageState } from 'recoil/atoms';
 
 function IoTstreaming() {
   const navigate = useNavigate();
@@ -12,6 +14,7 @@ function IoTstreaming() {
   const [capturedImage, setCapturedImage] = useState<string | null>(null);
   const [socketError, setSocketError] = useState<boolean | null>(null);
   const [loading, setLoading] = useState(true); // 로딩 중 상태
+  const [, setImageURL] = useRecoilState<string>(ImageState);
 
   let socket: WebSocket | null = null;
 
@@ -74,6 +77,8 @@ function IoTstreaming() {
   const diagnoseImage = () => {
     if (capturedImage) {
       console.log('이미지를 진단합니다.');
+      setImageURL(capturedImage);
+      navigate('/analyzing');
     }
   };
 

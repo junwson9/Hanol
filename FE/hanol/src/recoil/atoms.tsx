@@ -46,5 +46,5 @@ export const examinationState = atom({
 
 export const diagnoseState = atom({
   key: 'Diagnose',
-  default: '',
+  default: [0, 0, 0, 0, 0, 0],
 });
