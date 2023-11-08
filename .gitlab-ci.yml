@@ -1,24 +1,15 @@
 stages:
-  - download
   - build
-
-variables:
-  SECURE_FILES_DOWNLOAD_PATH: './secure_files/'  # Secure Files을 다운로드할 경로 설정
-
-download_secure_files:
-  stage: download
-  script:
-    - mkdir -p $SECURE_FILES_DOWNLOAD_PATH  # 다운로드할 디렉토리 생성
-    - curl --silent "https://lab.ssafy.com/s09-final/S09P31A205/-/jobs/artifacts/master/raw/application-dev.yml?job=download_secure_files" --output $SECURE_FILES_DOWNLOAD_PATH/application-dev.yml
-  artifacts:
-    paths:
-      - $SECURE_FILES_DOWNLOAD_PATH  # 파이프라인의 다음 단계에서 사용할 Secure Files이 있는 디렉토리를 아티팩트로 설정
 
 build:
   stage: build
   script:
-    - echo "Using downloaded application-dev.yml for the build..."  # Secure Files을 사용한 빌드 작업 수행
-    - cat $SECURE_FILES_DOWNLOAD_PATH/application-dev.yml  # 다운로드한 application-dev.yml 파일 내용 출력
-    # 다운로드한 Secure Files을 이용한 빌드 또는 배포 작업을 여기에 추가
-  dependencies:
-    - download_secure_files  # download_secure_files 단계가 성공적으로 완료되어야만 실행됨
+    - echo "Downloading secure files..."
+    - wget -O /tmp/download-secure-files https://gitlab-runner-downloads.s3.amazonaws.com/latest/binaries/download-secure-files-linux-amd64
+    - chmod +x /tmp/download-secure-files
+    - /tmp/download-secure-files
+    - cat .secure_files/application-dev.yml  # 복호화된 Secure File 사용
+  tags:
+    - hanol
+  only:
+    - master
