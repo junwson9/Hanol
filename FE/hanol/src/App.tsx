@@ -35,6 +35,7 @@ import SetScalpDone from 'pages/scalpti/SetScalpDone';
 import Examination from 'pages/scalpti/examination';
 import RoutineNotiSetting from 'pages/routine/routineNotiSetting';
 import Terms from 'pages/about/terms';
+import RouteChangeTracker from 'components/RouteChangeTracker.js';
 
 function App() {
   const location = useLocation();
@@ -49,6 +50,7 @@ function App() {
     '/dashboard',
   ];
   const shouldShowNavBar = showNavBarPaths.includes(location.pathname);
+  RouteChangeTracker();
   return (
     <div className="App">
       <div className={`AppContent ${shouldShowNavBar ? 'show-navbar' : ''}`}>
