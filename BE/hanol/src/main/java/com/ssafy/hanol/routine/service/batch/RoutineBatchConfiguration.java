@@ -99,7 +99,7 @@ public class RoutineBatchConfiguration {
                 .name(JOB_NAME+"_reader")
                 .entityManagerFactory(entityManagerFactory)
                 .pageSize(CHUNK_SIZE)   // 한 번에 읽어올 데이터 수
-                .queryString("SELECT mr FROM MemberRoutine mr")
+                .queryString("SELECT mr FROM MemberRoutine mr ORDER BY mr.id DESC") // JOB 실행 후 추가된 MEMBER_ROUTINE 은 WRITE 되면 안되기 때문에 id 내림차순으로 조회
                 .build();
     }
 
