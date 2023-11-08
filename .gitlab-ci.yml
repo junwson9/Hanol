@@ -1,0 +1,15 @@
+stages:
+  - build
+
+build:
+  stage: build
+  script:
+    - echo "Downloading secure files..."
+    - wget -O /tmp/download-secure-files https://gitlab-runner-downloads.s3.amazonaws.com/latest/binaries/download-secure-files-linux-amd64
+    - chmod +x /tmp/download-secure-files
+    - /tmp/download-secure-files
+    - cat .secure_files/application-dev.yml  # 복호화된 Secure File 사용
+  tags:
+    - hanol
+  only:
+    - master
