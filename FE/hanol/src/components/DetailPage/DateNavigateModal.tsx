@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+// import axios from 'axios';
 import styled from 'styled-components';
 import { ReactComponent as CloseIcon } from '../../assets/icons/close_FILL0_wght400_GRAD0_opsz24 1.svg';
 import { ReactComponent as SelectedIcon } from '../../assets/icons/check_FILL0_wght400_GRAD0_opsz24 1.svg';
 import { datelistType, diagnosisResultType } from 'types/DiagnosisResult';
+import axiosInstance from 'api/axiosInterceptor';
 
 interface Props {
   date: string;
@@ -48,8 +49,10 @@ const DateNavigateModal = ({ date, setIndex, setIsModalOpen, diagnosisResults }:
   };
 
   useEffect(() => {
-    axios
-      .get('http://localhost:4000/dates')
+    // axios
+    // .get('http://localhost:4000/dates')
+    axiosInstance
+      .get('/diagnoses/dates')
       .then((response) => {
         setDateList(response.data.diagnosis_id_list);
         console.log('모든 날짜 조회 성공', response.data.diagnosis_id_list);

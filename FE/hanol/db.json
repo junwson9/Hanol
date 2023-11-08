@@ -12,7 +12,7 @@
         "value6": 1,
         "image_url": null,
         "device_type": 1,
-        "scan_part": 2,
+        "scan_part": 0,
         "created_date": "2023-10-30 20:26:19"
       },
       {
@@ -56,6 +56,48 @@
         "device_type": 0,
         "scan_part": 4,
         "created_date": "2023-05-25 20:26:19"
+      },
+      {
+        "diagnosis_id": 5,
+        "member_id": 1,
+        "value1": 2,
+        "value2": 2,
+        "value3": 3,
+        "value4": 0,
+        "value5": 0,
+        "value6": 1,
+        "image_url": null,
+        "device_type": 0,
+        "scan_part": 4,
+        "created_date": "2023-05-15 20:26:19"
+      },
+      {
+        "diagnosis_id": 6,
+        "member_id": 1,
+        "value1": 1,
+        "value2": 2,
+        "value3": 3,
+        "value4": 1,
+        "value5": 1,
+        "value6": 1,
+        "image_url": null,
+        "device_type": 0,
+        "scan_part": 4,
+        "created_date": "2023-04-25 20:26:19"
+      },
+      {
+        "diagnosis_id": 7,
+        "member_id": 1,
+        "value1": 3,
+        "value2": 1,
+        "value3": 3,
+        "value4": 3,
+        "value5": 1,
+        "value6": 2,
+        "image_url": null,
+        "device_type": 0,
+        "scan_part": 4,
+        "created_date": "2023-03-02 20:26:19"
       }
     ]
   },
