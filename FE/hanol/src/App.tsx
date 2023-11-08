@@ -35,6 +35,7 @@ import SetScalpDone from 'pages/scalpti/SetScalpDone';
 import Examination from 'pages/scalpti/examination';
 import RoutineNotiSetting from 'pages/routine/routineNotiSetting';
 import Terms from 'pages/about/terms';
+import MyreportNonMember from 'pages/myreport/Myreport-nonmember';
 import RouteChangeTracker from 'components/RouteChangeTracker.js';
 
 function App() {
@@ -48,6 +49,7 @@ function App() {
     '/diagnose',
     '/explain-routine',
     '/dashboard',
+    '/myreport-explain',
   ];
   const shouldShowNavBar = showNavBarPaths.includes(location.pathname);
   RouteChangeTracker();
@@ -94,6 +96,7 @@ function App() {
             <Route path="/diagnosis" element={<DiagnosisDetail />} />
             <Route path="/" element={<Home />} />
             <Route path="/myreport" element={<Home />} />
+            <Route path="/myreport-explain" element={<MyreportNonMember />} />
           </Routes>
         </div>
       </div>
