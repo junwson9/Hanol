@@ -18,9 +18,10 @@ public class DiagnoseAiResultResponse {
     private int value4;
     private int value5;
     private int value6;
+    private Long diagnosisId;
 
     @Builder
-    public DiagnoseAiResultResponse(String imageUrl, int value1, int value2, int value3, int value4, int value5, int value6) {
+    public DiagnoseAiResultResponse(String imageUrl, int value1, int value2, int value3, int value4, int value5, int value6, Long diagnosisId) {
         this.imageUrl = imageUrl;
         this.value1 = value1;
         this.value2 = value2;
@@ -28,6 +29,7 @@ public class DiagnoseAiResultResponse {
         this.value4 = value4;
         this.value5 = value5;
         this.value6 = value6;
+        this.diagnosisId = diagnosisId;
     }
 
     public static DiagnoseAiResultResponse from(Diagnosis diagnosis) {
@@ -39,6 +41,7 @@ public class DiagnoseAiResultResponse {
                 .value4(diagnosis.getValue4())
                 .value5(diagnosis.getValue5())
                 .value6(diagnosis.getValue6())
+                .diagnosisId(diagnosis.getId())
                 .build();
     }
 
