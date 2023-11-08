@@ -46,6 +46,7 @@ public class DiagnosisService {
         } else { // 특정 id의 데이터 조회
             diagnosis = diagnosisRepository.findById(diagnosisId)
                     .orElseThrow(() -> new CustomException(DiagnoseErrorCode.NOT_FOUND_DIAGNOSIS));
+            validateValue(diagnosis);
             validateAccessRights(diagnosis, memberId);
         }
 
@@ -114,6 +115,13 @@ public class DiagnosisService {
     private void validateAccessRights(Diagnosis diagnosis, Long memberId) {
         if (!diagnosis.getMember().getId().equals(memberId)) {
             throw new CustomException(DiagnoseErrorCode.FORBIDDEN_ACCESS);
+        }
+    }
+
+    // AI 진단 결과가 없는 데이터
+    private static void validateValue(Diagnosis diagnosis) {
+        if(diagnosis.getValue1() == null) {
+            throw new CustomException(DiagnoseErrorCode.EMPTY_VALUE);
         }
     }
 

@@ -36,7 +36,8 @@ public class QueryDslDiagnosisRepository {
                         diagnosis.createdDate
                 ))
                 .from(diagnosis)
-                .where(diagnosis.member.id.eq(memberId))
+                .where(diagnosis.member.id.eq(memberId)
+                        .and(diagnosis.value1.isNotNull()))
                 .orderBy(diagnosis.createdDate.desc());
 
         if(applyLimit) {
@@ -56,7 +57,8 @@ public class QueryDslDiagnosisRepository {
                                 diagnosis.createdDate
                         ))
                 .from(diagnosis)
-                .where(diagnosis.member.id.eq(memberId))
+                .where(diagnosis.member.id.eq(memberId)
+                        .and(diagnosis.value1.isNotNull()))
                 .orderBy(diagnosis.createdDate.desc())
                 .fetch();
 
