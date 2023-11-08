@@ -4,6 +4,8 @@ stages:
 
 variables:
   SECURE_FILES_DOWNLOAD_PATH: './secure_files/'  # Secure Files을 다운로드할 경로 설정
+  DOCKER_USERNAME: "$DOCKER_USERNAME"
+  DOCKER_PASSWORD: "$DOCKER_PASSWORD"
 
 download_secure_files:
   stage: download
@@ -20,5 +22,7 @@ build:
     - echo "Using downloaded application-dev.yml for the build..."  # Secure Files을 사용한 빌드 작업 수행
     - cat $SECURE_FILES_DOWNLOAD_PATH/application-dev.yml  # 다운로드한 application-dev.yml 파일 내용 출력
     # 다운로드한 Secure Files을 이용한 빌드 또는 배포 작업을 여기에 추가
+    - echo "DOCKER_USERNAME: $DOCKER_USERNAME"
+    - echo "DOCKER_PASSWORD: $DOCKER_PASSWORD"
   dependencies:
     - download_secure_files  # download_secure_files 단계가 성공적으로 완료되어야만 실행됨
