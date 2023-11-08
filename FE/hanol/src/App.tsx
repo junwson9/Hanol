@@ -71,7 +71,6 @@ function App() {
             <Route path="/IoTstreaming" element={<IoTstreaming />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/mydetail" element={<MyDetail />} />
-            <Route path="/diagnosis" element={<DiagnosisDetail />} />
             <Route path="/analyzing" element={<Analyzing />} />
             <Route path="/select-part" element={<SelectPart />} />
             <Route path="/about-noti-setting" element={<AboutNotiSetting />} />
@@ -90,6 +89,7 @@ function App() {
         <div>
           <Routes>
             <Route path="/login-error" element={<LoginError />} />
+            <Route path="/diagnosis" element={<DiagnosisDetail />} />
             <Route path="/" element={<Home />} />
             <Route path="/myreport" element={<Home />} />
           </Routes>

@@ -1,16 +1,19 @@
 import React from 'react';
 import styled from 'styled-components';
 import AnalyzingAnimation from 'components/Animation/AnalyzingAnimation';
-import { useRecoilValue } from 'recoil';
-import { ImageState } from 'recoil/atoms';
+import { useRecoilValue, useRecoilState } from 'recoil';
+import { ImageState, diagnoseState } from 'recoil/atoms';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { EventSourcePolyfill, NativeEventSource } from 'event-source-polyfill';
 import { DeviceState } from 'recoil/atoms';
 import axiosInstance from 'api/axiosInterceptor';
+
 const AnalyzingPage = () => {
   const image = useRecoilValue(ImageState);
   const device = useRecoilValue(DeviceState);
+  const [, setImageURL] = useRecoilState(ImageState);
+  const [, setValues] = useRecoilState(diagnoseState);
   console.log(device);
   console.log(image);
   const navigate = useNavigate();
@@ -41,10 +44,20 @@ const AnalyzingPage = () => {
         // navigate('/posterror');
         eventSource.close();
       }
-      console.log(data);
-      // 서버로부터 받은 데이터 처리
-      // SSE 연결 닫기
+      console.log(data.value1);
+      setImageURL(data.image_url);
+      setValues((prevSelect) => {
+        const updatedSelect = [...prevSelect];
+        updatedSelect[0] = Math.abs(data.value1 - 3) as number;
+        updatedSelect[1] = Math.abs(data.value2 - 3) as number;
+        updatedSelect[2] = Math.abs(data.value3 - 3) as number;
+        updatedSelect[3] = Math.abs(data.value4 - 3) as number;
+        updatedSelect[4] = Math.abs(data.value5 - 3) as number;
+        updatedSelect[5] = Math.abs(data.value6 - 3) as number;
+        return updatedSelect;
+      });
       eventSource.close();
+      navigate('/diagnosis');
     };
 
     eventSource.onerror = (error) => {
@@ -121,14 +134,3 @@ const AnalyzingPageBox = styled.div`
   }
 `;
 export default AnalyzingPage;
-
-// eslint-disable-next-line
-function base64ToArrayBuffer(base64: any) {
-  const binaryString = window.atob(base64);
-  const length = binaryString.length;
-  const bytes = new Uint8Array(length);
-  for (let i = 0; i < length; i++) {
-    bytes[i] = binaryString.charCodeAt(i);
-  }
-  return bytes.buffer;
-}
