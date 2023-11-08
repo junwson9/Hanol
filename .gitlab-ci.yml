@@ -7,5 +7,7 @@ build:
     - echo "Using secure file..."
     - cat application-dev.yml  # Secure Files로 업로드한 파일을 사용
     # 이제 업로드한 파일을 사용하여 빌드 또는 배포 작업을 수행할 수 있습니다.
+  tags:
+    - hanol
   only:
     - master
