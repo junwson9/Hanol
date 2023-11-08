@@ -53,14 +53,6 @@ public class Diagnosis extends BaseTimeEntity {
     private int scanPart;
 
     @Builder
-    public Diagnosis(Member member, String imageUrl, int deviceType, int scanPart) {
-        this.member = member;
-        this.imageUrl = imageUrl;
-        this.deviceType = deviceType;
-        this.scanPart = scanPart;
-    }
-
-    @Builder
     public Diagnosis(Member member, Integer value1, Integer value2, Integer value3, Integer value4, Integer value5, Integer value6, String imageUrl, int deviceType, int scanPart) {
         this.member = member;
         this.value1 = value1;
@@ -86,6 +78,19 @@ public class Diagnosis extends BaseTimeEntity {
         this.value4 = response.getValue4();
         this.value5 = response.getValue5();
         this.value6 = response.getValue6();
+    }
+
+    public Diagnosis(Diagnosis other, Member newMember) {
+        this.member = newMember;
+        this.value1 = other.getValue1();
+        this.value2 = other.getValue2();
+        this.value3 = other.getValue3();
+        this.value4 = other.getValue4();
+        this.value5 = other.getValue5();
+        this.value6 = other.getValue6();
+        this.imageUrl = other.getImageUrl();
+        this.deviceType = other.getDeviceType();
+        this.scanPart = other.getScanPart();
     }
 
 }
