@@ -15,6 +15,9 @@ class DiagnosticAI:
         model = torch.load(model_path)
         return model.to(self.device)
 
+    def unload_model(self,model):
+        del model
+
     def predict(self, model, input_batch):
         with torch.no_grad():
             output = model(input_batch)
@@ -24,10 +27,13 @@ class DiagnosticAI:
         predicted_class = class_names[top_class]
         return predicted_class
 
-    async def process_diagnostic(self, image_bytes: UploadFile, sse_id: int):
-        image_content = await image_bytes.read()
+    def process_diagnostic(self, image_bytes: UploadFile, sse_id: int):
+        image_content = image_bytes.file.read()
         image = Image.open(BytesIO(image_content))
-        
+        print("로직 처리중")
+        # image = Image.open(BytesIO(image_bytes))
+        print("이미지 로딩도 됨")
+
         time1 = time.time()
 
         image_size = (600, 600)
@@ -42,12 +48,16 @@ class DiagnosticAI:
         input_batch = input_tensor.unsqueeze(0)
 
         # 병렬로 모델 처리
-        with concurrent.futures.ThreadPoolExecutor() as executor:
-            predictions = list(executor.map(self.predict, self.models, [input_batch]*6))
+        # with concurrent.futures.ThreadPoolExecutor() as executor:
+           # predictions = list(executor.map(self.predict, self.models, [input_batch]*6))
+
+        predictions = [self.predict(model, input_batch) for model in self.models]
 
         time2 = time.time()
 
         print(time2 - time1)
+        
+        #self.unload_model(model)
 
         response = {
             "sse_id": sse_id,
