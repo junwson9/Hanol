@@ -1,0 +1,11 @@
+FROM pytorch/pytorch:2.0.1-cuda11.7-cudnn8-runtime
+
+WORKDIR /app
+
+COPY . .
+
+# 필요한 라이브러리 설치
+RUN pip install --no-cache-dir -r requirements.txt
+
+# FastAPI 앱 실행
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8001"]

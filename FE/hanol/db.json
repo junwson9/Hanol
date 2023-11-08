@@ -1,0 +1,128 @@
+{
+  "diagnoses": {
+    "diagnosis_info_list": [
+      {
+        "diagnosis_id": 1,
+        "member_id": 1,
+        "value1": 2,
+        "value2": 1,
+        "value3": 0,
+        "value4": 3,
+        "value5": 2,
+        "value6": 1,
+        "image_url": null,
+        "device_type": 1,
+        "scan_part": 0,
+        "created_date": "2023-10-30 20:26:19"
+      },
+      {
+        "diagnosis_id": 2,
+        "member_id": 1,
+        "value1": 3,
+        "value2": 3,
+        "value3": 3,
+        "value4": 2,
+        "value5": 2,
+        "value6": 2,
+        "image_url": null,
+        "device_type": 1,
+        "scan_part": 1,
+        "created_date": "2023-10-10 20:26:19"
+      },
+      {
+        "diagnosis_id": 3,
+        "member_id": 1,
+        "value1": 1,
+        "value2": 1,
+        "value3": 2,
+        "value4": 2,
+        "value5": 3,
+        "value6": 3,
+        "image_url": null,
+        "device_type": 1,
+        "scan_part": 3,
+        "created_date": "2023-09-12 20:26:19"
+      },
+      {
+        "diagnosis_id": 4,
+        "member_id": 1,
+        "value1": 1,
+        "value2": 2,
+        "value3": 3,
+        "value4": 0,
+        "value5": 1,
+        "value6": 2,
+        "image_url": null,
+        "device_type": 0,
+        "scan_part": 4,
+        "created_date": "2023-05-25 20:26:19"
+      },
+      {
+        "diagnosis_id": 5,
+        "member_id": 1,
+        "value1": 2,
+        "value2": 2,
+        "value3": 3,
+        "value4": 0,
+        "value5": 0,
+        "value6": 1,
+        "image_url": null,
+        "device_type": 0,
+        "scan_part": 4,
+        "created_date": "2023-05-15 20:26:19"
+      },
+      {
+        "diagnosis_id": 6,
+        "member_id": 1,
+        "value1": 1,
+        "value2": 2,
+        "value3": 3,
+        "value4": 1,
+        "value5": 1,
+        "value6": 1,
+        "image_url": null,
+        "device_type": 0,
+        "scan_part": 4,
+        "created_date": "2023-04-25 20:26:19"
+      },
+      {
+        "diagnosis_id": 7,
+        "member_id": 1,
+        "value1": 3,
+        "value2": 1,
+        "value3": 3,
+        "value4": 3,
+        "value5": 1,
+        "value6": 2,
+        "image_url": null,
+        "device_type": 0,
+        "scan_part": 4,
+        "created_date": "2023-03-02 20:26:19"
+      }
+    ]
+  },
+  "notifications": {
+    "notification_setting_id": 1,
+    "member_id": 1,
+    "is_check_routine_active": true,
+    "is_individual_routine_active": false,
+    "notification_type": "INDIVIDUAL_ROUTINE",
+    "is_active": true
+  },
+  "dates": {
+    "diagnosis_id_list": [
+      {
+        "diagnosis_id": 7,
+        "created_date": "2023-11-02 10:40:10"
+      },
+      {
+        "diagnosis_id": 1,
+        "created_date": "2023-10-30 20:26:19"
+      },
+      {
+        "diagnosis_id": 2,
+        "created_date": "2023-10-10 20:26:19"
+      }
+    ]
+  }
+}
