@@ -4,7 +4,7 @@ import ValueDiv from 'components/common/ValueDiv';
 
 interface Props {
   title: string;
-  value: number;
+  value?: number;
   onClick: (arg: number) => void;
 }
 
