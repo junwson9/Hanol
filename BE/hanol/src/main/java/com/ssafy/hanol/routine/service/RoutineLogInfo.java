@@ -24,6 +24,7 @@ public class RoutineLogInfo {
     private Boolean isDone;
     private Long memberRoutineId;
     private Boolean isNotificationActive;
+    @JsonFormat(pattern = "HH:mm:ss")
     private LocalTime notificationTime;
 
 

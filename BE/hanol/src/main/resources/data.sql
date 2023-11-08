@@ -44,7 +44,7 @@ INSERT INTO MEMBER (name, email, gender, birth, oauth_provider, oauth_id, role, 
 INSERT INTO Member_Routine (member_id, routine_id, is_notification_active, notification_time, created_date) VALUES (1, 3, 1, '13:00:00', now());
 INSERT INTO Member_Routine (member_id, routine_id, is_notification_active, notification_time, created_date) VALUES (1, 6, 1, '19:00:00', now());
 INSERT INTO Member_Routine (member_id, routine_id, is_notification_active, notification_time, created_date) VALUES (1, 9, 0, '13:00:00', now());
-INSERT INTO Member_Routine (member_id, routine_id, is_notification_active, created_date) VALUES (1, 30, 0, now());
+INSERT INTO Member_Routine (member_id, routine_id, is_notification_active, notification_time, created_date) VALUES (1, 30, 0, '09:00:00', now());
 INSERT INTO Member_Routine (member_id, routine_id, is_notification_active, notification_time, created_date) VALUES (2, 5, 1, '13:00:00', now());
 
 /* 회원-루틴 이력 테스트 데이터 */
