@@ -13,6 +13,20 @@ interface Props {
 }
 
 const ScalpScaleView = ({ value1, value2, value3, value4, value5, value6 }: Props) => {
+  console.log(
+    'value1: ',
+    value1,
+    'value2: ',
+    value2,
+    'value3:',
+    value3,
+    'value4: ',
+    value4,
+    'value5: ',
+    value5,
+    'value6:',
+    value6,
+  );
   const data = [
     {
       category: '탈모',
@@ -70,6 +84,7 @@ const ScalpScaleView = ({ value1, value2, value3, value4, value5, value6 }: Prop
             dotLabel="value"
             dotLabelYOffset={-14}
             colors={{ scheme: 'pastel1' }}
+            animate={false}
             // motionConfig="wobbly"
           />
         </GraphBox>
