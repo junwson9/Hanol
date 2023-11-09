@@ -22,7 +22,7 @@ function NavBar() {
   };
   useEffect(() => {
     const path = location.pathname;
-    if (path === '/myreport') {
+    if (path === '/') {
       setSelectedMenu('myreport');
     } else if (path === '/examination') {
       setSelectedMenu('examination');
@@ -50,7 +50,7 @@ function NavBar() {
               handleNavigate('/myreport-explain');
               setSelectedMenu('myreport-explain');
             } else {
-              handleNavigate('/myreport');
+              handleNavigate('/');
               setSelectedMenu('myreport');
             }
           }}
