@@ -64,7 +64,6 @@ function App() {
             <Route path="/set-routine" element={<SetRoutine />} />
             <Route path="/signup-birth" element={<SignupBirth />} />
             <Route path="/signup-gender" element={<SignupGender />} />
-            <Route path="/examination" element={<Examination />} />
             <Route path="/routine" element={<Routine />} />
             <Route path="/about" element={<About />} />
             <Route path="/explain-routine" element={<ExplainRoutine />} />
@@ -97,6 +96,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/myreport" element={<Home />} />
             <Route path="/myreport-explain" element={<MyreportNonMember />} />
+            <Route path="/examination" element={<Examination />} />
           </Routes>
         </div>
       </div>
