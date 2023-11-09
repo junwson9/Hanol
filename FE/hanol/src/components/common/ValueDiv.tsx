@@ -22,6 +22,8 @@ const ValueDiv = ({ valuenumber }: Props) => {
         return '주의';
       case 3:
         return '위험';
+      case 5:
+        return '-';
       default:
         return '정도';
     }
@@ -37,6 +39,8 @@ const ValueDiv = ({ valuenumber }: Props) => {
         return '#FBDE48';
       case 3:
         return '#EA536F';
+      case 5:
+        return '#C5C5C5';
       default:
         return 'white';
     }
@@ -52,6 +56,8 @@ const ValueDiv = ({ valuenumber }: Props) => {
         return '#FEF9E2';
       case 3:
         return '#FDEFF1';
+      case 5:
+        return '#F5F5F5';
       default:
         return 'white';
     }

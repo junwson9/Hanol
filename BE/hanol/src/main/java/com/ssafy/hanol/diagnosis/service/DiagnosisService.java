@@ -3,6 +3,7 @@ package com.ssafy.hanol.diagnosis.service;
 import com.ssafy.hanol.common.exception.CustomException;
 import com.ssafy.hanol.common.util.s3.ImageUploadUtil;
 import com.ssafy.hanol.diagnosis.controller.DiagnosisIdListApiResponse;
+import com.ssafy.hanol.diagnosis.controller.dto.request.DiagnosisSendApiRequest;
 import com.ssafy.hanol.diagnosis.controller.dto.response.DiagnosisDetailApiResponse;
 import com.ssafy.hanol.diagnosis.domain.Diagnosis;
 import com.ssafy.hanol.diagnosis.exception.DiagnoseErrorCode;
@@ -15,6 +16,8 @@ import com.ssafy.hanol.diagnosis.service.rabbitmq.DiagnosisRequestProducer;
 import com.ssafy.hanol.global.sse.service.SseService;
 import com.ssafy.hanol.global.sse.service.dto.response.DiagnoseAiResultResponse;
 import com.ssafy.hanol.member.domain.Member;
+import com.ssafy.hanol.member.exception.MemberErrorCode;
+import com.ssafy.hanol.member.repository.MemberRepository;
 import com.ssafy.hanol.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -34,6 +37,7 @@ public class DiagnosisService {
     private final DiagnosisRequestProducer diagnosisRequestProducer;
     private final SseService sseService;
     private final MemberService memberService;
+    private final MemberRepository memberRepository;
 
     public DiagnosisDetailApiResponse findDiagnosis(Long diagnosisId, Long memberId) {
         Diagnosis diagnosis = null;
@@ -108,6 +112,17 @@ public class DiagnosisService {
     public DiagnosisIdListApiResponse findDiagnosisIds(Long memberId) {
         List<DiagnosisIdInfo> diagnosisIdList = diagnosisRepository.findDiagnosisIds(memberId);
         return DiagnosisIdListApiResponse.from(diagnosisIdList);
+    }
+
+
+    // 다른 회원에게 진단 결과 전송하기
+    public void sendDiagnosisResult(Long diagnosisId, DiagnosisSendApiRequest request) {
+        Member member = memberRepository.findByEmail(request.getEmail())
+                .orElseThrow(() -> new CustomException(MemberErrorCode.NOT_FOUND_MEMBER));
+        Diagnosis currentDiagnosis = diagnosisRepository.findById(diagnosisId)
+                .orElseThrow(() -> new CustomException(DiagnoseErrorCode.NOT_FOUND_DIAGNOSIS));
+        Diagnosis newDiagnosis = new Diagnosis(currentDiagnosis, member);
+        diagnosisRepository.save(newDiagnosis);
     }
 
 

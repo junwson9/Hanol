@@ -51,6 +51,9 @@ function Login() {
         if (role == 'GUEST') {
           setMemberRole(role);
           navigate('/signup-birth');
+          //FCM 토큰 관련
+          const messaging = getMessaging();
+          sendTokenToServer(messaging);
         } else {
           setMemberRole(role);
           navigate('/');

@@ -10,7 +10,7 @@ public interface MemberRepository {
 
     Optional<Member> findById(Long id);
     Optional<Member> findByOauthIdAndProvider(OauthId oAuthId, OauthProvider oAuthProvider);
-
     boolean exisitByOauthIdAndProvider(OauthId oAuthId, OauthProvider oAuthProvider);
     Member save(Member member);
+    Optional<Member> findByEmail(String email);
 }
