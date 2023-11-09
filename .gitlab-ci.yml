@@ -16,10 +16,11 @@ download_secure_files:
     paths:
       - $SECURE_FILES_DOWNLOAD_PATH  # 파이프라인의 다음 단계에서 사용할 Secure Files이 있는 디렉토리를 아티팩트로 설정
 
-build:
+build_server:
   stage: build
   script:
     - echo "Using downloaded application-dev.yml for the build..."  # Secure Files을 사용한 빌드 작업 수행
+    - echo "Deploying version $CI_COMMIT_TAG"
     # 도커 로그인
     - echo "DOCKER USERNAME = $DOCKER_USERNAME"
     - echo "DOCKER PASSWORD = $DOCKER_PASSWORD"
@@ -32,8 +33,17 @@ build:
 
   dependencies:
     - download_secure_files  # download_secure_files 단계가 성공적으로 완료되어야만 실행됨
+  tags:
+    - hanol
+  only:
+    - release/server
+
+build_client:
+  stage: build
+  script:
+    - echo "Client test 배포 시작"
 
   tags:
     - hanol
   only:
-    - master
+    - release/client
