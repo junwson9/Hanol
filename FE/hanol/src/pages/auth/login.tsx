@@ -74,15 +74,15 @@ function Login() {
   };
   return (
     <>
-      <div className="col-span-full h-screen flex flex-col justify-between">
-        <div>
+      <div className="col-span-full h-screen flex flex-col">
+        <div className="">
           <div className="mt-[105px] font-bold text-[18px] text-black flex">모발의 모든것</div>
           <div className=" font-bold text-[18px] text-black flex">한올에서 간편하게</div>
           <div className="mt-[12px] font-regular text-[12px] text-GrayForText flex">
             더욱 풍성해질 당신을 항상 응원합니다.
           </div>
         </div>
-        <div className="flex justify-center mb-[50px]">
+        <div className="flex justify-center mb-[5rem] col-span-full">
           <KakaoLogin
             token={kakaoID || ''}
             onSuccess={kakaoSuccessHandler}
@@ -94,6 +94,9 @@ function Login() {
               </div>
             )}
           />
+        </div>
+        <div className="flex justify-center">
+          <button className="font-medium text-left mb-[1rem] items-center text-GrayForText underline">회원 탈퇴</button>
         </div>
       </div>
     </>

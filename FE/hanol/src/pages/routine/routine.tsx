@@ -188,7 +188,7 @@ function Routine() {
         icon={<Calender />}
         onClickIcon={handleCalenderIconClick}
       />
-      <div className="flex justify-center z-1">
+      <div className="flex justify-between z-1">
         <button onClick={handlePrevDate}>
           <ArrorLeft />
         </button>
