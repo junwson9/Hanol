@@ -8,12 +8,30 @@ interface Props {
 }
 
 const ScalpImageView = ({ sub_title, scalp_img }: Props) => {
+  const scalpe_sub_titles = (sub_title: number) => {
+    switch (sub_title) {
+      case 0:
+        return '왼쪽 앞머리';
+      case 1:
+        return '오른쪽 앞머리';
+      case 2:
+        return '정수리';
+      case 3:
+        return '왼쪽 옆머리';
+      case 4:
+        return '오른쪽 옆머리';
+      case 5:
+        return '뒷머리';
+      default:
+        return '';
+    }
+  };
   return (
     <div className="col-span-full">
       <ScalpViewBox>
         <TitleBox>
           <div className="title">두피 이미지</div>
-          <div className="sub_title">{sub_title}</div>
+          <div className="sub_title">{scalpe_sub_titles(sub_title || 0)}</div>
         </TitleBox>
         <ImgBox>
           <img src={scalp_img} alt={scalp_img} className="scalp_img" />
