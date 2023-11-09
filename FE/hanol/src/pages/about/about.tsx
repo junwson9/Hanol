@@ -47,6 +47,10 @@ function About() {
   const handleterms = () => {
     navigate('/terms');
   };
+
+  const handlenotisettings = () => {
+    navigate('/about-noti-setting');
+  };
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -91,7 +95,11 @@ function About() {
         </div>
       )}
       <div className="">
-        <button className="font-bold text-[1.125rem] w-full my-[1rem] text-left">알림설정</button>
+        {role === 'logined' && (
+          <button onClick={handlenotisettings} className="font-bold text-[1.125rem] w-full my-[1rem] text-left">
+            알림설정
+          </button>
+        )}
         <button className="font-bold text-[1.125rem] w-full my-[1rem] text-left">ABOUT</button>
         <button onClick={handleterms} className="font-bold text-[1.125rem] w-full my-[1rem] text-left">
           약관 및 정책
