@@ -6,16 +6,23 @@ import TapBarDepth2 from 'components/common/TapBarDepth2';
 import CameraButton from 'components/button/Button';
 import { ReactComponent as UnActiveCheck } from 'assets/icons/check-unactive.svg';
 import { ReactComponent as Check } from 'assets/icons/check.svg';
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
 
 function SelectPart() {
   const [doSelect, setDoSelect] = useState<boolean>(false);
   const [activePart, setActivePart] = useRecoilState(PartState);
   const selectedDevice = useRecoilValue(DeviceState);
-  const parts: string[] = ['왼쪽 앞머리', '오른쪽 앞머리', '정수리', '왼쪽 옆머리', '오른쪽 옆머리', '뒷머리'];
+  const parts: { [key: string]: number } = {
+    '왼쪽 앞머리': 0,
+    '오른쪽 앞머리': 1,
+    정수리: 2,
+    '왼쪽 옆머리': 3,
+    '오른쪽 옆머리': 4,
+    뒷머리: 5,
+  };
   const navigate = useNavigate();
   const handleNavigate = () => {
-    if (activePart) {
+    if (activePart !== 7) {
       if (selectedDevice === 0) {
         navigate('/IoTstreaming');
       } else {
@@ -34,7 +41,6 @@ function SelectPart() {
   useEffect(() => {
     setActivePart(7);
   }, []);
-
   return (
     <div className="col-span-full relative h-screen">
       <TapBarDepth2
@@ -48,14 +54,14 @@ function SelectPart() {
       <p className="text-lg  text-left font-bold mt-12 text-center">촬영 부위를 선택해 주세요!</p>
       <div className="flex justify-center">
         <div className="flex-col">
-          {parts.map((part, index) => (
+          {Object.entries(parts).map(([partName, index]: [string, number]) => (
             <button
               key={index}
               className={`flex gap-3 mt-7 ${activePart === index ? 'text-Main' : ''}`}
               onClick={() => handlePartClick(index)}
             >
               {activePart === index ? <Check /> : <UnActiveCheck />}
-              <p>{part}</p>
+              <p>{partName}</p>
             </button>
           ))}
         </div>

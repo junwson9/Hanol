@@ -8,7 +8,6 @@ const CONSTRAINTS = { video: { facingMode: 'environment' } };
 
 function Streaming() {
   const [, setImageURL] = useRecoilState<string>(ImageState);
-
   const navigate = useNavigate();
   const videoRef = useRef<HTMLVideoElement>(null);
   const [capturedImage, setCapturedImage] = useState<string | null>(null);
@@ -91,6 +90,7 @@ function Streaming() {
         propsIsBack={true}
         rightBtnType={2}
       />
+      <div></div>
       <p className="text-lg text-center font-bold mt-20">
         원하시는 부위에 카메라를 대고
         <br />
