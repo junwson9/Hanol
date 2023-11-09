@@ -151,7 +151,9 @@ function Examination() {
             {scalpType && scalpType.type0 && (
               <div>
                 <div className="font-bold text-[1.125rem]">건강형 </div>
-                <img src={Trophy_icon} className="w-[14rem] h-[14rem]" />
+                <div className="flex justify-center">
+                  <img src={Trophy_icon} className="w-[14rem] h-[14rem]" />
+                </div>
                 <div className="text-[0.8125rem]">
                   “완벽한 두피 상태! 건성, 지성, 염증, 비듬, 자극, 탈모에서 자유로운 당신의 두피는 건강형입니다. 지금
                   그대로 생활 습관을 유지해주세요.”
@@ -162,7 +164,9 @@ function Examination() {
             {scalpType && scalpType.type1 && (
               <div>
                 <div className="font-bold text-[1.125rem]">건성형 </div>
-                <img src={DesertIcon} className="w-[14rem] h-[14rem]"></img>
+                <div className="flex justify-center">
+                  <img src={DesertIcon} className="w-[14rem] h-[14rem]"></img>
+                </div>
                 <div className="text-[0.8125rem]">
                   “유. 수분의 밸런스 붕괴로 인한 두피면역력 저하가 트러블을 유발하는 두피유형 입니다. <br />
                   건성 두피는 피지 분비가 부족해 말라있는 것이 특징입니다. 말라있는 두피를 건강하기 위해서는, 유분과
@@ -193,8 +197,9 @@ function Examination() {
             {scalpType && scalpType.type3 && (
               <div>
                 <div className="font-bold text-[1.125rem]">민감형 </div>
-                <img src={fragile_icon} className="w-[14rem] h-[14rem]"></img>
-
+                <div className="flex justify-center">
+                  <img src={fragile_icon} className="w-[14rem] h-[14rem]"></img>
+                </div>
                 <div className="text-[0.8125rem]">
                   “두피 면역력 저하, 세균 감염, 물리적 자극, 화학약품에 의한 노출, 질병 등으로 인하여 발생되는
                   두피유형입니다. <br />
@@ -209,7 +214,9 @@ function Examination() {
             {scalpType && scalpType.type4 && (
               <div>
                 <div className="font-bold text-[1.125rem]">염증형 </div>
-                <img src={ItchIcon} className="w-[14rem] h-[14rem]"></img>
+                <div className="flex justify-center">
+                  <img src={ItchIcon} className="w-[14rem] h-[14rem]"></img>
+                </div>
                 <div className="text-[0.8125rem]">
                   “모낭충, 세균감염, 화학약품에 의한 자극 등으로 두피조직에 염증반응이 나타나는 두피유형입니다. <br />
                   염증성 두피는 많은 사람들이 치료에 어려움을 겪고 있으면서 또 쉽게 재발하는 유형입니다. 이 유형은
@@ -223,8 +230,9 @@ function Examination() {
             {scalpType && scalpType.type5 && (
               <div>
                 <div className="font-bold text-[1.125rem]">비듬형 </div>
-                <img src={cloud_icon} className="w-[14rem] h-[14rem]"></img>
-
+                <div className="flex justify-center">
+                  <img src={cloud_icon} className="w-[14rem] h-[14rem]"></img>
+                </div>
                 <div className="text-[0.8125rem]">
                   “비듬균의 이상증식이 두피자극을 유발하여 과각질화를 유발하는 두피유형입니다. <br />
                   비듬성 두피는 두피를 깨끗하게 유지하는 위생관리가 무엇보다도 중요합니다. 또한, 두피를 건조하지 않게
@@ -238,8 +246,9 @@ function Examination() {
             {scalpType && scalpType.type6 && (
               <div>
                 <div className="font-bold text-[1.125rem]">탈모진행형 </div>
-                <img src={octopus_icon} className="w-[14rem] h-[14rem]"></img>
-
+                <div className="flex justify-center">
+                  <img src={octopus_icon} className="w-[14rem] h-[14rem]"></img>
+                </div>
                 <div className="text-[0.8125rem]">
                   “유전적 요인 및 잘못된 후천적 습관으로 모발의 굵기가 가늘어지고 탈모량이 증가하는 두피유형입니다.{' '}
                   <br />
