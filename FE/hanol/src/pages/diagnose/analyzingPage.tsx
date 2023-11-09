@@ -43,6 +43,7 @@ const AnalyzingPage = () => {
         // navigate('/posterror');
         eventSource.close();
       }
+      console.log(data);
       console.log(data.value1);
       setImageURL(data.image_url);
       setValues((prevSelect) => {

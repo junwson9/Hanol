@@ -5,14 +5,17 @@ import axiosInstance from 'api/axiosInterceptor';
 import { ReactComponent as Arrow } from '../../assets/icons/arrow_right.svg';
 import { getMessaging, getToken } from 'firebase/messaging';
 import { MemberRoleState } from 'recoil/atoms';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState } from 'recoil';
 
 function About() {
   const navigate = useNavigate();
   const [role, setRole] = useState<string | null>(null);
   const [name, setName] = useState<string | null>(null);
-  const memberRole = useRecoilValue(MemberRoleState);
+  const [memberRole, setMemberRole] = useRecoilState(MemberRoleState);
   const handleButtonClick = () => {
+    navigate('/');
+  };
+  const handleloginClick = () => {
     navigate('/login');
   };
   const handleLogout = async () => {
@@ -30,6 +33,7 @@ function About() {
       }
       localStorage.removeItem('access_token');
       localStorage.removeItem('refresh_token');
+      setMemberRole('GUEST');
       handleButtonClick();
     } catch (error) {
       console.error('데이터 가져오기 오류:', error);
@@ -70,7 +74,7 @@ function About() {
         <div className="h-[7rem] flex items-center justify-between border-y mb-[1rem]">
           <div className="text-[#999999] font-regular ">로그인이 필요합니다.</div>
           <button
-            onClick={handleButtonClick}
+            onClick={handleloginClick}
             className="bg-[#F4F4F4] px-[0.5rem] py-[0.2rem] rounded-[0.3rem] text-[#555555] font-regular text-[0.813rem]"
           >
             로그인

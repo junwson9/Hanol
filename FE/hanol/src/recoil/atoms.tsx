@@ -1,5 +1,8 @@
 import { atom } from 'recoil';
 
+const storedRole = sessionStorage.getItem('Role');
+const defaultRole = storedRole ? storedRole : 'GUEST';
+
 export const selectedMenuState = atom({
   key: 'selectedMenu',
   default: '',
@@ -32,7 +35,14 @@ export const ImageState = atom<string>({
 
 export const MemberRoleState = atom<string>({
   key: 'Role',
-  default: 'GUEST',
+  default: defaultRole,
+  effects_UNSTABLE: [
+    ({ onSet }) => {
+      onSet((newValue) => {
+        sessionStorage.setItem('Role', newValue);
+      });
+    },
+  ],
 });
 
 export const examinationState = atom({

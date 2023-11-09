@@ -42,13 +42,13 @@ function RoutineButton(props: RoutineButtonProps) {
   return (
     <div
       className={`w-full h-[3.375rem] border border-Main flex items-center justify-between gap-2.5 inline-flex rounded-[0.5rem] ${
-        !props.is_done ? 'border-[#999999]' : 'bg-White border-Main'
+        props.is_done ? 'border-[#999999]' : 'bg-White border-Main'
       }`}
     >
       <button onClick={handleTOAlarm} className="flex items-center">
         <div
-          className={`text-Main text-base font-medium text-[1rem] tracking-wide mx-[1rem] ${
-            !props.is_done ? 'text-[#999999]' : 'text-Main'
+          className={`text-Main text-base font-medium text-[1rem] text-left tracking-wide mx-[1rem] ${
+            props.is_done ? 'text-[#999999]' : 'text-Main'
           }`}
         >
           {props.routine_name} {/* routine_name props 사용 */}
@@ -58,7 +58,7 @@ function RoutineButton(props: RoutineButtonProps) {
         <div
           onClick={handleClick}
           className={`w-[3.4rem] mx-[0.5rem] px-[0.6rem] py-[0.2rem] border border-Main rounded-[0.3rem] text-[0.75rem] font-medium text-White bg-Main
-          ${!props.is_done ? 'border-[#999999] bg-White text-[#999999]' : 'bg-Main border-Main'}`}
+          ${props.is_done ? 'border-[#999999] bg-White text-[#999999]' : 'bg-Main border-Main'}`}
         >
           {props.is_done ? '완료' : '했어요'} {/* is_done props 사용 */}
         </div>
