@@ -28,11 +28,11 @@ function SelectPart() {
       }, 2000);
     }
   };
-  const handlePartClick = (part: string) => {
-    setActivePart(part);
+  const handlePartClick = (index: number) => {
+    setActivePart(index);
   };
   useEffect(() => {
-    setActivePart('');
+    setActivePart(7);
   }, []);
 
   return (
@@ -51,10 +51,10 @@ function SelectPart() {
           {parts.map((part, index) => (
             <button
               key={index}
-              className={`flex gap-3 mt-7 ${activePart === part ? 'text-Main' : ''}`}
-              onClick={() => handlePartClick(part)}
+              className={`flex gap-3 mt-7 ${activePart === index ? 'text-Main' : ''}`}
+              onClick={() => handlePartClick(index)}
             >
-              {activePart === part ? <Check /> : <UnActiveCheck />}
+              {activePart === index ? <Check /> : <UnActiveCheck />}
               <p>{part}</p>
             </button>
           ))}

@@ -23,7 +23,7 @@ function SetRoutine() {
   const [selectedMyRoutineIds, setSelectedMyRoutineIds] = useState<number[]>([]);
 
   const handleNavigate = () => {
-    navigate('/');
+    navigate('/routine');
   };
   console.log(selectedRoutineIds);
   console.log(selectedMyRoutineIds);
