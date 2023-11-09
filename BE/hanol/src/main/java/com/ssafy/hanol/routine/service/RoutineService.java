@@ -4,8 +4,6 @@ import com.ssafy.hanol.common.exception.CustomException;
 import com.ssafy.hanol.diagnosis.domain.Diagnosis;
 import com.ssafy.hanol.diagnosis.repository.DiagnosisRepository;
 import com.ssafy.hanol.member.domain.Member;
-import com.ssafy.hanol.member.exception.MemberErrorCode;
-import com.ssafy.hanol.member.repository.MemberRepository;
 import com.ssafy.hanol.member.service.MemberService;
 import com.ssafy.hanol.routine.domain.MemberRoutine;
 import com.ssafy.hanol.routine.domain.MemberRoutineLog;
@@ -28,7 +26,6 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -53,7 +50,6 @@ public class RoutineService {
         List<RoutineInfo> myRoutines = memberRoutines.stream()
                 .map(RoutineInfo::from)
                 .collect(Collectors.toList());
-        log.info("기존 루틴: {}", myRoutines);
 
         // 최신 진단 결과 조회
         Diagnosis latestDiagnosis = diagnosisRepository.findTopByMemberIdOrderByIdDesc(memberId).orElse(null);
@@ -66,7 +62,6 @@ public class RoutineService {
 
         // 추천 루틴 조회 : valueX값이 1이상이거나 isDefault=true인 루틴 중, memberRoutines에 없는 루틴.
         List<RoutineInfo> suggestedRoutines = routineRepository.findByValuesAndNotMemberRoutines(memberId, values, memberRoutines);
-        log.info("추천 루틴 suggestedRoutines: {}", suggestedRoutines);
 
         return RoutineListResponse.builder()
                 .myRoutines(myRoutines)
@@ -128,7 +123,6 @@ public class RoutineService {
         Member member = memberService.findMemberByMemberId(memberId);
 
         List<RoutineLogInfo> routineLogInfos = memberRoutineLogRepository.selectRoutineLogsByMemberIdAndDate(memberId, date);
-        log.info("특정일의 루틴 이력 조회, {}", routineLogInfos);
 
         return RoutineLogListResponse.builder()
                 .dailyRoutines(routineLogInfos)
