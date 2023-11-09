@@ -2,6 +2,7 @@ package com.ssafy.hanol.diagnosis.controller;
 
 import com.ssafy.hanol.common.response.ResponseFactory;
 import com.ssafy.hanol.diagnosis.controller.dto.request.DiagnosisApiRequest;
+import com.ssafy.hanol.diagnosis.controller.dto.request.DiagnosisSendApiRequest;
 import com.ssafy.hanol.diagnosis.controller.dto.response.DiagnosisDetailApiResponse;
 import com.ssafy.hanol.diagnosis.controller.dto.response.DiagnosisListApiResponse;
 import com.ssafy.hanol.diagnosis.service.DiagnosisService;
@@ -11,6 +12,7 @@ import com.ssafy.hanol.global.config.auth.AuthenticatedMember;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -57,5 +59,12 @@ public class DiagnosisController {
         return ResponseFactory.success("진단 요청 전송 성공");
     }
 
+    @PreAuthorize("hasAuthority('MANAGER') or hasAuthority('ADMIN')")
+    @PostMapping("/{diagnosisId}/send")
+    public ResponseEntity<?> diagnosisSend(@PathVariable Long diagnosisId,
+                                           @RequestBody DiagnosisSendApiRequest diagnosisSendApiRequest) {
+        diagnosisService.sendDiagnosisResult(diagnosisId, diagnosisSendApiRequest);
+        return ResponseFactory.success("진단 결과 보내기 성공");
+    }
 
 }

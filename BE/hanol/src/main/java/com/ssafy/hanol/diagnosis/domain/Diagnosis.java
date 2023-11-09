@@ -26,22 +26,22 @@ public class Diagnosis extends BaseTimeEntity {
     private Member member;
 
     @Column(name = "value_1")
-    private int value1;
+    private Integer value1;
 
     @Column(name = "value_2")
-    private int value2;
+    private Integer value2;
 
     @Column(name = "value_3")
-    private int value3;
+    private Integer value3;
 
     @Column(name = "value_4")
-    private int value4;
+    private Integer value4;
 
     @Column(name = "value_5")
-    private int value5;
+    private Integer value5;
 
     @Column(name = "value_6")
-    private int value6;
+    private Integer value6;
 
     @Column(name = "image_url")
     private String imageUrl;
@@ -53,15 +53,7 @@ public class Diagnosis extends BaseTimeEntity {
     private int scanPart;
 
     @Builder
-    public Diagnosis(Member member, String imageUrl, int deviceType, int scanPart) {
-        this.member = member;
-        this.imageUrl = imageUrl;
-        this.deviceType = deviceType;
-        this.scanPart = scanPart;
-    }
-
-    @Builder
-    public Diagnosis(Member member, int value1, int value2, int value3, int value4, int value5, int value6, String imageUrl, int deviceType, int scanPart) {
+    public Diagnosis(Member member, Integer value1, Integer value2, Integer value3, Integer value4, Integer value5, Integer value6, String imageUrl, int deviceType, int scanPart) {
         this.member = member;
         this.value1 = value1;
         this.value2 = value2;
@@ -86,6 +78,19 @@ public class Diagnosis extends BaseTimeEntity {
         this.value4 = response.getValue4();
         this.value5 = response.getValue5();
         this.value6 = response.getValue6();
+    }
+
+    public Diagnosis(Diagnosis other, Member newMember) {
+        this.member = newMember;
+        this.value1 = other.getValue1();
+        this.value2 = other.getValue2();
+        this.value3 = other.getValue3();
+        this.value4 = other.getValue4();
+        this.value5 = other.getValue5();
+        this.value6 = other.getValue6();
+        this.imageUrl = other.getImageUrl();
+        this.deviceType = other.getDeviceType();
+        this.scanPart = other.getScanPart();
     }
 
 }

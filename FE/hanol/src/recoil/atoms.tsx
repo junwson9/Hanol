@@ -1,7 +1,4 @@
 import { atom } from 'recoil';
-import { recoilPersist } from 'recoil-persist';
-
-const { persistAtom } = recoilPersist();
 
 export const selectedMenuState = atom({
   key: 'selectedMenu',
@@ -36,10 +33,14 @@ export const ImageState = atom<string>({
 export const MemberRoleState = atom<string>({
   key: 'Role',
   default: 'GUEST',
-  effects_UNSTABLE: [persistAtom],
 });
 
 export const examinationState = atom({
   key: 'Examination',
   default: [0, 0, 0, [] as number[], [] as number[], 0, 0],
+});
+
+export const diagnoseState = atom({
+  key: 'Diagnose',
+  default: [0, 0, 0, 0, 0, 0],
 });

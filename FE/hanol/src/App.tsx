@@ -35,6 +35,8 @@ import SetScalpDone from 'pages/scalpti/SetScalpDone';
 import Examination from 'pages/scalpti/examination';
 import RoutineNotiSetting from 'pages/routine/routineNotiSetting';
 import Terms from 'pages/about/terms';
+import MyreportNonMember from 'pages/myreport/Myreport-nonmember';
+import RouteChangeTracker from 'components/RouteChangeTracker.js';
 
 function App() {
   const location = useLocation();
@@ -47,8 +49,10 @@ function App() {
     '/diagnose',
     '/explain-routine',
     '/dashboard',
+    '/myreport-explain',
   ];
   const shouldShowNavBar = showNavBarPaths.includes(location.pathname);
+  RouteChangeTracker();
   return (
     <div className="App">
       <div className={`AppContent ${shouldShowNavBar ? 'show-navbar' : ''}`}>
@@ -71,7 +75,6 @@ function App() {
             <Route path="/IoTstreaming" element={<IoTstreaming />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/mydetail" element={<MyDetail />} />
-            <Route path="/diagnosis" element={<DiagnosisDetail />} />
             <Route path="/analyzing" element={<Analyzing />} />
             <Route path="/select-part" element={<SelectPart />} />
             <Route path="/about-noti-setting" element={<AboutNotiSetting />} />
@@ -90,8 +93,10 @@ function App() {
         <div>
           <Routes>
             <Route path="/login-error" element={<LoginError />} />
+            <Route path="/diagnosis" element={<DiagnosisDetail />} />
             <Route path="/" element={<Home />} />
             <Route path="/myreport" element={<Home />} />
+            <Route path="/myreport-explain" element={<MyreportNonMember />} />
           </Routes>
         </div>
       </div>

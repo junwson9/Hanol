@@ -41,8 +41,14 @@ function NavBar() {
         <button
           className="flex flex-col items-center justify-center w-[66px] h-[66px] gap-[7px]"
           onClick={() => {
-            handleNavigate('/myreport');
-            setSelectedMenu('myreport');
+            console.log(Role);
+            if (Role == 'GUEST') {
+              handleNavigate('/myreport-explain');
+              setSelectedMenu('myreport');
+            } else {
+              handleNavigate('/myreport');
+              setSelectedMenu('myreport');
+            }
           }}
         >
           {selectedMenu === 'myreport' ? <MyReport /> : <MyReportUnActive />}

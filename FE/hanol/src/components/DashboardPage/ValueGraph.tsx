@@ -41,16 +41,6 @@ const ValueGraph = ({ title, dataList, graphValue, setIndex }: Props) => {
   // 그래프 커스텀
   const options = {
     // eslint-disable-next-line
-    // onClick: (elements: any, chart: any) => {
-    //   if (elements.length > 0) {
-    //     const index = elements[0].index;
-    //     const label = chart.data.labels[index];
-    //     const value = chart.data.datasets[0].data[index];
-    //     // alert(`${label}: ${value}`);
-    //     console.log(`zz:${label}: ${value}`);
-    //   }
-    // },
-    // eslint-disable-next-line
     onClick: function (point: any, event: any) {
       if (event[0]) {
         // console.log('event : ', event[0].index);
@@ -90,7 +80,7 @@ const ValueGraph = ({ title, dataList, graphValue, setIndex }: Props) => {
       },
     },
     elements: { point: { radius: 5 } },
-    scales: { y: { display: false } },
+    scales: { y: { display: false, suggestedMin: 0, suggestedMax: 3, ticks: { stepSize: 1 } } },
   };
   const data = {
     // labels: [
@@ -137,7 +127,7 @@ const ValueGraph = ({ title, dataList, graphValue, setIndex }: Props) => {
 
   return (
     <ValueGraphBox id="myElement">
-      <Line options={options} data={data} />
+      <Line options={options} data={data} className="graph" />
     </ValueGraphBox>
   );
 };
@@ -151,5 +141,9 @@ const ValueGraphBox = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+
+  .graph {
+    overflow-x: scroll;
+  }
 `;
 export default ValueGraph;

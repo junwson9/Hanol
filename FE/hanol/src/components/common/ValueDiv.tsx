@@ -7,8 +7,8 @@ interface Props {
 }
 
 interface ValueColorProps {
-  textColor: string;
-  backgroundColor: string;
+  textcolor: string;
+  backgroundcolor: string;
 }
 
 const ValueDiv = ({ valuenumber }: Props) => {
@@ -22,6 +22,8 @@ const ValueDiv = ({ valuenumber }: Props) => {
         return '주의';
       case 3:
         return '위험';
+      case 5:
+        return '-';
       default:
         return '정도';
     }
@@ -37,6 +39,8 @@ const ValueDiv = ({ valuenumber }: Props) => {
         return '#FBDE48';
       case 3:
         return '#EA536F';
+      case 5:
+        return '#C5C5C5';
       default:
         return 'white';
     }
@@ -52,15 +56,17 @@ const ValueDiv = ({ valuenumber }: Props) => {
         return '#FEF9E2';
       case 3:
         return '#FDEFF1';
+      case 5:
+        return '#F5F5F5';
       default:
         return 'white';
     }
   };
-  const textColor = determineTextColor(valuenumber || 0);
-  const backgroundColor = determineBackgroundColor(valuenumber || 0);
+  const textcolor = determineTextColor(valuenumber || 0);
+  const backgroundcolor = determineBackgroundColor(valuenumber || 0);
 
   return (
-    <ValueBox textColor={textColor} backgroundColor={backgroundColor}>
+    <ValueBox textcolor={textcolor} backgroundcolor={backgroundcolor}>
       <div className="valuenumber">{determineValueTitle(valuenumber || 0)}</div>
     </ValueBox>
   );
@@ -74,7 +80,7 @@ const ValueBox = styled.div<ValueColorProps>`
   height: 35px;
   flex-shrink: 0;
   /* background-color: #f2fefe; */
-  background-color: ${(props) => props.backgroundColor};
+  background-color: ${(props) => props.backgroundcolor};
   border-radius: 20px;
 
   .valuenumber {
@@ -83,7 +89,7 @@ const ValueBox = styled.div<ValueColorProps>`
     flex-shrink: 0;
 
     /* color: #5bc3c4; */
-    color: ${(props) => props.textColor};
+    color: ${(props) => props.textcolor};
     text-align: center;
 
     /* Body Header */

@@ -29,7 +29,7 @@ public class DiagnosisRepositoryImpl implements DiagnosisRepository {
 
     @Override
     public Optional<Diagnosis> findTopByMemberIdOrderByIdDesc(Long memberId) {
-        return jpaDiagnosisRepository.findTopByMemberIdOrderByIdDesc(memberId);
+        return jpaDiagnosisRepository.findTopByMemberIdAndValue1IsNotNullOrderByIdDesc(memberId);
     }
 
     @Override

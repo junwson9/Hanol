@@ -21,7 +21,7 @@ function SetScalpDone() {
       </p>
       <p className="col-start-2 col-end-6 text-[0.75rem] text-GrayForText whitespace-nowrap mt-5"></p>
       <div className="absolute w-[100%] bottom-5">
-        <SuccessButton name="결과 확인" onClick={() => navigate('/examination')} />
+        <SuccessButton name="결과 확인" onClick={() => navigate('/examination?isTabActive=false')} />
       </div>
     </div>
   );

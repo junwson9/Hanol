@@ -15,11 +15,11 @@ function RoutineSetButton({ routineName, active, onClick }: RoutineSetButtonProp
       <div
         className={`flex h-14 mt-3 border ${
           active ? 'border-Main text-Main font-medium' : 'text-GrayForText font-medium'
-        } rounded-lg items-center gap-2.5 whitespace-nowrap cursor-pointer`}
+        } rounded-lg items-center gap-2.5 cursor-pointer`}
         onClick={onClick}
       >
-        {active ? <Check className="ml-2.5" /> : <UnActiveCheck className="ml-2.5" />}
-        {routineName}
+        <div>{active ? <Check className=" ml-2.5" /> : <UnActiveCheck className="ml-2.5 " />}</div>
+        <div className="mr-2.5">{routineName}</div>
       </div>
     </div>
   );

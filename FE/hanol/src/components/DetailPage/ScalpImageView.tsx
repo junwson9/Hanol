@@ -3,7 +3,7 @@ import styled from 'styled-components';
 // import ScalpImg from '../../assets/images/scalp.jpg';
 
 interface Props {
-  sub_title: number;
+  sub_title?: number;
   scalp_img: string;
 }
 

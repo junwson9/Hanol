@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-// import axiosInstance from 'api/axiosInterceptor';
-import axios from 'axios';
+import axiosInstance from 'api/axiosInterceptor';
+// import axios from 'axios';
 import styled from 'styled-components';
 import BannerButton from 'components/button/BannerButton';
 import ValueCard from 'components/DashboardPage/ValueCard';
@@ -16,6 +16,8 @@ import ScalpImageView from 'components/DetailPage/ScalpImageView';
 import DateNavigateModal from 'components/DetailPage/DateNavigateModal';
 import { diagnosisResultType } from 'types/DiagnosisResult';
 import TapBar from 'components/common/TopBar';
+import { MemberRoleState } from 'recoil/atoms';
+import { useRecoilValue } from 'recoil';
 
 // const initData: diagnosisResultType[] = [
 //   {
@@ -34,8 +36,10 @@ import TapBar from 'components/common/TopBar';
 //   },
 // ];
 
-const MyreportDashBoard = () => {
+const Myreport = () => {
   const navigate = useNavigate();
+  const Role = useRecoilValue(MemberRoleState);
+
   //대시보드
   const [isTabActive, setTabActive] = useState<boolean>(true);
   const [diagnosisList, setDiagnosisList] = useState<diagnosisResultType[]>();
@@ -52,16 +56,28 @@ const MyreportDashBoard = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [index, setIndex] = useState<number>(0);
 
+  // 날짜 포맷 변경
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = `0${date.getMonth() + 1}`.slice(-2);
+    const day = `0${date.getDate()}`.slice(-2);
+    const hours = `0${date.getHours()}`.slice(-2);
+    const minutes = `0${date.getMinutes()}`.slice(-2);
+
+    return `${year}-${month}-${day} ${hours}:${minutes}`;
+  };
+
   const handleTabClick = () => {
     setTabActive((prevActive: boolean) => !prevActive);
   };
 
   const handleButtonClick = () => {
-    navigate('/test');
+    navigate('/routine');
   };
 
   const handleBannerButtonClick = () => {
-    navigate('/test');
+    navigate('/diagnose');
   };
 
   const handleValueCardClick = (arg: number) => {
@@ -70,19 +86,25 @@ const MyreportDashBoard = () => {
   };
 
   useEffect(() => {
-    // axiosInstance
-    // .get('/diagnoses?limit=20')
-    axios
-      .get('http://localhost:4000/diagnoses')
+    axiosInstance
+      .get('/diagnoses?limit=10')
+      // axios
+      // .get('http://localhost:4000/diagnoses')
       .then((response) => {
         console.log('진단 결과 리스트 조회 성공:', response);
-        setDiagnosisList(response.data.diagnosis_info_list);
-        setValue1(response.data.diagnosis_info_list[0].value1);
-        setValue2(response.data.diagnosis_info_list[0].value2);
-        setValue3(response.data.diagnosis_info_list[0].value3);
-        setValue4(response.data.diagnosis_info_list[0].value4);
-        setValue5(response.data.diagnosis_info_list[0].value5);
-        setValue6(response.data.diagnosis_info_list[0].value6);
+        const fetchedDiagnosisList = response.data.data.diagnosis_info_list;
+
+        setDiagnosisList(response.data.data.diagnosis_info_list);
+        setValue1(response.data.data.diagnosis_info_list?.[0].value1);
+        setValue2(response.data.data.diagnosis_info_list?.[0].value2);
+        setValue3(response.data.data.diagnosis_info_list?.[0].value3);
+        setValue4(response.data.data.diagnosis_info_list?.[0].value4);
+        setValue5(response.data.data.diagnosis_info_list?.[0].value5);
+        setValue6(response.data.data.diagnosis_info_list?.[0].value6);
+
+        if (!fetchedDiagnosisList || fetchedDiagnosisList.length === 0) {
+          navigate('/myreport-explain');
+        }
       })
       .catch((error) => {
         console.error('진단 결과 리스트 조회 실패:', error);
@@ -107,38 +129,75 @@ const MyreportDashBoard = () => {
 
       <TopTab active={isTabActive} title1="대시보드" title2="상세보기" onTabClick={handleTabClick} />
       {isTabActive ? (
-        <DashBoardBox>
-          <div className="grid grid-cols-6 gap-[10px] mx-[23px]">
-            <div className="col-span-full">
-              {diagnosisList && (
-                <>
-                  <BannerButton name="내 두피 분석 하러가기" onClick={() => handleBannerButtonClick()} />
-                  <ValueCardBox>
-                    <ValueCard title="탈모" value={value6} onClick={() => handleValueCardClick(6)} />
-                    <ValueCard title="각질" value={value1} onClick={() => handleValueCardClick(1)} />
-                    <ValueCard title="피지" value={value2} onClick={() => handleValueCardClick(2)} />
-                  </ValueCardBox>
-                  <ValueCardBox>
-                    <ValueCard title="홍반" value={value3} onClick={() => handleValueCardClick(3)} />
-                    <ValueCard title="염증" value={value4} onClick={() => handleValueCardClick(4)} />
-                    <ValueCard title="비듬" value={value5} onClick={() => handleValueCardClick(5)} />
-                  </ValueCardBox>
-                  <ValueGraph title="탈모" dataList={diagnosisList} graphValue={graphValue} setIndex={setIndex} />
-                </>
-              )}
-            </div>
-          </div>
-          <DivisionRectangle />
-          <div className="grid grid-cols-6 gap-[10px] mx-[23px]">
-            <div className="col-span-full">
-              <RecommendCareRoutine />
-              <Button name="두피 케어 루틴 추천 받기" onClick={() => handleButtonClick()} />
-              <br />
-              <br />
-              <br />
-            </div>
-          </div>
-        </DashBoardBox>
+        <>
+          {Role === 'GUEST' ? (
+            <DashBoardBox>
+              <div className="grid grid-cols-6 gap-[10px] mx-[23px]">
+                <div className="col-span-full">
+                  {diagnosisList && (
+                    <>
+                      <BannerButton name="내 두피 분석 하러가기" onClick={() => handleBannerButtonClick()} />
+                      <ValueCardBox>
+                        <ValueCard title="탈모" value={5} onClick={() => handleValueCardClick(6)} />
+                        <ValueCard title="각질" value={5} onClick={() => handleValueCardClick(1)} />
+                        <ValueCard title="피지" value={5} onClick={() => handleValueCardClick(2)} />
+                      </ValueCardBox>
+                      <ValueCardBox>
+                        <ValueCard title="홍반" value={5} onClick={() => handleValueCardClick(3)} />
+                        <ValueCard title="염증" value={5} onClick={() => handleValueCardClick(4)} />
+                        <ValueCard title="비듬" value={5} onClick={() => handleValueCardClick(5)} />
+                      </ValueCardBox>
+                      <ValueGraph title="탈모" dataList={diagnosisList} graphValue={graphValue} setIndex={setIndex} />
+                    </>
+                  )}
+                </div>
+              </div>
+              <DivisionRectangle />
+              <div className="grid grid-cols-6 gap-[10px] mx-[23px]">
+                <div className="col-span-full">
+                  <RecommendCareRoutine />
+                  <Button name="두피 케어 루틴 추천 받기" onClick={() => handleButtonClick()} />
+                  <br />
+                  <br />
+                  <br />
+                </div>
+              </div>
+            </DashBoardBox>
+          ) : (
+            <DashBoardBox>
+              <div className="grid grid-cols-6 gap-[10px] mx-[23px]">
+                <div className="col-span-full">
+                  {diagnosisList && (
+                    <>
+                      <BannerButton name="내 두피 분석 하러가기" onClick={() => handleBannerButtonClick()} />
+                      <ValueCardBox>
+                        <ValueCard title="탈모" value={value6} onClick={() => handleValueCardClick(6)} />
+                        <ValueCard title="각질" value={value1} onClick={() => handleValueCardClick(1)} />
+                        <ValueCard title="피지" value={value2} onClick={() => handleValueCardClick(2)} />
+                      </ValueCardBox>
+                      <ValueCardBox>
+                        <ValueCard title="홍반" value={value3} onClick={() => handleValueCardClick(3)} />
+                        <ValueCard title="염증" value={value4} onClick={() => handleValueCardClick(4)} />
+                        <ValueCard title="비듬" value={value5} onClick={() => handleValueCardClick(5)} />
+                      </ValueCardBox>
+                      <ValueGraph title="탈모" dataList={diagnosisList} graphValue={graphValue} setIndex={setIndex} />
+                    </>
+                  )}
+                </div>
+              </div>
+              <DivisionRectangle />
+              <div className="grid grid-cols-6 gap-[10px] mx-[23px]">
+                <div className="col-span-full">
+                  <RecommendCareRoutine />
+                  <Button name="두피 케어 루틴 추천 받기" onClick={() => handleButtonClick()} />
+                  <br />
+                  <br />
+                  <br />
+                </div>
+              </div>
+            </DashBoardBox>
+          )}
+        </>
       ) : (
         <div className="grid grid-cols-6 gap-[10px] mx-[23px]">
           <div className="col-span-full">
@@ -148,7 +207,7 @@ const MyreportDashBoard = () => {
                   <DateNavigateButton
                     index={index}
                     setIndex={setIndex}
-                    date={diagnosisList[index].created_date}
+                    date={formatDate(diagnosisList[index].created_date)}
                     onClick={() => setIsModalOpen(true)}
                     length={diagnosisList.length}
                   />
@@ -168,10 +227,11 @@ const MyreportDashBoard = () => {
                   {isModalOpen && (
                     <OverwrapContainer2>
                       <DateNavigateModal
-                        date={diagnosisList[index].created_date}
+                        diagnosis_id={diagnosisList[index].diagnosis_id}
                         setIndex={setIndex}
                         setIsModalOpen={setIsModalOpen}
                         diagnosisResults={diagnosisList}
+                        formatDate={formatDate}
                       />
                     </OverwrapContainer2>
                   )}
@@ -205,4 +265,4 @@ const DashBoardBox = styled.div``;
 const MyreportContainer = styled.div`
   position: relative;
 `;
-export default MyreportDashBoard;
+export default Myreport;
