@@ -53,7 +53,6 @@ public class RoutineService {
         List<RoutineInfo> myRoutines = memberRoutines.stream()
                 .map(RoutineInfo::from)
                 .collect(Collectors.toList());
-        log.info("기존 루틴: {}", myRoutines);
 
         // 최신 진단 결과 조회
         Diagnosis latestDiagnosis = diagnosisRepository.findTopByMemberIdOrderByIdDesc(memberId).orElse(null);
@@ -66,7 +65,6 @@ public class RoutineService {
 
         // 추천 루틴 조회 : valueX값이 1이상이거나 isDefault=true인 루틴 중, memberRoutines에 없는 루틴.
         List<RoutineInfo> suggestedRoutines = routineRepository.findByValuesAndNotMemberRoutines(memberId, values, memberRoutines);
-        log.info("추천 루틴 suggestedRoutines: {}", suggestedRoutines);
 
         return RoutineListResponse.builder()
                 .myRoutines(myRoutines)
@@ -128,7 +126,6 @@ public class RoutineService {
         Member member = memberService.findMemberByMemberId(memberId);
 
         List<RoutineLogInfo> routineLogInfos = memberRoutineLogRepository.selectRoutineLogsByMemberIdAndDate(memberId, date);
-        log.info("특정일의 루틴 이력 조회, {}", routineLogInfos);
 
         return RoutineLogListResponse.builder()
                 .dailyRoutines(routineLogInfos)
