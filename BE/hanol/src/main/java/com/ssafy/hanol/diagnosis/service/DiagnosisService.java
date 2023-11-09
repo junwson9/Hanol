@@ -85,6 +85,12 @@ public class DiagnosisService {
                 .scanPart(diagnosisRequest.getScanPart())
                 .deviceType(diagnosisRequest.getDeviceType())
                 .imageUrl(imageUrl)
+                .value1(-1)
+                .value2(-1)
+                .value3(-1)
+                .value4(-1)
+                .value5(-1)
+                .value6(-1)
                 .build();
 
         Diagnosis savedDiagnosis = diagnosisRepository.save(diagnosis);
@@ -117,10 +123,12 @@ public class DiagnosisService {
 
     // 다른 회원에게 진단 결과 전송하기
     public void sendDiagnosisResult(Long diagnosisId, DiagnosisSendApiRequest request) {
+        // 받는 회원 존재 여부, 전송할 진단 존재 여부 체크
         Member member = memberRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new CustomException(MemberErrorCode.NOT_FOUND_MEMBER));
         Diagnosis currentDiagnosis = diagnosisRepository.findById(diagnosisId)
                 .orElseThrow(() -> new CustomException(DiagnoseErrorCode.NOT_FOUND_DIAGNOSIS));
+
         Diagnosis newDiagnosis = new Diagnosis(currentDiagnosis, member);
         diagnosisRepository.save(newDiagnosis);
     }
@@ -135,7 +143,7 @@ public class DiagnosisService {
 
     // AI 진단 결과가 없는 데이터
     private static void validateValue(Diagnosis diagnosis) {
-        if(diagnosis.getValue1() == null) {
+        if(diagnosis.getValue1() == -1) {
             throw new CustomException(DiagnoseErrorCode.EMPTY_VALUE);
         }
     }
