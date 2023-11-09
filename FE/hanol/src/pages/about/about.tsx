@@ -6,6 +6,7 @@ import { ReactComponent as Arrow } from '../../assets/icons/arrow_right.svg';
 import { getMessaging, getToken } from 'firebase/messaging';
 import { MemberRoleState } from 'recoil/atoms';
 import { useRecoilState } from 'recoil';
+import Logo from '../../assets/images/Hanol_Logo.png';
 
 function About() {
   const navigate = useNavigate();
@@ -72,7 +73,7 @@ function About() {
   return (
     <div className="col-span-full">
       <div>
-        <TapBar name="로고" />
+        <TapBar logo={<img src={Logo} alt="로고" />} />
       </div>
       {role !== 'logined' ? (
         <div className="h-[7rem] flex items-center justify-between border-y mb-[1rem]">
