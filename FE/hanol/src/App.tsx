@@ -37,6 +37,7 @@ import RoutineNotiSetting from 'pages/routine/routineNotiSetting';
 import Terms from 'pages/about/terms';
 import MyreportNonMember from 'pages/myreport/Myreport-nonmember';
 import RouteChangeTracker from 'components/RouteChangeTracker.js';
+import ScalpException from 'pages/diagnose/scalpException';
 
 function App() {
   const location = useLocation();
@@ -87,6 +88,7 @@ function App() {
             <Route path="/set-scalp-done" element={<SetScalpDone />} />
             <Route path="/routine-noti-setting/:member_routine_id" element={<RoutineNotiSetting />} />
             <Route path="/terms" element={<Terms />} />
+            <Route path="/scalp-exception" element={<ScalpException />} />
           </Routes>
         </div>
         <div>
