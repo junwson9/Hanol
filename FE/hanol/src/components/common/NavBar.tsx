@@ -30,6 +30,10 @@ function NavBar() {
       setSelectedMenu('routine');
     } else if (path === '/about') {
       setSelectedMenu('about');
+    } else if (path === '/myreport-explain') {
+      setSelectedMenu('myreport-explain');
+    } else if (path === '/explain-routine') {
+      setSelectedMenu('explain-routine');
     } else {
       setSelectedMenu('');
     }
@@ -44,17 +48,17 @@ function NavBar() {
             console.log(Role);
             if (Role == 'GUEST') {
               handleNavigate('/myreport-explain');
-              setSelectedMenu('myreport');
+              setSelectedMenu('myreport-explain');
             } else {
               handleNavigate('/myreport');
               setSelectedMenu('myreport');
             }
           }}
         >
-          {selectedMenu === 'myreport' ? <MyReport /> : <MyReportUnActive />}
+          {selectedMenu === 'myreport' || selectedMenu === 'myreport-explain' ? <MyReport /> : <MyReportUnActive />}
           <p
             className={`${
-              selectedMenu === 'myreport' ? 'text-NavActive' : 'text-GrayForText'
+              selectedMenu === 'myreport' || selectedMenu === 'myreport-explain' ? 'text-NavActive' : 'text-GrayForText'
             } text-xs whitespace-nowrap`}
           >
             마이리포트
@@ -90,17 +94,17 @@ function NavBar() {
             console.log(Role);
             if (Role == 'GUEST') {
               handleNavigate('/explain-routine');
-              setSelectedMenu('routine');
+              setSelectedMenu('explain-routine');
             } else {
               handleNavigate('/routine');
               setSelectedMenu('routine');
             }
           }}
         >
-          {selectedMenu === 'routine' ? <Routine /> : <RoutineUnActive />}
+          {selectedMenu === 'routine' || selectedMenu === 'explain-routine' ? <Routine /> : <RoutineUnActive />}
           <p
             className={`${
-              selectedMenu === 'routine' ? 'text-NavActive' : 'text-GrayForText'
+              selectedMenu === 'routine' || selectedMenu === 'explain-routine' ? 'text-NavActive' : 'text-GrayForText'
             } text-xs whitespace-nowrap`}
           >
             케어루틴
