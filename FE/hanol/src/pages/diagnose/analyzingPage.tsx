@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import AnalyzingAnimation from 'components/Animation/AnalyzingAnimation';
 import { useRecoilValue, useRecoilState } from 'recoil';
-import { ImageState, diagnoseState } from 'recoil/atoms';
+import { ImageState, diagnoseState, PartState } from 'recoil/atoms';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { EventSourcePolyfill, NativeEventSource } from 'event-source-polyfill';
@@ -10,12 +10,11 @@ import { DeviceState } from 'recoil/atoms';
 import axiosInstance from 'api/axiosInterceptor';
 
 const AnalyzingPage = () => {
+  const scan_part = useRecoilValue(PartState);
   const image = useRecoilValue(ImageState);
-  const device = useRecoilValue(DeviceState);
+  const device_type = useRecoilValue(DeviceState);
   const [, setImageURL] = useRecoilState(ImageState);
   const [, setValues] = useRecoilState(diagnoseState);
-  console.log(device);
-  console.log(image);
   const navigate = useNavigate();
   const access_token = localStorage.getItem('access_token');
 
@@ -75,8 +74,8 @@ const AnalyzingPage = () => {
     const formData = new FormData();
     formData.append('file', imageBlob, 'image.jpg');
     const data = {
-      device_type: 0,
-      scan_part: 0,
+      device_type,
+      scan_part,
     };
     formData.append('data', new Blob([JSON.stringify(data)], { type: 'application/json' }));
     const fetchData = async () => {

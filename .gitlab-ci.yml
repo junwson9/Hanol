@@ -1,15 +1,54 @@
 stages:
+  - download
   - build
 
-build:
-  stage: build
+variables:
+  SECURE_FILES_DOWNLOAD_PATH: './secure_files/'  # Secure Files을 다운로드할 경로 설정
+  DOCKER_USERNAME: "$DOCKER_USERNAME"
+  DOCKER_PASSWORD: "$DOCKER_PASSWORD"
+
+download_secure_files:
+  stage: download
   script:
-    - echo "Downloading secure files..."
-    - wget -O /tmp/download-secure-files https://gitlab-runner-downloads.s3.amazonaws.com/latest/binaries/download-secure-files-linux-amd64
-    - chmod +x /tmp/download-secure-files
-    - /tmp/download-secure-files
-    - cat .secure_files/application-dev.yml  # 복호화된 Secure File 사용
+    - mkdir -p $SECURE_FILES_DOWNLOAD_PATH  # 다운로드할 디렉토리 생성
+    - curl --silent "https://lab.ssafy.com/s09-final/S09P31A205/-/jobs/artifacts/master/raw/application-dev.yml?job=download_secure_files" --output $SECURE_FILES_DOWNLOAD_PATH/application-dev.yml
+  artifacts:
+    paths:
+      - $SECURE_FILES_DOWNLOAD_PATH  # 파이프라인의 다음 단계에서 사용할 Secure Files이 있는 디렉토리를 아티팩트로 설정
   tags:
     - hanol
   only:
-    - master
+    - release/server
+
+build_server:
+  stage: build
+  script:
+    - echo "Using downloaded application-dev.yml for the build..."  # Secure Files을 사용한 빌드 작업 수행
+    - echo "Deploying version $CI_COMMIT_TAG"
+    # 도커 로그인
+    - echo "DOCKER USERNAME = $DOCKER_USERNAME"
+    - echo "DOCKER PASSWORD = $DOCKER_PASSWORD"
+    - echo "Login to Docker using username, password"
+    - docker login --username $DOCKER_USERNAME --password $DOCKER_PASSWORD
+    # hanol server docker image build
+    - echo "hanol server 이미지 빌드 시작"
+    - docker build -t hanol/hanol-repo:server --platform linux/amd64 ./BE/hanol/
+    - echo "hanol server 이미지 빌드 성공"
+
+  dependencies:
+    - download_secure_files  # download_secure_files 단계가 성공적으로 완료되어야만 실행됨
+  tags:
+    - hanol
+  only:
+    - release/server
+
+# 클라이언트 배포
+build_client:
+  stage: build
+  script:
+    - echo "Client test 배포 시작"
+
+  tags:
+    - hanol
+  only:
+    - release/client
