@@ -12,7 +12,7 @@ export const DeviceState = atom({
 
 export const PartState = atom({
   key: 'part',
-  default: '',
+  default: 7,
 });
 
 export const GenderInfo = atom<string>({
