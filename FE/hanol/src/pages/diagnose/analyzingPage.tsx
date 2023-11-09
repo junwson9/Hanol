@@ -56,7 +56,11 @@ const AnalyzingPage = () => {
         return updatedSelect;
       });
       eventSource.close();
-      navigate('/diagnosis');
+      if (data.value1 === -1) {
+        navigate('/scalp-exception');
+      } else {
+        navigate('/diagnosis');
+      }
     };
 
     eventSource.onerror = (error) => {
