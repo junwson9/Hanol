@@ -2,16 +2,11 @@ import { useRef, useEffect, useState } from 'react';
 import { ReactComponent as Camera } from 'assets/icons/diagnoseCamera.svg';
 import TopBarDepth2 from 'components/common/TapBarDepth2';
 import { useNavigate } from 'react-router-dom';
-import { useRecoilValue } from 'recoil';
-import { DeviceState } from 'recoil/atoms';
-import { PartState } from 'recoil/atoms';
 import { ImageState } from 'recoil/atoms';
 import { useRecoilState } from 'recoil';
 const CONSTRAINTS = { video: { facingMode: 'environment' } };
 
 function Streaming() {
-  const test1 = useRecoilValue(DeviceState);
-  const test2 = useRecoilValue(PartState);
   const [, setImageURL] = useRecoilState<string>(ImageState);
 
   const navigate = useNavigate();
@@ -96,10 +91,6 @@ function Streaming() {
         propsIsBack={true}
         rightBtnType={2}
       />
-      <div>
-        {test1}
-        {test2}
-      </div>
       <p className="text-lg text-center font-bold mt-20">
         원하시는 부위에 카메라를 대고
         <br />
