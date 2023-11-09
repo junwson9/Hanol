@@ -12,7 +12,7 @@ function ExplainRoutine() {
   };
   return (
     <div className="col-span-full flex flex-col justify-between">
-      <TapBar name={'문진하기'} />
+      <TapBar name={'두피 케어 루틴'} />
       <div>
         <div className="font-bold text-[1.125rem] text-black flex">두피 진단 결과를 바탕으로</div>
         <div className="font-bold text-[1.125rem] text-black flex">두피 케어 루틴을 추천해드려요.</div>
