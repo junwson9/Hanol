@@ -39,7 +39,6 @@ import RouteChangeTracker from 'components/RouteChangeTracker.js';
 import ScalpException from 'pages/diagnose/scalpException';
 import { useRecoilValue } from 'recoil';
 import { MemberRoleState } from 'recoil/atoms';
-import Test from 'pages/diagnose/streamingTest';
 
 function App() {
   const ROLE = useRecoilValue(MemberRoleState);
@@ -73,7 +72,6 @@ function App() {
             <Route path="/explain-routine" element={<ExplainRoutine />} />
             <Route path="/select-device" element={<SelectDevice />} />
             <Route path="/streaming" element={<Streaming />} />
-            <Route path="/test" element={<Test />} />
             <Route path="/mypage" element={<MyPage />} />
             <Route path="/IoTstreaming" element={<IoTstreaming />} />
             <Route path="/dashboard" element={<Dashboard />} />
@@ -92,7 +90,6 @@ function App() {
             <Route path="/routine-noti-setting/:member_routine_id" element={<RoutineNotiSetting />} />
             <Route path="/terms" element={<Terms />} />
             <Route path="/scalp-exception" element={<ScalpException />} />
-            <Route path="/test" element={<Test />} />
           </Routes>
         </div>
         <div>
