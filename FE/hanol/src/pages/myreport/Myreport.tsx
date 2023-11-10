@@ -82,7 +82,7 @@ const Myreport = () => {
 
   const handleValueCardClick = (arg: number) => {
     setgraphValue(arg);
-    console.log('whatvalue:', graphValue);
+    console.log('graphValue:', graphValue);
   };
 
   useEffect(() => {
@@ -173,14 +173,44 @@ const Myreport = () => {
                     <>
                       <BannerButton name="내 두피 분석 하러가기" onClick={() => handleBannerButtonClick()} />
                       <ValueCardBox>
-                        <ValueCard title="탈모" value={value6} onClick={() => handleValueCardClick(6)} />
-                        <ValueCard title="각질" value={value1} onClick={() => handleValueCardClick(1)} />
-                        <ValueCard title="피지" value={value2} onClick={() => handleValueCardClick(2)} />
+                        <ValueCard
+                          title="탈모"
+                          value={value6}
+                          onClick={() => handleValueCardClick(6)}
+                          isSelected={graphValue === 6}
+                        />
+                        <ValueCard
+                          title="각질"
+                          value={value1}
+                          onClick={() => handleValueCardClick(1)}
+                          isSelected={graphValue === 1}
+                        />
+                        <ValueCard
+                          title="피지"
+                          value={value2}
+                          onClick={() => handleValueCardClick(2)}
+                          isSelected={graphValue === 2}
+                        />
                       </ValueCardBox>
                       <ValueCardBox>
-                        <ValueCard title="홍반" value={value3} onClick={() => handleValueCardClick(3)} />
-                        <ValueCard title="염증" value={value4} onClick={() => handleValueCardClick(4)} />
-                        <ValueCard title="비듬" value={value5} onClick={() => handleValueCardClick(5)} />
+                        <ValueCard
+                          title="홍반"
+                          value={value3}
+                          onClick={() => handleValueCardClick(3)}
+                          isSelected={graphValue === 3}
+                        />
+                        <ValueCard
+                          title="염증"
+                          value={value4}
+                          onClick={() => handleValueCardClick(4)}
+                          isSelected={graphValue === 4}
+                        />
+                        <ValueCard
+                          title="비듬"
+                          value={value5}
+                          onClick={() => handleValueCardClick(5)}
+                          isSelected={graphValue === 5}
+                        />
                       </ValueCardBox>
                       <ValueGraph title="탈모" dataList={diagnosisList} graphValue={graphValue} setIndex={setIndex} />
                     </>

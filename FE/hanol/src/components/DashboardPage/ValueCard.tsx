@@ -6,13 +6,16 @@ interface Props {
   title: string;
   value?: number;
   onClick?: (arg: number) => void;
+  isSelected?: boolean;
 }
 
-const ValueCard = ({ title, value, onClick }: Props) => {
-  // console.log(title, ':', typeof value);
-  // console.log(title, ':', value);
+const ValueCard = ({ title, value, onClick, isSelected }: Props) => {
+  console.log('isselected:', isSelected, 'title', title);
   return (
-    <ValueCardBox onClick={() => onClick?.(0)}>
+    <ValueCardBox
+      onClick={() => onClick?.(0)}
+      style={isSelected ? { boxShadow: '0px 4px 4px 0px rgba(0, 0, 0, 0.10) inset' } : {}}
+    >
       <div className="value_title">{title}</div>
       <ValueDiv valuenumber={value} />
     </ValueCardBox>
