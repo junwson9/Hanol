@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import styled from 'styled-components';
 // import Hammer from 'hammerjs';
 import {
@@ -26,6 +26,8 @@ interface Props {
 }
 
 const ValueGraph = ({ title, dataList, graphValue, setIndex }: Props) => {
+  const reversedDataList = useMemo(() => dataList.slice().reverse(), [dataList]);
+
   // useEffect(() => {
   //   const myElement = document.getElementById('myElement');
   //   if (myElement) {
@@ -37,7 +39,6 @@ const ValueGraph = ({ title, dataList, graphValue, setIndex }: Props) => {
   //     });
   //   }
   // }, []);
-  console.log('타이틀:', title);
   // 그래프 커스텀
   const options = {
     // eslint-disable-next-line
@@ -83,11 +84,11 @@ const ValueGraph = ({ title, dataList, graphValue, setIndex }: Props) => {
     scales: { y: { display: false, suggestedMin: 0, suggestedMax: 3, ticks: { stepSize: 1 } } },
   };
   const data = {
-    labels: dataList?.reverse().map((data) => data.created_date.split(' ')[0].slice(2)),
+    labels: reversedDataList?.map((data) => data.created_date.split(' ')[0].slice(2)),
     datasets: [
       {
         label: `${title}`,
-        data: dataList?.reverse().map((data) => {
+        data: reversedDataList?.map((data) => {
           switch (graphValue) {
             case 1:
               return data.value1;
