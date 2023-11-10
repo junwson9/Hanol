@@ -108,6 +108,15 @@ const ScalpScaleView = ({ value1, value2, value3, value4, value5, value6 }: Prop
             colors={{ scheme: 'pastel1' }}
             animate={true}
             // motionConfig="wobbly"
+            // theme={{
+            //   grid: {
+            //     line: {
+            //       stroke: '#FBDE48',
+            //       strokeWidth: 2,
+            //       strokeDasharray: '4 4',
+            //     },
+            //   },
+            // }}
           />
         </GraphBox>
       </ScalpImageViewBox>
