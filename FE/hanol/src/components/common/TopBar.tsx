@@ -8,7 +8,7 @@ type TapBarProps = {
 function TapBar({ name, icon, logo, noMargin }: TapBarProps) {
   const marginClass = noMargin ? '' : 'mb-[2rem]';
   return (
-    <div className={`h-[3.75rem] flex items-center ${marginClass}`}>
+    <div className={` h-[3.75rem] flex items-center ${marginClass}`}>
       <div className="flex ">
         <div className="flex items-center font-bold text-[1.25rem]">
           <div className="mr-[0.3rem] ">{name}</div>
