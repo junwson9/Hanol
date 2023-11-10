@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { getMessaging, getToken } from 'firebase/messaging';
 import { MemberRoleState } from 'recoil/atoms';
 import { useSetRecoilState } from 'recoil';
-
+import { ReactComponent as HanolLogo } from '../../assets/icons/hanolLogo.svg';
 function Login() {
   const kakaoID = process.env.REACT_APP_KAKAO_CLIENT_ID;
   const APP_URI = process.env.REACT_APP_API_URL;
@@ -74,7 +74,7 @@ function Login() {
   };
   return (
     <>
-      <div className="col-span-full h-screen flex flex-col">
+      <div className="col-span-full h-screen flex flex-col justify-between">
         <div className="">
           <div className="mt-[105px] font-bold text-[18px] text-black flex">모발의 모든것</div>
           <div className=" font-bold text-[18px] text-black flex">한올에서 간편하게</div>
@@ -82,21 +82,28 @@ function Login() {
             더욱 풍성해질 당신을 항상 응원합니다.
           </div>
         </div>
-        <div className="flex justify-center mb-[5rem] col-span-full">
+        <div className="flex justify-center">
+          <HanolLogo />
+        </div>
+        <div className="mb-[9rem]">
           <KakaoLogin
             token={kakaoID || ''}
             onSuccess={kakaoSuccessHandler}
             onFail={kakaoFailHandler}
             render={(props) => (
-              <div>
-                {/* <button onClick={props.onClick}>카카오 로그인</button> */}
+              <div className="flex justify-center">
                 <IconKakaoLogin onClick={props.onClick} />
               </div>
             )}
           />
-        </div>
-        <div className="flex justify-center">
-          <button className="font-medium text-left mb-[1rem] items-center text-GrayForText underline">회원 탈퇴</button>
+          <div className="mt-[3rem] flex justify-center">
+            <button
+              className="font-medium text-left mb-[1rem] items-center text-GrayForText underline"
+              onClick={() => navigate('/')}
+            >
+              비회원으로 둘러 보기
+            </button>
+          </div>
         </div>
       </div>
     </>
