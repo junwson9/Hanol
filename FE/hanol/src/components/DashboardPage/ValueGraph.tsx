@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import styled from 'styled-components';
 // import Hammer from 'hammerjs';
 import {
@@ -19,13 +19,15 @@ import { diagnosisResultType } from 'types/DiagnosisResult';
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, PointElement, LineElement, zoomPlugin);
 
 interface Props {
-  title: string;
+  title?: string;
   dataList: diagnosisResultType[];
   graphValue: number;
   setIndex: (arg: number) => void;
 }
 
 const ValueGraph = ({ title, dataList, graphValue, setIndex }: Props) => {
+  const reversedDataList = useMemo(() => dataList.slice().reverse(), [dataList]);
+
   // useEffect(() => {
   //   const myElement = document.getElementById('myElement');
   //   if (myElement) {
@@ -37,7 +39,6 @@ const ValueGraph = ({ title, dataList, graphValue, setIndex }: Props) => {
   //     });
   //   }
   // }, []);
-
   // 그래프 커스텀
   const options = {
     // eslint-disable-next-line
@@ -83,27 +84,11 @@ const ValueGraph = ({ title, dataList, graphValue, setIndex }: Props) => {
     scales: { y: { display: false, suggestedMin: 0, suggestedMax: 3, ticks: { stepSize: 1 } } },
   };
   const data = {
-    // labels: [
-    //   '4주 전',
-    //   '3주 전',
-    //   '2주 전',
-    //   '1주 전',
-    //   '4주 전',
-    //   '3주 전',
-    //   '2주 전',
-    //   '1주 전',
-    //   '4주 전',
-    //   '3주 전',
-    //   '2주 전',
-    //   '1주 전',
-    // ],
-    labels: dataList?.reverse().map((data) => data.created_date.split(' ')[0].slice(2)),
+    labels: reversedDataList?.map((data) => data.created_date.split(' ')[0].slice(2)),
     datasets: [
       {
         label: `${title}`,
-        // data: [123403, 123603, 125079, 126030, 123403, 123603, 125079, 126030, 123403, 123603, 125079, 126030],
-        // data: artistLikesCountperWeek.reverse().map((data) => data.scrapCount),
-        data: dataList?.reverse().map((data) => {
+        data: reversedDataList?.map((data) => {
           switch (graphValue) {
             case 1:
               return data.value1;
