@@ -75,6 +75,7 @@ build_client:
       echo "스프링 서버 빌드에 필요한 파일 복사"  # Secure Files을 사용한 빌드 작업 수행
       cp ~/config/client/.env.prod ./FE/hanol/
       ls -al FE/hanol/
+      cat FE/hanol/.env.prod
 
       # 도커 로그인
       echo "DOCKER USERNAME = $DOCKER_USERNAME"
