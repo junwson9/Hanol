@@ -87,7 +87,7 @@ build_client:
       image_name="hanol-client"
       
       # Dockerfile을 사용하여 이미지 빌드
-      docker build -t ${image_name}:fe --platform linux/amd64 ./FE/hanol
+      docker build -t ${image_name}:latest --platform linux/amd64 ./FE/hanol
 
       # container 실행 여부 확인
       if docker ps --format "{{.Names}}" | grep -q "$container_name"; then
