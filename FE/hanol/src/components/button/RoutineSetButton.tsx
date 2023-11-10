@@ -1,4 +1,4 @@
-// RoutineSetButton.tsx
+import React from 'react';
 import { ReactComponent as UnActiveCheck } from 'assets/icons/check-unactive.svg';
 import { ReactComponent as Check } from 'assets/icons/check.svg';
 // import { useState } from 'react';
@@ -19,7 +19,20 @@ function RoutineSetButton({ routineName, active, onClick }: RoutineSetButtonProp
         onClick={onClick}
       >
         <div>{active ? <Check className=" ml-2.5" /> : <UnActiveCheck className="ml-2.5 " />}</div>
-        <div className="mr-2.5">{routineName}</div>
+        <div className="mr-2.5 text-left">
+          {routineName.includes('\\n') ? (
+            <div className="whitespace-pre-line">
+              {routineName.split('\\n').map((line, index) => (
+                <React.Fragment key={index}>
+                  {line}
+                  <br />
+                </React.Fragment>
+              ))}
+            </div>
+          ) : (
+            routineName
+          )}
+        </div>
       </div>
     </div>
   );
