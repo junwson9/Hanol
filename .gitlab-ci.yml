@@ -73,7 +73,7 @@ build_client:
 
       # 파일 복사
       echo "스프링 서버 빌드에 필요한 파일 복사"  # Secure Files을 사용한 빌드 작업 수행
-      cp ~/config/server/.env.prod ./FE/hanol/
+      cp ~/config/client/.env.prod ./FE/hanol/
       ls -al FE/hanol/
 
       # 도커 로그인
