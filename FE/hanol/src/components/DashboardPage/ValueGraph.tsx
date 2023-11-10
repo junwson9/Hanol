@@ -37,7 +37,7 @@ const ValueGraph = ({ title, dataList, graphValue, setIndex }: Props) => {
   //     });
   //   }
   // }, []);
-
+  console.log('타이틀:', title);
   // 그래프 커스텀
   const options = {
     // eslint-disable-next-line

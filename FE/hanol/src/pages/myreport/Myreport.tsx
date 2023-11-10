@@ -83,7 +83,6 @@ const Myreport = () => {
   const handleValueCardClick = (arg: number) => {
     setgraphValue(arg);
   };
-
   const getValueTitle = (arg: number) => {
     switch (arg) {
       case 1:
@@ -100,7 +99,6 @@ const Myreport = () => {
         return '탈모';
     }
   };
-
   useEffect(() => {
     axiosInstance
       .get('/diagnoses?limit=10')
@@ -233,7 +231,12 @@ const Myreport = () => {
                           isSelected={graphValue === 5}
                         />
                       </ValueCardBox>
-                      <ValueGraph title="탈모" dataList={diagnosisList} graphValue={graphValue} setIndex={setIndex} />
+                      <ValueGraph
+                        title={getValueTitle(graphValue)}
+                        dataList={diagnosisList}
+                        graphValue={graphValue}
+                        setIndex={setIndex}
+                      />
                     </>
                   )}
                 </div>
