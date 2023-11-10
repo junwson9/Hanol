@@ -1,5 +1,4 @@
 /// <reference lib="webworker" />
-/* eslint-disable */
 /* eslint-disable no-restricted-globals */
 
 // This service worker can be customized!
@@ -11,7 +10,7 @@
 
 import { clientsClaim } from 'workbox-core';
 import { ExpirationPlugin } from 'workbox-expiration';
-import { createHandlerBoundToURL, cleanupOutdatedCaches } from 'workbox-precaching';
+import { createHandlerBoundToURL, precacheAndRoute } from 'workbox-precaching';
 import { registerRoute } from 'workbox-routing';
 import { StaleWhileRevalidate } from 'workbox-strategies';
 
@@ -27,8 +26,8 @@ if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
   navigator.serviceWorker.controller.postMessage({ type: 'SKIP_WAITING' });
 }
 // 캐시 의심 부분
-const ignored = self.__WB_MANIFEST;
-cleanupOutdatedCaches();
+precacheAndRoute(self.__WB_MANIFEST);
+
 // Set up App Shell-style routing, so that all navigation requests
 // are fulfilled with your index.html shell. Learn more at
 // https://developers.google.com/web/fundamentals/architecture/app-shell

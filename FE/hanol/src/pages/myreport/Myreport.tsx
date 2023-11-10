@@ -16,8 +16,8 @@ import ScalpImageView from 'components/DetailPage/ScalpImageView';
 import DateNavigateModal from 'components/DetailPage/DateNavigateModal';
 import { diagnosisResultType } from 'types/DiagnosisResult';
 import TapBar from 'components/common/TopBar';
-import { MemberRoleState } from 'recoil/atoms';
-import { useRecoilValue } from 'recoil';
+// import { MemberRoleState } from 'recoil/atoms';
+// import { useRecoilValue } from 'recoil';
 
 // const initData: diagnosisResultType[] = [
 //   {
@@ -38,7 +38,7 @@ import { useRecoilValue } from 'recoil';
 
 const Myreport = () => {
   const navigate = useNavigate();
-  const Role = useRecoilValue(MemberRoleState);
+  // const Role = useRecoilValue(MemberRoleState);
 
   //대시보드
   const [isTabActive, setTabActive] = useState<boolean>(true);
@@ -82,9 +82,23 @@ const Myreport = () => {
 
   const handleValueCardClick = (arg: number) => {
     setgraphValue(arg);
-    console.log('whatvalue:', graphValue);
   };
-
+  const getValueTitle = (arg: number) => {
+    switch (arg) {
+      case 1:
+        return '각질';
+      case 2:
+        return '피지';
+      case 3:
+        return '홍반';
+      case 4:
+        return '염증';
+      case 5:
+        return '비듬';
+      case 6:
+        return '탈모';
+    }
+  };
   useEffect(() => {
     axiosInstance
       .get('/diagnoses?limit=10')
@@ -132,7 +146,7 @@ const Myreport = () => {
       <TopTab active={isTabActive} title1="대시보드" title2="상세보기" onTabClick={handleTabClick} />
       {isTabActive ? (
         <>
-          {Role === 'GUEST' ? (
+          {/* {Role === 'GUEST' ? (
             <DashBoardBox>
               <div className="grid grid-cols-6 gap-[10px] mx-[23px]">
                 <div className="col-span-full">
@@ -140,16 +154,21 @@ const Myreport = () => {
                     <>
                       <BannerButton name="내 두피 분석 하러가기" onClick={() => handleBannerButtonClick()} />
                       <ValueCardBox>
-                        <ValueCard title="탈모" value={5} onClick={() => handleValueCardClick(6)} />
-                        <ValueCard title="각질" value={5} onClick={() => handleValueCardClick(1)} />
-                        <ValueCard title="피지" value={5} onClick={() => handleValueCardClick(2)} />
+                        <ValueCard title={getValueTitle(6)} value={5} onClick={() => handleValueCardClick(6)} />
+                        <ValueCard title={getValueTitle(1)} value={5} onClick={() => handleValueCardClick(1)} />
+                        <ValueCard title={getValueTitle(2)} value={5} onClick={() => handleValueCardClick(2)} />
                       </ValueCardBox>
                       <ValueCardBox>
-                        <ValueCard title="홍반" value={5} onClick={() => handleValueCardClick(3)} />
-                        <ValueCard title="염증" value={5} onClick={() => handleValueCardClick(4)} />
-                        <ValueCard title="비듬" value={5} onClick={() => handleValueCardClick(5)} />
+                        <ValueCard title={getValueTitle(3)} value={5} onClick={() => handleValueCardClick(3)} />
+                        <ValueCard title={getValueTitle(4)} value={5} onClick={() => handleValueCardClick(4)} />
+                        <ValueCard title={getValueTitle(5)} value={5} onClick={() => handleValueCardClick(5)} />
                       </ValueCardBox>
-                      <ValueGraph title="탈모" dataList={diagnosisList} graphValue={graphValue} setIndex={setIndex} />
+                      <ValueGraph
+                        title={getValueTitle(graphValue)}
+                        dataList={diagnosisList}
+                        graphValue={graphValue}
+                        setIndex={setIndex}
+                      />
                     </>
                   )}
                 </div>
@@ -165,40 +184,75 @@ const Myreport = () => {
                 </div>
               </div>
             </DashBoardBox>
-          ) : (
-            <DashBoardBox>
-              <div className="grid grid-cols-6 gap-[10px] mx-[23px]">
-                <div className="col-span-full">
-                  {diagnosisList && (
-                    <>
-                      <BannerButton name="내 두피 분석 하러가기" onClick={() => handleBannerButtonClick()} />
-                      <ValueCardBox>
-                        <ValueCard title="탈모" value={value6} onClick={() => handleValueCardClick(6)} />
-                        <ValueCard title="각질" value={value1} onClick={() => handleValueCardClick(1)} />
-                        <ValueCard title="피지" value={value2} onClick={() => handleValueCardClick(2)} />
-                      </ValueCardBox>
-                      <ValueCardBox>
-                        <ValueCard title="홍반" value={value3} onClick={() => handleValueCardClick(3)} />
-                        <ValueCard title="염증" value={value4} onClick={() => handleValueCardClick(4)} />
-                        <ValueCard title="비듬" value={value5} onClick={() => handleValueCardClick(5)} />
-                      </ValueCardBox>
-                      <ValueGraph title="탈모" dataList={diagnosisList} graphValue={graphValue} setIndex={setIndex} />
-                    </>
-                  )}
-                </div>
+          ) : ( */}
+          <DashBoardBox>
+            <div className="grid grid-cols-6 gap-[10px] mx-[23px]">
+              <div className="col-span-full">
+                {diagnosisList && (
+                  <>
+                    <BannerButton name="내 두피 분석 하러가기" onClick={() => handleBannerButtonClick()} />
+                    <ValueCardBox>
+                      <ValueCard
+                        title="탈모"
+                        value={value6}
+                        onClick={() => handleValueCardClick(6)}
+                        isSelected={graphValue === 6}
+                      />
+                      <ValueCard
+                        title="각질"
+                        value={value1}
+                        onClick={() => handleValueCardClick(1)}
+                        isSelected={graphValue === 1}
+                      />
+                      <ValueCard
+                        title="피지"
+                        value={value2}
+                        onClick={() => handleValueCardClick(2)}
+                        isSelected={graphValue === 2}
+                      />
+                    </ValueCardBox>
+                    <ValueCardBox>
+                      <ValueCard
+                        title="홍반"
+                        value={value3}
+                        onClick={() => handleValueCardClick(3)}
+                        isSelected={graphValue === 3}
+                      />
+                      <ValueCard
+                        title="염증"
+                        value={value4}
+                        onClick={() => handleValueCardClick(4)}
+                        isSelected={graphValue === 4}
+                      />
+                      <ValueCard
+                        title="비듬"
+                        value={value5}
+                        onClick={() => handleValueCardClick(5)}
+                        isSelected={graphValue === 5}
+                      />
+                    </ValueCardBox>
+                    <ValueGraph
+                      title={getValueTitle(graphValue)}
+                      dataList={diagnosisList}
+                      // dataList={reversedDiagnosisList}
+                      graphValue={graphValue}
+                      setIndex={setIndex}
+                    />
+                  </>
+                )}
               </div>
-              <DivisionRectangle />
-              <div className="grid grid-cols-6 gap-[10px] mx-[23px]">
-                <div className="col-span-full">
-                  <RecommendCareRoutine />
-                  <Button name="두피 케어 루틴 추천 받기" onClick={() => handleButtonClick()} />
-                  <br />
-                  <br />
-                  <br />
-                </div>
+            </div>
+            <DivisionRectangle />
+            <div className="grid grid-cols-6 gap-[10px] mx-[23px]">
+              <div className="col-span-full">
+                <RecommendCareRoutine />
+                <Button name="두피 케어 루틴 추천 받기" onClick={() => handleButtonClick()} />
+                <br />
+                <br />
+                <br />
               </div>
-            </DashBoardBox>
-          )}
+            </div>
+          </DashBoardBox>
         </>
       ) : (
         <div className="grid grid-cols-6 gap-[10px] mx-[23px]">
