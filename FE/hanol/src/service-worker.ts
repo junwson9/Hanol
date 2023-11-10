@@ -1,4 +1,5 @@
 /// <reference lib="webworker" />
+/* eslint-disable */
 /* eslint-disable no-restricted-globals */
 
 // This service worker can be customized!
@@ -10,7 +11,7 @@
 
 import { clientsClaim } from 'workbox-core';
 import { ExpirationPlugin } from 'workbox-expiration';
-import { createHandlerBoundToURL, precacheAndRoute } from 'workbox-precaching';
+import { createHandlerBoundToURL, cleanupOutdatedCaches } from 'workbox-precaching';
 import { registerRoute } from 'workbox-routing';
 import { StaleWhileRevalidate } from 'workbox-strategies';
 
@@ -24,8 +25,8 @@ clientsClaim();
 // even if you decide not to use precaching. See https://cra.link/PWA
 
 // 캐시 의심 부분
-precacheAndRoute(self.__WB_MANIFEST);
-
+const ignored = self.__WB_MANIFEST;
+cleanupOutdatedCaches();
 // Set up App Shell-style routing, so that all navigation requests
 // are fulfilled with your index.html shell. Learn more at
 // https://developers.google.com/web/fundamentals/architecture/app-shell
