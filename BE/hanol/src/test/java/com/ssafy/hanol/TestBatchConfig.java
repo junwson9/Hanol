@@ -18,8 +18,4 @@ import org.springframework.context.annotation.Configuration;
 @ComponentScan(basePackages = "com.ssafy.hanol.routine")
 public class TestBatchConfig {
 
-    @Bean
-    public JobLauncherTestUtils jobLauncherTestUtils() {
-        return new JobLauncherTestUtils();
-    }
 }

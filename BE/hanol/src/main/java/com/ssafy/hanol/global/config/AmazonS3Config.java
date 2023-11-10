@@ -6,9 +6,11 @@ import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 @Component
+@Profile("!test") // 테스트 프로파일이 아닐 때만 적용
 public class AmazonS3Config {
 
     @Value(("${cloud.aws.credentials.access-key}"))
