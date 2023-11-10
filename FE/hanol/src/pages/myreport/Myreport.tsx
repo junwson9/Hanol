@@ -82,7 +82,23 @@ const Myreport = () => {
 
   const handleValueCardClick = (arg: number) => {
     setgraphValue(arg);
-    console.log('graphValue:', graphValue);
+  };
+
+  const getValueTitle = (arg: number) => {
+    switch (arg) {
+      case 1:
+        return '각질';
+      case 2:
+        return '피지';
+      case 3:
+        return '홍반';
+      case 4:
+        return '염증';
+      case 5:
+        return '비듬';
+      case 6:
+        return '탈모';
+    }
   };
 
   useEffect(() => {
@@ -140,16 +156,21 @@ const Myreport = () => {
                     <>
                       <BannerButton name="내 두피 분석 하러가기" onClick={() => handleBannerButtonClick()} />
                       <ValueCardBox>
-                        <ValueCard title="탈모" value={5} onClick={() => handleValueCardClick(6)} />
-                        <ValueCard title="각질" value={5} onClick={() => handleValueCardClick(1)} />
-                        <ValueCard title="피지" value={5} onClick={() => handleValueCardClick(2)} />
+                        <ValueCard title={getValueTitle(6)} value={5} onClick={() => handleValueCardClick(6)} />
+                        <ValueCard title={getValueTitle(1)} value={5} onClick={() => handleValueCardClick(1)} />
+                        <ValueCard title={getValueTitle(2)} value={5} onClick={() => handleValueCardClick(2)} />
                       </ValueCardBox>
                       <ValueCardBox>
-                        <ValueCard title="홍반" value={5} onClick={() => handleValueCardClick(3)} />
-                        <ValueCard title="염증" value={5} onClick={() => handleValueCardClick(4)} />
-                        <ValueCard title="비듬" value={5} onClick={() => handleValueCardClick(5)} />
+                        <ValueCard title={getValueTitle(3)} value={5} onClick={() => handleValueCardClick(3)} />
+                        <ValueCard title={getValueTitle(4)} value={5} onClick={() => handleValueCardClick(4)} />
+                        <ValueCard title={getValueTitle(5)} value={5} onClick={() => handleValueCardClick(5)} />
                       </ValueCardBox>
-                      <ValueGraph title="탈모" dataList={diagnosisList} graphValue={graphValue} setIndex={setIndex} />
+                      <ValueGraph
+                        title={getValueTitle(graphValue)}
+                        dataList={diagnosisList}
+                        graphValue={graphValue}
+                        setIndex={setIndex}
+                      />
                     </>
                   )}
                 </div>

@@ -3,14 +3,13 @@ import styled from 'styled-components';
 import ValueDiv from 'components/common/ValueDiv';
 
 interface Props {
-  title: string;
+  title?: string;
   value?: number;
   onClick?: (arg: number) => void;
   isSelected?: boolean;
 }
 
 const ValueCard = ({ title, value, onClick, isSelected }: Props) => {
-  console.log('isselected:', isSelected, 'title', title);
   return (
     <ValueCardBox
       onClick={() => onClick?.(0)}
