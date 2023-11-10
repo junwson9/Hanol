@@ -26,6 +26,8 @@ type DailyRoutine = {
   routine_name: string;
   member_routine_log_id: number;
   member_routine_id: number | null;
+  is_notification_active: boolean | null;
+  notification_time: string;
 };
 
 function Routine() {
@@ -229,6 +231,8 @@ function Routine() {
                 routine_name={routine.routine_name}
                 member_routine_log_id={routine.member_routine_log_id}
                 member_routine_id={routine.member_routine_id}
+                is_notification_active={routine.is_notification_active}
+                notification_time={routine.notification_time}
                 onDataChange={handleDataChange}
               />
             </div>

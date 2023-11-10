@@ -15,7 +15,6 @@ import ExplainDiagnose from 'pages/diagnose/explainDiagnose';
 import SelectDevice from 'pages/diagnose/selectDevice';
 import Streaming from 'pages/diagnose/streaming';
 import IoTstreaming from 'pages/diagnose/IoTstreaming';
-import Test from 'components/diagnosisResultPage/ResultSender';
 import MyPage from 'pages/about/mypage';
 import Dashboard from 'pages/myreport/MyreportDashBoard';
 import MyDetail from 'pages/myreport/MyreportDetailPage';
@@ -40,10 +39,18 @@ import RouteChangeTracker from 'components/RouteChangeTracker.js';
 import ScalpException from 'pages/diagnose/scalpException';
 import { useRecoilValue } from 'recoil';
 import { MemberRoleState } from 'recoil/atoms';
+import { useEffect } from 'react';
 
 function App() {
   const ROLE = useRecoilValue(MemberRoleState);
   const location = useLocation();
+  useEffect(() => {
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.ready.then((registration) => {
+        registration.update();
+      });
+    }
+  }, [location]);
   const showNavBarPaths = [
     '/examination',
     '/routine',
@@ -63,7 +70,6 @@ function App() {
         <div className="grid grid-cols-6 gap-[10px] mx-[23px]">
           <Routes>
             <Route path="/diagnose" element={<ExplainDiagnose />} />
-            <Route path="/login" element={<Login />} />
             <Route path="/login-done" element={<LoginDone />} />
             <Route path="/set-routine" element={<SetRoutine />} />
             <Route path="/signup-birth" element={<SignupBirth />} />
@@ -73,7 +79,6 @@ function App() {
             <Route path="/explain-routine" element={<ExplainRoutine />} />
             <Route path="/select-device" element={<SelectDevice />} />
             <Route path="/streaming" element={<Streaming />} />
-            <Route path="/test" element={<Test />} />
             <Route path="/mypage" element={<MyPage />} />
             <Route path="/IoTstreaming" element={<IoTstreaming />} />
             <Route path="/dashboard" element={<Dashboard />} />
@@ -98,6 +103,7 @@ function App() {
           <Routes>
             <Route path="/login-error" element={<LoginError />} />
             <Route path="/diagnosis" element={<DiagnosisDetail />} />
+            <Route path="/login" element={<Login />} />
 
             <Route path="/myreport-explain" element={<MyreportNonMember />} />
 

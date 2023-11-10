@@ -40,7 +40,10 @@ function NavBar() {
   }, [location]);
 
   return (
-    <div className="fixed bottom-0 h-[4.5rem] max-w-[450px] w-full rounded-xl border bg-White" style={{ zIndex: 20 }}>
+    <div
+      className="fixed bottom-0 h-[4.5rem] max-w-[450px] w-full px-[1rem] rounded-xl border bg-White"
+      style={{ zIndex: 20 }}
+    >
       <div className="flex justify-between">
         <button
           className="flex flex-col items-center justify-center w-[66px] h-[66px] gap-[7px]"
