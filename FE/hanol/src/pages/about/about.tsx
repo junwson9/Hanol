@@ -23,12 +23,19 @@ function About() {
   const handleLogout = async () => {
     try {
       const messaging = getMessaging();
-      const token = await getToken(messaging, {
-        vapidKey: process.env.REACT_APP_VAPID_KEY,
-      });
-      if (token) {
-        await axiosInstance.patch(`/members/logout`, { fcm_token: token });
+
+      // Check if the browser supports notifications
+      if (messaging && Notification.permission === 'granted') {
+        const token = await getToken(messaging, {
+          vapidKey: process.env.REACT_APP_VAPID_KEY,
+        });
+
+        // If the user has granted notification permissions, send the FCM token
+        if (token) {
+          await axiosInstance.patch(`/members/logout`, { fcm_token: token });
+        }
       }
+
       localStorage.removeItem('access_token');
       localStorage.removeItem('refresh_token');
       setMemberRole('GUEST');
