@@ -110,7 +110,7 @@ const ValueGraph = ({ title, dataList, graphValue, setIndex }: Props) => {
             'rgba(251, 222, 72, 0.5)',
             'rgba(234, 83, 111, .5)',
           ],
-          lineWidth: 3,
+          lineWidth: 2,
         },
       },
     },

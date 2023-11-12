@@ -16,6 +16,8 @@ import ScalpImageView from 'components/DetailPage/ScalpImageView';
 import DateNavigateModal from 'components/DetailPage/DateNavigateModal';
 import { diagnosisResultType } from 'types/DiagnosisResult';
 import TapBar from 'components/common/TopBar';
+import AlopeciaDiagnosis from 'components/diagnosisResultPage/AlopeciaDiagnosis';
+// import DiagnosisDetailResult from 'components/diagnosisResultPage/DiagnosisDetailResult';
 // import { MemberRoleState } from 'recoil/atoms';
 // import { useRecoilValue } from 'recoil';
 
@@ -272,6 +274,8 @@ const Myreport = () => {
                     onClick={() => setIsModalOpen(true)}
                     length={diagnosisList.length}
                   />
+                  <AlopeciaDiagnosis valuenumber={diagnosisList[index].value6} />
+
                   <ScalpScaleView
                     value1={diagnosisList[index].value1}
                     value2={diagnosisList[index].value2}
@@ -280,6 +284,8 @@ const Myreport = () => {
                     value5={diagnosisList[index].value5}
                     value6={diagnosisList[index].value6}
                   />
+                  {/* <DiagnosisDetailResult viewBoolean={viewBoolean} /> */}
+
                   <ScalpImageView
                     sub_title={diagnosisList[index].scan_part}
                     // scalp_img="../.../src/assets/images/scalp.jpg"
