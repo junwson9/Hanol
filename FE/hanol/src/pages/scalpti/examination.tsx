@@ -111,7 +111,7 @@ function Examination() {
               <div className="flex justify-center">
                 <img className="w-[12.5rem] h-[12.rem]" src={Image2} alt="Image2" />
               </div>
-              <div className="my-[2rem]">
+              <div className="my-[2rem] sticky bottom-5 mb-[3rem] z-1">
                 <FloatingButton name={'두피TI 시작하기'} onClick={navToSetScalp} />
               </div>
             </div>

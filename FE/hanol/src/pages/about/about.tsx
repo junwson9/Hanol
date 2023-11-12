@@ -45,12 +45,12 @@ function About() {
     }
   };
 
-  const handleterms = () => {
-    navigate('/terms');
-  };
-
   const handleToSurvey = () => {
     window.open('https://naver.me/xVAGzMK5', '_blank');
+  };
+
+  const handleToAbout = () => {
+    window.open('https://acoustic-epoch-1b4.notion.site/HANOL-d428de0d90a841a29b8f484041d51179?pvs=4', '_blank');
   };
 
   const handlenotisettings = () => {
@@ -108,11 +108,10 @@ function About() {
             알림설정
           </button>
         )}
-        <button className="font-bold text-[1.125rem] w-full my-[1rem] text-left">ABOUT</button>
-        <button onClick={handleterms} className="font-bold text-[1.125rem] w-full my-[1rem] text-left">
-          약관 및 정책
+        <button className="font-bold text-[1.125rem] w-full my-[1rem] text-left" onClick={handleToAbout}>
+          ABOUT
         </button>
-        <button className="font-bold text-[1.125rem] w-full my-[1rem] text-left">오픈소스 라이브러리</button>
+
         <button className="font-bold text-[1.125rem] text-Main w-full my-[1rem] text-left" onClick={handleToSurvey}>
           설문조사 참여하고 커피 받기
         </button>

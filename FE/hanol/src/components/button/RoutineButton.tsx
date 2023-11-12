@@ -54,6 +54,12 @@ function RoutineButton(props: RoutineButtonProps) {
   };
 
   const handleTOAlarm = () => {
+    const currentDate = new Date();
+    const notificationDate = new Date(props.notification_time);
+
+    if (currentDate > notificationDate) {
+      return; // 이전 날짜이므로 클릭 불가능
+    }
     navigate(`/routine-noti-setting/${props.member_routine_id}`);
   };
 

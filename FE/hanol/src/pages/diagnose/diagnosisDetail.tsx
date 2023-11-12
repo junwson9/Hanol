@@ -24,7 +24,7 @@ const DiagnosisDetail = () => {
   const scanPart = useRecoilValue(PartState);
   const diagnoseId = useRecoilValue(diagnoseIdState);
   // viewBoolean 배열 초기화
-  console.log(diagnoseId);
+  console.log('스캔부위', scanPart);
   const initialViewBoolean = new Array(6).fill(false);
   const [viewBoolean, setViewBoolean] = useState(initialViewBoolean);
 
