@@ -135,6 +135,11 @@ const Myreport = () => {
     setValue5(diagnosisList?.[index].value5);
     setValue6(diagnosisList?.[index].value6);
   }, [index]);
+
+  useEffect(() => {
+    setIndex(0);
+  }, [isTabActive]);
+
   return (
     <MyreportContainer>
       <div className="grid grid-cols-6 gap-[10px] mx-[23px]">
