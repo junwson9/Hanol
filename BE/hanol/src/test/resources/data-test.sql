@@ -1,6 +1,6 @@
 /* 루틴 데이터 */
-INSERT INTO routine (routine_name, is_default, is_value_1, is_value_2, is_value_3, is_value_4, is_value_5, is_value_6) VALUES ('두피 전용 팩하기', 0, 1, 0, 0, 0, 0, 0);
-INSERT INTO routine (routine_name, is_default, is_value_1, is_value_2, is_value_3, is_value_4, is_value_5, is_value_6) VALUES ('따끈하게 적신 스팀 타월로 머리 찜질하기', 0, 1, 0, 0, 0, 0, 0);
+INSERT INTO routine (routine_name, is_default, is_value_1, is_value_2, is_value_3, is_value_4, is_value_5, is_value_6) VALUES ('두피 전용 팩하기1234', 0, 1, 0, 0, 0, 0, 0);
+INSERT INTO routine (routine_name, is_default, is_value_1, is_value_2, is_value_3, is_value_4, is_value_5, is_value_6) VALUES ('따끈하게 적신 스팀 타월로 머리 찜질하기000', 0, 1, 0, 0, 0, 0, 0);
 INSERT INTO routine (routine_name, is_default, is_value_1, is_value_2, is_value_3, is_value_4, is_value_5, is_value_6) VALUES ('호호바 오일 사용해서 머리 감기', 0, 1, 0, 0, 0, 0, 0);
 INSERT INTO routine (routine_name, is_default, is_value_1, is_value_2, is_value_3, is_value_4, is_value_5, is_value_6) VALUES ('샴푸 후 두피에서 모발 순으로 건조하기', 1, 0, 0, 0, 0, 0, 0);
 INSERT INTO routine (routine_name, is_default, is_value_1, is_value_2, is_value_3, is_value_4, is_value_5, is_value_6) VALUES ('피부가 회복되는 오후 10시에서 새벽 2시에 샴푸하기', 0, 0, 1, 0, 0, 0, 0);
@@ -36,16 +36,16 @@ INSERT INTO routine (routine_name, is_default, is_value_1, is_value_2, is_value_
 INSERT INTO routine (routine_name, is_default, is_value_1, is_value_2, is_value_3, is_value_4, is_value_5, is_value_6) VALUES ('아누카 사과 먹기', 0, 0, 0, 0, 0, 0, 1);
 
 /* 회원 테스트 데이터 */
-INSERT INTO MEMBER (name, email, gender, birth, oauth_provider, oauth_id, role, created_date) VALUES ('test1', "ssafy1@ssafy.com", 1, '1999-01-05 00:00:00.000000', 'KAKAO', 'test1', 1, now());
-INSERT INTO MEMBER (name, email, gender, birth, oauth_provider, oauth_id, role, created_date) VALUES ('test2', "ssafy2@ssafy.com", 1, '1999-10-05 00:00:00.000000', 'KAKAO', 'test2', 1, now());
-INSERT INTO MEMBER (name, email, gender, birth, oauth_provider, oauth_id, role, created_date) VALUES ('test3', "ssafy3@ssafy.com", 1, '1999-10-05 00:00:00.000000', 'KAKAO', 'test3', 1, now());
+INSERT INTO member (name, email, gender, birth, oauth_provider, oauth_id, role, created_date) VALUES ('test1', 'ssafy1@ssafy.com', 1, '1999-01-05 00:00:00.000000', 'KAKAO', 'test1', 1, now());
+INSERT INTO member (name, email, gender, birth, oauth_provider, oauth_id, role, created_date) VALUES ('test2', 'ssafy2@ssafy.com', 1, '1999-10-05 00:00:00.000000', 'KAKAO', 'test2', 1, now());
+INSERT INTO member (name, email, gender, birth, oauth_provider, oauth_id, role, created_date) VALUES ('test3', 'ssafy3@ssafy.com', 1, '1999-10-05 00:00:00.000000', 'KAKAO', 'test3', 1, now());
 
 /* 회원별 루틴 테스트 데이터 */
-INSERT INTO Member_Routine (member_id, routine_id, is_notification_active, notification_time, created_date) VALUES (1, 3, 1, '13:00:00', now());
-INSERT INTO Member_Routine (member_id, routine_id, is_notification_active, notification_time, created_date) VALUES (1, 6, 1, '19:00:00', now());
-INSERT INTO Member_Routine (member_id, routine_id, is_notification_active, notification_time, created_date) VALUES (1, 9, 0, '13:00:00', now());
-INSERT INTO Member_Routine (member_id, routine_id, is_notification_active, notification_time, created_date) VALUES (1, 30, 0, '09:00:00', now());
-INSERT INTO Member_Routine (member_id, routine_id, is_notification_active, notification_time, created_date) VALUES (2, 5, 1, '13:00:00', now());
+INSERT INTO member_routine (member_id, routine_id, is_notification_active, notification_time, created_date) VALUES (1, 3, 1, '13:00:00', now());
+INSERT INTO member_routine (member_id, routine_id, is_notification_active, notification_time, created_date) VALUES (1, 6, 1, '19:00:00', now());
+INSERT INTO member_routine (member_id, routine_id, is_notification_active, notification_time, created_date) VALUES (1, 9, 0, '13:00:00', now());
+INSERT INTO member_routine (member_id, routine_id, is_notification_active, notification_time, created_date) VALUES (1, 30, 0, '09:00:00', now());
+INSERT INTO member_routine (member_id, routine_id, is_notification_active, notification_time, created_date) VALUES (2, 5, 1, '13:00:00', now());
 
 /* 알림 설정 테스트 데이터*/
 INSERT INTO notification_configuration (member_id, is_check_routine_active, is_individual_routine_active, created_date) values (1, 1, 1, now());

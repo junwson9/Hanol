@@ -36,7 +36,7 @@ public class DailyRoutineJobIntegrationTest {
     @AfterEach
     public void cleanUp() {
         // 데이터베이스 정리
-        jpaMemberRoutineLogRepository.deleteAllInBatch();
+//        jpaMemberRoutineLogRepository.deleteAllInBatch();
     }
 
     @Test
@@ -45,11 +45,14 @@ public class DailyRoutineJobIntegrationTest {
         // 테스트 전 memberRoutineLog가 비어 있는 지 확인
         // 테스트 후 memberRoutine 개수와 memberRoutineLog 개수가 같은 지 검증 (단, 중간에 memberRoutine을 변경 요청이 없는 환경을 전제로 함)
 
+        System.out.println("테스트 시작");
         //given
         long initialCount = jpaMemberRoutineLogRepository.count();
+        System.out.println("시작 개수: "+initialCount);
         assertThat(initialCount).isEqualTo(0);
 
         long goalCount = jpaMemberRoutineRepository.count();
+        System.out.println("멤버 루틴 goal count: "+goalCount);
 
         //when
         JobExecution jobExecution = jobLauncherTestUtils.launchJob();
@@ -58,6 +61,7 @@ public class DailyRoutineJobIntegrationTest {
         //then
         assertThat(jobExecution.getStatus()).isEqualTo(BatchStatus.COMPLETED);
         assertThat(afterCount).isEqualTo(goalCount);
+        System.out.println("after count:"+afterCount);
     }
 
 

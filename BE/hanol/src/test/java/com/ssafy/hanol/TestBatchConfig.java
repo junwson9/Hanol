@@ -1,9 +1,7 @@
 package com.ssafy.hanol;
 
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
-import org.springframework.batch.test.JobLauncherTestUtils;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
@@ -15,7 +13,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @EnableAutoConfiguration
 @EnableBatchProcessing
-@ComponentScan(basePackages = "com.ssafy.hanol.routine")
+@ComponentScan(basePackages = "com.ssafy.hanol")
 public class TestBatchConfig {
 
 }
