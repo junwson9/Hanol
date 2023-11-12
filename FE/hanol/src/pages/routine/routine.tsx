@@ -48,7 +48,13 @@ function Routine() {
   // 데이트박스 클릭되는곳
   const handleDateBoxClick = (dateInfo: DateInfo) => {
     // console.log('여기', selectedDateInfo);
-    console.log('저기', dateInfo);
+    const currentDate = new Date();
+    const clickedDate = new Date(dateInfo.year, dateInfo.month - 1, dateInfo.day);
+
+    // 클릭된 날짜가 현재 날짜보다 미래인 경우 클릭 이벤트 처리하지 않음
+    if (clickedDate > currentDate) {
+      return;
+    }
     setSelectedDateInfo(dateInfo);
     const dateInfoString = `${dateInfo.year}-${dateInfo.month.toString().padStart(2, '0')}-${dateInfo.day
       .toString()
