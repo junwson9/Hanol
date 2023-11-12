@@ -81,7 +81,39 @@ const ValueGraph = ({ title, dataList, graphValue, setIndex }: Props) => {
       },
     },
     elements: { point: { radius: 5 } },
-    scales: { y: { display: false, suggestedMin: 0, suggestedMax: 3, ticks: { stepSize: 1 } } },
+    scales: {
+      y: {
+        display: true,
+        suggestedMin: 0,
+        suggestedMax: 3,
+        ticks: {
+          stepSize: 1,
+          // eslint-disable-next-line
+          callback: function (label: any) {
+            switch (label) {
+              case 0:
+                return '우수';
+              case 1:
+                return '양호';
+              case 2:
+                return '주의';
+              case 3:
+                return '위험';
+            }
+          },
+          color: ['rgba(91, 195, 196, 1)', 'rgba(107, 228, 100, 1)', 'rgba(251, 222, 72, 1)', 'rgba(234, 83, 111, 1)'],
+        },
+        grid: {
+          color: [
+            'rgba(91, 195, 196, 0.4)',
+            'rgba(107, 228, 100, .5)',
+            'rgba(251, 222, 72, 0.5)',
+            'rgba(234, 83, 111, .5)',
+          ],
+          lineWidth: 3,
+        },
+      },
+    },
   };
   const data = {
     labels: reversedDataList?.map((data) => data.created_date.split(' ')[0].slice(2)),
