@@ -15,7 +15,7 @@ self.addEventListener('push', function (e) {
   const notificationTitle = resultData.title;
   const notificationOptions = {
     body: resultData.body,
-    icon: resultData.image,
+    icon: '/src/assets/images/Hanol_simpleLogo_whiteBack.png',
     tag: resultData.tag,
     ...resultData,
   };
