@@ -17,64 +17,64 @@ const ScalpScaleView = ({ value1, value2, value3, value4, value5, value6 }: Prop
     {
       category: '탈모',
 
-      score: 0,
+      risk_level: 0,
     },
     {
       category: '각질',
 
-      score: 0,
+      risk_level: 0,
     },
     {
       category: '피지',
 
-      score: 0,
+      risk_level: 0,
     },
     {
       category: '홍반',
 
-      score: 0,
+      risk_level: 0,
     },
     {
       category: '비듬',
 
-      score: 0,
+      risk_level: 0,
     },
     {
       category: '염증',
 
-      score: 0,
+      risk_level: 0,
     },
   ];
   const wantedData = [
     {
       category: '탈모',
 
-      score: value6,
+      risk_level: value6,
     },
     {
       category: '각질',
 
-      score: value1,
+      risk_level: value1,
     },
     {
       category: '피지',
 
-      score: value2,
+      risk_level: value2,
     },
     {
       category: '홍반',
 
-      score: value3,
+      risk_level: value3,
     },
     {
       category: '비듬',
 
-      score: value4,
+      risk_level: value4,
     },
     {
       category: '염증',
 
-      score: value5,
+      risk_level: value5,
     },
   ];
   const [graphicData, setGraphicData] = useState(defaultData);
@@ -92,7 +92,7 @@ const ScalpScaleView = ({ value1, value2, value3, value4, value5, value6 }: Prop
         <GraphBox>
           <ResponsiveRadar
             data={graphicData}
-            keys={['score']}
+            keys={['risk_level']}
             indexBy="category"
             margin={{ top: 30, right: 30, bottom: 30, left: 30 }}
             borderColor={{ from: 'color', modifiers: [] }}

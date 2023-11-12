@@ -16,6 +16,8 @@ import ScalpImageView from 'components/DetailPage/ScalpImageView';
 import DateNavigateModal from 'components/DetailPage/DateNavigateModal';
 import { diagnosisResultType } from 'types/DiagnosisResult';
 import TapBar from 'components/common/TopBar';
+import AlopeciaDiagnosis from 'components/diagnosisResultPage/AlopeciaDiagnosis';
+import DiagnosisDetailResult from 'components/diagnosisResultPage/DiagnosisDetailResult';
 // import { MemberRoleState } from 'recoil/atoms';
 // import { useRecoilValue } from 'recoil';
 
@@ -54,6 +56,32 @@ const Myreport = () => {
   //상세보기
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [index, setIndex] = useState<number>(0);
+
+  // viewBoolean 배열 초기화
+  const initialViewBoolean = new Array(6).fill(false);
+  const [viewBoolean, setViewBoolean] = useState(initialViewBoolean);
+
+  // values 배열의 각 항목을 검사하여 viewBoolean 업데이트
+  useEffect(() => {
+    const diagnosisItem = diagnosisList?.[index];
+    if (diagnosisItem) {
+      const updatedViewBoolean = [];
+
+      // value1부터 value6까지 반복
+      for (let i = 1; i <= 6; i++) {
+        //eslint-disable-next-line
+        updatedViewBoolean.push((diagnosisItem as any)[`value${i}`] >= 2);
+      }
+
+      if (!updatedViewBoolean.includes(true)) {
+        updatedViewBoolean.push(true);
+      }
+
+      setViewBoolean(updatedViewBoolean);
+    }
+  }, [diagnosisList, index]);
+
+  console.log('여기요', viewBoolean);
 
   // 날짜 포맷 변경
   const formatDate = (dateString: string) => {
@@ -134,6 +162,11 @@ const Myreport = () => {
     setValue5(diagnosisList?.[index].value5);
     setValue6(diagnosisList?.[index].value6);
   }, [index]);
+
+  useEffect(() => {
+    setIndex(0);
+  }, [isTabActive]);
+
   return (
     <MyreportContainer>
       <div className="grid grid-cols-6 gap-[10px] mx-[23px]">
@@ -266,6 +299,8 @@ const Myreport = () => {
                     onClick={() => setIsModalOpen(true)}
                     length={diagnosisList.length}
                   />
+                  <AlopeciaDiagnosis valuenumber={diagnosisList[index].value6} />
+
                   <ScalpScaleView
                     value1={diagnosisList[index].value1}
                     value2={diagnosisList[index].value2}
@@ -274,6 +309,8 @@ const Myreport = () => {
                     value5={diagnosisList[index].value5}
                     value6={diagnosisList[index].value6}
                   />
+                  <DiagnosisDetailResult viewBoolean={viewBoolean} />
+
                   <ScalpImageView
                     sub_title={diagnosisList[index].scan_part}
                     // scalp_img="../.../src/assets/images/scalp.jpg"
