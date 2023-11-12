@@ -9,15 +9,21 @@ type ResultSenderProps = {
 
 function ResultSender({ diagnoseId }: ResultSenderProps) {
   const [email, setEmail] = useState<string>('');
-  const sendEmail = () => {
-    fetchData();
-  };
-  const fetchData = async () => {
+
+  const sendEmail = async () => {
     try {
       const response = await axiosInstance.post(`/diagnoses/${diagnoseId}/send`, { email: email });
       console.log(response);
-    } catch (error) {
+      // eslint-disable-next-line
+    } catch (error: any) {
       console.error('데이터 가져오기 오류:', error);
+      if (error.response && error.response.status === 404) {
+        // Handle 404 error - Invalid email
+        console.log('유효하지 않은 이메일입니다.');
+      } else {
+        // Handle other errors
+        console.log('일시적인 오류가 발생했습니다. 나중에 다시 시도해주세요.');
+      }
     }
   };
   return (

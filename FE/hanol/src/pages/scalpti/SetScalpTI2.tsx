@@ -58,7 +58,7 @@ function SetScalpTI2() {
           </div>
         </div>
 
-        <div className="col-span-full sticky mt-10 bottom-5">
+        <div className="my-[2rem] sticky bottom-5 mb-[3rem]">
           <DisabledButton name="다음" onClick={handleButtonClick} disabled={selectedOption === null} />
         </div>
       </div>

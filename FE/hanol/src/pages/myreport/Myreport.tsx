@@ -39,7 +39,6 @@ import TapBar from 'components/common/TopBar';
 const Myreport = () => {
   const navigate = useNavigate();
   // const Role = useRecoilValue(MemberRoleState);
-
   //대시보드
   const [isTabActive, setTabActive] = useState<boolean>(true);
   const [diagnosisList, setDiagnosisList] = useState<diagnosisResultType[]>();
