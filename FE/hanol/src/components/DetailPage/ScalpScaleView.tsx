@@ -10,9 +10,20 @@ interface Props {
   value4: number;
   value5: number;
   value6: number;
+  isExplainModalOpen?: boolean;
+  setIsExplainModalOpen?: (arg: boolean) => void;
 }
 
-const ScalpScaleView = ({ value1, value2, value3, value4, value5, value6 }: Props) => {
+const ScalpScaleView = ({
+  value1,
+  value2,
+  value3,
+  value4,
+  value5,
+  value6,
+  isExplainModalOpen,
+  setIsExplainModalOpen,
+}: Props) => {
   const defaultData = [
     {
       category: '탈모',
@@ -82,12 +93,16 @@ const ScalpScaleView = ({ value1, value2, value3, value4, value5, value6 }: Prop
     setGraphicData(wantedData);
   }, [value1, value2, value3, value4, value5, value6]);
 
+  const handleHelpIconClick = () => {
+    setIsExplainModalOpen?.(!isExplainModalOpen);
+  };
+
   return (
     <div className="col-span-full">
       <ScalpImageViewBox>
         <TitleBox>
           <div className="title">두피 진단 결과</div>
-          <HelpIcon className="help_icon" />
+          <HelpIcon className="help_icon" onClick={() => handleHelpIconClick()} />
         </TitleBox>
         <GraphBox>
           <ResponsiveRadar

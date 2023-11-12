@@ -18,6 +18,7 @@ import { diagnosisResultType } from 'types/DiagnosisResult';
 import TapBar from 'components/common/TopBar';
 import AlopeciaDiagnosis from 'components/diagnosisResultPage/AlopeciaDiagnosis';
 import DiagnosisDetailResult from 'components/diagnosisResultPage/DiagnosisDetailResult';
+import GraphExplainModal from 'components/common/GraphExplainModal';
 // import { MemberRoleState } from 'recoil/atoms';
 // import { useRecoilValue } from 'recoil';
 
@@ -55,6 +56,7 @@ const Myreport = () => {
 
   //상세보기
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isExplainModalOpen, setIsExplainModalOpen] = useState(false);
   const [index, setIndex] = useState<number>(0);
 
   // viewBoolean 배열 초기화
@@ -308,7 +310,10 @@ const Myreport = () => {
                     value4={diagnosisList[index].value4}
                     value5={diagnosisList[index].value5}
                     value6={diagnosisList[index].value6}
+                    isExplainModalOpen={isExplainModalOpen}
+                    setIsExplainModalOpen={setIsExplainModalOpen}
                   />
+                  {isExplainModalOpen && <GraphExplainModal />}
                   <DiagnosisDetailResult viewBoolean={viewBoolean} />
 
                   <ScalpImageView
@@ -344,6 +349,7 @@ const ValueCardBox = styled.div`
 `;
 
 const OverwrapContainer2 = styled.div`
+  background-color: #f7f7f7;
   position: absolute;
   top: 0;
   left: 0;
