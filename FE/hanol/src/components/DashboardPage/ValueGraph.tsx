@@ -60,27 +60,27 @@ const ValueGraph = ({ title, dataList, graphValue, setIndex }: Props) => {
         display: true,
         // text: 'Chart.js Bar Chart',
       },
-      zoom: {
-        pan: {
-          enabled: true,
-          mode: 'x' as const,
-          modifierKey: 'shift' as const,
-          scaleMode: 'x' as const,
-          threshold: 1,
-        },
-        // limits: {
-        //   x: { min: 3, max: 15 },
-        // },
-        // zoom: {
-        //   mode: 'xy' as const,
-        //   wheel: {
-        //     enabled: true,
-        //     modifierKey: 'shift' as const,
-        //   },
-        // },
-      },
+      // zoom: {
+      //   pan: {
+      //     enabled: true,
+      //     mode: 'x' as const,
+      //     modifierKey: 'shift' as const,
+      //     scaleMode: 'x' as const,
+      //     threshold: 1,
+      //   },
+      // limits: {
+      //   x: { min: 3, max: 15 },
+      // },
+      // zoom: {
+      //   mode: 'xy' as const,
+      //   wheel: {
+      //     enabled: true,
+      //     modifierKey: 'shift' as const,
+      //   },
+      // },
+      // },
     },
-    elements: { point: { radius: 5 } },
+    elements: { point: { radius: 7 }, line: { borderWidth: 5 } },
     scales: {
       y: {
         display: true,
@@ -105,12 +105,12 @@ const ValueGraph = ({ title, dataList, graphValue, setIndex }: Props) => {
         },
         grid: {
           color: [
-            'rgba(91, 195, 196, 0.4)',
-            'rgba(107, 228, 100, .5)',
-            'rgba(251, 222, 72, 0.5)',
-            'rgba(234, 83, 111, .5)',
+            'rgba(91, 195, 196, 0.2)',
+            'rgba(107, 228, 100, .3)',
+            'rgba(251, 222, 72, 0.3)',
+            'rgba(234, 83, 111, .3)',
           ],
-          lineWidth: 3,
+          lineWidth: 2,
         },
       },
     },

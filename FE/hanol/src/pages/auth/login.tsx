@@ -50,13 +50,17 @@ function Login() {
           navigate('/signup-birth');
           //FCM 토큰 관련
           const messaging = getMessaging();
-          sendTokenToServer(messaging);
+          if (messaging && Notification.permission === 'granted') {
+            sendTokenToServer(messaging);
+          }
         } else {
           setMemberRole(role);
           navigate('/');
           //FCM 토큰 관련
           const messaging = getMessaging();
-          sendTokenToServer(messaging);
+          if (messaging && Notification.permission === 'granted') {
+            sendTokenToServer(messaging);
+          }
         }
       })
 
