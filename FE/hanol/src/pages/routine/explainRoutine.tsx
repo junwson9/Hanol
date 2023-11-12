@@ -1,9 +1,10 @@
 import { ReactComponent as ExplainRoutinesvg } from 'assets/images/explainRoutine.svg';
-import { ReactComponent as Bell } from 'assets/images/bell.svg';
-import { ReactComponent as CareRoutineExplain } from 'assets/images/careRoutineExplain.svg';
+import Bell from 'assets/images/bell.png';
+import CareRoutineExplain from 'assets/images/careRoutineExplain.png';
 import FloatingButton from 'components/button/FloatingButton';
 import TapBar from 'components/common/TopBar';
 import { useNavigate } from 'react-router';
+import { ReactComponent as ExplainAlarm } from 'assets/images/explainAlarm.svg';
 
 function ExplainRoutine() {
   const navigate = useNavigate();
@@ -16,7 +17,7 @@ function ExplainRoutine() {
       <div>
         <div className="font-bold text-[1.125rem] text-black flex">두피 진단 결과를 바탕으로</div>
         <div className="font-bold text-[1.125rem] text-black flex">두피 케어 루틴을 추천해드려요.</div>
-        <div className="mt-[1rem] bg-Gray px-[0.5rem] py-[2rem] rounded-[1rem]">
+        <div className="mt-[1rem] px-[0.5rem] py-[2rem] rounded-[1rem]">
           <ExplainRoutinesvg className="w-full" />
         </div>
       </div>
@@ -26,20 +27,19 @@ function ExplainRoutine() {
             <div className="font-bold text-[1.125rem] text-black flex">루틴을 선택하고</div>
             <div className="font-bold text-[1.125rem] text-black flex">알림을 받아 실천하세요.</div>
           </div>
-          <div className="ml-auto">
-            <Bell />
+          <div className="">
+            <img className="w-[4.3rem]" src={Bell} alt="" />
           </div>
         </div>
-        <div className="mt-[1rem] bg-Gray px-[0.5rem] py-[0.5rem] rounded-[2rem]">
-          <div className="font-bold text-[0.75rem] flex ml-[2rem]">오늘의 루틴!</div>
-          <div className="font-medium text-[0.75rem] flex ml-[2rem]">오늘의 두피 루틴을 시작해봅시다!</div>
+        <div className="mt-[2rem] flex justify-center ">
+          <ExplainAlarm />
         </div>
       </div>
       <div className="mt-[3rem]">
         <div className="font-bold text-[1.125rem] text-black flex">루틴을 선택하고</div>
         <div className="font-bold text-[1.125rem] text-black flex">알림을 받아 실천하세요.</div>
-        <div className="flex justify-center bg-Gray mt-[2rem] rounded-[1rem]">
-          <CareRoutineExplain className="h-[22rem] my-[2rem]" />
+        <div className="mt-[0.5rem] flex justify-center">
+          <img className="w-[14rem]" src={CareRoutineExplain} alt="" />
         </div>
       </div>
       <div className="my-[2rem] sticky bottom-5 mb-[3rem]">
