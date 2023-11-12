@@ -187,7 +187,7 @@ function Routine() {
     };
 
     fetchData();
-  }, [weekDates]);
+  }, [weekDates, dailyRoutines]);
 
   return (
     <div className="col-span-full flex flex-col justify-between">

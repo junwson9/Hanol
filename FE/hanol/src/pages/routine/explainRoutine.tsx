@@ -31,14 +31,16 @@ function ExplainRoutine() {
             <img className="w-[4.3rem]" src={Bell} alt="" />
           </div>
         </div>
-        <div className="mt-[2rem] flex justify-center">
+        <div className="mt-[2rem] flex justify-center ">
           <ExplainAlarm />
         </div>
       </div>
       <div className="mt-[3rem]">
         <div className="font-bold text-[1.125rem] text-black flex">루틴을 선택하고</div>
         <div className="font-bold text-[1.125rem] text-black flex">알림을 받아 실천하세요.</div>
-        <img src={CareRoutineExplain} alt="" />
+        <div className="mt-[0.5rem] flex justify-center">
+          <img className="w-[14rem]" src={CareRoutineExplain} alt="" />
+        </div>
       </div>
       <div className="my-[2rem] sticky bottom-5 mb-[3rem]">
         <FloatingButton name={'두피 케어 루틴 설정하기'} onClick={handleClick} />

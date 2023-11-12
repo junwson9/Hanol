@@ -19,7 +19,7 @@ import ScalpImgDefault from 'assets/images/scalp_img_default.png';
 
 const MyreportNonMember = () => {
   const navigate = useNavigate();
-  //   const Role = useRecoilValue(MemberRoleState);
+  // const Role = useRecoilValue(MemberRoleState);
 
   //대시보드
   const [isTabActive, setTabActive] = useState<boolean>(true);
@@ -29,7 +29,7 @@ const MyreportNonMember = () => {
   };
 
   const handleButtonClick = () => {
-    navigate('/routine');
+    navigate('/explain-routine');
   };
 
   const handleBannerButtonClick = () => {
