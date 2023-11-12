@@ -86,7 +86,7 @@ const ScalpScaleView = ({ value1, value2, value3, value4, value5, value6 }: Prop
     <div className="col-span-full">
       <ScalpImageViewBox>
         <TitleBox>
-          <div className="title">두피 건강점수</div>
+          <div className="title">두피 진단 결과</div>
           <HelpIcon className="help_icon" />
         </TitleBox>
         <GraphBox>
@@ -113,10 +113,11 @@ const ScalpScaleView = ({ value1, value2, value3, value4, value5, value6 }: Prop
             //     line: {
             //       stroke: '#FBDE48',
             //       strokeWidth: 2,
-            //       strokeDasharray: '4 4',
+            //       // strokeDasharray: '4 4',
             //     },
             //   },
             // }}
+            maxValue={3}
           />
         </GraphBox>
       </ScalpImageViewBox>
