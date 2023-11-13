@@ -47,12 +47,12 @@ const ScalpScaleView = ({
       risk_level: 0,
     },
     {
-      category: '비듬',
+      category: '염증',
 
       risk_level: 0,
     },
     {
-      category: '염증',
+      category: '비듬',
 
       risk_level: 0,
     },
@@ -79,12 +79,12 @@ const ScalpScaleView = ({
       risk_level: value3,
     },
     {
-      category: '비듬',
+      category: '염증',
 
       risk_level: value4,
     },
     {
-      category: '염증',
+      category: '비듬',
 
       risk_level: value5,
     },
