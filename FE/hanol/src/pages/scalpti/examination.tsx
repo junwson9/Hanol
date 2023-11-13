@@ -115,6 +115,12 @@ function Examination() {
                 <FloatingButton name={'두피TI 시작하기'} onClick={navToSetScalp} />
               </div>
             </div>
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
           </div>
         </div>
       ) : scalpType === null ? (
