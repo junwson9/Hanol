@@ -20,11 +20,8 @@ function ResultSender({ diagnoseId }: ResultSenderProps) {
       // eslint-disable-next-line
     } catch (error: any) {
       console.error('데이터 가져오기 오류:', error);
-      if (error.response && error.response.status === 404) {
-        setSnackbarMessage('유효하지 않은 이메일입니다.');
-      } else {
-        setSnackbarMessage('일시적인 오류입니다.');
-      }
+
+      setSnackbarMessage('유효하지 않은 이메일입니다.');
     }
   };
 
