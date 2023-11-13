@@ -45,8 +45,6 @@ function ExplainDiagnose() {
       <br />
       <br />
       <br />
-      <br />
-      <br />
     </div>
   );
 }
