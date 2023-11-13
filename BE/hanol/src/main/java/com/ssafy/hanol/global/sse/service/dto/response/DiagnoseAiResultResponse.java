@@ -47,6 +47,7 @@ public class DiagnoseAiResultResponse {
                 .value5(diagnosis.getValue5())
                 .value6(diagnosis.getValue6())
                 .diagnosisId(diagnosis.getId())
+                .scanPart(diagnosis.getScanPart())
                 .build();
     }
 
