@@ -58,12 +58,12 @@ const ValueGraph = ({ title, dataList, graphValue, setIndex }: Props) => {
         // text: 'Chart.js Bar Chart',
       },
     },
-    elements: { point: { radius: 7 }, line: { borderWidth: 5 } },
+    elements: { point: { radius: 7, hitRadius: 3 }, line: { borderWidth: 5 } },
     scales: {
       y: {
         display: true,
-        suggestedMin: 0,
-        suggestedMax: 3,
+        suggestedMin: -1,
+        suggestedMax: 4,
         ticks: {
           stepSize: 1,
           // eslint-disable-next-line
@@ -77,16 +77,27 @@ const ValueGraph = ({ title, dataList, graphValue, setIndex }: Props) => {
                 return '주의';
               case 3:
                 return '위험';
+              default:
+                return '';
             }
           },
-          color: ['rgba(91, 195, 196, 1)', 'rgba(107, 228, 100, 1)', 'rgba(251, 222, 72, 1)', 'rgba(234, 83, 111, 1)'],
+          color: [
+            '',
+            'rgba(91, 195, 196, 1)',
+            'rgba(107, 228, 100, 1)',
+            'rgba(251, 222, 72, 1)',
+            'rgba(234, 83, 111, 1)',
+            '',
+          ],
         },
         grid: {
           color: [
+            '',
             'rgba(91, 195, 196, 0.2)',
             'rgba(107, 228, 100, .2)',
             'rgba(251, 222, 72, 0.2)',
             'rgba(234, 83, 111, .2)',
+            '',
           ],
           lineWidth: 3,
         },
