@@ -28,17 +28,14 @@ interface Props {
 const ValueGraph = ({ title, dataList, graphValue, setIndex }: Props) => {
   const reversedDataList = useMemo(() => dataList.slice().reverse(), [dataList]);
 
-  // useEffect(() => {
-  //   const myElement = document.getElementById('myElement');
-  //   if (myElement) {
-  //     const hammer = new Hammer(myElement as HTMLElement);
+  //날짜 포맷 변경
+  const extractMonthAndDay = (dateString: string) => {
+    const dateComponents = dateString.split(' ')[0].split('-');
+    const month = dateComponents[1];
+    const day = dateComponents[2];
+    return `${month}-${day}`;
+  };
 
-  //     // Add event listeners for specific gestures
-  //     hammer.on('pan', (event) => {
-  //       console.log('Pan gesture detected', event);
-  //     });
-  //   }
-  // }, []);
   // 그래프 커스텀
   const options = {
     // eslint-disable-next-line
@@ -60,25 +57,6 @@ const ValueGraph = ({ title, dataList, graphValue, setIndex }: Props) => {
         display: true,
         // text: 'Chart.js Bar Chart',
       },
-      // zoom: {
-      //   pan: {
-      //     enabled: true,
-      //     mode: 'x' as const,
-      //     modifierKey: 'shift' as const,
-      //     scaleMode: 'x' as const,
-      //     threshold: 1,
-      //   },
-      // limits: {
-      //   x: { min: 3, max: 15 },
-      // },
-      // zoom: {
-      //   mode: 'xy' as const,
-      //   wheel: {
-      //     enabled: true,
-      //     modifierKey: 'shift' as const,
-      //   },
-      // },
-      // },
     },
     elements: { point: { radius: 7 }, line: { borderWidth: 5 } },
     scales: {
@@ -106,17 +84,22 @@ const ValueGraph = ({ title, dataList, graphValue, setIndex }: Props) => {
         grid: {
           color: [
             'rgba(91, 195, 196, 0.2)',
-            'rgba(107, 228, 100, .3)',
-            'rgba(251, 222, 72, 0.3)',
-            'rgba(234, 83, 111, .3)',
+            'rgba(107, 228, 100, .2)',
+            'rgba(251, 222, 72, 0.2)',
+            'rgba(234, 83, 111, .2)',
           ],
-          lineWidth: 2,
+          lineWidth: 3,
+        },
+      },
+      x: {
+        grid: {
+          display: false,
         },
       },
     },
   };
   const data = {
-    labels: reversedDataList?.map((data) => data.created_date.split(' ')[0].slice(2)),
+    labels: reversedDataList?.map((data) => extractMonthAndDay(data.created_date)),
     datasets: [
       {
         label: `${title}`,

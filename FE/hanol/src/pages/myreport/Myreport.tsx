@@ -129,7 +129,7 @@ const Myreport = () => {
   };
   useEffect(() => {
     axiosInstance
-      .get('/diagnoses?limit=10')
+      .get('/diagnoses?limit=8')
       // axios
       // .get('http://localhost:4000/diagnoses')
       .then((response) => {
