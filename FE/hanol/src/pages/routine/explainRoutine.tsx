@@ -46,6 +46,12 @@ function ExplainRoutine() {
       <div className="my-[2rem] sticky bottom-5 mb-[3rem]">
         <FloatingButton name={'두피 케어 루틴 설정하기'} onClick={handleClick} />
       </div>
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
     </div>
   );
 }
