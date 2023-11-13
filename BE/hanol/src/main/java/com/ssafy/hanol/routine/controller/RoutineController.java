@@ -8,6 +8,7 @@ import com.ssafy.hanol.routine.controller.dto.request.RoutineListModifyApiReques
 import com.ssafy.hanol.routine.controller.dto.request.RoutineNotificationModifyApiRequest;
 import com.ssafy.hanol.routine.controller.dto.response.*;
 import com.ssafy.hanol.routine.service.RoutineService;
+import com.ssafy.hanol.routine.service.TestService;
 import com.ssafy.hanol.routine.service.batch.RoutineBatchScheduler;
 import com.ssafy.hanol.routine.service.dto.response.*;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +27,7 @@ public class RoutineController {
 
     private final RoutineService routineService;
     private final RoutineBatchScheduler routineBatchScheduler;
+    private final TestService testService;
 
     @GetMapping
     public ResponseEntity<?> routineList(@AuthenticatedMember AuthMember authMember) {
@@ -83,5 +85,17 @@ public class RoutineController {
     public ResponseEntity<?> dailyRoutineBatchRun() {
         routineBatchScheduler.runDailyRoutineJob();
         return ResponseFactory.success("데일리 루틴 생성 배치 실행");
+    }
+
+    @PostMapping("/dummy/{startNo}/{endNo}")
+    public ResponseEntity<?> dummyInsert(@PathVariable Long startNo, @PathVariable Long endNo) {
+        testService.insertDummy(startNo, endNo);
+        return ResponseFactory.success("더미데이터 삽입 완료");
+    }
+
+    @PostMapping("/dummyMember/{startNo}/{endNo}")
+    public ResponseEntity<?> dummyMemberInsert(@PathVariable Long startNo, @PathVariable Long endNo) {
+        testService.insertMemberDummy(startNo, endNo);
+        return ResponseFactory.success("회원 더미데이터 삽입 완료");
     }
 }
