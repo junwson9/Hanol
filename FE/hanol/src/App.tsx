@@ -37,6 +37,7 @@ import RouteChangeTracker from 'components/RouteChangeTracker.js';
 import ScalpException from 'pages/diagnose/scalpException';
 import { useRecoilValue } from 'recoil';
 import { MemberRoleState } from 'recoil/atoms';
+import A2HS from 'components/common/useA2HS.js';
 
 function App() {
   const ROLE = useRecoilValue(MemberRoleState);
@@ -103,6 +104,7 @@ function App() {
         </div>
       </div>
       {shouldShowNavBar && <NavBar />}
+      <A2HS />
     </div>
   );
 }
