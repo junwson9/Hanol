@@ -55,6 +55,7 @@ const Myreport = () => {
 
   //상세보기
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isExplainModalOpen, setIsExplainModalOpen] = useState(false);
   const [index, setIndex] = useState<number>(0);
 
   // viewBoolean 배열 초기화
@@ -128,7 +129,7 @@ const Myreport = () => {
   };
   useEffect(() => {
     axiosInstance
-      .get('/diagnoses?limit=10')
+      .get('/diagnoses?limit=8')
       // axios
       // .get('http://localhost:4000/diagnoses')
       .then((response) => {
@@ -308,6 +309,8 @@ const Myreport = () => {
                     value4={diagnosisList[index].value4}
                     value5={diagnosisList[index].value5}
                     value6={diagnosisList[index].value6}
+                    isExplainModalOpen={isExplainModalOpen}
+                    setIsExplainModalOpen={setIsExplainModalOpen}
                   />
                   <DiagnosisDetailResult viewBoolean={viewBoolean} />
 
@@ -344,14 +347,17 @@ const ValueCardBox = styled.div`
 `;
 
 const OverwrapContainer2 = styled.div`
+  background-color: #f7f7f7;
   position: absolute;
   top: 0;
   left: 0;
-
+  z-index: 20;
   width: 100%;
 `;
 
-const OverwrapContainer1 = styled.div``;
+const OverwrapContainer1 = styled.div`
+  /* position: relative; */
+`;
 
 const DashBoardBox = styled.div``;
 const MyreportContainer = styled.div`

@@ -16,8 +16,6 @@ import SelectDevice from 'pages/diagnose/selectDevice';
 import Streaming from 'pages/diagnose/streaming';
 import IoTstreaming from 'pages/diagnose/IoTstreaming';
 import MyPage from 'pages/about/mypage';
-import Dashboard from 'pages/myreport/MyreportDashBoard';
-import MyDetail from 'pages/myreport/MyreportDetailPage';
 import DiagnosisDetail from 'pages/diagnose/diagnosisDetail';
 import Analyzing from 'pages/diagnose/analyzingPage';
 import SelectPart from 'pages/diagnose/selectPart';
@@ -74,8 +72,6 @@ function App() {
             <Route path="/streaming" element={<Streaming />} />
             <Route path="/mypage" element={<MyPage />} />
             <Route path="/IoTstreaming" element={<IoTstreaming />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/mydetail" element={<MyDetail />} />
             <Route path="/analyzing" element={<Analyzing />} />
             <Route path="/select-part" element={<SelectPart />} />
             <Route path="/about-noti-setting" element={<AboutNotiSetting />} />
