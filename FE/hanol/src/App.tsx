@@ -37,18 +37,11 @@ import RouteChangeTracker from 'components/RouteChangeTracker.js';
 import ScalpException from 'pages/diagnose/scalpException';
 import { useRecoilValue } from 'recoil';
 import { MemberRoleState } from 'recoil/atoms';
-import { useEffect } from 'react';
 
 function App() {
   const ROLE = useRecoilValue(MemberRoleState);
   const location = useLocation();
-  useEffect(() => {
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.ready.then((registration) => {
-        registration.update();
-      });
-    }
-  }, [location]);
+
   const showNavBarPaths = [
     '/examination',
     '/routine',

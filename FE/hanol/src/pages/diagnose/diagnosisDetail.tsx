@@ -16,6 +16,7 @@ import { ImageState } from 'recoil/atoms';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import ResultSender from 'components/diagnosisResultPage/ResultSender';
+import { MemberRoleState } from 'recoil/atoms';
 
 const DiagnosisDetail = () => {
   const navigate = useNavigate();
@@ -29,6 +30,7 @@ const DiagnosisDetail = () => {
   console.log('스캔부위', scanPart);
   const initialViewBoolean = new Array(6).fill(false);
   const [viewBoolean, setViewBoolean] = useState(initialViewBoolean);
+  const Role = useRecoilValue(MemberRoleState);
 
   // values 배열의 각 항목을 검사하여 viewBoolean 업데이트
   useEffect(() => {
@@ -68,9 +70,11 @@ const DiagnosisDetail = () => {
           <DiagnosisDetailResult viewBoolean={viewBoolean} />
           <ScalpImageView scalp_img={image} sub_title={scanPart} />
           <EmptyButton name="지난 내역 확인 하기" onClick={() => handleButtonClick()} />
-          <div>
-            <ResultSender diagnoseId={diagnoseId} />
-          </div>
+          {Role === 'ADMIN' || Role === 'MANAGER' ? (
+            <div>
+              <ResultSender diagnoseId={diagnoseId} />
+            </div>
+          ) : null}
         </div>
       </div>
 
