@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import EmptyButton from 'components/button/EmptyButton';
 import { useState } from 'react';
 import axiosInstance from 'api/axiosInterceptor';
+import Snackbar from 'components/common/SnackBar';
 
 type ResultSenderProps = {
   diagnoseId: number;
@@ -9,23 +10,21 @@ type ResultSenderProps = {
 
 function ResultSender({ diagnoseId }: ResultSenderProps) {
   const [email, setEmail] = useState<string>('');
+  const [snackbarMessage, setSnackbarMessage] = useState<string>(''); // 스낵바 메시지 상태
 
   const sendEmail = async () => {
     try {
       const response = await axiosInstance.post(`/diagnoses/${diagnoseId}/send`, { email: email });
       console.log(response);
+      setSnackbarMessage('해당 이메일에 전송되었습니다.');
       // eslint-disable-next-line
     } catch (error: any) {
       console.error('데이터 가져오기 오류:', error);
-      if (error.response && error.response.status === 404) {
-        // Handle 404 error - Invalid email
-        console.log('유효하지 않은 이메일입니다.');
-      } else {
-        // Handle other errors
-        console.log('일시적인 오류가 발생했습니다. 나중에 다시 시도해주세요.');
-      }
+
+      setSnackbarMessage('유효하지 않은 이메일입니다.');
     }
   };
+
   return (
     <div className="relative col-span-full mt-[2rem]">
       <ResultSenderBox>
@@ -41,6 +40,9 @@ function ResultSender({ diagnoseId }: ResultSenderProps) {
           <EmptyButton name="전송하기" onClick={sendEmail} />
         </div>
       </ResultSenderBox>
+      {snackbarMessage && (
+        <Snackbar message={snackbarMessage} onClose={() => setSnackbarMessage('')} /> // 스낵바 컴포넌트 추가
+      )}
     </div>
   );
 }
