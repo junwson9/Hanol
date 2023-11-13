@@ -92,6 +92,7 @@ public class DiagnosisService {
                 .value5(-1)
                 .value6(-1)
                 .build();
+        log.info(diagnosis.toString());
 
         Diagnosis savedDiagnosis = diagnosisRepository.save(diagnosis);
 
@@ -110,6 +111,7 @@ public class DiagnosisService {
 
         // 진단 결과 저장
         diagnosis.updateValues(rabbitmqResponse);
+        log.info(diagnosis.toString());
 
         sseService.sendDiagnosisResult(rabbitmqResponse.getSseId(), DiagnoseAiResultResponse.from(diagnosis));
     }
