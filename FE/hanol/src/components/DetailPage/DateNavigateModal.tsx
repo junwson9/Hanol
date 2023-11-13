@@ -120,7 +120,7 @@ const DateListBox = styled.div`
   align-self: flex-start;
   /* margin-left: 1.438rem; */
 
-  height: 62vh;
+  height: 100vh;
   overflow-y: auto;
 `;
 const TitleBox = styled.div`
@@ -172,6 +172,7 @@ const ModalBackgroundBox = styled.div`
   height: 100%;
 
   background: rgba(72, 72, 72, 0.67);
+  z-index: 999;
 `;
 
 export default DateNavigateModal;
