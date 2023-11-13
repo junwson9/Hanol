@@ -27,7 +27,7 @@ class ConnectionManager:
             self.active_connection = websocket
 
     def disconnect(self, websocket: WebSocket):
-        if websocket == self.active_connection:s
+        if websocket == self.active_connection:
             self.active_connection = None
 
 manager = ConnectionManager()
