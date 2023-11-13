@@ -1,5 +1,6 @@
 package com.ssafy.hanol.routine.service.batch;
 
+import com.querydsl.jpa.JPQLQuery;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.batch.item.database.AbstractPagingItemReader;
@@ -9,12 +10,16 @@ import org.springframework.util.CollectionUtils;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.Function;
 
+/**
+ * Spring Batch는 QueryDsl을 지원하지 않으므로 JpaPagingItemReader를 기반으로 QueryDslPagingItemReader 생성
+ */
 public class QueryDslPagingItemReader<T> extends AbstractPagingItemReader {
     protected final Map<String, Object> jpaPropertyMap = new HashMap<>();
     protected EntityManagerFactory entityManagerFactory;
@@ -31,7 +36,7 @@ public class QueryDslPagingItemReader<T> extends AbstractPagingItemReader {
                                     Function<JPAQueryFactory, JPAQuery<T>> queryFunction) {
         this();
         this.entityManagerFactory = entityManagerFactory;
-        this.queryFunction = queryFunction;
+        this.queryFunction = queryFunction; // 람다 표현식 사용할 수 있도록 추가
         setPageSize(pageSize);
     }
 
@@ -52,22 +57,28 @@ public class QueryDslPagingItemReader<T> extends AbstractPagingItemReader {
     @Override
     @SuppressWarnings("unchecked")
     protected void doReadPage() {
+        EntityTransaction tx = getTxOrNull();
 
-        clearIfTransacted();
-
-        JPAQuery<T> query = createQuery()
+        JPQLQuery<T> query = createQuery()
                 .offset(getPage() * getPageSize())
                 .limit(getPageSize());
 
         initResults();
 
-        fetchQuery(query);
+        fetchQuery(query, tx);
     }
 
-    protected void clearIfTransacted() {
+    protected EntityTransaction getTxOrNull() {
         if (transacted) {
+            EntityTransaction tx = entityManager.getTransaction();
+            tx.begin();
+
+            entityManager.flush();
             entityManager.clear();
+            return tx;
         }
+
+        return null;
     }
 
     protected JPAQuery<T> createQuery() {
@@ -83,15 +94,23 @@ public class QueryDslPagingItemReader<T> extends AbstractPagingItemReader {
         }
     }
 
-    protected void fetchQuery(JPAQuery<T> query) {
-        if (!transacted) {
+    /**
+     * where 조건은 id max/min 을 이용한 제한된 범위를 가지게 한다
+     * @param query
+     * @param tx
+     */
+    protected void fetchQuery(JPQLQuery<T> query, EntityTransaction tx) {
+        if (transacted) {
+            results.addAll(query.fetch());
+            if(tx != null) {
+                tx.commit();
+            }
+        } else {
             List<T> queryResult = query.fetch();
             for (T entity : queryResult) {
                 entityManager.detach(entity);
                 results.add(entity);
             }
-        } else {
-            results.addAll(query.fetch());
         }
     }
 

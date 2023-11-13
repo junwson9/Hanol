@@ -48,7 +48,7 @@ public class DailyRoutineJobIntegrationTest {
 
     @Test
     @DisplayName("지정한 날짜의 MemberRoutineLog가 MemberRoutine 개수 만큼 생성되어야 한다")
-    void testName() throws Exception {
+    void DailyRoutineJob이_정상적으로_수행된다() throws Exception {
 
         // 테스트 전 memberRoutineLog가 비어 있는 지 확인
         // 테스트 후 memberRoutine 개수와 memberRoutineLog 개수가 같은 지 검증 (단, 중간에 memberRoutine을 변경 요청이 없는 환경을 전제로 함)

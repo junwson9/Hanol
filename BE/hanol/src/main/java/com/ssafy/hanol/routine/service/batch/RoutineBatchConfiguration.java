@@ -4,6 +4,9 @@ import com.ssafy.hanol.routine.domain.MemberRoutine;
 import com.ssafy.hanol.routine.domain.MemberRoutineLog;
 import com.ssafy.hanol.routine.repository.MemberRoutineLogRepository;
 import com.ssafy.hanol.routine.repository.MemberRoutineRepository;
+import com.ssafy.hanol.routine.service.batch.expression.Expression;
+import com.ssafy.hanol.routine.service.batch.options.QueryDslNoOffsetNumberOptions;
+import com.ssafy.hanol.routine.service.batch.options.QueryDslNoOffsetOptions;
 import io.netty.channel.ConnectTimeoutException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -100,10 +103,7 @@ public class RoutineBatchConfiguration {
 
     @Bean(name = JOB_NAME + "_reader")
     @StepScope
-
-
-
-    //ver1 JpaPaging(offset)
+//    //ver1 JpaPaging(offset)
 //    public JpaPagingItemReader<MemberRoutine> reader() {
 //        log.info("Configuring reader for {}", JOB_NAME);
 //        return new JpaPagingItemReaderBuilder<MemberRoutine>()
@@ -113,7 +113,6 @@ public class RoutineBatchConfiguration {
 //                .queryString("SELECT mr FROM MemberRoutine mr ORDER BY mr.id DESC") // JOB 실행 후 추가된 MEMBER_ROUTINE 은 WRITE 되면 안되기 때문에 id 내림차순으로 조회
 //                .build();
 //    }
-
 // //ver2 페이지 처리 하지 않고 데이터 일괄 불러오기
 //    public ItemReader<MemberRoutine> reader() {
 //        return new ItemReader<MemberRoutine>() {
@@ -134,13 +133,27 @@ public class RoutineBatchConfiguration {
 //            }
 //        };
 //    }
-
-//    // ver3 QueryDsl Paging
-    public QueryDslPagingItemReader<MemberRoutine> reader() {
-        return new QueryDslPagingItemReader<>(entityManagerFactory, CHUNK_SIZE, jpaQueryFactory ->
-                jpaQueryFactory.selectFrom(memberRoutine).orderBy(memberRoutine.id.desc()));
+//    // ver3 QueryDsl Paging OffSet
+//    public QueryDslPagingItemReader<MemberRoutine> reader() {
+//        return new QueryDslPagingItemReader<>(entityManagerFactory, CHUNK_SIZE, jpaQueryFactory ->
+//                jpaQueryFactory.selectFrom(memberRoutine).orderBy(memberRoutine.id.desc()));
+//    }
+//    // ver4 QueryDsl Paging No Offset
+//    public QueryDslNoOffsetPagingItemReader<MemberRoutine> reader() {
+//        // No Offset Option 설정
+//        QueryDslNoOffsetNumberOptions<MemberRoutine, Long> options = new QueryDslNoOffsetNumberOptions<>(memberRoutine.id, Expression.DESC);
+//        // QueryDsl Reader 생성
+//        return new QueryDslNoOffsetPagingItemReader<>(entityManagerFactory, CHUNK_SIZE, options, jpaQueryFactory ->
+//                jpaQueryFactory.selectFrom(memberRoutine));
+//    }
+    // ver5 QueryDsl Paging No Offset with firstId
+    public QueryDslNoOffsetIdPagingItemReader<MemberRoutine, Long> reader() {
+        // No Offset Option 설정
+        QueryDslNoOffsetNumberOptions<MemberRoutine, Long> options = new QueryDslNoOffsetNumberOptions<>(memberRoutine.id, Expression.DESC);
+        // QueryDsl Reader
+        return new QueryDslNoOffsetIdPagingItemReader<>(entityManagerFactory, CHUNK_SIZE, options, jpaQueryFactory ->
+                jpaQueryFactory.selectFrom(memberRoutine));
     }
-
 
 
     public ItemProcessor<MemberRoutine, MemberRoutineLog> processor() {
