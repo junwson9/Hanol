@@ -12,6 +12,8 @@ app = FastAPI()
 # picamera2 설정
 picam2 = Picamera2()
 picam2.configure(picam2.create_video_configuration(main={"size": (640, 480)}))
+picam2.options['quality'] = 100
+
 
 class ConnectionManager:
     def __init__(self):
@@ -66,5 +68,8 @@ async def websocket_endpoint(websocket: WebSocket):
         print(f"WebSocket Error: {e}")
 
 if __name__ == "__main__":
+    ssl_certfile = "./certificate.crt"
+    ssl_keyfile = "./private.key"
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8888)
+    uvicorn.run(app, host="0.0.0.0", port=8888, ssl_keyfile=ssl_keyfile, ssl_certfile=ssl_certfile)
+

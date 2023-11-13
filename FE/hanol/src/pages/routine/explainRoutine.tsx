@@ -36,8 +36,9 @@ function ExplainRoutine() {
         </div>
       </div>
       <div className="mt-[3rem]">
-        <div className="font-bold text-[1.125rem] text-black flex">루틴을 선택하고</div>
-        <div className="font-bold text-[1.125rem] text-black flex">알림을 받아 실천하세요.</div>
+        <div className="font-bold text-[1.125rem] text-black flex">하루 하루 꾸준한 실천이</div>
+        <div className="font-bold text-[1.125rem] text-black flex">한올 한올 건강한 모발을 </div>
+        <div className="font-bold text-[1.125rem] text-black flex">만들어 줄거에요.</div>
         <div className="mt-[0.5rem] flex justify-center">
           <img className="w-[14rem]" src={CareRoutineExplain} alt="" />
         </div>

@@ -46,7 +46,7 @@ axiosInstance.interceptors.response.use(
 
     // 토큰 자동 재발급 필요 외 다른 에러
     console.log('에러발생 ============================');
-
+    console.log(error);
     if (config.url !== '/members/reissue' && response && response.status === 401) {
       console.log('재발급요청하기 ============================');
       const access_token = await reIssuedToken();
