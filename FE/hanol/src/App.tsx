@@ -40,10 +40,16 @@ import ScalpException from 'pages/diagnose/scalpException';
 import { useRecoilValue } from 'recoil';
 import { MemberRoleState } from 'recoil/atoms';
 
-function App() {
+function App(props: { onShow: (show: boolean) => void }) {
+  // eslint-disable-next-line
+  const { onShow } = props;
   const ROLE = useRecoilValue(MemberRoleState);
   const location = useLocation();
-
+  navigator.serviceWorker.getRegistrations().then((regs) =>
+    regs.forEach((reg) => {
+      reg.waiting?.postMessage({ type: 'SKIP_WAITING' });
+    }),
+  );
   const showNavBarPaths = [
     '/examination',
     '/routine',
