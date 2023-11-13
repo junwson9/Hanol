@@ -118,7 +118,6 @@ function Examination() {
             <br />
             <br />
             <br />
-            <br />
           </div>
         </div>
       ) : scalpType === null ? (
