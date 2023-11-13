@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { ReactComponent as HelpIcon } from '../../assets/icons/help_FILL0_wght400_GRAD0_opsz24 1.svg';
 import { ResponsiveRadar } from '@nivo/radar';
+import GraphExplainModal from 'components/common/GraphExplainModal';
 
 interface Props {
   value1: number;
@@ -10,9 +11,20 @@ interface Props {
   value4: number;
   value5: number;
   value6: number;
+  isExplainModalOpen?: boolean;
+  setIsExplainModalOpen?: (arg: boolean) => void;
 }
 
-const ScalpScaleView = ({ value1, value2, value3, value4, value5, value6 }: Props) => {
+const ScalpScaleView = ({
+  value1,
+  value2,
+  value3,
+  value4,
+  value5,
+  value6,
+  isExplainModalOpen,
+  setIsExplainModalOpen,
+}: Props) => {
   const defaultData = [
     {
       category: '탈모',
@@ -35,12 +47,12 @@ const ScalpScaleView = ({ value1, value2, value3, value4, value5, value6 }: Prop
       risk_level: 0,
     },
     {
-      category: '비듬',
+      category: '염증',
 
       risk_level: 0,
     },
     {
-      category: '염증',
+      category: '비듬',
 
       risk_level: 0,
     },
@@ -67,12 +79,12 @@ const ScalpScaleView = ({ value1, value2, value3, value4, value5, value6 }: Prop
       risk_level: value3,
     },
     {
-      category: '비듬',
+      category: '염증',
 
       risk_level: value4,
     },
     {
-      category: '염증',
+      category: '비듬',
 
       risk_level: value5,
     },
@@ -82,13 +94,18 @@ const ScalpScaleView = ({ value1, value2, value3, value4, value5, value6 }: Prop
     setGraphicData(wantedData);
   }, [value1, value2, value3, value4, value5, value6]);
 
+  const handleHelpIconClick = () => {
+    setIsExplainModalOpen?.(!isExplainModalOpen);
+  };
+
   return (
     <div className="col-span-full">
       <ScalpImageViewBox>
         <TitleBox>
           <div className="title">두피 진단 결과</div>
-          <HelpIcon className="help_icon" />
+          <HelpIcon className="help_icon" onClick={() => handleHelpIconClick()} />
         </TitleBox>
+        {isExplainModalOpen && <GraphExplainModal />}
         <GraphBox>
           <ResponsiveRadar
             data={graphicData}
@@ -166,6 +183,7 @@ const ScalpImageViewBox = styled.div`
   display: flex;
   flex-direction: column;
   margin-top: 1.563rem;
+  position: relative;
 `;
 
 export default ScalpScaleView;
