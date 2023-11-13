@@ -19,7 +19,7 @@ import ScalpImgDefault from 'assets/images/scalp_img_default.png';
 
 const MyreportNonMember = () => {
   const navigate = useNavigate();
-  //   const Role = useRecoilValue(MemberRoleState);
+  // const Role = useRecoilValue(MemberRoleState);
 
   //대시보드
   const [isTabActive, setTabActive] = useState<boolean>(true);
@@ -29,7 +29,7 @@ const MyreportNonMember = () => {
   };
 
   const handleButtonClick = () => {
-    navigate('/routine');
+    navigate('/explain-routine');
   };
 
   const handleBannerButtonClick = () => {
@@ -71,6 +71,8 @@ const MyreportNonMember = () => {
             <div className="col-span-full">
               <RecommendCareRoutine />
               <Button name="두피 케어 루틴 추천 받기" onClick={() => handleButtonClick()} />
+              <br />
+              <br />
               <br />
               <br />
               <br />

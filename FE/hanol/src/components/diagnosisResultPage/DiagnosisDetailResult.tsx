@@ -68,7 +68,7 @@ const DiagnosisDetailResult = ({ viewBoolean }: Props) => {
           {viewBoolean && viewBoolean[6] && (
             <div>
               <DiagnosisDetailToggle
-                diagnosisTitle="겅강형 두피"
+                diagnosisTitle="건강형 두피"
                 diagnosisContent="“완벽한 두피 상태! 
                 건성, 지성, 염증, 비듬, 자극, 탈모에서 자유로운 당신의 두피는 건강형입니다. 지금 그대로 생활 습관을 유지해주세요.”"
               />

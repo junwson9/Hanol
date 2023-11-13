@@ -1,5 +1,7 @@
 package com.ssafy.hanol.global.sse.service.dto.response;
 
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.ssafy.hanol.diagnosis.domain.Diagnosis;
 import com.ssafy.hanol.diagnosis.service.dto.response.RabbitmqResponse;
 import lombok.Builder;
@@ -10,6 +12,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
+@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class DiagnoseAiResultResponse {
     private String imageUrl;
     private int value1;
@@ -19,9 +22,10 @@ public class DiagnoseAiResultResponse {
     private int value5;
     private int value6;
     private Long diagnosisId;
+    private int scanPart;
 
     @Builder
-    public DiagnoseAiResultResponse(String imageUrl, int value1, int value2, int value3, int value4, int value5, int value6, Long diagnosisId) {
+    public DiagnoseAiResultResponse(String imageUrl, int value1, int value2, int value3, int value4, int value5, int value6, Long diagnosisId, int scanPart) {
         this.imageUrl = imageUrl;
         this.value1 = value1;
         this.value2 = value2;
@@ -30,6 +34,7 @@ public class DiagnoseAiResultResponse {
         this.value5 = value5;
         this.value6 = value6;
         this.diagnosisId = diagnosisId;
+        this.scanPart = scanPart;
     }
 
     public static DiagnoseAiResultResponse from(Diagnosis diagnosis) {
@@ -42,6 +47,7 @@ public class DiagnoseAiResultResponse {
                 .value5(diagnosis.getValue5())
                 .value6(diagnosis.getValue6())
                 .diagnosisId(diagnosis.getId())
+                .scanPart(diagnosis.getScanPart())
                 .build();
     }
 

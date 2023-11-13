@@ -1,6 +1,8 @@
+import React from 'react';
 import axiosInstance from 'api/axiosInterceptor';
 import { useNavigate } from 'react-router';
-
+import { ReactComponent as AlarmIcon } from '../../assets/icons/alarmIcon.svg';
+import { useRef, useEffect } from 'react';
 type RoutineButtonProps = {
   index: number;
   is_done: boolean;
@@ -8,10 +10,26 @@ type RoutineButtonProps = {
   routine_name: string;
   member_routine_log_id: number;
   member_routine_id: number | null;
+  is_notification_active: boolean | null;
+  notification_time: string;
 
   onDataChange: (isDone: boolean, achievementRates: number, index: number) => void;
 };
 function RoutineButton(props: RoutineButtonProps) {
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (containerRef.current) {
+      const containerHeight = containerRef.current.scrollHeight;
+      if (containerHeight > 3.375 * 16) {
+        // 3.375rem * 16px (assuming 1rem = 16px)
+        containerRef.current.classList.add('col-span-full');
+      } else {
+        containerRef.current.classList.remove('col-span-full');
+      }
+    }
+  }, [props.routine_name]);
+
   const navigate = useNavigate();
   const handleClick = async () => {
     try {
@@ -36,12 +54,19 @@ function RoutineButton(props: RoutineButtonProps) {
   };
 
   const handleTOAlarm = () => {
+    const currentDate = new Date();
+    const notificationDate = new Date(props.notification_time);
+
+    if (currentDate > notificationDate) {
+      return; // 이전 날짜이므로 클릭 불가능
+    }
     navigate(`/routine-noti-setting/${props.member_routine_id}`);
   };
 
   return (
     <div
-      className={`w-full h-[3.375rem] border border-Main flex items-center justify-between gap-2.5 inline-flex rounded-[0.5rem] ${
+      ref={containerRef}
+      className={`w-full py-[1rem] border border-Main flex items-center justify-between gap-2.5 inline-flex rounded-[0.5rem] ${
         props.is_done ? 'border-[#999999]' : 'bg-White border-Main'
       }`}
     >
@@ -51,16 +76,33 @@ function RoutineButton(props: RoutineButtonProps) {
             props.is_done ? 'text-[#999999]' : 'text-Main'
           }`}
         >
-          {props.routine_name} {/* routine_name props 사용 */}
+          {props.routine_name.includes('\\n') ? (
+            <div className="whitespace-pre-line">
+              {props.routine_name.split('\\n').map((line, index) => (
+                <React.Fragment key={index}>
+                  {line}
+                  <br />
+                </React.Fragment>
+              ))}
+            </div>
+          ) : (
+            props.routine_name
+          )}
+          {props.is_notification_active && (
+            <div className="flex items-center ">
+              <AlarmIcon />
+              <div className="ml-[0.3rem] text-[#999999] ">{props.notification_time}</div>
+            </div>
+          )}
         </div>
       </button>
       <div className="flex items-center">
         <div
           onClick={handleClick}
-          className={`w-[3.4rem] mx-[0.5rem] px-[0.6rem] py-[0.2rem] border border-Main rounded-[0.3rem] text-[0.75rem] font-medium text-White bg-Main
+          className={`w-[3.6rem] mx-[0.5rem] py-[0.2rem] border border-Main rounded-[0.3rem] text-[0.75rem] font-medium text-White bg-Main
           ${props.is_done ? 'border-[#999999] bg-White text-[#999999]' : 'bg-Main border-Main'}`}
         >
-          {props.is_done ? '완료' : '했어요'} {/* is_done props 사용 */}
+          {props.is_done ? '완료함' : '완료하기'}
         </div>
       </div>
     </div>

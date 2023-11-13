@@ -11,22 +11,30 @@ import DivisionRectangle from 'components/common/DivisionRectangle';
 import RecommendCareRoutine2 from 'components/diagnosisResultPage/RecommendCareRoutine2';
 import TopBarDepth2 from 'components/common/TapBarDepth2';
 import { useRecoilValue } from 'recoil';
-import { diagnoseState } from 'recoil/atoms';
+import { diagnoseIdState, diagnoseState, PartState } from 'recoil/atoms';
 import { ImageState } from 'recoil/atoms';
 import { useState } from 'react';
 import { useEffect } from 'react';
+import ResultSender from 'components/diagnosisResultPage/ResultSender';
+import { MemberRoleState } from 'recoil/atoms';
 
 const DiagnosisDetail = () => {
   const navigate = useNavigate();
   const values = useRecoilValue(diagnoseState);
   const image = useRecoilValue(ImageState);
+  const scanPart = useRecoilValue(PartState);
+  const diagnoseId = useRecoilValue(diagnoseIdState);
+  const [isExplainModalOpen, setIsExplainModalOpen] = useState(false);
+
   // viewBoolean 배열 초기화
+  console.log('스캔부위', scanPart);
   const initialViewBoolean = new Array(6).fill(false);
   const [viewBoolean, setViewBoolean] = useState(initialViewBoolean);
+  const Role = useRecoilValue(MemberRoleState);
 
   // values 배열의 각 항목을 검사하여 viewBoolean 업데이트
   useEffect(() => {
-    const updatedViewBoolean = values.map((value) => value <= 1);
+    const updatedViewBoolean = values.map((value) => value >= 2);
     if (!updatedViewBoolean.includes(true)) {
       updatedViewBoolean.push(true);
     }
@@ -48,7 +56,7 @@ const DiagnosisDetail = () => {
       <div className="grid grid-cols-6 gap-[10px] mx-[23px]">
         <div className="col-span-full">
           <TopBarDepth2 name={'진단결과'} propsIsBack={false} rightBtnType={2} onClick={handleButtonClick} />
-          <AlopeciaDiagnosis valuenumber={Math.abs(values[5] - 3)} />
+          <AlopeciaDiagnosis valuenumber={values[5]} />
           <ScalpScaleView
             value1={values[0]}
             value2={values[1]}
@@ -56,12 +64,20 @@ const DiagnosisDetail = () => {
             value4={values[3]}
             value5={values[4]}
             value6={values[5]}
+            isExplainModalOpen={isExplainModalOpen}
+            setIsExplainModalOpen={setIsExplainModalOpen}
           />
           <DiagnosisDetailResult viewBoolean={viewBoolean} />
-          <ScalpImageView scalp_img={image} />
+          <ScalpImageView scalp_img={image} sub_title={scanPart} />
           <EmptyButton name="지난 내역 확인 하기" onClick={() => handleButtonClick()} />
+          {Role === 'ADMIN' || Role === 'MANAGER' ? (
+            <div>
+              <ResultSender diagnoseId={diagnoseId} />
+            </div>
+          ) : null}
         </div>
       </div>
+
       <div>
         <DivisionRectangle />
         <div className="grid grid-cols-6 gap-[10px] mx-[23px]">

@@ -41,6 +41,10 @@ function ExplainDiagnose() {
       <div className="sticky mt-10 bottom-5">
         <FloatingButton name="시작하기" onClick={handleClick} />
       </div>
+      <br />
+      <br />
+      <br />
+      <br />
     </div>
   );
 }

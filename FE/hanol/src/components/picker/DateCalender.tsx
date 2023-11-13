@@ -4,6 +4,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
 import { useEffect } from 'react';
 import { ReactComponent as Close } from '../../assets/icons/close.svg';
+import { DemoItem } from '@mui/x-date-pickers/internals/demo';
 type CalendarBasicProps = {
   onDateChange: (date: Date | null) => void;
   isModalOpen: boolean;
@@ -17,10 +18,8 @@ export default function CalendarBasic({ onDateChange, isModalOpen, openModal, cl
   const handleDateChange = (date: Date | null) => {
     setSelectedDate(date || null);
     onDateChange(date);
-    console.log('캘린더 선택', selectedDate);
     closeModal();
   };
-
   useEffect(() => {
     if (isModalOpen) {
       openModal();
@@ -38,12 +37,14 @@ export default function CalendarBasic({ onDateChange, isModalOpen, openModal, cl
               <Close />
             </button>
             <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="ko">
-              <DateCalendar
-                showDaysOutsideCurrentMonth
-                fixedWeekNumber={6}
-                onChange={handleDateChange}
-                value={selectedDate} // 포맷팅된 날짜를 value prop으로 전달
-              />
+              <DemoItem>
+                <DateCalendar
+                  showDaysOutsideCurrentMonth
+                  fixedWeekNumber={6}
+                  onChange={handleDateChange}
+                  value={selectedDate} // 포맷팅된 날짜를 value prop으로 전달
+                />
+              </DemoItem>
             </LocalizationProvider>
           </div>
         </div>
