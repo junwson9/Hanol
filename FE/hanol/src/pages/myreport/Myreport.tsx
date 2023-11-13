@@ -18,7 +18,6 @@ import { diagnosisResultType } from 'types/DiagnosisResult';
 import TapBar from 'components/common/TopBar';
 import AlopeciaDiagnosis from 'components/diagnosisResultPage/AlopeciaDiagnosis';
 import DiagnosisDetailResult from 'components/diagnosisResultPage/DiagnosisDetailResult';
-import GraphExplainModal from 'components/common/GraphExplainModal';
 // import { MemberRoleState } from 'recoil/atoms';
 // import { useRecoilValue } from 'recoil';
 
@@ -313,7 +312,6 @@ const Myreport = () => {
                     isExplainModalOpen={isExplainModalOpen}
                     setIsExplainModalOpen={setIsExplainModalOpen}
                   />
-                  {isExplainModalOpen && <GraphExplainModal />}
                   <DiagnosisDetailResult viewBoolean={viewBoolean} />
 
                   <ScalpImageView
@@ -353,11 +351,13 @@ const OverwrapContainer2 = styled.div`
   position: absolute;
   top: 0;
   left: 0;
-
+  z-index: 20;
   width: 100%;
 `;
 
-const OverwrapContainer1 = styled.div``;
+const OverwrapContainer1 = styled.div`
+  /* position: relative; */
+`;
 
 const DashBoardBox = styled.div``;
 const MyreportContainer = styled.div`

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { ReactComponent as HelpIcon } from '../../assets/icons/help_FILL0_wght400_GRAD0_opsz24 1.svg';
 import { ResponsiveRadar } from '@nivo/radar';
+import GraphExplainModal from 'components/common/GraphExplainModal';
 
 interface Props {
   value1: number;
@@ -104,6 +105,7 @@ const ScalpScaleView = ({
           <div className="title">두피 진단 결과</div>
           <HelpIcon className="help_icon" onClick={() => handleHelpIconClick()} />
         </TitleBox>
+        {isExplainModalOpen && <GraphExplainModal />}
         <GraphBox>
           <ResponsiveRadar
             data={graphicData}
@@ -181,6 +183,7 @@ const ScalpImageViewBox = styled.div`
   display: flex;
   flex-direction: column;
   margin-top: 1.563rem;
+  position: relative;
 `;
 
 export default ScalpScaleView;

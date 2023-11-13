@@ -23,6 +23,8 @@ const DiagnosisDetail = () => {
   const image = useRecoilValue(ImageState);
   const scanPart = useRecoilValue(PartState);
   const diagnoseId = useRecoilValue(diagnoseIdState);
+  const [isExplainModalOpen, setIsExplainModalOpen] = useState(false);
+
   // viewBoolean 배열 초기화
   console.log('스캔부위', scanPart);
   const initialViewBoolean = new Array(6).fill(false);
@@ -60,6 +62,8 @@ const DiagnosisDetail = () => {
             value4={values[3]}
             value5={values[4]}
             value6={values[5]}
+            isExplainModalOpen={isExplainModalOpen}
+            setIsExplainModalOpen={setIsExplainModalOpen}
           />
           <DiagnosisDetailResult viewBoolean={viewBoolean} />
           <ScalpImageView scalp_img={image} sub_title={scanPart} />

@@ -20,6 +20,12 @@ const ModalBox = styled.div`
   border-radius: 18px;
   width: 15.625rem;
   height: 15.625rem;
+  padding: 0.938rem;
+
+  position: absolute;
+  z-index: 10;
+  top: 12%;
+  left: 18%;
 `;
 
 export default GraphExplainModal;
