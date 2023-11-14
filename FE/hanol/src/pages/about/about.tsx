@@ -111,7 +111,9 @@ function About() {
         <button className="font-bold text-[1.125rem] w-full my-[1rem] text-left" onClick={handleToAbout}>
           ABOUT
         </button>
-
+        <button className="font-bold text-[1.125rem] w-full my-[1rem] text-left" onClick={handleToAbout}>
+          ABOUT
+        </button>
         <button className="font-bold text-[1.125rem] text-Main w-full my-[1rem] text-left" onClick={handleToSurvey}>
           설문조사 참여하고 커피 받기
         </button>
