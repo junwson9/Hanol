@@ -93,6 +93,7 @@
     "@types/hammerjs": "^2.0.43",
     "@types/react-datepicker": "^4.19.1",
     "autoprefixer": "^10.4.16",
+    "babel-plugin-transform-remove-console": "^6.9.4",
     "postcss": "^8.4.31",
     "tailwindcss": "^3.3.3"
   }

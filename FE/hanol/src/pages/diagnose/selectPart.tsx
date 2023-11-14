@@ -24,7 +24,6 @@ function SelectPart() {
       navigate('/analyzing');
     }
   };
-  console.log(activePart);
   const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = event.target.files?.[0];
 
