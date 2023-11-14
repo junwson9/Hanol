@@ -1,5 +1,3 @@
-import simpleLogo from './images/1024.png';
-
 self.addEventListener('install', function (e) {
   console.log('fcm sw install..');
   self.skipWaiting();
@@ -17,7 +15,7 @@ self.addEventListener('push', function (e) {
   const notificationTitle = resultData.title;
   const notificationOptions = {
     body: resultData.body,
-    icon: { simpleLogo },
+    icon: '/public/images/1024.png',
     tag: resultData.tag,
     ...resultData,
   };
