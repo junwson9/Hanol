@@ -6,18 +6,21 @@
   font-family: 'Noto Sans KR';
   font-weight: 700;
   src: url('./assets/fonts/NotoSansKR-Bold.otf') format('truetype');
+  font-display: swap;
 }
 
 @font-face {
   font-family: 'Noto Sans KR';
   font-weight: 400;
   src: url('./assets/fonts/NotoSansKR-Regular.otf') format('truetype');
+  font-display: swap;
 }
 
 @font-face {
   font-family: 'Noto Sans KR';
   font-weight: 500;
   src: url('./assets/fonts/NotoSansKR-Medium.otf') format('truetype');
+  font-display: swap;
 }
 
 body {

@@ -15,7 +15,6 @@ function ExplainDiagnose() {
       navigate('/select-device');
     }
   };
-  console.log(role);
   return (
     <div className="col-span-full">
       <div>

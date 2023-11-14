@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import illust from '../../assets/images/image35.jpg';
+import illust from '../../assets/images/checklist_image.png';
 
 const RecommendCareRoutine2 = () => {
   return (
@@ -11,7 +11,7 @@ const RecommendCareRoutine2 = () => {
           <div className="content">회원님께 꼭 맞는 두피 케어 루틴을 추천해드려요.</div>
           <div className="content">매일 루틴을 실천하고 두피 건강을 챙기세요.</div>
         </ContentBox>
-        <IllustrationBox>
+        <IllustrationBox className="w-[14rem]">
           <img src={illust} alt="3d 일러스트 아이콘" className="illustration" />
         </IllustrationBox>
       </RecMentBox>
