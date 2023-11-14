@@ -5,10 +5,17 @@ import TapBarDepth2 from 'components/common/TapBarDepth2';
 import { ReactComponent as Ex } from 'assets/images/scalpExample.svg';
 import { useRecoilState } from 'recoil';
 import { DeviceState } from 'recoil/atoms';
-
+import { useRecoilValue } from 'recoil';
+import { MemberRoleState } from 'recoil/atoms';
+import Snackbar from 'components/common/SnackBar';
+import { ReactComponent as CameraIcon } from 'assets/images/Camera_icon.svg';
+import { ReactComponent as HanolDevice } from 'assets/images/hanol_device.svg';
 function SelectDevice() {
   const [selectedButton, setSelectedButton] = useState<number>(0);
+  const Role = useRecoilValue(MemberRoleState);
   const [, setSelectedDevice] = useRecoilState<number>(DeviceState);
+  const [snackbarMessage, setSnackbarMessage] = useState<string>(''); // 스낵바 메시지 상태
+
   const handleButtonSelect = (index: number) => {
     setSelectedButton(index);
   };
@@ -18,6 +25,10 @@ function SelectDevice() {
       setSelectedDevice(1);
     } else if (selectedButton === 0) {
       setSelectedDevice(0);
+      if (Role == 'MEMBER') {
+        setSnackbarMessage('사용을 원하시면 A205팀장 김지수에게 MM주세요!');
+        return;
+      }
     }
     navigate('/select-part');
   };
@@ -34,20 +45,30 @@ function SelectDevice() {
       <p className="text-lg  text-left font-bold mt-12 text-center">촬영 기기를 선택해 주세요.</p>
       <div className="flex justify-center mt-6 gap-6">
         <button
-          className={`flex w-[6.5rem] h-[6.5rem] rounded-xl shadow-lg justify-center items-center border ${
+          className={`flex w-[9rem] h-[9rem] rounded-xl shadow-lg justify-center items-center border ${
             selectedButton === 0 ? 'border-Main border-4' : ''
           }`}
           onClick={() => handleButtonSelect(0)}
         >
-          <p>한올 기기</p>
+          <div>
+            <div className="flex justify-center">
+              <HanolDevice />
+            </div>
+            <p>한올 기기</p>
+          </div>
         </button>
         <button
-          className={`flex w-[6.5rem] h-[6.5rem] rounded-xl shadow-lg justify-center items-center border ${
+          className={`flex w-[9rem] h-[9rem] rounded-xl shadow-lg justify-center items-center border ${
             selectedButton === 1 ? 'border-Main border-4' : ''
           }`}
           onClick={() => handleButtonSelect(1)}
         >
-          <p className="text-center">휴대폰 카메라</p>
+          <div>
+            <div className="flex justify-center">
+              <CameraIcon />
+            </div>
+            <p className="text-center">휴대폰 카메라</p>
+          </div>
         </button>
       </div>
       <p className="text-lg  text-left font-bold mt-6">촬영 방법 안내</p>
@@ -86,6 +107,9 @@ function SelectDevice() {
       <div className="absolute w-[100%] bottom-5">
         <StartButton name="선택 완료" onClick={() => handleNavigate()} />
       </div>
+      {snackbarMessage && (
+        <Snackbar message={snackbarMessage} onClose={() => setSnackbarMessage('')} /> // 스낵바 컴포넌트 추가
+      )}
     </div>
   );
 }
