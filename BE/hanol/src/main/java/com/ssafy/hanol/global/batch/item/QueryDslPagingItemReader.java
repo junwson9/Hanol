@@ -1,4 +1,4 @@
-package com.ssafy.hanol.routine.service.batch;
+package com.ssafy.hanol.global.batch.item;
 
 import com.querydsl.jpa.JPQLQuery;
 import com.querydsl.jpa.impl.JPAQuery;
@@ -68,6 +68,7 @@ public class QueryDslPagingItemReader<T> extends AbstractPagingItemReader {
         fetchQuery(query, tx);
     }
 
+    // 데이터베이스 연산 수행 전 트랜잭션을 시작하고 영속성 컨텍스트를 초기화
     protected EntityTransaction getTxOrNull() {
         if (transacted) {
             EntityTransaction tx = entityManager.getTransaction();

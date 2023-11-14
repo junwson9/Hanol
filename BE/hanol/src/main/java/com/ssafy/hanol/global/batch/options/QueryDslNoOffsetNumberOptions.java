@@ -1,10 +1,10 @@
-package com.ssafy.hanol.routine.service.batch.options;
+package com.ssafy.hanol.global.batch.options;
 
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.NumberPath;
 import com.querydsl.jpa.impl.JPAQuery;
-import com.ssafy.hanol.routine.service.batch.expression.Expression;
+import com.ssafy.hanol.global.batch.expression.Expression;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.annotation.Nonnull;
@@ -69,8 +69,6 @@ public class QueryDslNoOffsetNumberOptions<T, N extends Number & Comparable<?>> 
     }
 
     private BooleanExpression whereExpression(int page) {
-        log.info("필드: {}, lastId: {}", field, lastId);
-
         return expression.where(field, page, currentId)
                 .and(expression.isAsc()? field.loe(lastId) : field.goe(lastId));
     }

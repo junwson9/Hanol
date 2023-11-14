@@ -1,4 +1,4 @@
-package com.ssafy.hanol.routine.service.batch.exception;
+package com.ssafy.hanol.global.batch.exception;
 
 
 import com.ssafy.hanol.common.exception.ErrorCode;

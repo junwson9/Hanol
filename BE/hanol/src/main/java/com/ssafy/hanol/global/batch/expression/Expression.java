@@ -1,4 +1,4 @@
-package com.ssafy.hanol.routine.service.batch.expression;
+package com.ssafy.hanol.global.batch.expression;
 
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.BooleanExpression;

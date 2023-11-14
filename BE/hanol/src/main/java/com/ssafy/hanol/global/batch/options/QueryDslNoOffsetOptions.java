@@ -1,8 +1,8 @@
-package com.ssafy.hanol.routine.service.batch.options;
+package com.ssafy.hanol.global.batch.options;
 
 import com.querydsl.core.types.Path;
 import com.querydsl.jpa.impl.JPAQuery;
-import com.ssafy.hanol.routine.service.batch.expression.Expression;
+import com.ssafy.hanol.global.batch.expression.Expression;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.annotation.Nonnull;

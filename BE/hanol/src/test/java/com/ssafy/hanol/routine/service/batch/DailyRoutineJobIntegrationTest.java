@@ -3,7 +3,6 @@ package com.ssafy.hanol.routine.service.batch;
 import com.ssafy.hanol.TestBatchConfig;
 import com.ssafy.hanol.routine.repository.JpaMemberRoutineLogRepository;
 import com.ssafy.hanol.routine.repository.JpaMemberRoutineRepository;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -19,7 +18,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
- * DailyRoutineJob의 통합 테스트용 클래스
+ * DailyRoutineJob의 통합 테스트
  */
 
 //@Sql({"classpath:data-test.sql"}) // 테스트 수행 시 실행할 SQL 파일
@@ -40,12 +39,6 @@ public class DailyRoutineJobIntegrationTest {
         jpaMemberRoutineLogRepository.deleteAllInBatch();
     }
 
-    @AfterEach
-    public void cleanUp() {
-        // 데이터베이스 정리
-//        jpaMemberRoutineLogRepository.deleteAllInBatch();
-    }
-
     @Test
     @DisplayName("지정한 날짜의 MemberRoutineLog가 MemberRoutine 개수 만큼 생성되어야 한다")
     void DailyRoutineJob이_정상적으로_수행된다() throws Exception {
@@ -60,27 +53,13 @@ public class DailyRoutineJobIntegrationTest {
         System.out.println("멤버 루틴 goal count: "+goalCount);
 
         //when
-        Long startTime = System.currentTimeMillis();
         JobExecution jobExecution = jobLauncherTestUtils.launchJob();
-        Long endTime = System.currentTimeMillis();
-        Long durationTime = endTime - startTime;
-        System.out.println("JOB 수행 시간: " + durationTime);
         long afterCount = jpaMemberRoutineLogRepository.count();
 
         //then
         assertThat(jobExecution.getStatus()).isEqualTo(BatchStatus.COMPLETED);
         assertThat(afterCount).isEqualTo(goalCount);
-        System.out.println("after count:"+afterCount);
+        System.out.println("after count: "+afterCount);
     }
 
-
-//    @Test
-//    @DisplayName("더미데이터 입력")
-//    void insertQuery() throws Exception {
-//        //given
-//
-//        //when
-//
-//        //then
-//    }
 }

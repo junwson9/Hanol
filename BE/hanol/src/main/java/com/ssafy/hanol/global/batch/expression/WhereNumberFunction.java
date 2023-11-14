@@ -1,4 +1,4 @@
-package com.ssafy.hanol.routine.service.batch.expression;
+package com.ssafy.hanol.global.batch.expression;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.NumberPath;

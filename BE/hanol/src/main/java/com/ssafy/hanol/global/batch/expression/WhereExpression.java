@@ -1,14 +1,11 @@
-package com.ssafy.hanol.routine.service.batch.expression;
+package com.ssafy.hanol.global.batch.expression;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.NumberPath;
 
 public enum WhereExpression {
-    GT(
-            (id, page, currentId) -> page == 0? id.goe(currentId): id.gt(currentId)),
-    LT(
-            (id, page, currentId) -> page == 0? id.loe(currentId): id.lt(currentId)
-    );
+    GT((id, page, currentId) -> page == 0? id.goe(currentId): id.gt(currentId)),
+    LT((id, page, currentId) -> page == 0? id.loe(currentId): id.lt(currentId));
 
     private final WhereNumberFunction number;
 

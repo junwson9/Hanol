@@ -1,10 +1,9 @@
-package com.ssafy.hanol.routine.service.batch;
+package com.ssafy.hanol.global.batch.item;
 
 import com.querydsl.jpa.JPQLQuery;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.ssafy.hanol.routine.service.batch.options.QueryDslNoOffsetNumberOptions;
-import com.ssafy.hanol.routine.service.batch.options.QueryDslNoOffsetOptions;
+import com.ssafy.hanol.global.batch.options.QueryDslNoOffsetNumberOptions;
 import org.springframework.util.ClassUtils;
 import org.springframework.util.CollectionUtils;
 
