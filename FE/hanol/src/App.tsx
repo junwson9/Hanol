@@ -39,10 +39,10 @@ import { useRecoilValue } from 'recoil';
 import { MemberRoleState } from 'recoil/atoms';
 import A2HS from 'components/common/useA2HS.js';
 
-const console = window.console || {};
-console.log = function no_console() {};
-console.warn = function no_console() {};
-console.error = function () {};
+// const console = window.console || {};
+// console.log = function no_console() {};
+// console.warn = function no_console() {};
+// console.error = function () {};
 
 function App() {
   const ROLE = useRecoilValue(MemberRoleState);
@@ -63,38 +63,40 @@ function App() {
   RouteChangeTracker();
   return (
     <div className="App">
-      <div className={`AppContent ${shouldShowNavBar ? 'show-navbar' : ''}`}>
-        <div className="grid grid-cols-6 gap-[10px] mx-[23px]">
-          <Routes>
-            <Route path="/diagnose" element={<ExplainDiagnose />} />
-            <Route path="/login-done" element={<LoginDone />} />
-            <Route path="/set-routine" element={<SetRoutine />} />
-            <Route path="/signup-birth" element={<SignupBirth />} />
-            <Route path="/signup-gender" element={<SignupGender />} />
-            <Route path="/routine" element={<Routine />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/explain-routine" element={<ExplainRoutine />} />
-            <Route path="/select-device" element={<SelectDevice />} />
-            <Route path="/streaming" element={<Streaming />} />
-            <Route path="/mypage" element={<MyPage />} />
-            <Route path="/IoTstreaming" element={<IoTstreaming />} />
-            <Route path="/analyzing" element={<Analyzing />} />
-            <Route path="/select-part" element={<SelectPart />} />
-            <Route path="/about-noti-setting" element={<AboutNotiSetting />} />
-            <Route path="/set-scalpti1" element={<SetScalpTI1 />} />
-            <Route path="/set-scalpti2" element={<SetScalpTI2 />} />
-            <Route path="/set-scalpti3" element={<SetScalpTI3 />} />
-            <Route path="/set-scalpti4" element={<SetScalpTI4 />} />
-            <Route path="/set-scalpti5" element={<SetScalpTI5 />} />
-            <Route path="/set-scalpti6" element={<SetScalpTI6 />} />
-            <Route path="/set-scalpti7" element={<SetScalpTI7 />} />
-            <Route path="/set-scalp-done" element={<SetScalpDone />} />
-            <Route path="/routine-noti-setting/:member_routine_id" element={<RoutineNotiSetting />} />
-            <Route path="/terms" element={<Terms />} />
-            <Route path="/scalp-exception" element={<ScalpException />} />
-          </Routes>
+      <div className={`AppContent ${shouldShowNavBar ? 'show-navbar' : ''} `}>
+        <div className="bg-white">
+          <div className="grid grid-cols-6 gap-[10px] mx-[23px] ">
+            <Routes>
+              <Route path="/diagnose" element={<ExplainDiagnose />} />
+              <Route path="/login-done" element={<LoginDone />} />
+              <Route path="/set-routine" element={<SetRoutine />} />
+              <Route path="/signup-birth" element={<SignupBirth />} />
+              <Route path="/signup-gender" element={<SignupGender />} />
+              <Route path="/routine" element={<Routine />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/explain-routine" element={<ExplainRoutine />} />
+              <Route path="/select-device" element={<SelectDevice />} />
+              <Route path="/streaming" element={<Streaming />} />
+              <Route path="/mypage" element={<MyPage />} />
+              <Route path="/IoTstreaming" element={<IoTstreaming />} />
+              <Route path="/analyzing" element={<Analyzing />} />
+              <Route path="/select-part" element={<SelectPart />} />
+              <Route path="/about-noti-setting" element={<AboutNotiSetting />} />
+              <Route path="/set-scalpti1" element={<SetScalpTI1 />} />
+              <Route path="/set-scalpti2" element={<SetScalpTI2 />} />
+              <Route path="/set-scalpti3" element={<SetScalpTI3 />} />
+              <Route path="/set-scalpti4" element={<SetScalpTI4 />} />
+              <Route path="/set-scalpti5" element={<SetScalpTI5 />} />
+              <Route path="/set-scalpti6" element={<SetScalpTI6 />} />
+              <Route path="/set-scalpti7" element={<SetScalpTI7 />} />
+              <Route path="/set-scalp-done" element={<SetScalpDone />} />
+              <Route path="/routine-noti-setting/:member_routine_id" element={<RoutineNotiSetting />} />
+              <Route path="/terms" element={<Terms />} />
+              <Route path="/scalp-exception" element={<ScalpException />} />
+            </Routes>
+          </div>
         </div>
-        <div>
+        <div className="bg-white">
           <Routes>
             <Route path="/login-error" element={<LoginError />} />
             <Route path="/diagnosis" element={<DiagnosisDetail />} />

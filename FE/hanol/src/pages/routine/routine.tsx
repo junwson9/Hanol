@@ -214,7 +214,7 @@ function Routine() {
         {/* <CalenderBasic /> */}
       </div>
       {render ? (
-        <div className="z-1 mt-[4rem]">
+        <div className="z-1 mt-[4rem] ">
           {dailyRoutines.map((routine, index) => (
             <div className="mb-[1rem]" key={index}>
               <RoutineButton
@@ -240,7 +240,7 @@ function Routine() {
           <div>꾸준한 실천이 건강한 모발을 만들어줄거에요.</div>
         </div>
       )}
-      <div className="my-[2rem] sticky bottom-5 mb-[3rem] z-1">
+      <div className="mt-[3rem] mb-[3rem] sticky bottom-24 z-1">
         <FloatingButton name={'두피 케어 루틴 설정하기'} onClick={handleClick} />
       </div>
     </div>

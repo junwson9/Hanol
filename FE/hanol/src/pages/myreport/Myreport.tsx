@@ -277,7 +277,7 @@ const Myreport = () => {
             </div>
             <DivisionRectangle />
             <div className="grid grid-cols-6 gap-[10px] mx-[23px]">
-              <div className="col-span-full">
+              <div className="col-span-full mb-[5rem]">
                 <RecommendCareRoutine />
                 <Button name="두피 케어 루틴 추천 받기" onClick={() => handleButtonClick()} />
                 <br />

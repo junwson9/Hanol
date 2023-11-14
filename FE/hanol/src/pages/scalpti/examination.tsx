@@ -111,7 +111,7 @@ function Examination() {
               <div className="flex justify-center">
                 <img className="w-[12.5rem] h-[12.rem]" src={Image2} alt="Image2" />
               </div>
-              <div className="my-[2rem] sticky bottom-5 mb-[3rem] z-1">
+              <div className="mt-[1rem] mb-[3rem] sticky bottom-24 z-1">
                 <FloatingButton name={'두피TI 시작하기'} onClick={navToSetScalp} />
               </div>
             </div>
@@ -150,7 +150,7 @@ function Examination() {
             두피가 될 확률이 높습니다.
           </p>
           <DivisionRectangle />
-          <div className="my-[2rem] mx-[4rem]">
+          <div className="mb-[6rem] mx-[4rem]">
             {scalpType && scalpType.type0 && (
               <div>
                 <div className="font-bold text-[1.125rem]">건강형 </div>

@@ -74,7 +74,7 @@ function SetScalpTI7() {
           </div>
         </div>
 
-        <div className="col-span-full sticky mt-10 bottom-5">
+        <div className="mt-[1rem] mb-[3rem] sticky bottom-24 z-1">
           <DisabledButton name="다음" onClick={handleButtonClick} disabled={selectedOption === null} />
         </div>
       </div>

@@ -12,7 +12,7 @@ import { examinationState } from 'recoil/atoms';
 function SetScalpTI4() {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const navigate = useNavigate();
-  const question_1 = ['염색모발', '가발 사용(붙임머리 포함)', '모발이식 / 시술', '기타'];
+  const question_1 = ['염색모발', '가발 사용(붙임머리 포함)', '모발이식 / 시술', '자연모'];
   const [selectedOptions, setSelectedOptions] = useState<boolean[]>(new Array(question_1.length).fill(false));
   const [select, setSelect] = useRecoilState(examinationState);
   // const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
@@ -72,7 +72,7 @@ function SetScalpTI4() {
           </div>
         </div>
 
-        <div className="col-span-full sticky mt-10 bottom-5">
+        <div className="mt-[1rem] mb-[3rem] sticky bottom-24 z-1">
           <DisabledButton
             name="다음"
             onClick={handleButtonClick}

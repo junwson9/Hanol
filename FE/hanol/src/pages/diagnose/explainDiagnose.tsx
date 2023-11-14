@@ -37,7 +37,7 @@ function ExplainDiagnose() {
       <div className="flex mt-10 justify-center">
         <img src={scoreEx} className="w-64 h-64" />
       </div>
-      <div className="sticky mt-10 bottom-5">
+      <div className="mt-[1rem] mb-[3rem] sticky bottom-24 z-1">
         <FloatingButton name="시작하기" onClick={handleClick} />
       </div>
       <br />
