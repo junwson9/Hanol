@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class AmazonS3Config {
 
-    @Value(("${cloud.aws.credentials.access-key}"))
+    @Value("${cloud.aws.credentials.access-key}")
     private String accessKey;
 
     @Value("${cloud.aws.credentials.secret-key}")
