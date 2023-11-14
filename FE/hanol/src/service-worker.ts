@@ -56,6 +56,24 @@ registerRoute(
 
 // An example runtime caching route for requests that aren't handled by the
 // precache, in this case same-origin .png requests like those from in public/
+
+self.addEventListener('install', (event) => {
+  event.waitUntil(
+    // eslint-disable-next-line
+    caches.open('my-cache').then((cache) => {
+      // 캐시 관련 작업 수행
+    }),
+  );
+
+  // install 이벤트 발생 후에 즉시 활성화
+  self.skipWaiting();
+});
+
+self.addEventListener('activate', (event) => {
+  // activate 이벤트 발생 후에 페이지 컨트롤 즉시 가져옴
+  event.waitUntil(self.clients.claim());
+});
+
 registerRoute(
   // Add in any other file extensions or routing criteria as needed.
   ({ url }) => url.origin === self.location.origin && url.pathname.endsWith('.png'),
