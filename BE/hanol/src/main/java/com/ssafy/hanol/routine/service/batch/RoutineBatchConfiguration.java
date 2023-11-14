@@ -3,6 +3,12 @@ package com.ssafy.hanol.routine.service.batch;
 import com.ssafy.hanol.routine.domain.MemberRoutine;
 import com.ssafy.hanol.routine.domain.MemberRoutineLog;
 import com.ssafy.hanol.routine.repository.MemberRoutineLogRepository;
+import com.ssafy.hanol.routine.repository.MemberRoutineRepository;
+import com.ssafy.hanol.global.batch.expression.Expression;
+import com.ssafy.hanol.global.batch.item.QueryDslNoOffsetIdPagingItemReader;
+import com.ssafy.hanol.global.batch.item.QueryDslNoOffsetPagingItemReader;
+import com.ssafy.hanol.global.batch.item.QueryDslPagingItemReader;
+import com.ssafy.hanol.global.batch.options.QueryDslNoOffsetNumberOptions;
 import io.netty.channel.ConnectTimeoutException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -32,6 +38,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.ssafy.hanol.routine.domain.QMemberRoutine.memberRoutine;
+
 @Configuration
 @Slf4j
 @RequiredArgsConstructor
@@ -41,9 +49,10 @@ public class RoutineBatchConfiguration {
     private final StepBuilderFactory stepBuilderFactory;
     private final EntityManagerFactory entityManagerFactory;
     private final MemberRoutineLogRepository memberRoutineLogRepository;
+    private final MemberRoutineRepository memberRoutineRepository;
 
     private static final String JOB_NAME = "dailyRoutineJob";
-    public static final int CHUNK_SIZE = 100;
+    public static final int CHUNK_SIZE = 1000;
 
 
     @Bean(name = JOB_NAME)
@@ -90,19 +99,15 @@ public class RoutineBatchConfiguration {
         return retryPolicy;
     }
 
-
     @Bean(name = JOB_NAME + "_reader")
     @StepScope
-    public JpaPagingItemReader<MemberRoutine> reader() {
-        log.info("Configuring reader for {}", JOB_NAME);
-        return new JpaPagingItemReaderBuilder<MemberRoutine>()
-                .name(JOB_NAME+"_reader")
-                .entityManagerFactory(entityManagerFactory)
-                .pageSize(CHUNK_SIZE)   // 한 번에 읽어올 데이터 수
-                .queryString("SELECT mr FROM MemberRoutine mr ORDER BY mr.id DESC") // JOB 실행 후 추가된 MEMBER_ROUTINE 은 WRITE 되면 안되기 때문에 id 내림차순으로 조회
-                .build();
+    public QueryDslNoOffsetIdPagingItemReader<MemberRoutine, Long> reader() {
+        // No Offset Option 설정
+        QueryDslNoOffsetNumberOptions<MemberRoutine, Long> options = new QueryDslNoOffsetNumberOptions<>(memberRoutine.id, Expression.DESC);
+        // QueryDsl Reader
+        return new QueryDslNoOffsetIdPagingItemReader<>(entityManagerFactory, CHUNK_SIZE, options, jpaQueryFactory ->
+                jpaQueryFactory.selectFrom(memberRoutine));
     }
-
 
     public ItemProcessor<MemberRoutine, MemberRoutineLog> processor() {
         log.info("Configuring processor for {}", JOB_NAME);

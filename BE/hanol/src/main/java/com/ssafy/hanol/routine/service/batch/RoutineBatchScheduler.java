@@ -1,7 +1,7 @@
 package com.ssafy.hanol.routine.service.batch;
 
 import com.ssafy.hanol.common.exception.CustomException;
-import com.ssafy.hanol.routine.service.batch.exception.BatchErrorCode;
+import com.ssafy.hanol.global.batch.exception.BatchErrorCode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.Job;
