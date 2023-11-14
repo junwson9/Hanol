@@ -37,6 +37,9 @@ const ValueGraph = ({ title, dataList, graphValue, setIndex }: Props) => {
   };
 
   // 그래프 커스텀
+  ChartJS.defaults.font.family = 'Noto Sans';
+  // ChartJS.defaults.font.size = 12;
+
   const options = {
     // eslint-disable-next-line
     onClick: function (point: any, event: any) {
@@ -51,7 +54,6 @@ const ValueGraph = ({ title, dataList, graphValue, setIndex }: Props) => {
       legend: {
         position: 'top' as const,
         display: false,
-        labels: { font: { size: 10, family: 'Noto Sans' } },
       },
       title: {
         display: true,

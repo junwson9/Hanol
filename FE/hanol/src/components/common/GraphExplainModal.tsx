@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import explainImg from '../../assets/images/graph_explain_img.png';
+import explainImg from '../../assets/images/graph_explain_img_white.png';
 
 const GraphExplainModal = () => {
   return (
@@ -16,7 +16,8 @@ const ModalBox = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #f7f7f7;
+  background-color: #fffeff;
+  border: 0.2px solid rgba(188, 188, 188, 0.5);
   border-radius: 18px;
   width: 15.625rem;
   height: 15.625rem;
@@ -24,8 +25,8 @@ const ModalBox = styled.div`
 
   position: absolute;
   z-index: 10;
-  top: 12%;
-  left: 18%;
+  top: 11.5%;
+  left: 17.7%;
 `;
 
 export default GraphExplainModal;
