@@ -104,7 +104,7 @@ function SelectDevice() {
           </p>
         </>
       )}
-      <div className="absolute w-[100%] bottom-5">
+      <div className="absolute w-[100%] bottom-24">
         <StartButton name="선택 완료" onClick={() => handleNavigate()} />
       </div>
       {snackbarMessage && (

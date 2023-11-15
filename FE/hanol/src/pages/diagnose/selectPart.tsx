@@ -24,6 +24,7 @@ function SelectPart() {
       navigate('/analyzing');
     }
   };
+  console.log(activePart);
   const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = event.target.files?.[0];
 
@@ -116,7 +117,7 @@ function SelectPart() {
               부위를 선택해 주세요.
             </p>
           )}
-          <div className="absolute w-[100%] bottom-5">
+          <div className="absolute w-[100%] bottom-24">
             <CameraButton name="촬영하기" onClick={() => handleNavigate()} />
           </div>
         </>
@@ -125,7 +126,7 @@ function SelectPart() {
           {selectedImage && (
             <div>
               <img src={selectedImage} alt="Selected" className="rounded-xl mt-20" />
-              <div className="absolute w-[100%] bottom-5 text-center">
+              <div className="absolute w-[100%] bottom-24 text-center">
                 <div className="flex justify-center">
                   <CameraButton name="진단받기" onClick={confirmCapture} />
                 </div>
