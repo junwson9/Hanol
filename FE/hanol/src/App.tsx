@@ -39,10 +39,10 @@ import { useRecoilValue } from 'recoil';
 import { MemberRoleState } from 'recoil/atoms';
 import A2HS from 'components/common/useA2HS.js';
 
-const console = window.console || {};
-console.log = function no_console() {};
-console.warn = function no_console() {};
-console.error = function () {};
+// const console = window.console || {};
+// console.log = function no_console() {};
+// console.warn = function no_console() {};
+// console.error = function () {};
 
 function App() {
   const ROLE = useRecoilValue(MemberRoleState);
