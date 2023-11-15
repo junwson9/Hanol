@@ -135,8 +135,7 @@ function SetRoutine() {
               ))}
             </div>
           </div>
-
-          <div className="mt-[1rem] mb-[3rem] sticky bottom-5 z-1">
+          <div className="mt-[3rem] mb-[3rem] sticky bottom-5 z-1">
             <FloatingButton name="루틴 설정하기" onClick={handleButtonClick} />
           </div>
         </div>

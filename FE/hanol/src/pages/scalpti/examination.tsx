@@ -111,7 +111,7 @@ function Examination() {
               <div className="flex justify-center">
                 <img className="w-[12.5rem] h-[12.rem]" src={Image2} alt="Image2" />
               </div>
-              <div className="mt-[1rem] mb-[3rem] sticky bottom-24 z-1">
+              <div className="mt-[3rem] mb-[3rem] sticky bottom-5 z-1">
                 <FloatingButton name={'두피TI 시작하기'} onClick={navToSetScalp} />
               </div>
             </div>
@@ -157,7 +157,7 @@ function Examination() {
                 <div className="flex justify-center">
                   <img src={Trophy_icon} className="w-[14rem] h-[14rem]" />
                 </div>
-                <div className="text-[0.8125rem]">
+                <div className="text-[0.8125rem] ">
                   “완벽한 두피 상태! 건성, 지성, 염증, 비듬, 자극, 탈모에서 자유로운 당신의 두피는 건강형입니다. 지금
                   그대로 생활 습관을 유지해주세요.”
                   <br />

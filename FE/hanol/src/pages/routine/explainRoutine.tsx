@@ -43,7 +43,7 @@ function ExplainRoutine() {
           <img className="w-[14rem]" src={CareRoutineExplain} alt="" />
         </div>
       </div>
-      <div className="mt-[1rem] mb-[3rem] sticky bottom-24 z-1">
+      <div className="mt-[3rem] mb-[3rem] sticky bottom-5 z-1">
         <FloatingButton name={'두피 케어 루틴 설정하기'} onClick={handleClick} />
       </div>
       <br />

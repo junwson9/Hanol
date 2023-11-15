@@ -117,7 +117,7 @@ function SelectPart() {
               부위를 선택해 주세요.
             </p>
           )}
-          <div className="absolute w-[100%] bottom-24">
+          <div className="absolute w-[100%] bottom-5">
             <CameraButton name="촬영하기" onClick={() => handleNavigate()} />
           </div>
         </>
