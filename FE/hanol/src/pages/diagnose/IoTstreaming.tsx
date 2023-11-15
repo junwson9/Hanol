@@ -19,7 +19,7 @@ function IoTstreaming() {
   let socket: WebSocket | null = null;
 
   const initializeWebSocket = () => {
-    socket = new WebSocket('wss://192.168.162.262:8888/ws');
+    socket = new WebSocket('wss://192.168.162.252:8888/ws');
 
     socket.onmessage = (event) => {
       if (videoRef.current) {
