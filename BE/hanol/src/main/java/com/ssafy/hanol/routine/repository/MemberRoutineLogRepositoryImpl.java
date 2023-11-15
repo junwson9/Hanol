@@ -1,6 +1,7 @@
 package com.ssafy.hanol.routine.repository;
 
 import com.ssafy.hanol.routine.domain.MemberRoutineLog;
+import com.ssafy.hanol.routine.service.RoutineAchievementInfo;
 import com.ssafy.hanol.routine.service.RoutineLogInfo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -45,7 +46,7 @@ public class MemberRoutineLogRepositoryImpl implements MemberRoutineLogRepositor
     }
 
     @Override
-    public Map<LocalDate, Double> computeAchievementRates(Long memberId, LocalDate startOfWeek, LocalDate endOfWeek) {
-        return queryDslMemberRoutineLogRepository.computeAchievementRates(memberId, startOfWeek, endOfWeek);
+    public List<RoutineAchievementInfo> findAchievementData(Long memberId, LocalDate startDate, LocalDate endDate) {
+        return queryDslMemberRoutineLogRepository.findAchievementData(memberId, startDate, endDate);
     }
 }

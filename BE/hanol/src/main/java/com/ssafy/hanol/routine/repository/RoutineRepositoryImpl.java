@@ -1,6 +1,5 @@
 package com.ssafy.hanol.routine.repository;
 
-import com.ssafy.hanol.routine.domain.MemberRoutine;
 import com.ssafy.hanol.routine.domain.Routine;
 import com.ssafy.hanol.routine.service.RoutineInfo;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +26,7 @@ public class RoutineRepositoryImpl implements RoutineRepository {
     }
 
     @Override
-    public List<RoutineInfo> findByValuesAndNotMemberRoutines(Long memberId, List<Integer> values, List<MemberRoutine> memberRoutines) {
-        return queryDslRoutineRepository.findByValuesAndNotMemberRoutines(memberId, values, memberRoutines);
+    public List<RoutineInfo> findByValuesAndNotMemberRoutines(Long memberId, List<Boolean> valueConditions, List<Long> memberRoutineIds) {
+        return queryDslRoutineRepository.findByValuesAndNotMemberRoutines(memberId, valueConditions, memberRoutineIds);
     }
 }
