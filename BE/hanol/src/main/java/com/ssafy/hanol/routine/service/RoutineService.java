@@ -23,10 +23,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -154,14 +151,38 @@ public class RoutineService {
     public RoutineAchievementRatesResponse findRoutineAchievementRates(LocalDate startDate, LocalDate endDate, Long memberId) {
         Member member = memberService.findMemberByMemberId(memberId);
 
-        log.info("startDate: {}, endDate: {}", startDate, endDate);
-        Map<LocalDate, Double> achievementRates = memberRoutineLogRepository.computeAchievementRates(memberId, startDate, endDate);
+        Map<LocalDate, Double> achievementRates = computeAchievementRates(memberId, startDate, endDate);
+
         return RoutineAchievementRatesResponse.builder()
                 .achievementRates(achievementRates)
                 .build();
     }
+
     
-    
+    // 일별 루틴 달성율 계산
+    private Map<LocalDate, Double> computeAchievementRates(Long memberId, LocalDate startDate, LocalDate endDate) {
+
+        Map<LocalDate, Double> achievementRates = new LinkedHashMap<>();
+
+        LocalDate currentDate = startDate;
+        while (!currentDate.isAfter(endDate)) {
+            achievementRates.put(currentDate, 0.0);
+            currentDate = currentDate.plusDays(1);
+        }
+
+        List<RoutineAchievementInfo> achievementInfos = memberRoutineLogRepository.findAchievementData(memberId, startDate, endDate);
+
+        for (RoutineAchievementInfo info : achievementInfos) {
+            long doneCount = info.getDoneCount();
+            long totalCount = info.getTotalCount();
+            double rate = totalCount > 0 ? ((double) doneCount / totalCount) * 100 : 0.0;
+            achievementRates.put(info.getDate(), rate);
+        }
+
+        return achievementRates;
+    }
+
+
     // 루틴 달성여부 변경
     public RoutineAchievementStatusResponse modifyRoutineAchievementStatus(Long memberRoutineLogId,
                                                                            RoutineAchievementStatusRequest request,
@@ -183,13 +204,14 @@ public class RoutineService {
         RoutineLogInfo updatedRoutineLog = RoutineLogInfo.from(routineLog, memberRoutine);
 
         // 해당일의 달성율 재계산
-        Map<LocalDate, Double> achievementRates = memberRoutineLogRepository.computeAchievementRates(memberId, targetDate, targetDate);
+        Map<LocalDate, Double> achievementRates = computeAchievementRates(memberId, targetDate, targetDate);
 
         return RoutineAchievementStatusResponse.builder()
                 .updatedRoutineLog(updatedRoutineLog)
                 .achievementRates(achievementRates)
                 .build();
     }
+
 
     // 루틴 알림 설정 변경
     public MemberRoutineDetailResponse modifyRoutineNotification(Long memberRoutineId,

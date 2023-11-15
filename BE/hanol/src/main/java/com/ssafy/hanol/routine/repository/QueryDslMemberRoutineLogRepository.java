@@ -3,10 +3,12 @@ package com.ssafy.hanol.routine.repository;
 import com.querydsl.core.Tuple;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.core.types.dsl.CaseBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.ssafy.hanol.routine.domain.QMemberRoutine;
 import com.ssafy.hanol.routine.domain.QMemberRoutineLog;
 import com.ssafy.hanol.routine.domain.QRoutine;
+import com.ssafy.hanol.routine.service.RoutineAchievementInfo;
 import com.ssafy.hanol.routine.service.RoutineLogInfo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -94,59 +96,23 @@ public class QueryDslMemberRoutineLogRepository {
     }
 
 
-    public Map<LocalDate, Double> computeAchievementRates(Long memberId, LocalDate startDate, LocalDate endDate) {
-
+    public List<RoutineAchievementInfo> findAchievementData(Long memberId, LocalDate startDate, LocalDate endDate) {
         QMemberRoutineLog memberRoutineLog = QMemberRoutineLog.memberRoutineLog;
 
-        Map<LocalDate, Double> achievementRates = new LinkedHashMap<>();
-
-        // 달성한 루틴 개수 조회
-        List<Tuple> doneRoutinesCounts = jpaQueryFactory
-                .select(memberRoutineLog.date, memberRoutineLog.isDone.count())
-                .from(memberRoutineLog)
-                .where(memberRoutineLog.member.id.eq(memberId)
-                        .and(memberRoutineLog.date.between(startDate, endDate))
-                        .and(memberRoutineLog.isDone.isTrue()))
-                .groupBy(memberRoutineLog.date)
-                .fetch();
-
-        // 전체 루틴 개수 조회
-        List<Tuple> totalRoutinesCounts = jpaQueryFactory
-                .select(memberRoutineLog.date, memberRoutineLog.id.count())
+        return jpaQueryFactory
+                .select(Projections.constructor(RoutineAchievementInfo.class,
+                        memberRoutineLog.date,
+                        new CaseBuilder()
+                                .when(memberRoutineLog.isDone.isTrue())
+                                .then(1L)
+                                .otherwise(0L)
+                                .sum().as("doneCount"),
+                        memberRoutineLog.id.count().as("totalCount")
+                ))
                 .from(memberRoutineLog)
                 .where(memberRoutineLog.member.id.eq(memberId)
                         .and(memberRoutineLog.date.between(startDate, endDate)))
                 .groupBy(memberRoutineLog.date)
                 .fetch();
-
-
-        // 일자별 달성률 계산
-        // - Map으로 변환
-        Map<LocalDate, Long> totalRoutinesMap = totalRoutinesCounts.stream()
-                .collect(Collectors.toMap(
-                        tuple -> tuple.get(memberRoutineLog.date),
-                        tuple -> tuple.get(memberRoutineLog.id.count())
-                ));
-
-        Map<LocalDate, Long> doneRoutinesMap = doneRoutinesCounts.stream()
-                .collect(Collectors.toMap(
-                        tuple -> tuple.get(memberRoutineLog.date),
-                        tuple -> tuple.get(memberRoutineLog.isDone.count())
-                ));
-
-        // - 달성률 계산
-        LocalDate currentDate = startDate;
-        while (!currentDate.isAfter(endDate)) {
-            Long completedCount = doneRoutinesMap.getOrDefault(currentDate, 0L);
-            Long totalCount = totalRoutinesMap.getOrDefault(currentDate, 0L);
-
-            double rate = (totalCount == 0) ? 0 : ((double) completedCount / totalCount) * 100;
-
-            achievementRates.put(currentDate, rate);
-
-            currentDate = currentDate.plusDays(1);
-        }
-
-        return achievementRates;
     }
 }
