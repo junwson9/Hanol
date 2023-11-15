@@ -96,6 +96,11 @@ const MyreportNonMember = () => {
                 <div className="explain">아직 진단 결과가 없습니다.</div>
               </ExplainContainer>
               <ScalpImageView sub_title={6} scalp_img={ScalpImgDefault} />
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
             </OverwrapContainer1>
           </div>
         </div>
