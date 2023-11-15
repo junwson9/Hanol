@@ -4,6 +4,7 @@
   margin: 0 auto; /* 중앙 정렬을 위해 가운데 정렬 */
   background-color: white;
   height: 100vh;
+  overflow-y: auto;
 }
 .AppContent {
   height: 100vh;

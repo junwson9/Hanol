@@ -85,7 +85,7 @@ function SetRoutine() {
     <>
       {!settingDone ? (
         <div className="col-span-full relative h-screen">
-          <div ref={containerRef}>
+          <div ref={containerRef} className="mb-[3rem]">
             <div className="col-start-1 col-end-7">
               <TopBarDepth2
                 name="두피 케어 루틴 설정"
@@ -136,7 +136,7 @@ function SetRoutine() {
             </div>
           </div>
 
-          <div className="mt-[1rem] mb-[3rem] sticky bottom-24 z-1">
+          <div className="mt-[1rem] mb-[3rem] sticky bottom-5 z-1">
             <FloatingButton name="루틴 설정하기" onClick={handleButtonClick} />
           </div>
         </div>
