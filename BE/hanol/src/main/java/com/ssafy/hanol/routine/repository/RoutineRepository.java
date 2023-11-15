@@ -1,6 +1,5 @@
 package com.ssafy.hanol.routine.repository;
 
-import com.ssafy.hanol.routine.domain.MemberRoutine;
 import com.ssafy.hanol.routine.domain.Routine;
 import com.ssafy.hanol.routine.service.RoutineInfo;
 
@@ -13,5 +12,5 @@ public interface RoutineRepository {
 
     List<Routine> findAllById(List<Long> routines);
 
-    List<RoutineInfo> findByValuesAndNotMemberRoutines(Long memberId, List<Integer> values, List<MemberRoutine> memberRoutines);
+    List<RoutineInfo> findByValuesAndNotMemberRoutines(Long memberId, List<Boolean> valueConditions, List<Long> memberRoutineIds);
 }

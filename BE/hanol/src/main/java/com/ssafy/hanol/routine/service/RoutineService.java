@@ -24,6 +24,7 @@ import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -44,29 +45,48 @@ public class RoutineService {
     // 회원별 설정 루틴 및 추천 루틴 리스트 조회
     public RoutineListResponse findRoutineList(Long memberId) {
         Member member = memberService.findMemberByMemberId(memberId);
-        // 회원이 설정해둔 루틴 리스트 조회
+        // 1. 회원이 설정해둔 루틴 리스트 조회
         List<MemberRoutine> memberRoutines = memberRoutineRepository.findByMemberId(memberId);
 
         List<RoutineInfo> myRoutines = memberRoutines.stream()
                 .map(RoutineInfo::from)
                 .collect(Collectors.toList());
 
-        // 최신 진단 결과 조회
-        Diagnosis latestDiagnosis = diagnosisRepository.findTopByMemberIdOrderByIdDesc(memberId).orElse(null);
+        // 2. 추천 루틴 리스트 조회
+        List<Boolean> valueConditions = diagnosisRepository.findTopByMemberIdOrderByIdDesc(memberId)
+                .map(diagnosis -> extractValueConditions(diagnosis, 2))
+                .orElse(Collections.emptyList());
 
-        // 진단 결과가 존재하면 value 값들을 리스트로 받기
-        List<Integer> values = new ArrayList<>();
-        if(latestDiagnosis !=  null) {
-            values = latestDiagnosis.getValuesAsList();
-        }
+        // 기존 루틴 id 추출
+        List<Long> memberRoutineIds = extractRoutineIds(memberRoutines);
 
-        // 추천 루틴 조회 : valueX값이 1이상이거나 isDefault=true인 루틴 중, memberRoutines에 없는 루틴.
-        List<RoutineInfo> suggestedRoutines = routineRepository.findByValuesAndNotMemberRoutines(memberId, values, memberRoutines);
+        List<RoutineInfo> suggestedRoutines = routineRepository.findByValuesAndNotMemberRoutines(memberId, valueConditions, memberRoutineIds);
 
         return RoutineListResponse.builder()
                 .myRoutines(myRoutines)
                 .suggestedRoutines(suggestedRoutines)
                 .build();
+    }
+
+    // 루틴 값의 id만 추출하는 메서드
+    private List<Long> extractRoutineIds(List<MemberRoutine> memberRoutines) {
+        return memberRoutines.stream()
+                .map(memberRoutine -> memberRoutine.getRoutine().getId())
+                .collect(Collectors.toList());
+    }
+
+    // 진단 결과의 valueX 값이 특정 값 이상인 지 여부 확인
+    private List<Boolean> extractValueConditions(Diagnosis latestDiagnosis, int threshold) {
+        List<Boolean> valueConditions = new ArrayList<>();
+        if(latestDiagnosis != null) {
+            valueConditions.add(latestDiagnosis.getValue1() >= threshold);
+            valueConditions.add(latestDiagnosis.getValue2() >= threshold);
+            valueConditions.add(latestDiagnosis.getValue3() >= threshold);
+            valueConditions.add(latestDiagnosis.getValue4() >= threshold);
+            valueConditions.add(latestDiagnosis.getValue5() >= threshold);
+            valueConditions.add(latestDiagnosis.getValue6() >= threshold);
+        }
+        return valueConditions;
     }
 
 
