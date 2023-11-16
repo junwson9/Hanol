@@ -97,7 +97,7 @@ function SelectDevice() {
             <br />
             &nbsp;&nbsp;&nbsp;&nbsp;두피를 촬영해 주세요.
           </p>
-          <p className="text-left mt-5">
+          <p className="text-left mt-5 mb-[14rem]">
             3. 사진이 선명할 수록 분석이 정확해집니다.
             <br />
             &nbsp;&nbsp;&nbsp;&nbsp;휴대폰 화면을 보고 기기 위치를 조정해 주세요!

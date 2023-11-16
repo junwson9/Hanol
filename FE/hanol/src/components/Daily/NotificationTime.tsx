@@ -23,13 +23,13 @@ const BoxDiv = styled.div`
   display: flex;
   width: 100%;
   height: 2.25rem;
-  padding: 1rem 1.875rem;
+  padding: 1rem;
   justify-content: center;
   align-items: center;
   flex-shrink: 0;
   border: 1px solid var(--GrayForText, #888);
   border-radius: 8px;
-  margin: 0 10px;
+  margin: 0 20px;
   cursor: pointer;
 `;
 const TimeBox = styled.div`
