@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-
+import { ReactComponent as CloseIcon } from '../../assets/icons/closeWhite.svg';
 const useA2HS = () => {
   const [deferredPrompt, setDeferredPrompt] = useState(null);
 
@@ -23,7 +23,6 @@ const useA2HS = () => {
       clearPrompt();
     });
   };
-
   const clearPrompt = () => {
     setDeferredPrompt(null);
   };
@@ -39,7 +38,9 @@ const A2HS = () => {
       <SnackbarContainer>
         <div className="button-container">
           <button onClick={installApp}>앱으로 이용하기</button>
-          <button onClick={clearPrompt}>취소</button>
+          <button onClick={clearPrompt}>
+            <CloseIcon />
+          </button>
         </div>
       </SnackbarContainer>
     </div>
@@ -54,15 +55,13 @@ const SnackbarContainer = styled.div`
   display: flex;
   align-items: center;
   padding: 1rem 1rem;
-  background-color: #fff;
-  color: #fff;
-  border-radius: 12px;
+  background-color: #888888;
+  border-radius: 50px;
+  border: 1px solid #ffffff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   max-width: calc(100% - 46px);
   width: min(404px, calc(100% - 46px));
-  color: #3fcc8a;
-  border: 1px solid #3fcc8a;
-  z-index: 11111;
+  color: #fff;
 
   .button-container {
     display: flex;
@@ -73,6 +72,14 @@ const SnackbarContainer = styled.div`
   button {
     flex: 1;
     margin: 0 8px; /* Adjust margin as needed */
+    height: 100%;
+  }
+
+  /* Move the "취소" button to the right */
+  .button-container button:last-child {
+    position: absolute;
+    right: 12px;
+    bottom: 0.7px;
   }
 `;
 

@@ -179,45 +179,6 @@ const Myreport = () => {
       <TopTab active={isTabActive} title1="대시보드" title2="상세보기" onTabClick={handleTabClick} />
       {isTabActive ? (
         <>
-          {/* {Role === 'GUEST' ? (
-            <DashBoardBox>
-              <div className="grid grid-cols-6 gap-[10px] mx-[23px]">
-                <div className="col-span-full">
-                  {diagnosisList && (
-                    <>
-                      <BannerButton name="내 두피 분석 하러가기" onClick={() => handleBannerButtonClick()} />
-                      <ValueCardBox>
-                        <ValueCard title={getValueTitle(6)} value={5} onClick={() => handleValueCardClick(6)} />
-                        <ValueCard title={getValueTitle(1)} value={5} onClick={() => handleValueCardClick(1)} />
-                        <ValueCard title={getValueTitle(2)} value={5} onClick={() => handleValueCardClick(2)} />
-                      </ValueCardBox>
-                      <ValueCardBox>
-                        <ValueCard title={getValueTitle(3)} value={5} onClick={() => handleValueCardClick(3)} />
-                        <ValueCard title={getValueTitle(4)} value={5} onClick={() => handleValueCardClick(4)} />
-                        <ValueCard title={getValueTitle(5)} value={5} onClick={() => handleValueCardClick(5)} />
-                      </ValueCardBox>
-                      <ValueGraph
-                        title={getValueTitle(graphValue)}
-                        dataList={diagnosisList}
-                        graphValue={graphValue}
-                        setIndex={setIndex}
-                      />
-                    </>
-                  )}
-                </div>
-              </div>
-              <DivisionRectangle />
-              <div className="grid grid-cols-6 gap-[10px] mx-[23px]">
-                <div className="col-span-full">
-                  <RecommendCareRoutine />
-                  <Button name="두피 케어 루틴 추천 받기" onClick={() => handleButtonClick()} />
-                  <br />
-                  <br />
-                  <br />
-                </div>
-              </div>
-            </DashBoardBox>
-          ) : ( */}
           <DashBoardBox>
             <div className="grid grid-cols-6 gap-[10px] mx-[23px]">
               <div className="col-span-full">
@@ -277,7 +238,7 @@ const Myreport = () => {
             </div>
             <DivisionRectangle />
             <div className="grid grid-cols-6 gap-[10px] mx-[23px]">
-              <div className="col-span-full">
+              <div className="col-span-full mb-[5rem]">
                 <RecommendCareRoutine />
                 <Button name="두피 케어 루틴 추천 받기" onClick={() => handleButtonClick()} />
                 <br />
@@ -333,6 +294,11 @@ const Myreport = () => {
                 </>
               )}
             </OverwrapContainer1>
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
           </div>
         </div>
       )}

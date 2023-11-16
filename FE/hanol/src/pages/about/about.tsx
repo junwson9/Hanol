@@ -86,7 +86,7 @@ function About() {
             onClick={handleloginClick}
             className="bg-[#F4F4F4] px-[0.5rem] py-[0.2rem] rounded-[0.3rem] text-[#555555] font-regular text-[0.813rem]"
           >
-            로그인
+            로그인 / 회원가입
           </button>
         </div>
       ) : (
