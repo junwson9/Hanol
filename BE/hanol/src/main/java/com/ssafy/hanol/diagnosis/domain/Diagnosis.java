@@ -66,10 +66,6 @@ public class Diagnosis extends BaseTimeEntity {
         this.scanPart = scanPart;
     }
 
-    // value값만 리스트로 추출하는 메서드
-    public List<Integer> getValuesAsList() {
-        return Arrays.asList(value1, value2, value3, value4, value5, value6);
-    }
 
     public void updateValues(RabbitmqResponse response) {
         this.value1 = response.getValue1();
