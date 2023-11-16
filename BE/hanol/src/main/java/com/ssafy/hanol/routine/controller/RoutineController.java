@@ -84,4 +84,5 @@ public class RoutineController {
         routineBatchScheduler.runDailyRoutineJob();
         return ResponseFactory.success("데일리 루틴 생성 배치 실행");
     }
+
 }

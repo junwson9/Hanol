@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { ReactComponent as HelpIcon } from '../../assets/icons/help_FILL0_wght400_GRAD0_opsz24 1.svg';
 import { ResponsiveRadar } from '@nivo/radar';
+import GraphExplainModal from 'components/common/GraphExplainModal';
 
 interface Props {
   value1: number;
@@ -10,71 +11,82 @@ interface Props {
   value4: number;
   value5: number;
   value6: number;
+  isExplainModalOpen?: boolean;
+  setIsExplainModalOpen?: (arg: boolean) => void;
 }
 
-const ScalpScaleView = ({ value1, value2, value3, value4, value5, value6 }: Props) => {
+const ScalpScaleView = ({
+  value1,
+  value2,
+  value3,
+  value4,
+  value5,
+  value6,
+  isExplainModalOpen,
+  setIsExplainModalOpen,
+}: Props) => {
   const defaultData = [
     {
       category: '탈모',
 
-      score: 0,
+      risk_level: 0,
     },
     {
       category: '각질',
 
-      score: 0,
+      risk_level: 0,
     },
     {
       category: '피지',
 
-      score: 0,
+      risk_level: 0,
     },
     {
       category: '홍반',
 
-      score: 0,
-    },
-    {
-      category: '비듬',
-
-      score: 0,
+      risk_level: 0,
     },
     {
       category: '염증',
 
-      score: 0,
+      risk_level: 0,
+    },
+    {
+      category: '비듬',
+
+      risk_level: 0,
     },
   ];
   const wantedData = [
     {
       category: '탈모',
 
-      score: value6,
+      risk_level: value6,
     },
     {
       category: '각질',
 
-      score: value1,
+      risk_level: value1,
     },
     {
       category: '피지',
 
-      score: value2,
+      risk_level: value2,
     },
     {
       category: '홍반',
 
-      score: value3,
-    },
-    {
-      category: '비듬',
-
-      score: value4,
+      risk_level: value3,
     },
     {
       category: '염증',
 
-      score: value5,
+      risk_level: value4,
+    },
+    {
+      category: '비듬',
+
+      risk_level: value5,
     },
   ];
   const [graphicData, setGraphicData] = useState(defaultData);
@@ -82,21 +94,26 @@ const ScalpScaleView = ({ value1, value2, value3, value4, value5, value6 }: Prop
     setGraphicData(wantedData);
   }, [value1, value2, value3, value4, value5, value6]);
 
+  const handleHelpIconClick = () => {
+    setIsExplainModalOpen?.(!isExplainModalOpen);
+  };
+
   return (
     <div className="col-span-full">
       <ScalpImageViewBox>
         <TitleBox>
-          <div className="title">두피 건강점수</div>
-          <HelpIcon className="help_icon" />
+          <div className="title">두피 진단 결과</div>
+          <HelpIcon className="help_icon" onClick={() => handleHelpIconClick()} />
         </TitleBox>
+        {isExplainModalOpen && <GraphExplainModal />}
         <GraphBox>
           <ResponsiveRadar
             data={graphicData}
-            keys={['score']}
+            keys={['risk_level']}
             indexBy="category"
             margin={{ top: 30, right: 30, bottom: 30, left: 30 }}
             borderColor={{ from: 'color', modifiers: [] }}
-            gridLevels={4}
+            gridLevels={3}
             gridShape="linear"
             gridLabelOffset={18}
             dotSize={10}
@@ -108,6 +125,16 @@ const ScalpScaleView = ({ value1, value2, value3, value4, value5, value6 }: Prop
             colors={{ scheme: 'pastel1' }}
             animate={true}
             // motionConfig="wobbly"
+            // theme={{
+            //   grid: {
+            //     line: {
+            //       stroke: '#FBDE48',
+            //       strokeWidth: 2,
+            //       // strokeDasharray: '4 4',
+            //     },
+            //   },
+            // }}
+            maxValue={3}
           />
         </GraphBox>
       </ScalpImageViewBox>
@@ -156,6 +183,7 @@ const ScalpImageViewBox = styled.div`
   display: flex;
   flex-direction: column;
   margin-top: 1.563rem;
+  position: relative;
 `;
 
 export default ScalpScaleView;

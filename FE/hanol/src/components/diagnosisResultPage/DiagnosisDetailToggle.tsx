@@ -103,5 +103,6 @@ const DiagnosisDetailBox = styled.div`
   opacity: 0.76;
 
   padding: 1.25rem 0.938rem;
+  z-index: 0;
 `;
 export default DiagnosisDetailToggle;

@@ -13,7 +13,7 @@ const routineNotiSetting = () => {
   const [routineNotiSettingData, setRoutineNotiSettingData] = useState<routineNotiSettingType>();
   const [notiTime, setNotiTime] = useState<string>();
   const { member_routine_id } = useParams();
-
+  const [routineName, setRoutineName] = useState<string>();
   console.log('notiTime', notiTime);
 
   useEffect(() => {
@@ -23,6 +23,9 @@ const routineNotiSetting = () => {
         console.log('루틴 알림 설정 조회 성공:', response.data.data);
         setRoutineNotiSettingData(response.data.data);
         setNotiTime(response.data.data.notification_time);
+        const cleanedRoutineName = response.data.data.routine_name.replace(/\\n/g, '');
+        console.log(cleanedRoutineName);
+        setRoutineName(cleanedRoutineName);
       })
       .catch((error) => {
         console.error('루틴 알림 설정 조회 실패:', error);
@@ -48,7 +51,7 @@ const routineNotiSetting = () => {
     <div className="col-span-full">
       <PageBox>
         <TopBarDepth2 name="루틴 알림 설정" rightBtnType={1} onClick={handleCompleteClick} propsIsBack />
-        <RoutineName routineName={routineNotiSettingData?.routine_name} />
+        <RoutineName routineName={routineName} />
         {routineNotiSettingData && (
           <PushSetting
             notiTime={notiTime}

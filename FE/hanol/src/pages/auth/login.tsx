@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { getMessaging, getToken } from 'firebase/messaging';
 import { MemberRoleState } from 'recoil/atoms';
 import { useSetRecoilState } from 'recoil';
-
+import { ReactComponent as HanolLogo } from '../../assets/icons/hanolLogo.svg';
 function Login() {
   const kakaoID = process.env.REACT_APP_KAKAO_CLIENT_ID;
   const APP_URI = process.env.REACT_APP_API_URL;
@@ -21,10 +21,8 @@ function Login() {
     });
 
     if (token) {
-      console.log('token: ', token);
       try {
-        const response = await axiosInstance.post('/notifications/token', { fcm_token: token });
-        console.log('로그인 후 토큰을 서버로 전송했습니다.', response.data);
+        await axiosInstance.post('/notifications/token', { fcm_token: token });
       } catch (error) {
         console.error('로그인 후 토큰을 서버로 전송하는 중 에러 발생:', error);
       }
@@ -44,19 +42,25 @@ function Login() {
       // eslint-disable-next-line
       .then((response: any) => {
         const { access_token, refresh_token } = response.data.data;
-        console.log('data', response.data.data);
         localStorage.setItem('access_token', access_token);
         localStorage.setItem('refresh_token', refresh_token);
         const role = response.data.data.role;
         if (role == 'GUEST') {
           setMemberRole(role);
           navigate('/signup-birth');
+          //FCM 토큰 관련
+          const messaging = getMessaging();
+          if (messaging && Notification.permission === 'granted') {
+            sendTokenToServer(messaging);
+          }
         } else {
           setMemberRole(role);
           navigate('/');
           //FCM 토큰 관련
           const messaging = getMessaging();
-          sendTokenToServer(messaging);
+          if (messaging && Notification.permission === 'granted') {
+            sendTokenToServer(messaging);
+          }
         }
       })
 
@@ -67,30 +71,44 @@ function Login() {
   // eslint-disable-next-line
   const kakaoFailHandler = (err: any) => {
     alert('카카오 로그인 실패');
-    console.error(err);
   };
   return (
     <>
       <div className="col-span-full h-screen flex flex-col justify-between">
-        <div>
-          <div className="mt-[105px] font-bold text-[18px] text-black flex">모발의 모든것</div>
-          <div className=" font-bold text-[18px] text-black flex">한올에서 간편하게</div>
-          <div className="mt-[12px] font-regular text-[12px] text-GrayForText flex">
-            더욱 풍성해질 당신을 항상 응원합니다.
+        <div className="mt-[2rem]">
+          <div className="ml-[0.65rem]">
+            <HanolLogo className="w-[12rem]" />
+          </div>
+          <div className="grid grid-cols-6 gap-[10px] mx-[23px]">
+            <div className="col-span-full">
+              <div className="font-bold text-[18px] text-black flex">머리카락의 내일을 지키는 오늘,</div>
+              <div className=" font-bold text-[18px] text-black flex">AI 두피 진단 케어 서비스</div>
+              <div className="mt-[12px] font-regular text-[12px] text-GrayForText flex">
+                더욱 풍성해질 당신을 항상 응원합니다.
+              </div>
+            </div>
           </div>
         </div>
-        <div className="flex justify-center mb-[50px]">
+        <div className="flex justify-center"></div>
+        <div className="mb-[9rem]">
           <KakaoLogin
             token={kakaoID || ''}
             onSuccess={kakaoSuccessHandler}
             onFail={kakaoFailHandler}
             render={(props) => (
-              <div>
-                {/* <button onClick={props.onClick}>카카오 로그인</button> */}
+              <div className="flex justify-center cursor-pointer">
                 <IconKakaoLogin onClick={props.onClick} />
               </div>
             )}
           />
+          <div className="mt-[1rem] flex justify-center">
+            <button
+              className="font-regular text-left mb-[1rem] text-[12px] text-GrayForText items-center underline"
+              onClick={() => navigate('/')}
+            >
+              비회원으로 둘러 보기
+            </button>
+          </div>
         </div>
       </div>
     </>

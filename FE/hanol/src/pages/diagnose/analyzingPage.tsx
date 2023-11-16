@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import AnalyzingAnimation from 'components/Animation/AnalyzingAnimation';
 import { useRecoilValue, useRecoilState } from 'recoil';
-import { ImageState, diagnoseState } from 'recoil/atoms';
+import { ImageState, diagnoseState, PartState, diagnoseIdState } from 'recoil/atoms';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { EventSourcePolyfill, NativeEventSource } from 'event-source-polyfill';
@@ -10,12 +10,13 @@ import { DeviceState } from 'recoil/atoms';
 import axiosInstance from 'api/axiosInterceptor';
 
 const AnalyzingPage = () => {
+  const scan_part = useRecoilValue(PartState);
   const image = useRecoilValue(ImageState);
-  const device = useRecoilValue(DeviceState);
+  const device_type = useRecoilValue(DeviceState);
   const [, setImageURL] = useRecoilState(ImageState);
   const [, setValues] = useRecoilState(diagnoseState);
-  console.log(device);
-  console.log(image);
+  const [, setPart] = useRecoilState(PartState);
+  const [, setDiagnoseId] = useRecoilState(diagnoseIdState);
   const navigate = useNavigate();
   const access_token = localStorage.getItem('access_token');
 
@@ -44,20 +45,27 @@ const AnalyzingPage = () => {
         // navigate('/posterror');
         eventSource.close();
       }
+      console.log(data);
       console.log(data.value1);
       setImageURL(data.image_url);
+      setPart(data.scan_part);
+      setDiagnoseId(data.diagnosis_id);
       setValues((prevSelect) => {
         const updatedSelect = [...prevSelect];
-        updatedSelect[0] = Math.abs(data.value1 - 3) as number;
-        updatedSelect[1] = Math.abs(data.value2 - 3) as number;
-        updatedSelect[2] = Math.abs(data.value3 - 3) as number;
-        updatedSelect[3] = Math.abs(data.value4 - 3) as number;
-        updatedSelect[4] = Math.abs(data.value5 - 3) as number;
-        updatedSelect[5] = Math.abs(data.value6 - 3) as number;
+        updatedSelect[0] = data.value1 as number;
+        updatedSelect[1] = data.value2 as number;
+        updatedSelect[2] = data.value3 as number;
+        updatedSelect[3] = data.value4 as number;
+        updatedSelect[4] = data.value5 as number;
+        updatedSelect[5] = data.value6 as number;
         return updatedSelect;
       });
       eventSource.close();
-      navigate('/diagnosis');
+      if (data.value1 === -1) {
+        navigate('/scalp-exception');
+      } else {
+        navigate('/diagnosis');
+      }
     };
 
     eventSource.onerror = (error) => {
@@ -75,8 +83,8 @@ const AnalyzingPage = () => {
     const formData = new FormData();
     formData.append('file', imageBlob, 'image.jpg');
     const data = {
-      device_type: 0,
-      scan_part: 0,
+      device_type,
+      scan_part,
     };
     formData.append('data', new Blob([JSON.stringify(data)], { type: 'application/json' }));
     const fetchData = async () => {

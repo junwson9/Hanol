@@ -15,10 +15,7 @@ import ExplainDiagnose from 'pages/diagnose/explainDiagnose';
 import SelectDevice from 'pages/diagnose/selectDevice';
 import Streaming from 'pages/diagnose/streaming';
 import IoTstreaming from 'pages/diagnose/IoTstreaming';
-import Test from 'components/diagnosisResultPage/ResultSender';
 import MyPage from 'pages/about/mypage';
-import Dashboard from 'pages/myreport/MyreportDashBoard';
-import MyDetail from 'pages/myreport/MyreportDetailPage';
 import DiagnosisDetail from 'pages/diagnose/diagnosisDetail';
 import Analyzing from 'pages/diagnose/analyzingPage';
 import SelectPart from 'pages/diagnose/selectPart';
@@ -35,9 +32,22 @@ import SetScalpDone from 'pages/scalpti/SetScalpDone';
 import Examination from 'pages/scalpti/examination';
 import RoutineNotiSetting from 'pages/routine/routineNotiSetting';
 import Terms from 'pages/about/terms';
+import MyreportNonMember from 'pages/myreport/Myreport-nonmember';
+import RouteChangeTracker from 'components/RouteChangeTracker.js';
+import ScalpException from 'pages/diagnose/scalpException';
+import { useRecoilValue } from 'recoil';
+import { MemberRoleState } from 'recoil/atoms';
+import A2HS from 'components/common/useA2HS.js';
+
+const console = window.console || {};
+console.log = function no_console() {};
+console.warn = function no_console() {};
+console.error = function () {};
 
 function App() {
+  const ROLE = useRecoilValue(MemberRoleState);
   const location = useLocation();
+
   const showNavBarPaths = [
     '/examination',
     '/routine',
@@ -47,30 +57,27 @@ function App() {
     '/diagnose',
     '/explain-routine',
     '/dashboard',
+    '/myreport-explain',
   ];
   const shouldShowNavBar = showNavBarPaths.includes(location.pathname);
+  RouteChangeTracker();
   return (
     <div className="App">
       <div className={`AppContent ${shouldShowNavBar ? 'show-navbar' : ''}`}>
         <div className="grid grid-cols-6 gap-[10px] mx-[23px]">
           <Routes>
             <Route path="/diagnose" element={<ExplainDiagnose />} />
-            <Route path="/login" element={<Login />} />
             <Route path="/login-done" element={<LoginDone />} />
             <Route path="/set-routine" element={<SetRoutine />} />
             <Route path="/signup-birth" element={<SignupBirth />} />
             <Route path="/signup-gender" element={<SignupGender />} />
-            <Route path="/examination" element={<Examination />} />
             <Route path="/routine" element={<Routine />} />
             <Route path="/about" element={<About />} />
             <Route path="/explain-routine" element={<ExplainRoutine />} />
             <Route path="/select-device" element={<SelectDevice />} />
             <Route path="/streaming" element={<Streaming />} />
-            <Route path="/test" element={<Test />} />
             <Route path="/mypage" element={<MyPage />} />
             <Route path="/IoTstreaming" element={<IoTstreaming />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/mydetail" element={<MyDetail />} />
             <Route path="/analyzing" element={<Analyzing />} />
             <Route path="/select-part" element={<SelectPart />} />
             <Route path="/about-noti-setting" element={<AboutNotiSetting />} />
@@ -84,18 +91,25 @@ function App() {
             <Route path="/set-scalp-done" element={<SetScalpDone />} />
             <Route path="/routine-noti-setting/:member_routine_id" element={<RoutineNotiSetting />} />
             <Route path="/terms" element={<Terms />} />
+            <Route path="/scalp-exception" element={<ScalpException />} />
           </Routes>
         </div>
         <div>
           <Routes>
             <Route path="/login-error" element={<LoginError />} />
             <Route path="/diagnosis" element={<DiagnosisDetail />} />
-            <Route path="/" element={<Home />} />
-            <Route path="/myreport" element={<Home />} />
+            <Route path="/login" element={<Login />} />
+
+            <Route path="/myreport-explain" element={<MyreportNonMember />} />
+
+            <Route path="/" element={ROLE === 'GUEST' ? <MyreportNonMember /> : <Home />} />
+
+            <Route path="/examination" element={<Examination />} />
           </Routes>
         </div>
       </div>
       {shouldShowNavBar && <NavBar />}
+      <A2HS />
     </div>
   );
 }

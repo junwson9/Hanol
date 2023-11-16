@@ -1,7 +1,7 @@
 import { atom } from 'recoil';
-import { recoilPersist } from 'recoil-persist';
 
-const { persistAtom } = recoilPersist();
+const storedRole = sessionStorage.getItem('Role');
+const defaultRole = storedRole ? storedRole : 'GUEST';
 
 export const selectedMenuState = atom({
   key: 'selectedMenu',
@@ -15,7 +15,7 @@ export const DeviceState = atom({
 
 export const PartState = atom({
   key: 'part',
-  default: '',
+  default: 7,
 });
 
 export const GenderInfo = atom<string>({
@@ -35,8 +35,14 @@ export const ImageState = atom<string>({
 
 export const MemberRoleState = atom<string>({
   key: 'Role',
-  default: 'GUEST',
-  effects_UNSTABLE: [persistAtom],
+  default: defaultRole,
+  effects_UNSTABLE: [
+    ({ onSet }) => {
+      onSet((newValue) => {
+        sessionStorage.setItem('Role', newValue);
+      });
+    },
+  ],
 });
 
 export const examinationState = atom({
@@ -47,4 +53,9 @@ export const examinationState = atom({
 export const diagnoseState = atom({
   key: 'Diagnose',
   default: [0, 0, 0, 0, 0, 0],
+});
+
+export const diagnoseIdState = atom({
+  key: 'DiagnoseId',
+  default: 0,
 });

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import styled from 'styled-components';
 // import Hammer from 'hammerjs';
 import {
@@ -19,26 +19,27 @@ import { diagnosisResultType } from 'types/DiagnosisResult';
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, PointElement, LineElement, zoomPlugin);
 
 interface Props {
-  title: string;
+  title?: string;
   dataList: diagnosisResultType[];
   graphValue: number;
   setIndex: (arg: number) => void;
 }
 
 const ValueGraph = ({ title, dataList, graphValue, setIndex }: Props) => {
-  // useEffect(() => {
-  //   const myElement = document.getElementById('myElement');
-  //   if (myElement) {
-  //     const hammer = new Hammer(myElement as HTMLElement);
+  const reversedDataList = useMemo(() => dataList.slice().reverse(), [dataList]);
 
-  //     // Add event listeners for specific gestures
-  //     hammer.on('pan', (event) => {
-  //       console.log('Pan gesture detected', event);
-  //     });
-  //   }
-  // }, []);
+  //날짜 포맷 변경
+  const extractMonthAndDay = (dateString: string) => {
+    const dateComponents = dateString.split(' ')[0].split('-');
+    const month = dateComponents[1];
+    const day = dateComponents[2];
+    return `${month}-${day}`;
+  };
 
   // 그래프 커스텀
+  ChartJS.defaults.font.family = 'Noto Sans';
+  // ChartJS.defaults.font.size = 12;
+
   const options = {
     // eslint-disable-next-line
     onClick: function (point: any, event: any) {
@@ -53,57 +54,69 @@ const ValueGraph = ({ title, dataList, graphValue, setIndex }: Props) => {
       legend: {
         position: 'top' as const,
         display: false,
-        labels: { font: { size: 10, family: 'Noto Sans' } },
       },
       title: {
         display: true,
         // text: 'Chart.js Bar Chart',
       },
-      zoom: {
-        pan: {
-          enabled: true,
-          mode: 'x' as const,
-          modifierKey: 'shift' as const,
-          scaleMode: 'x' as const,
-          threshold: 1,
+    },
+    elements: { point: { radius: 7, hitRadius: 3 }, line: { borderWidth: 5 } },
+    scales: {
+      y: {
+        display: true,
+        suggestedMin: -1,
+        suggestedMax: 4,
+        ticks: {
+          stepSize: 1,
+          // eslint-disable-next-line
+          callback: function (label: any) {
+            switch (label) {
+              case 0:
+                return '우수';
+              case 1:
+                return '양호';
+              case 2:
+                return '주의';
+              case 3:
+                return '위험';
+              default:
+                return '';
+            }
+          },
+          color: [
+            '',
+            'rgba(91, 195, 196, 1)',
+            'rgba(107, 228, 100, 1)',
+            'rgba(251, 222, 72, 1)',
+            'rgba(234, 83, 111, 1)',
+            '',
+          ],
         },
-        // limits: {
-        //   x: { min: 3, max: 15 },
-        // },
-        // zoom: {
-        //   mode: 'xy' as const,
-        //   wheel: {
-        //     enabled: true,
-        //     modifierKey: 'shift' as const,
-        //   },
-        // },
+        grid: {
+          color: [
+            '',
+            'rgba(91, 195, 196, 0.2)',
+            'rgba(107, 228, 100, .2)',
+            'rgba(251, 222, 72, 0.2)',
+            'rgba(234, 83, 111, .2)',
+            '',
+          ],
+          lineWidth: 3,
+        },
+      },
+      x: {
+        grid: {
+          display: false,
+        },
       },
     },
-    elements: { point: { radius: 5 } },
-    scales: { y: { display: false, suggestedMin: 0, suggestedMax: 3, ticks: { stepSize: 1 } } },
   };
   const data = {
-    // labels: [
-    //   '4주 전',
-    //   '3주 전',
-    //   '2주 전',
-    //   '1주 전',
-    //   '4주 전',
-    //   '3주 전',
-    //   '2주 전',
-    //   '1주 전',
-    //   '4주 전',
-    //   '3주 전',
-    //   '2주 전',
-    //   '1주 전',
-    // ],
-    labels: dataList?.reverse().map((data) => data.created_date.split(' ')[0].slice(2)),
+    labels: reversedDataList?.map((data) => extractMonthAndDay(data.created_date)),
     datasets: [
       {
         label: `${title}`,
-        // data: [123403, 123603, 125079, 126030, 123403, 123603, 125079, 126030, 123403, 123603, 125079, 126030],
-        // data: artistLikesCountperWeek.reverse().map((data) => data.scrapCount),
-        data: dataList?.reverse().map((data) => {
+        data: reversedDataList?.map((data) => {
           switch (graphValue) {
             case 1:
               return data.value1;

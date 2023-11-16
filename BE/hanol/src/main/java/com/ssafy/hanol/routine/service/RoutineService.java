@@ -4,8 +4,6 @@ import com.ssafy.hanol.common.exception.CustomException;
 import com.ssafy.hanol.diagnosis.domain.Diagnosis;
 import com.ssafy.hanol.diagnosis.repository.DiagnosisRepository;
 import com.ssafy.hanol.member.domain.Member;
-import com.ssafy.hanol.member.exception.MemberErrorCode;
-import com.ssafy.hanol.member.repository.MemberRepository;
 import com.ssafy.hanol.member.service.MemberService;
 import com.ssafy.hanol.routine.domain.MemberRoutine;
 import com.ssafy.hanol.routine.domain.MemberRoutineLog;
@@ -25,10 +23,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -47,31 +42,48 @@ public class RoutineService {
     // 회원별 설정 루틴 및 추천 루틴 리스트 조회
     public RoutineListResponse findRoutineList(Long memberId) {
         Member member = memberService.findMemberByMemberId(memberId);
-        // 회원이 설정해둔 루틴 리스트 조회
+        // 1. 회원이 설정해둔 루틴 리스트 조회
         List<MemberRoutine> memberRoutines = memberRoutineRepository.findByMemberId(memberId);
 
         List<RoutineInfo> myRoutines = memberRoutines.stream()
                 .map(RoutineInfo::from)
                 .collect(Collectors.toList());
-        log.info("기존 루틴: {}", myRoutines);
 
-        // 최신 진단 결과 조회
-        Diagnosis latestDiagnosis = diagnosisRepository.findTopByMemberIdOrderByIdDesc(memberId).orElse(null);
+        // 2. 추천 루틴 리스트 조회
+        List<Boolean> valueConditions = diagnosisRepository.findTopByMemberIdOrderByIdDesc(memberId)
+                .map(diagnosis -> extractValueConditions(diagnosis, 2))
+                .orElse(Collections.emptyList());
 
-        // 진단 결과가 존재하면 value 값들을 리스트로 받기
-        List<Integer> values = new ArrayList<>();
-        if(latestDiagnosis !=  null) {
-            values = latestDiagnosis.getValuesAsList();
-        }
+        // 기존 루틴 id 추출
+        List<Long> memberRoutineIds = extractRoutineIds(memberRoutines);
 
-        // 추천 루틴 조회 : valueX값이 1이상이거나 isDefault=true인 루틴 중, memberRoutines에 없는 루틴.
-        List<RoutineInfo> suggestedRoutines = routineRepository.findByValuesAndNotMemberRoutines(memberId, values, memberRoutines);
-        log.info("추천 루틴 suggestedRoutines: {}", suggestedRoutines);
+        List<RoutineInfo> suggestedRoutines = routineRepository.findByValuesAndNotMemberRoutines(memberId, valueConditions, memberRoutineIds);
 
         return RoutineListResponse.builder()
                 .myRoutines(myRoutines)
                 .suggestedRoutines(suggestedRoutines)
                 .build();
+    }
+
+    // 루틴 값의 id만 추출하는 메서드
+    private List<Long> extractRoutineIds(List<MemberRoutine> memberRoutines) {
+        return memberRoutines.stream()
+                .map(memberRoutine -> memberRoutine.getRoutine().getId())
+                .collect(Collectors.toList());
+    }
+
+    // 진단 결과의 valueX 값이 특정 값 이상인 지 여부 확인
+    private List<Boolean> extractValueConditions(Diagnosis latestDiagnosis, int threshold) {
+        List<Boolean> valueConditions = new ArrayList<>();
+        if(latestDiagnosis != null) {
+            valueConditions.add(latestDiagnosis.getValue1() >= threshold);
+            valueConditions.add(latestDiagnosis.getValue2() >= threshold);
+            valueConditions.add(latestDiagnosis.getValue3() >= threshold);
+            valueConditions.add(latestDiagnosis.getValue4() >= threshold);
+            valueConditions.add(latestDiagnosis.getValue5() >= threshold);
+            valueConditions.add(latestDiagnosis.getValue6() >= threshold);
+        }
+        return valueConditions;
     }
 
 
@@ -128,7 +140,6 @@ public class RoutineService {
         Member member = memberService.findMemberByMemberId(memberId);
 
         List<RoutineLogInfo> routineLogInfos = memberRoutineLogRepository.selectRoutineLogsByMemberIdAndDate(memberId, date);
-        log.info("특정일의 루틴 이력 조회, {}", routineLogInfos);
 
         return RoutineLogListResponse.builder()
                 .dailyRoutines(routineLogInfos)
@@ -140,14 +151,38 @@ public class RoutineService {
     public RoutineAchievementRatesResponse findRoutineAchievementRates(LocalDate startDate, LocalDate endDate, Long memberId) {
         Member member = memberService.findMemberByMemberId(memberId);
 
-        log.info("startDate: {}, endDate: {}", startDate, endDate);
-        Map<LocalDate, Double> achievementRates = memberRoutineLogRepository.computeAchievementRates(memberId, startDate, endDate);
+        Map<LocalDate, Double> achievementRates = computeAchievementRates(memberId, startDate, endDate);
+
         return RoutineAchievementRatesResponse.builder()
                 .achievementRates(achievementRates)
                 .build();
     }
+
     
-    
+    // 일별 루틴 달성율 계산
+    private Map<LocalDate, Double> computeAchievementRates(Long memberId, LocalDate startDate, LocalDate endDate) {
+
+        Map<LocalDate, Double> achievementRates = new LinkedHashMap<>();
+
+        LocalDate currentDate = startDate;
+        while (!currentDate.isAfter(endDate)) {
+            achievementRates.put(currentDate, 0.0);
+            currentDate = currentDate.plusDays(1);
+        }
+
+        List<RoutineAchievementInfo> achievementInfos = memberRoutineLogRepository.findAchievementData(memberId, startDate, endDate);
+
+        for (RoutineAchievementInfo info : achievementInfos) {
+            long doneCount = info.getDoneCount();
+            long totalCount = info.getTotalCount();
+            double rate = totalCount > 0 ? ((double) doneCount / totalCount) * 100 : 0.0;
+            achievementRates.put(info.getDate(), rate);
+        }
+
+        return achievementRates;
+    }
+
+
     // 루틴 달성여부 변경
     public RoutineAchievementStatusResponse modifyRoutineAchievementStatus(Long memberRoutineLogId,
                                                                            RoutineAchievementStatusRequest request,
@@ -169,13 +204,14 @@ public class RoutineService {
         RoutineLogInfo updatedRoutineLog = RoutineLogInfo.from(routineLog, memberRoutine);
 
         // 해당일의 달성율 재계산
-        Map<LocalDate, Double> achievementRates = memberRoutineLogRepository.computeAchievementRates(memberId, targetDate, targetDate);
+        Map<LocalDate, Double> achievementRates = computeAchievementRates(memberId, targetDate, targetDate);
 
         return RoutineAchievementStatusResponse.builder()
                 .updatedRoutineLog(updatedRoutineLog)
                 .achievementRates(achievementRates)
                 .build();
     }
+
 
     // 루틴 알림 설정 변경
     public MemberRoutineDetailResponse modifyRoutineNotification(Long memberRoutineId,

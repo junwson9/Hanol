@@ -22,11 +22,11 @@ function DateBox({
       onClick(dateInfo);
     }
   };
-  // console.log(achievement);
-  const roundedAchievement = Math.round(achievement);
-  const bgStyle = roundedAchievement > 0 ? `bg-Main opacity-${roundedAchievement}` : `bg-Gray`;
-  // console.log(bgStyle);
-  console.log(roundedAchievement);
+  // console.log(achievement)8
+  const roundedAchievement = Math.round(achievement / 10) * 10;
+  const bgStyle = roundedAchievement > 0 ? `bg-Main bg-opacity-${roundedAchievement}` : `bg-Gray`;
+  // console.log('여기요', bgStyle);
+  console.log('여기요', roundedAchievement);
   return (
     <button
       className={`bg-White w-[2.8rem] h-[4rem] flex flex-col justify-center items-center rounded-[0.75rem] border border-Gray ${
@@ -38,7 +38,7 @@ function DateBox({
         {dayOfWeek}
       </div>
       <div
-        className={`flex justify-center items-center rounded-full bg-Gray text-White w-[1.875rem] h-[1.875rem] p-[0.25rem] ${bgStyle}`}
+        className={`flex justify-center items-center rounded-full text-White w-[1.875rem] h-[1.875rem] p-[0.25rem] ${bgStyle}`}
       >
         {day}
       </div>

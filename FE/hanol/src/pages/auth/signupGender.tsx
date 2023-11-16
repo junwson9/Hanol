@@ -37,7 +37,7 @@ function SignupGender() {
       const access_token = response.data.data.access_token;
       localStorage.setItem('access_token', access_token);
     } catch (error) {
-      console.error('데이터 가져오기 오류:', error);
+      console.error(error);
     }
     navigate('/login-done');
     setMemberRole('USER');
@@ -78,8 +78,13 @@ function SignupGender() {
           <div className="font-medium text-[1rem] mb-[0.5rem]">여성</div>
         </div>
       </div>
-      <div></div>
       <div className="mb-[4rem]">
+        <div className="flex justify-center mb-[1rem]">
+          <div className="font-regular text-[12px] text-GrayForText items-center underline">서비스 이용약관</div>
+          <div className="font-regular text-[12px] text-GrayForText items-center">,</div>
+          <div className="font-regular text-[12px] text-GrayForText items-center underline">개인정보 처리방침</div>
+          <div className="font-regular text-[12px] text-GrayForText items-center">에 동의합니다.</div>
+        </div>
         <DisabledButton name={buttonName} onClick={handleButtonClick} disabled={gender === null} />
       </div>
     </div>

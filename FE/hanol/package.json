@@ -37,6 +37,7 @@
     "react-chartjs-2": "^5.2.0",
     "react-datepicker": "^4.21.0",
     "react-dom": "^18.2.0",
+    "react-ga4": "^2.1.0",
     "react-kakao-login": "^2.1.1",
     "react-router-dom": "^6.17.0",
     "react-scripts": "5.0.1",
@@ -59,6 +60,7 @@
     "workbox-routing": "^6.6.0",
     "workbox-strategies": "^6.6.0",
     "workbox-streams": "^6.6.0",
+    "workbox-webpack-plugin": "^7.0.0",
     "ws": "^8.14.2"
   },
   "scripts": {
@@ -91,6 +93,7 @@
     "@types/hammerjs": "^2.0.43",
     "@types/react-datepicker": "^4.19.1",
     "autoprefixer": "^10.4.16",
+    "babel-plugin-transform-remove-console": "^6.9.4",
     "postcss": "^8.4.31",
     "tailwindcss": "^3.3.3"
   }

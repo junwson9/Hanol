@@ -54,7 +54,9 @@ const NotiSettingComponent = ({ title, desc, toggleState, noti_type, onToggle }:
 
     //FCM 토큰 관련
     const messaging = getMessaging();
-    sendTokenToServer(messaging);
+    if (messaging && Notification.permission === 'granted') {
+      sendTokenToServer(messaging);
+    }
   };
   return (
     <div className="col-span-full">

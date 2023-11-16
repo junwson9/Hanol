@@ -3,6 +3,7 @@ package com.ssafy.hanol.diagnosis.repository;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.ssafy.hanol.diagnosis.domain.Diagnosis;
 import com.ssafy.hanol.diagnosis.domain.QDiagnosis;
 import com.ssafy.hanol.diagnosis.service.DiagnosisIdInfo;
 import com.ssafy.hanol.diagnosis.service.DiagnosisInfo;
@@ -11,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @Slf4j
@@ -37,7 +39,7 @@ public class QueryDslDiagnosisRepository {
                 ))
                 .from(diagnosis)
                 .where(diagnosis.member.id.eq(memberId)
-                        .and(diagnosis.value1.isNotNull()))
+                        .and(diagnosis.value1.ne(-1)))
                 .orderBy(diagnosis.createdDate.desc());
 
         if(applyLimit) {
@@ -58,10 +60,24 @@ public class QueryDslDiagnosisRepository {
                         ))
                 .from(diagnosis)
                 .where(diagnosis.member.id.eq(memberId)
-                        .and(diagnosis.value1.isNotNull()))
+                        .and(diagnosis.value1.ne(-1)))
                 .orderBy(diagnosis.createdDate.desc())
                 .fetch();
 
         return result;
+    }
+
+    public Optional<Diagnosis> findTopByMemberIdOrderByIdDesc(Long memberId) {
+
+        QDiagnosis diagnosis = QDiagnosis.diagnosis;
+        Diagnosis result = jpaQueryFactory.selectFrom(diagnosis)
+                .where(
+                        diagnosis.member.id.eq(memberId)
+                                .and(diagnosis.value1.ne(-1))
+                )
+                .orderBy(diagnosis.id.desc())
+                .fetchFirst();
+
+        return Optional.ofNullable(result);
     }
 }

@@ -3,6 +3,7 @@ stages:
   - build
 
 variables:
+<<<<<<< HEAD
   SECURE_FILES_DOWNLOAD_PATH: './secure_files/'  # Secure Files을 다운로드할 경로 설정
   DOCKER_USERNAME: "$DOCKER_USERNAME"
   DOCKER_PASSWORD: "$DOCKER_PASSWORD"
@@ -33,15 +34,114 @@ build_server:
 
   dependencies:
     - download_secure_files  # download_secure_files 단계가 성공적으로 완료되어야만 실행됨
+=======
+  DOCKER_USERNAME: "$DOCKER_USERNAME"
+  DOCKER_PASSWORD: "$DOCKER_PASSWORD"
+  S3_ACCESS_KEY: "$S3_ACCESS_KEY"
+  S3_SECRET_KEY: "$S3_SECRET_KEY"
+  S3_BUCKET_NAME: "$S3_BUCKET_NAME"
+  S3_REGION: "$S3_REGION"
+
+
+# hanol api 서버 배포
+build_server:
+  stage: build
+  script:
+    - |
+      # 버전 관리
+      echo "Using downloaded application-dev.yml for the build..."  # Secure Files을 사용한 빌드 작업 수행
+      echo "Deploying version $CI_COMMIT_TAG"
+
+      # 파일 복사
+      echo "스프링 서버 빌드에 필요한 파일 복사"  # Secure Files을 사용한 빌드 작업 수행
+      cp ~/config/server/application-dev.yml ./BE/hanol/src/main/resources
+      cp ~/config/server/firebase-sdk.json ./BE/hanol/src/main/resources
+      ls -l BE/hanol/src/main/resources/
+
+      # 도커 로그인
+      echo "DOCKER USERNAME = $DOCKER_USERNAME"
+      echo "DOCKER PASSWORD = $DOCKER_PASSWORD"
+      echo "Login to Docker using username, password"
+      docker login --username $DOCKER_USERNAME --password $DOCKER_PASSWORD
+
+      container_name="hanol-server"
+      image_name="hanol-server"
+      
+      # 빌드 시작
+      echo "hanol server 이미지 빌드 시작"
+      docker build --no-cache -t ${image_name}:latest --platform linux/amd64 ./BE/hanol/
+      echo "hanol server 이미지 빌드 성공"
+    
+      echo "BE server container 시작"
+      echo "$S3_BUCKET_NAME"
+      echo "$S3_REGION"
+      
+      # container 실행 여부 확인
+      if docker ps -a --format "{{.Names}}" | grep -q "$container_name"; then
+        echo "'$container_name'가 실행중입니다. 컨테이너를 삭제합니다."
+        docker stop ${container_name}
+        docker rm ${container_name}
+        sleep 2
+      else
+        echo "'$container_name'가 실행중이지 않습니다."
+      fi
+
+      echo "==================== 컨테이너 빌드 시작 ===================="
+      docker run -d --name ${container_name} --network hanol-dev -p 8000:8000 -e PROFILE=dev -e S3_BUCKET_NAME=${S3_BUCKET_NAME} -e S3_REGION=${S3_REGION} -e S3_ACCESS_KEY=${S3_ACCESS_KEY} -e S3_SECRET_KEY=${S3_SECRET_KEY} ${image_name}
+
+      echo "==================== 새로운 서버 생성 성공 => 사용하지 않는 이미지 삭제===================="
+      # yes | docker image prune -a
+
+>>>>>>> develop
   tags:
     - hanol
   only:
     - release/server
 
+<<<<<<< HEAD
 build_client:
   stage: build
   script:
     - echo "Client test 배포 시작"
+=======
+# 클라이언트 배포
+build_client:
+  stage: build
+  script:
+    - |
+      echo "Client test 배포 시작"
+
+      # 파일 복사
+      echo "스프링 서버 빌드에 필요한 파일 복사"  # Secure Files을 사용한 빌드 작업 수행
+      cp ~/config/client/.env.prod ./FE/hanol/
+      cat FE/hanol/.env.prod
+
+      # 도커 로그인
+      echo "DOCKER USERNAME = $DOCKER_USERNAME"
+      echo "DOCKER PASSWORD = $DOCKER_PASSWORD"
+      echo "Login to Docker using username, password"
+      docker login --username $DOCKER_USERNAME --password $DOCKER_PASSWORD
+
+
+      container_name="hanol-client"
+      image_name="hanol-client"
+      
+      # Dockerfile을 사용하여 이미지 빌드
+      docker build -t ${image_name}:latest --platform linux/amd64 ./FE/hanol
+
+      # container 실행 여부 확인
+      if docker ps --format "{{.Names}}" | grep -q "$container_name"; then
+              echo "'$container_name'가 실행중입니다."
+              docker stop ${container_name}
+              docker rm ${container_name}
+      else
+              echo "'$container_name'가 실행중이지 않습니다."
+      fi
+
+      echo "==================== 컨테이너 빌드 시작 ===================="
+      docker run -d --name ${container_name} -p 3000:3000 --network hanol-dev ${image_name}
+
+>>>>>>> develop
 
   tags:
     - hanol

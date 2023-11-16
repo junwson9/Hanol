@@ -10,7 +10,7 @@
 
 import { clientsClaim } from 'workbox-core';
 import { ExpirationPlugin } from 'workbox-expiration';
-import { createHandlerBoundToURL } from 'workbox-precaching';
+import { createHandlerBoundToURL, precacheAndRoute } from 'workbox-precaching';
 import { registerRoute } from 'workbox-routing';
 import { StaleWhileRevalidate } from 'workbox-strategies';
 
@@ -23,8 +23,7 @@ clientsClaim();
 // This variable must be present somewhere in your service worker file,
 // even if you decide not to use precaching. See https://cra.link/PWA
 
-// 캐시 의심 부분
-// precacheAndRoute(self.__WB_MANIFEST);
+precacheAndRoute(self.__WB_MANIFEST);
 
 // Set up App Shell-style routing, so that all navigation requests
 // are fulfilled with your index.html shell. Learn more at
@@ -57,6 +56,24 @@ registerRoute(
 
 // An example runtime caching route for requests that aren't handled by the
 // precache, in this case same-origin .png requests like those from in public/
+
+self.addEventListener('install', (event) => {
+  event.waitUntil(
+    // eslint-disable-next-line
+    caches.open('my-cache').then((cache) => {
+      // 캐시 관련 작업 수행
+    }),
+  );
+
+  // install 이벤트 발생 후에 즉시 활성화
+  self.skipWaiting();
+});
+
+self.addEventListener('activate', (event) => {
+  // activate 이벤트 발생 후에 페이지 컨트롤 즉시 가져옴
+  event.waitUntil(self.clients.claim());
+});
+
 registerRoute(
   // Add in any other file extensions or routing criteria as needed.
   ({ url }) => url.origin === self.location.origin && url.pathname.endsWith('.png'),
@@ -72,7 +89,7 @@ registerRoute(
 );
 
 // This allows the web app to trigger skipWaiting via
-// registration.waiting.postMessage({type: 'SKIP_WAITING'})
+// registration.waiting.postMessage({type: 'SKIP_WAITING'})///
 self.addEventListener('message', (event) => {
   if (event.data && event.data.type === 'SKIP_WAITING') {
     self.skipWaiting();
