@@ -26,7 +26,6 @@ const PushSetting = ({ onToggle, toggleState, notiTime, setNotiTime }: Props) =>
             <Toggle toggleState={toggleState} onClick={toggleHandler} />
           </div>
         </PushNotificationBox>
-
         {toggleState ? (
           <NotificationTimeBox>
             <NotificationTime

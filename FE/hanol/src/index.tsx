@@ -7,6 +7,8 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import ReactGA from 'react-ga4';
+import { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 const TRAKING_ID = process.env.REACT_APP_MEASUREMENT_ID as string;
@@ -14,6 +16,7 @@ ReactGA.initialize(TRAKING_ID);
 root.render(
   <RecoilRoot>
     <BrowserRouter>
+      <ScrollToTop />
       <App />
     </BrowserRouter>
   </RecoilRoot>,
@@ -22,3 +25,14 @@ root.render(
 reportWebVitals();
 
 serviceWorkerRegistration.register();
+
+export default function ScrollToTop() {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    console.log('Page Loaded. Scroll Position:', window.scrollY);
+    window.scrollTo(0, 1);
+  }, [pathname]);
+
+  return null;
+}

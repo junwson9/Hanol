@@ -44,6 +44,8 @@ const Myreport = () => {
   //대시보드
   const [isTabActive, setTabActive] = useState<boolean>(true);
   const [diagnosisList, setDiagnosisList] = useState<diagnosisResultType[]>();
+  const [maxDiagnosisCount] = useState(8); // 최대 저장할 진단 결과 개수
+  const [diagnosisListDash, setDiagnosisListDash] = useState<diagnosisResultType[]>();
   const [graphValue, setgraphValue] = useState<number>(6);
   // const [diagnosisId, setDiagnosisId] = useState<number>();
   const [value1, setValue1] = useState<number>();
@@ -129,9 +131,7 @@ const Myreport = () => {
   };
   useEffect(() => {
     axiosInstance
-      .get('/diagnoses?limit=8')
-      // axios
-      // .get('http://localhost:4000/diagnoses')
+      .get('/diagnoses?')
       .then((response) => {
         console.log('진단 결과 리스트 조회 성공:', response);
         const fetchedDiagnosisList = response.data.data.diagnosis_info_list;
@@ -141,7 +141,8 @@ const Myreport = () => {
           navigate('/myreport-explain');
           console.log('이도오오옹');
         }
-
+        const limitedDiagnosisList = fetchedDiagnosisList.slice(0, maxDiagnosisCount);
+        setDiagnosisListDash(limitedDiagnosisList);
         setDiagnosisList(response.data.data.diagnosis_info_list);
         setValue1(response.data.data.diagnosis_info_list?.[0].value1);
         setValue2(response.data.data.diagnosis_info_list?.[0].value2);
@@ -179,49 +180,10 @@ const Myreport = () => {
       <TopTab active={isTabActive} title1="대시보드" title2="상세보기" onTabClick={handleTabClick} />
       {isTabActive ? (
         <>
-          {/* {Role === 'GUEST' ? (
-            <DashBoardBox>
-              <div className="grid grid-cols-6 gap-[10px] mx-[23px]">
-                <div className="col-span-full">
-                  {diagnosisList && (
-                    <>
-                      <BannerButton name="내 두피 분석 하러가기" onClick={() => handleBannerButtonClick()} />
-                      <ValueCardBox>
-                        <ValueCard title={getValueTitle(6)} value={5} onClick={() => handleValueCardClick(6)} />
-                        <ValueCard title={getValueTitle(1)} value={5} onClick={() => handleValueCardClick(1)} />
-                        <ValueCard title={getValueTitle(2)} value={5} onClick={() => handleValueCardClick(2)} />
-                      </ValueCardBox>
-                      <ValueCardBox>
-                        <ValueCard title={getValueTitle(3)} value={5} onClick={() => handleValueCardClick(3)} />
-                        <ValueCard title={getValueTitle(4)} value={5} onClick={() => handleValueCardClick(4)} />
-                        <ValueCard title={getValueTitle(5)} value={5} onClick={() => handleValueCardClick(5)} />
-                      </ValueCardBox>
-                      <ValueGraph
-                        title={getValueTitle(graphValue)}
-                        dataList={diagnosisList}
-                        graphValue={graphValue}
-                        setIndex={setIndex}
-                      />
-                    </>
-                  )}
-                </div>
-              </div>
-              <DivisionRectangle />
-              <div className="grid grid-cols-6 gap-[10px] mx-[23px]">
-                <div className="col-span-full">
-                  <RecommendCareRoutine />
-                  <Button name="두피 케어 루틴 추천 받기" onClick={() => handleButtonClick()} />
-                  <br />
-                  <br />
-                  <br />
-                </div>
-              </div>
-            </DashBoardBox>
-          ) : ( */}
           <DashBoardBox>
             <div className="grid grid-cols-6 gap-[10px] mx-[23px]">
               <div className="col-span-full">
-                {diagnosisList && (
+                {diagnosisListDash && (
                   <>
                     <BannerButton name="내 두피 분석 하러가기" onClick={() => handleBannerButtonClick()} />
                     <ValueCardBox>
@@ -266,7 +228,7 @@ const Myreport = () => {
                     </ValueCardBox>
                     <ValueGraph
                       title={getValueTitle(graphValue)}
-                      dataList={diagnosisList}
+                      dataList={diagnosisListDash}
                       // dataList={reversedDiagnosisList}
                       graphValue={graphValue}
                       setIndex={setIndex}
@@ -277,7 +239,7 @@ const Myreport = () => {
             </div>
             <DivisionRectangle />
             <div className="grid grid-cols-6 gap-[10px] mx-[23px]">
-              <div className="col-span-full">
+              <div className="col-span-full mb-[5rem]">
                 <RecommendCareRoutine />
                 <Button name="두피 케어 루틴 추천 받기" onClick={() => handleButtonClick()} />
                 <br />
@@ -333,6 +295,11 @@ const Myreport = () => {
                 </>
               )}
             </OverwrapContainer1>
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
           </div>
         </div>
       )}
