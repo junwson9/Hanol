@@ -27,8 +27,7 @@
 # Screens
 ### 1. AI 두피 건강 분석
 
-![U_2.0.0_진단하기](/uploads/9eaa15a890b76e59e167125ce184e6e5/U_2.0.0_진단하기.png)
-
+<img src="/uploads/9eaa15a890b76e59e167125ce184e6e5/U_2.0.0_진단하기.png" width="270">
 - 전용 IoT 기기를 통한 AI 두피 건강 진단
 
 ![IoT기기_진단](/uploads/2ca64516a958a9143e12453cb4625207/IoT기기_진단.gif)
