@@ -27,39 +27,29 @@
 # Screens
 ### 1. AI 두피 건강 분석
 
-![U_2.0.0 진단하기.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/228a544b-96ab-43fd-8f9d-05e56f3bdd7e/fa9ec5f8-8fc2-4b0f-8c22-addb4c7e6a22/U_2.0.0_%EC%A7%84%EB%8B%A8%ED%95%98%EA%B8%B0.png)
+![U_2.0.0_진단하기](/uploads/9eaa15a890b76e59e167125ce184e6e5/U_2.0.0_진단하기.png)
 
 - 전용 IoT 기기를 통한 AI 두피 건강 진단
+
+![IoT기기_진단](/uploads/2ca64516a958a9143e12453cb4625207/IoT기기_진단.gif)
 - 휴대폰 카메라 촬영을 통한 AI 두피 건강 진단
     
-    [진단하는 화면 GIF]
-    
-    [진단 결과 화면 GIF]
+![핸드폰_진단](/uploads/f73ee185d0543411827cec7d77abe8e4/핸드폰_진단.gif)
     
 
 ### 2. 진단 결과를 모아보는 마이리포트
 
-- 진단 결과 변화 추이 확인 가능
-    
-    [마이리포트 > 대시보드 화면]
-    
-- 진단 별 세부 결과 확인 가능
-    
-    [마이리포트 > 상세결과 화면]
+![마이리포트](/uploads/7882e672b3048bd48711f13e114d1d3e/마이리포트.gif)
     
 
 ### 3. 두피 상태에 맞는 두피 케어 루틴 추천, 알림
 
-![U_4.0.0 데일리 _ 다이어리 (비로그인) (1).png](https://prod-files-secure.s3.us-west-2.amazonaws.com/228a544b-96ab-43fd-8f9d-05e56f3bdd7e/bea0244f-4d02-41ed-8503-a1d14905a7a2/U_4.0.0_%EB%8D%B0%EC%9D%BC%EB%A6%AC___%EB%8B%A4%EC%9D%B4%EC%96%B4%EB%A6%AC_(%EB%B9%84%EB%A1%9C%EA%B7%B8%EC%9D%B8)_(1).png)
+![U_4.0.0_데일리___다이어리__비로그인___1_](/uploads/f18faa221570a9039b470184fbd7599d/U_4.0.0_데일리___다이어리__비로그인___1_.png)
 
 - AI 진단 결과를 기반으로 사용자 맞춤형 두피 케어 루틴 추천
     
-    [루틴 메인화면에서 추천 루틴 설정 페이지 들어가서 설정 변경하는 화면]
+![루틴설정](/uploads/0ea04f083592b0554551b0e286a7f81c/루틴설정.gif)
     
-
-- 매일 루틴 달성 완료 여부 체크
-    
-    [루틴 달성 여부 변경 하는 화면]
     
 
 - 루틴별 알림 설정 시 원하는 시간에 Push 알림 수신
@@ -71,19 +61,13 @@
 
 ### 4. 생활 습관으로 예측해보는 두피TI
 
-![두피TI메인.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/228a544b-96ab-43fd-8f9d-05e56f3bdd7e/4a47689b-d5bd-4918-b0a7-e587de6a27d6/%EB%91%90%ED%94%BCTI%EB%A9%94%EC%9D%B8.png)
-
+![두피TI메인](/uploads/6d01922446fc4c9812582dbda5dc2244/두피TI메인.png)
 - 생활 습관 문진을 기반으로 나의 두피 타입 예측
     
-    [문진 하는 화면]
-    
-- 두피TI 결과 조회
-    
-    [두피TI 결과 화면]
-
+![두피ti](/uploads/5913136c4f4e00119f2e0f05e7b858fd/두피ti.gif)
+<br/><br/><br/>
 # Main Features
 
----
 
 ### AI
 
