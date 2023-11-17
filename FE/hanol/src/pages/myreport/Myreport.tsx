@@ -44,6 +44,8 @@ const Myreport = () => {
   //대시보드
   const [isTabActive, setTabActive] = useState<boolean>(true);
   const [diagnosisList, setDiagnosisList] = useState<diagnosisResultType[]>();
+  const [maxDiagnosisCount] = useState(8); // 최대 저장할 진단 결과 개수
+  const [diagnosisListDash, setDiagnosisListDash] = useState<diagnosisResultType[]>();
   const [graphValue, setgraphValue] = useState<number>(6);
   // const [diagnosisId, setDiagnosisId] = useState<number>();
   const [value1, setValue1] = useState<number>();
@@ -129,9 +131,7 @@ const Myreport = () => {
   };
   useEffect(() => {
     axiosInstance
-      .get('/diagnoses?limit=8')
-      // axios
-      // .get('http://localhost:4000/diagnoses')
+      .get('/diagnoses?')
       .then((response) => {
         console.log('진단 결과 리스트 조회 성공:', response);
         const fetchedDiagnosisList = response.data.data.diagnosis_info_list;
@@ -141,7 +141,8 @@ const Myreport = () => {
           navigate('/myreport-explain');
           console.log('이도오오옹');
         }
-
+        const limitedDiagnosisList = fetchedDiagnosisList.slice(0, maxDiagnosisCount);
+        setDiagnosisListDash(limitedDiagnosisList);
         setDiagnosisList(response.data.data.diagnosis_info_list);
         setValue1(response.data.data.diagnosis_info_list?.[0].value1);
         setValue2(response.data.data.diagnosis_info_list?.[0].value2);
@@ -182,7 +183,7 @@ const Myreport = () => {
           <DashBoardBox>
             <div className="grid grid-cols-6 gap-[10px] mx-[23px]">
               <div className="col-span-full">
-                {diagnosisList && (
+                {diagnosisListDash && (
                   <>
                     <BannerButton name="내 두피 분석 하러가기" onClick={() => handleBannerButtonClick()} />
                     <ValueCardBox>
@@ -227,7 +228,7 @@ const Myreport = () => {
                     </ValueCardBox>
                     <ValueGraph
                       title={getValueTitle(graphValue)}
-                      dataList={diagnosisList}
+                      dataList={diagnosisListDash}
                       // dataList={reversedDiagnosisList}
                       graphValue={graphValue}
                       setIndex={setIndex}
