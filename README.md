@@ -28,12 +28,17 @@
 ### 1. AI 두피 건강 분석
 
 <img src="/uploads/9eaa15a890b76e59e167125ce184e6e5/U_2.0.0_진단하기.png" width="270">
+<br/><br/>
+
 
 - 전용 IoT 기기를 통한 AI 두피 건강 진단
-
+<br/><br/>
 ![IoT기기_진단](/uploads/2ca64516a958a9143e12453cb4625207/IoT기기_진단.gif)
+<br/><br/>
+
+
 - 휴대폰 카메라 촬영을 통한 AI 두피 건강 진단
-    
+<br/><br/>    
 ![핸드폰_진단](/uploads/f73ee185d0543411827cec7d77abe8e4/핸드폰_진단.gif)
     
 
@@ -45,21 +50,24 @@
 ### 3. 두피 상태에 맞는 두피 케어 루틴 추천, 알림
 
 <img src="/uploads/f18faa221570a9039b470184fbd7599d/U_4.0.0_데일리___다이어리__비로그인___1_.png" width="270">
-
+<br/><br/>
 
 - AI 진단 결과를 기반으로 사용자 맞춤형 두피 케어 루틴 추천
-    
+<br/><br/>    
 ![루틴설정](/uploads/1834940e1e70cdafd626b6da9891d686/루틴설정.gif)
-    
+<br/><br/>    
     
 
 - 루틴별 알림 설정 시 원하는 시간에 Push 알림 수신
-
-   
-
+<br/><br/>
+![알람](/uploads/e577b74164ea4828ae897ca6eb0750a5/알람.gif)   
+<br/><br/>
 ### 4. 생활 습관으로 예측해보는 두피TI
 
-<img src="/uploads/6d01922446fc4c9812582dbda5dc2244/두피TI메인.png" width="270">
+<img src="/uploads/6d01922446fc4c9812582dbda5dc2244/두피TI메인.png" width="270">  
+<br/><br/>
+
+
 - 생활 습관 문진을 기반으로 나의 두피 타입 예측
     
 ![두피ti](/uploads/5913136c4f4e00119f2e0f05e7b858fd/두피ti.gif)
