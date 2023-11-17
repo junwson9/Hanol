@@ -48,7 +48,7 @@
 
 - AI 진단 결과를 기반으로 사용자 맞춤형 두피 케어 루틴 추천
     
-![루틴설정](/uploads/0ea04f083592b0554551b0e286a7f81c/루틴설정.gif)
+![루틴설정](/uploads/1834940e1e70cdafd626b6da9891d686/루틴설정.gif)
     
     
 
@@ -111,8 +111,8 @@
 - Nginx reverse proxy를 활용하여 애플리케이션 서버의 직접적인 노출을 방지하고 요청을 안전하게 처리
 - 시스템 아키텍처
 
-![Group 49.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/228a544b-96ab-43fd-8f9d-05e56f3bdd7e/57800081-d269-4bc2-9960-45b1d5a8a9bc/Group_49.png)
-
+![Group_49](/uploads/82c2b14dc691e233e33d0c5a66c9d76d/Group_49.png)
+<br/><br/><br/>
 # Stacks
 
 
