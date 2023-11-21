@@ -1,4 +1,5 @@
 stages:
+  - download
   - build
 
 variables:
@@ -63,6 +64,7 @@ build_server:
     - hanol
   only:
     - release/server
+
 
 # 클라이언트 배포
 build_client:
