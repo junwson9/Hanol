@@ -41,11 +41,12 @@ const routineNotiSetting = () => {
       .patch(`routines/${member_routine_id}/notification`, data)
       .then((response) => {
         console.log('루틴변경요청성공', response);
+        navigate(-1);
       })
       .catch((error) => {
         console.error('루틴변경요청실패', error);
+        navigate(-1);
       });
-    navigate(-1);
   };
   return (
     <div className="col-span-full">
