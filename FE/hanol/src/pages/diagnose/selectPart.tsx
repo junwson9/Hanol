@@ -92,21 +92,19 @@ function SelectPart() {
       />
       {!selectedImage ? (
         <>
-          <p className="text-lg  text-left font-bold mt-12 text-center">촬영 부위를 선택해 주세요!</p>
-          <div className="flex justify-center">
-            <div className="flex-col">
-              {Object.entries(parts).map(([partName, index]: [string, number]) => (
-                <button
-                  key={index}
-                  className={`flex gap-3 mt-7 ${activePart === index ? 'text-Main' : ''}`}
-                  onClick={() => handlePartClick(index)}
-                >
-                  {activePart === index ? <Check /> : <UnActiveCheck />}
-                  <p>{partName}</p>
-                </button>
-              ))}
-            </div>
-          </div>
+          <p className="text-lg  text-left font-bold mt-10 mb-12">촬영 부위 선택</p>
+          {Object.entries(parts).map(([partName, index]: [string, number]) => (
+            <button
+              key={index}
+              className={`flex mt-3 gap-2.5 border w-[100%] rounded-lg h-14 items-center ${
+                activePart === index ? 'border-Main text-Main font-medium' : 'text-GrayForText font-medium'
+              } `}
+              onClick={() => handlePartClick(index)}
+            >
+              {activePart === index ? <Check className=" ml-2.5" /> : <UnActiveCheck className=" ml-2.5" />}
+              <p>{partName}</p>
+            </button>
+          ))}
           {doSelect && (
             <p
               className="absolute  w-[100%] bottom-20 text-Error"

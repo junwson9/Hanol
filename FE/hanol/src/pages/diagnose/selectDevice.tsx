@@ -1,15 +1,19 @@
 import { useState } from 'react';
-import StartButton from 'components/button/Button';
 import { useNavigate } from 'react-router';
 import TapBarDepth2 from 'components/common/TapBarDepth2';
-import { ReactComponent as Ex } from 'assets/images/scalpExample.svg';
 import { useRecoilState } from 'recoil';
 import { DeviceState } from 'recoil/atoms';
 import { useRecoilValue } from 'recoil';
 import { MemberRoleState } from 'recoil/atoms';
 import Snackbar from 'components/common/SnackBar';
-import { ReactComponent as CameraIcon } from 'assets/images/Camera_icon.svg';
+import { ReactComponent as CameraIcons } from 'assets/images/cellphoneCamera.svg';
 import { ReactComponent as HanolDevice } from 'assets/images/hanol_device.svg';
+import explainwifi from 'assets/icons/explain_WIFI 1.png';
+import { ReactComponent as ExplainHanol } from 'assets/images/explainHanol.svg';
+import FloatingButton from 'components/button/FloatingButton';
+import { ReactComponent as Dopi } from 'assets/images/dopi.svg';
+import { ReactComponent as CameraZoom } from 'assets/images/cameraZoom.svg';
+
 function SelectDevice() {
   const [selectedButton, setSelectedButton] = useState<number>(0);
   const Role = useRecoilValue(MemberRoleState);
@@ -42,70 +46,84 @@ function SelectDevice() {
         propsIsBack={false}
         rightBtnType={2}
       />
-      <p className="text-lg  text-left font-bold mt-12 text-center">촬영 기기를 선택해 주세요.</p>
-      <div className="flex justify-center mt-6 gap-6">
+      <p className="text-lg text-left font-bold mt-10">촬영 기기 선택</p>
+      <div className="flex justify-center mt-8 gap-6">
         <button
-          className={`flex w-[9rem] h-[9rem] rounded-xl shadow-lg justify-center items-center border ${
-            selectedButton === 0 ? 'border-Main border-4' : ''
+          className={`flex w-[9rem] h-[9rem] rounded-xl justify-center items-center border ${
+            selectedButton === 0 ? 'border-Main border-2' : ''
           }`}
           onClick={() => handleButtonSelect(0)}
         >
           <div>
-            <div className="flex justify-center">
+            <div className="flex justify-center mb-[0.25rem]">
               <HanolDevice />
             </div>
-            <p>한올 기기</p>
+            <p className={`${selectedButton === 0 ? 'text-Main' : ''}`}>한올 기기</p>
           </div>
         </button>
         <button
-          className={`flex w-[9rem] h-[9rem] rounded-xl shadow-lg justify-center items-center border ${
-            selectedButton === 1 ? 'border-Main border-4' : ''
+          className={`flex w-[9rem] h-[9rem] rounded-xl justify-center items-center border ${
+            selectedButton === 1 ? 'border-Main border-2' : ''
           }`}
           onClick={() => handleButtonSelect(1)}
         >
           <div>
-            <div className="flex justify-center">
-              <CameraIcon />
+            <div className="flex justify-center mb-[0.25rem]">
+              <CameraIcons />
             </div>
-            <p className="text-center">휴대폰 카메라</p>
+            <p className={`${selectedButton === 1 ? 'text-Main' : ''}`}>휴대폰 카메라</p>
           </div>
         </button>
       </div>
-      <p className="text-lg  text-left font-bold mt-6">촬영 방법 안내</p>
-      {selectedButton ? (
+      <p className="text-lg text-left font-bold mt-16 mb-8">촬영 방법 안내</p>
+      {!selectedButton ? (
         <>
-          <p className="text-left mt-5">1. 카메라 엑세스 권한을 허용해주세요.</p>
-          <p className="text-left mt-5">
-            2. 아래 예시처럼 카메라를 15~20배 확대하여
-            <br />
-            &nbsp;&nbsp;&nbsp;&nbsp;두피를 촬영해 주세요.
-          </p>
-          <div className="mt-6 flex justify-center">
-            <Ex />
+          <div className="bg-[#F6F6F6] rounded-[12px] py-3">
+            <div className="text-[#acacac] font-Medium text-[14px] pt-2">STEP 1.</div>
+            <div className="font-Medium">WIFI 연결 확인</div>
+            <div className="flex justify-center pt-2 pb-4">
+              <img src={explainwifi} />
+            </div>
           </div>
-          <p className="text-left mt-5">
-            3. 사진이 선명할 수록 분석이 정확해집니다.
-            <br />
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;촬영 시 타인의 도움을 받아보세요.
-          </p>
+          <div className="bg-[#F6F6F6] rounded-[12px] mt-8 py-3">
+            <div className="text-[#acacac] font-Medium text-[14px] pt-2">STEP 2.</div>
+            <div className="font-Medium">고민 부위에 기기를 가까이 대고 촬영</div>
+            <div className="flex justify-center pt-2 pb-4">
+              <ExplainHanol />
+            </div>
+          </div>
+          <div className="bg-[#F6F6F6] rounded-[12px] mt-8 py-3">
+            <div className="text-[#acacac] font-Medium text-[14px] pt-2">TIP!</div>
+            <div className="font-Medium">사진이 선명할수록 분석이 정확해집니다.</div>
+            <div className="font-Medium">아래 사진처럼 초점을 잘 맞춰 </div>
+            <div className="font-Medium">촬영해주세요!</div>
+            <div className="flex justify-center pt-2 pb-4">
+              <Dopi />
+            </div>
+          </div>
         </>
       ) : (
         <>
-          <p className="text-left mt-5">1. 와이파이를 연결해주세요.</p>
-          <p className="text-left mt-5">
-            2. 고민부위에 기기를 대고
-            <br />
-            &nbsp;&nbsp;&nbsp;&nbsp;두피를 촬영해 주세요.
-          </p>
-          <p className="text-left mt-5 mb-[14rem]">
-            3. 사진이 선명할 수록 분석이 정확해집니다.
-            <br />
-            &nbsp;&nbsp;&nbsp;&nbsp;휴대폰 화면을 보고 기기 위치를 조정해 주세요!
-          </p>
+          <div className="bg-[#F6F6F6] rounded-[12px] py-3">
+            <div className="text-[#acacac] font-Medium text-[14px] pt-2">STEP 1.</div>
+            <div className="font-Medium">카메라 15~20배 확대</div>
+            <div className="flex justify-center pt-2 pb-4">
+              <img src={explainwifi} />
+            </div>
+          </div>
+          <div className="bg-[#F6F6F6] rounded-[12px] mt-8 py-3">
+            <div className="text-[#acacac] font-Medium text-[14px] pt-2">TIP!</div>
+            <div className="font-Medium">사진이 선명할수록 분석이 정확해집니다.</div>
+            <div className="font-Medium">아래 사진처럼 초점을 잘 맞춰 </div>
+            <div className="font-Medium">촬영해주세요!</div>
+            <div className="flex justify-center pt-2 pb-4">
+              <CameraZoom />
+            </div>
+          </div>
         </>
       )}
-      <div className="absolute w-[100%] bottom-5">
-        <StartButton name="선택 완료" onClick={() => handleNavigate()} />
+      <div className="mt-[3rem] mb-[3rem] sticky bottom-5 z-1">
+        <FloatingButton name={'선택 완료'} onClick={handleNavigate} />
       </div>
       {snackbarMessage && (
         <Snackbar message={snackbarMessage} onClose={() => setSnackbarMessage('')} /> // 스낵바 컴포넌트 추가
